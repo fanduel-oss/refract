@@ -3,7 +3,7 @@
     "compilerOptions": {
         "declaration": true,
         "declarationDir": "./types",
-        "outDir": "./"
+        "outDir": "./build"
     },
-    "include": ["./src/index.ts"]
+    "include": ["./src/*.ts"]
 }
