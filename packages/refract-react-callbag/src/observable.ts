@@ -13,7 +13,7 @@ export interface Subscription {
 }
 
 export interface ObservableComponent {
-    observe: <T>(propName: string) => Callbag
+    observe: <T = any>(propName: string) => Callbag
     mount: Callbag
     unmount: Callbag
 }

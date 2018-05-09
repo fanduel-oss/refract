@@ -1,8 +1,4 @@
-import {
-    Observable,
-    PartialObserver as Listener,
-    Subscription
-} from 'rxjs'
+import { Observable, PartialObserver as Listener, Subscription } from 'rxjs'
 
 export { Listener, Subscription }
 
