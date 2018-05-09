@@ -7,7 +7,8 @@
         "copy": "node ./scripts/copy",
         "prebuild": "npm run copy",
         "build": "rollup -c rollup.config.js",
-        "test": "jest"
+        "test": "jest",
+        "precommit": "lint-staged"
     },
     "devDependencies": {
         "@types/enzyme": "~3.1.10",
@@ -28,40 +29,24 @@
         "rollup": "~0.58.2",
         "rollup-plugin-typescript2": "~0.13.0",
         "rxjs": "~6.1.0",
+        "rxjs-compat": "~6.1.0",
         "ts-jest": "~22.4.5",
         "tslint": "~5.10.0",
         "tslint-config-prettier": "~1.12.0",
         "typescript": "~2.8.3",
         "xstream": "~11.2.0"
     },
-    "git": {
-        "scripts": {
-            "pre-commit": "./node_modules/.bin/lint-staged"
-        }
-    },
     "lint-staged": {
-        "packages/**/*.ts": [
-            "prettier --write",
-            "tslint",
-            "git add"
-        ],
-        "packages/**/*.js": [
-            "prettier --write",
-            "git add"
-        ]
+        "*.ts": ["prettier --write", "tslint", "git add"],
+        "*.{js,json}": ["prettier --write", "git add"]
     },
     "jest": {
         "transform": {
             "^.+\\.ts$": "ts-jest"
         },
         "testRegex": "/__tests__/.*\\.ts$",
-        "moduleFileExtensions": [
-            "ts",
-            "js"
-        ],
-        "setupFiles": [
-            "<rootDir>/test.config.js"
-        ],
+        "moduleFileExtensions": ["ts", "js"],
+        "setupFiles": ["<rootDir>/test.config.js"],
         "globals": {
             "ts-jest": {
                 "tsConfigFile": "tsconfig.test.json"

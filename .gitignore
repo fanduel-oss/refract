@@ -1,5 +1,4 @@
 /packages/*/index.js
 /packages/*/index.es.js
-/packages/*/types/
 node_modules/
 *.log
