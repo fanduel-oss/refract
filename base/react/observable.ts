@@ -1,5 +1,11 @@
-import { Observable, Observer } from 'rxjs'
-import { Listener } from './baseTypes'
+import {
+    Observable,
+    Observer,
+    PartialObserver as Listener,
+    Subscription
+} from 'rxjs'
+
+export { Listener, Subscription }
 
 export interface ObservableComponent {
     observe: <T>(propName: string) => Observable<T>
@@ -7,14 +13,21 @@ export interface ObservableComponent {
     unmount: Observable<any>
 }
 
-export type EffectFactory<P, E> = (props: P) => (component: ObservableComponent) => Observable<E>
+export type EffectFactory<P, E> = (
+    props: P
+) => (component: ObservableComponent) => Observable<E>
 
-export const toSubscribable = <T>(sink: Observable<T>) => sink
+export const subscribeToSink = <T>(
+    sink: Observable<T>,
+    next: (val: T) => void
+): Subscription =>
+    sink.subscribe({
+        next
+    })
 
-export const createObservable = <T>(subscribe): Observable<T> => Observable.create(
-    (Listener: Listener<T>) => {
+export const createObservable = <T>(subscribe): Observable<T> =>
+    Observable.create((Listener: Partial<Listener<T>>) => {
         const unsubscribe = subscribe(Listener)
 
         return unsubscribe
-    }
-)
+    })

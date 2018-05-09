@@ -1,20 +1,12 @@
-export interface Listener<T> {
-    next: (value?: T) => void
-    error?: (err: any) => void
-    complete?: (value?: T) => void
-}
-
-export interface Subscription {
-    unsubscribe: () => void
-}
+import { Listener } from './observable'
 
 export interface PropListeners {
-    [key: string]: Array<Listener<any>>
+    [key: string]: Array<Partial<Listener<any>>>
 }
 
 export interface Listeners {
-    mount: Array<Listener<any>>
-    unmount: Array<Listener<any>>
+    mount: Array<Partial<Listener<any>>>
+    unmount: Array<Partial<Listener<any>>>
     props: PropListeners
 }
 

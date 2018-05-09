@@ -1,6 +1,6 @@
 const prefix = 'refract'
 const supportedMainLibraries = ['react']
-const supportedObservableLibraries = ['rxjs']
+const supportedObservableLibraries = ['rxjs', 'xstream']
 
 const listMainLibPackages = mainLib =>
     supportedObservableLibraries.map(obsLib => `${prefix}-${mainLib}-${obsLib}`)

@@ -1,5 +1,5 @@
 {
-    "name": "refract-react-rxjs",
+    "name": "refract-react-xstream",
     "version": "1.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -9,9 +9,6 @@
     "license": "MIT",
     "peerDependencies": {
         "react": "~16.3.2",
-        "rxjs": "~6.1.0"
-    },
-    "devDependencies": {
-        "@types/react": "~16.3.13"
+        "xstream": "~11.2.0"
     }
 }

@@ -1,16 +1,16 @@
 import * as React from 'react'
 
 import {
-    Listener,
-    Subscription,
     PropListeners,
     Listeners,
     EffectHandler
 } from './baseTypes'
 import {
+    Subscription,
+    Listener,
     createObservable,
     ObservableComponent,
-    toSubscribable,
+    subscribeToSink,
     EffectFactory
 } from './observable'
 
@@ -81,15 +81,11 @@ export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
 
             const sinkObservable = effectFactory(this.props)(this.component)
 
-            this.sinkSubscription = toSubscribable<E>(sinkObservable).subscribe(
-                {
-                    next: effectHandler(this.props)
-                }
-            )
+            this.sinkSubscription = subscribeToSink<E>(sinkObservable, effectHandler(this.props))
         }
 
         public componentDidMount() {
-            this.listeners.mount.forEach(l => l.next())
+            this.listeners.mount.forEach(l => l.next(undefined))
         }
 
         public componentDidUpdate(prevProps) {
@@ -103,7 +99,7 @@ export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
         }
 
         public componentWillUnmount() {
-            this.listeners.unmount.forEach(l => l.next())
+            this.listeners.unmount.forEach(l => l.next(undefined))
             this.sinkSubscription.unsubscribe()
         }
 
