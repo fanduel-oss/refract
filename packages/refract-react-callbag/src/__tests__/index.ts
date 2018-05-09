@@ -4,7 +4,7 @@ import {
     EffectFactory,
     ObservableComponent
 } from '../index'
-import { map } from 'rxjs/operators'
+import map from 'callbag-map'
 
 describe('refract-react-rxjs', () => {
     interface Effect {
@@ -26,17 +26,15 @@ describe('refract-react-rxjs', () => {
     const effectFactory: EffectFactory<Props, Effect> = props => component => {
         const value$ = component.observe<number>('value')
 
-        return value$.pipe(
-            map(value => ({
-                type: 'MyEffect',
-                value
-            }))
-        )
+        return map(value => ({
+            type: 'MyEffect',
+            value
+        }))(value$)
     }
 
     const withEffectsHOC = withEffects<Props, Effect>(effectHandler)
 
-    it('should work', () => {
+    it('should create a HoC', () => {
         const WithEffects = withEffectsHOC(effectFactory)
     })
 })
