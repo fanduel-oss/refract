@@ -1,0 +1,21 @@
+{
+    "name": "refract-react-rxjs",
+    "version": "1.0.0",
+    "main": "index.js",
+    "jsnext:main": "index.es.js",
+    "module": "index.es.js",
+    "typings": "types/index.d.ts",
+    "sideEffects": false,
+    "license": "MIT",
+    "peerDependencies": {
+        "rxjs": "~6.1.0"
+    },
+    "devDependencies": {
+        "@types/react": "~16.3.13"
+    },
+    "dependencies": {
+        "callbag": "~1.0.3",
+        "callbag-from-obs": "~1.2.0",
+        "callbag-to-obs": "~1.0.0"
+    }
+}
