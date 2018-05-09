@@ -1,0 +1,60 @@
+{
+    "name": "refract",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "init": "lerna bootstrap",
+        "build": "rollup -c rollup.config.js",
+        "test": "jest"
+    },
+    "devDependencies": {
+        "@types/enzyme": "~3.1.10",
+        "@types/jest": "~22.2.3",
+        "@types/react": "~16.3.14",
+        "enzyme": "~3.3.0",
+        "enzyme-adapter-react-16": "~1.1.1",
+        "husky": "~0.14.3",
+        "jest": "~22.4.3",
+        "lerna": "~2.9.0",
+        "lint-staged": "~7.0.5",
+        "prettier": "~1.12.1",
+        "react": "~16.3.2",
+        "react-dom": "~16.3.2",
+        "rollup": "~0.58.2",
+        "rollup-plugin-typescript2": "~0.13.0",
+        "rxjs": "~6.1.0",
+        "ts-jest": "~22.4.5",
+        "tslint": "~5.10.0",
+        "tslint-config-prettier": "~1.12.0",
+        "typescript": "~2.8.3"
+    },
+    "lint-staged": {
+        "packages/**/*.ts": [
+            "prettier --write",
+            "tslint",
+            "git add"
+        ],
+        "packages/**/*.js": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.ts$": "ts-jest"
+        },
+        "testRegex": "/__tests__/.*\\.ts$",
+        "moduleFileExtensions": [
+            "ts",
+            "js"
+        ],
+        "setupFiles": [
+            "<rootDir>/test.config.js"
+        ],
+        "globals": {
+            "ts-jest": {
+                "tsConfigFile": "tsconfig.test.json"
+            }
+        }
+    }
+}
