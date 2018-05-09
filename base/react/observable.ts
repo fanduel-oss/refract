@@ -1,6 +1,5 @@
 import {
     Observable,
-    Observer,
     PartialObserver as Listener,
     Subscription
 } from 'rxjs'
