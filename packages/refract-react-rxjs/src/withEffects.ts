@@ -16,7 +16,7 @@ import {
 
 export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
     effectFactory: EffectFactory<P, E>
-) => (BaseComponent: React.ComponentType<P>): React.ComponentType<P> => {
+) => (BaseComponent: React.ComponentType<P>): React.ComponentType<P> =>
     class WithEffects extends React.Component<P> {
         private listeners: Listeners
         private modifiedProps: object
@@ -111,6 +111,3 @@ export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
             return React.createElement(BaseComponent, this.props)
         }
     }
-
-    return WithEffects
-}

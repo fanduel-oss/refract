@@ -28,6 +28,11 @@
         "tslint-config-prettier": "~1.12.0",
         "typescript": "~2.8.3"
     },
+    "git": {
+        "scripts": {
+            "pre-commit": "./node_modules/.bin/lint-staged"
+        }
+    },
     "lint-staged": {
         "packages/**/*.ts": [
             "prettier --write",
