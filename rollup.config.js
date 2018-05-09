@@ -1,6 +1,7 @@
 import typescript from 'rollup-plugin-typescript2'
 
-const packages = ['refract-react-rxjs']
+const getPackages = require('./packages')
+const packages = getPackages()
 const formats = {
     es: 'index.es.js',
     cjs: 'index.js'

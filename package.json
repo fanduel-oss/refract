@@ -4,6 +4,8 @@
     "version": "0.0.0",
     "scripts": {
         "init": "lerna bootstrap",
+        "copy": "node ./scripts/copy",
+        "prebuild": "npm run copy",
         "build": "rollup -c rollup.config.js",
         "test": "jest"
     },
