@@ -24,10 +24,6 @@ callbag-to-obs@~1.0.0:
   dependencies:
     symbol-observable "^1.2.0"
 
-callbag@~1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/callbag/-/callbag-1.0.3.tgz#d78c111107fbf02c01370084967645093ff8fd73"
-
 csstype@^2.2.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.4.2.tgz#158e36c69566bf968da63d0ba14eda1c20e8643a"

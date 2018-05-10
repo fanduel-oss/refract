@@ -33,7 +33,7 @@ describe('refract-react-xstream', () => {
 
     const withEffectsHOC = withEffects<Props, Effect>(effectHandler)
 
-    it('should work', () => {
+    it('should create a HoC', () => {
         const WithEffects = withEffectsHOC(effectFactory)
     })
 })

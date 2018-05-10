@@ -9,7 +9,7 @@ export interface ObservableComponent {
 }
 
 export type EffectFactory<P, E> = (
-    props: P
+    initialProps: P
 ) => (component: ObservableComponent) => Observable<E>
 
 export const subscribeToSink = <T>(

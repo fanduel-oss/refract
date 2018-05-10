@@ -15,7 +15,6 @@
         "callbag-map": "~1.0.1"
     },
     "dependencies": {
-        "callbag": "~1.0.3",
         "callbag-from-obs": "~1.2.0",
         "callbag-to-obs": "~1.0.0"
     }

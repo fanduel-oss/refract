@@ -10,4 +10,4 @@ export interface Listeners {
     props: PropListeners
 }
 
-export type EffectHandler<P, E> = (props: P) => (val: E) => void
+export type EffectHandler<P, E> = (intialProps: P) => (val: E) => void

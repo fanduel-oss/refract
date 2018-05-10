@@ -12,7 +12,7 @@ import {
 
 export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
     effectFactory: EffectFactory<P, E>
-) => (BaseComponent: React.ComponentType<P>): React.ComponentType<P> =>
+) => (BaseComponent: React.ComponentType<P>): React.ComponentClass<P> =>
     class WithEffects extends React.Component<P> {
         private listeners: Listeners
         private modifiedProps: object
@@ -81,20 +81,16 @@ export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
                 sinkObservable,
                 effectHandler(this.props)
             )
+
+            this.sendNext()
         }
 
         public componentDidMount() {
             this.listeners.mount.forEach(l => l.next(undefined))
         }
 
-        public componentDidUpdate(prevProps) {
-            Object.keys(this.listeners.props).forEach(propName => {
-                const prop = this.props[propName]
-
-                if (prevProps[propName] !== prop) {
-                    this.listeners.props[propName].forEach(l => l.next(prop))
-                }
-            })
+        public componentDidUpdate(prevProps: P) {
+            this.sendNext(prevProps)
         }
 
         public componentWillUnmount() {
@@ -104,5 +100,15 @@ export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
 
         public render() {
             return React.createElement(BaseComponent, this.props)
+        }
+
+        private sendNext(prevProps?: P) {
+            Object.keys(this.listeners.props).forEach(propName => {
+                const prop = this.props[propName]
+
+                if (!prevProps || prevProps[propName] !== prop) {
+                    this.listeners.props[propName].forEach(l => l.next(prop))
+                }
+            })
         }
     }

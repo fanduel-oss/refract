@@ -1,3 +1,4 @@
+import * as React from 'react'
 import {
     withEffects,
     EffectHandler,
@@ -5,6 +6,7 @@ import {
     ObservableComponent
 } from '../index'
 import { map } from 'rxjs/operators'
+import { shallow, mount } from 'enzyme'
 
 describe('refract-react-rxjs', () => {
     interface Effect {
@@ -34,9 +36,30 @@ describe('refract-react-rxjs', () => {
         )
     }
 
-    const withEffectsHOC = withEffects<Props, Effect>(effectHandler)
+    it('should create a HoC', () => {
+        const WithEffects = withEffects<Props, Effect>(effectHandler)(
+            effectFactory
+        )(() => React.createElement('div'))
+    })
 
-    it('should work', () => {
-        const WithEffects = withEffectsHOC(effectFactory)
+    it('should observe props changing', () => {
+        const effectValueHandler = jest.fn()
+        const WithEffects = withEffects<Props, Effect>(
+            () => effectValueHandler
+        )(effectFactory)(() => React.createElement('div'))
+
+        const component = mount(React.createElement(WithEffects, { value: 1 }))
+
+        expect(component.prop('value')).toBe(1)
+        expect(effectValueHandler).toHaveBeenCalledWith({
+            type: 'MyEffect',
+            value: 1
+        })
+
+        component.setProps({ value: 2 })
+        expect(effectValueHandler).toHaveBeenCalledWith({
+            type: 'MyEffect',
+            value: 2
+        })
     })
 })
