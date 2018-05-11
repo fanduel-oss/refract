@@ -18,7 +18,7 @@ export const withEffects = <P, E>(
 ): React.ComponentClass<P> =>
     class WithEffects extends React.Component<P> {
         private listeners: Listeners
-        private modifiedProps: object = {}
+        private decoratedProps: Partial<P> = {}
         private component: ObservableComponent
         private sinkSubscription: Subscription
 
@@ -28,8 +28,25 @@ export const withEffects = <P, E>(
             this.listeners = {
                 mount: [],
                 unmount: [],
-                props: {}
+                props: {},
+                fnProps: {}
             }
+
+            this.decoratedProps = Object.keys(props).reduce(
+                (decoratedProps, propName) => {
+                    const prop = props[propName]
+
+                    if (typeof prop === 'function') {
+                        decoratedProps[propName] = this.decorateProp(
+                            prop,
+                            propName
+                        )
+                    }
+
+                    return decoratedProps
+                },
+                {}
+            )
 
             const mountObservable = createObservable<any>(listener => {
                 this.listeners.mount = this.listeners.mount.concat(listener)
@@ -43,36 +60,24 @@ export const withEffects = <P, E>(
                 return () => this.listeners.unmount.filter(l => l !== listener)
             })
 
-            const createPropObservable = <T>(propName: string) =>
-                typeof this.props[propName] === 'function'
-                    ? createObservable<T>(listener => {
-                          const initialProp =
-                              this.modifiedProps[propName] ||
-                              this.props[propName]
+            const createPropObservable = <T>(propName: string) => {
+                const listenerType =
+                    typeof this.props[propName] === 'function'
+                        ? 'fnProps'
+                        : 'props'
 
-                          this.modifiedProps[propName] = (...args) => {
-                              listener.next(args[0])
+                return createObservable<T>(listener => {
+                    this.listeners[listenerType][propName] = (
+                        this.listeners[listenerType][propName] || []
+                    ).concat(listener)
 
-                              return initialProp(...args)
-                          }
-
-                          return () => {
-                              this.modifiedProps[propName] = this.props[
-                                  propName
-                              ]
-                          }
-                      })
-                    : createObservable<T>(listener => {
-                          this.listeners.props[propName] = (
-                              this.listeners.props[propName] || []
-                          ).concat(listener)
-
-                          return () => {
-                              this.listeners.props[propName].filter(
-                                  l => l !== listener
-                              )
-                          }
-                      })
+                    return () => {
+                        this.listeners[listenerType][propName].filter(
+                            l => l !== listener
+                        )
+                    }
+                })
+            }
 
             this.component = {
                 mount: mountObservable,
@@ -108,7 +113,7 @@ export const withEffects = <P, E>(
         public render() {
             return React.createElement(
                 BaseComponent,
-                Object.assign({}, this.props, this.modifiedProps)
+                Object.assign({}, this.props, this.decoratedProps)
             )
         }
 
@@ -120,5 +125,15 @@ export const withEffects = <P, E>(
                     this.listeners.props[propName].forEach(l => l.next(prop))
                 }
             })
+        }
+
+        private decorateProp(prop, propName) {
+            return (...args) => {
+                const listeners = this.listeners.fnProps[propName] || []
+
+                listeners.forEach(l => l.next(args[0]))
+
+                return prop(...args)
+            }
         }
     }

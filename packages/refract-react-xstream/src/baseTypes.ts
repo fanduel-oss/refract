@@ -8,6 +8,7 @@ export interface Listeners {
     mount: Array<Partial<Listener<any>>>
     unmount: Array<Partial<Listener<any>>>
     props: PropListeners
+    fnProps: PropListeners
 }
 
 export type EffectHandler<P, E> = (intialProps: P) => (val: E) => void
