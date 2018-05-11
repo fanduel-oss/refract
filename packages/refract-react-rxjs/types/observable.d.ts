@@ -10,6 +10,7 @@ export declare type EffectFactory<P, E> = (
 ) => (component: ObservableComponent) => Observable<E>
 export declare const subscribeToSink: <T>(
     sink: Observable<T>,
-    next: (val: T) => void
+    next: (val: T) => void,
+    error?: (error: any) => void
 ) => Subscription
 export declare const createObservable: <T>(subscribe: any) => Observable<T>
