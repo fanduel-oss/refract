@@ -2,12 +2,6 @@
 # yarn lockfile v1
 
 
-"@types/react@~16.3.13":
-  version "16.3.14"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.14.tgz#f90ac6834de172e13ecca430dcb6814744225d36"
-  dependencies:
-    csstype "^2.2.0"
-
 callbag-from-obs@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/callbag-from-obs/-/callbag-from-obs-1.2.0.tgz#f092f302f302b53abaf1a4d7a5393f9a65fac517"
@@ -23,10 +17,6 @@ callbag-to-obs@~1.0.0:
   resolved "https://registry.yarnpkg.com/callbag-to-obs/-/callbag-to-obs-1.0.0.tgz#a198e82d86f1283cd40583970c96c8acc35d9ad3"
   dependencies:
     symbol-observable "^1.2.0"
-
-csstype@^2.2.0:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.4.2.tgz#158e36c69566bf968da63d0ba14eda1c20e8643a"
 
 symbol-observable@^1.2.0:
   version "1.2.0"

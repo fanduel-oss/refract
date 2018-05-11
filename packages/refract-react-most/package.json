@@ -8,10 +8,7 @@
     "sideEffects": false,
     "license": "MIT",
     "peerDependencies": {
-        "most": "~1.7.3",
-        "react": "~16.3.2"
-    },
-    "devDependencies": {
-        "@types/react": "~16.3.13"
+        "most": "^1.0.0",
+        "react": ">= 15.0.0 < 16.0.0"
     }
 }
