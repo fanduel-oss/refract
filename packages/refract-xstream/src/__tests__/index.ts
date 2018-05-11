@@ -5,7 +5,7 @@ import {
     ObservableComponent
 } from '../index'
 
-describe('refract-react-rxjs', () => {
+describe('refract-xstream', () => {
     interface Effect {
         type: string
         value: number

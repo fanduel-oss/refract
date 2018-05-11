@@ -9,7 +9,7 @@ import { map, mapTo, concat } from 'rxjs/operators'
 import { merge } from 'rxjs'
 import { shallow, mount } from 'enzyme'
 
-describe('refract-react-rxjs', () => {
+describe('refract-rxjs', () => {
     interface Effect {
         type: string
         value?: number

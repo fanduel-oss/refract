@@ -1,5 +1,5 @@
 {
-    "name": "refract-react-xstream",
+    "name": "refract-xstream",
     "version": "1.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",

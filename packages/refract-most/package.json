@@ -1,5 +1,5 @@
 {
-    "name": "refract-react-rxjs",
+    "name": "refract-most",
     "version": "1.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -8,7 +8,7 @@
     "sideEffects": false,
     "license": "MIT",
     "peerDependencies": {
-        "react": ">= 15.0.0 < 16.0.0",
-        "rxjs": "^6.0.0"
+        "most": "^1.0.0",
+        "react": ">= 15.0.0 < 16.0.0"
     }
 }

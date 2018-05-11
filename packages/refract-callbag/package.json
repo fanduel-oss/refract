@@ -1,5 +1,5 @@
 {
-    "name": "refract-react-most",
+    "name": "refract-callbag",
     "version": "1.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -7,8 +7,11 @@
     "typings": "types/index.d.ts",
     "sideEffects": false,
     "license": "MIT",
-    "peerDependencies": {
-        "most": "^1.0.0",
-        "react": ">= 15.0.0 < 16.0.0"
+    "devDependencies": {
+        "callbag-map": "~1.0.1"
+    },
+    "dependencies": {
+        "callbag-from-obs": "~1.2.0",
+        "callbag-to-obs": "~1.0.0"
     }
 }

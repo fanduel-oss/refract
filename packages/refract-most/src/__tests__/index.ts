@@ -4,9 +4,8 @@ import {
     EffectFactory,
     ObservableComponent
 } from '../index'
-import map from 'callbag-map'
 
-describe('refract-react-rxjs', () => {
+describe('refract-rxjs', () => {
     interface Effect {
         type: string
         value: number
@@ -26,10 +25,10 @@ describe('refract-react-rxjs', () => {
     const effectFactory: EffectFactory<Props, Effect> = props => component => {
         const value$ = component.observe<number>('value')
 
-        return map(value => ({
+        return value$.map(value => ({
             type: 'MyEffect',
             value
-        }))(value$)
+        }))
     }
 
     const withEffectsHOC = withEffects<Props, Effect>(effectHandler)

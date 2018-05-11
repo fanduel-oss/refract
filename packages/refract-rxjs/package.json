@@ -1,5 +1,5 @@
 {
-    "name": "refract-react-callbag",
+    "name": "refract-rxjs",
     "version": "1.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -7,11 +7,8 @@
     "typings": "types/index.d.ts",
     "sideEffects": false,
     "license": "MIT",
-    "devDependencies": {
-        "callbag-map": "~1.0.1"
-    },
-    "dependencies": {
-        "callbag-from-obs": "~1.2.0",
-        "callbag-to-obs": "~1.0.0"
+    "peerDependencies": {
+        "react": ">= 15.0.0 < 16.0.0",
+        "rxjs": "^6.0.0"
     }
 }

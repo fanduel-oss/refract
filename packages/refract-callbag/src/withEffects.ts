@@ -1,10 +1,6 @@
 import * as React from 'react'
 
-import {
-    PropListeners,
-    Listeners,
-    EffectHandler
-} from './baseTypes'
+import { PropListeners, Listeners, EffectHandler } from './baseTypes'
 import {
     Subscription,
     Listener,
@@ -81,7 +77,10 @@ export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
 
             const sinkObservable = effectFactory(this.props)(this.component)
 
-            this.sinkSubscription = subscribeToSink<E>(sinkObservable, effectHandler(this.props))
+            this.sinkSubscription = subscribeToSink<E>(
+                sinkObservable,
+                effectHandler(this.props)
+            )
         }
 
         public componentDidMount() {
