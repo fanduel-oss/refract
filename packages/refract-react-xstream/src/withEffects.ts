@@ -32,21 +32,13 @@ export const withEffects = <P, E>(
                 fnProps: {}
             }
 
-            this.decoratedProps = Object.keys(props).reduce(
-                (decoratedProps, propName) => {
-                    const prop = props[propName]
+            Object.keys(props).forEach(propName => {
+                const prop = props[propName]
 
-                    if (typeof prop === 'function') {
-                        decoratedProps[propName] = this.decorateProp(
-                            prop,
-                            propName
-                        )
-                    }
-
-                    return decoratedProps
-                },
-                {}
-            )
+                if (typeof prop === 'function') {
+                    this.decorateProp(prop, propName)
+                }
+            })
 
             const mountObservable = createObservable<any>(listener => {
                 this.listeners.mount = this.listeners.mount.concat(listener)
@@ -101,6 +93,19 @@ export const withEffects = <P, E>(
             this.listeners.mount.forEach(l => l.next(undefined))
         }
 
+        public componentWillReceiveProps(nextProps) {
+            // Note: this will be replaced by getDerivedStateFromProps
+            // but for now, we want to support React < 16.3.0
+            Object.keys(nextProps).forEach(propName => {
+                if (
+                    typeof this.props[propName] === 'function' &&
+                    nextProps[propName] !== this.props[propName]
+                ) {
+                    this.decorateProp(nextProps[propName], propName)
+                }
+            })
+        }
+
         public componentDidUpdate(prevProps: P) {
             this.sendNext(prevProps)
         }
@@ -128,7 +133,7 @@ export const withEffects = <P, E>(
         }
 
         private decorateProp(prop, propName) {
-            return (...args) => {
+            this.decoratedProps[propName] = (...args) => {
                 const listeners = this.listeners.fnProps[propName] || []
 
                 listeners.forEach(l => l.next(args[0]))

@@ -70,7 +70,7 @@ describe('refract-react-rxjs', () => {
 
     it('should observe component changes', () => {
         const effectValueHandler = jest.fn()
-        const setValue = jest.fn()
+        const setValue = () => void 0
         const WithEffects = withEffects<Props, Effect>(
             () => effectValueHandler
         )(effectFactory)(({ setValue }) =>
@@ -99,6 +99,14 @@ describe('refract-react-rxjs', () => {
             value: 2
         })
 
+        component.simulate('click')
+
+        expect(effectValueHandler).toHaveBeenCalledWith({
+            type: 'ValueSet',
+            value: 10
+        })
+
+        component.setProps({ setValue: () => void 0 })
         component.simulate('click')
 
         expect(effectValueHandler).toHaveBeenCalledWith({
