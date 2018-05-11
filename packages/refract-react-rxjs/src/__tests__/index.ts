@@ -5,16 +5,18 @@ import {
     EffectFactory,
     ObservableComponent
 } from '../index'
-import { map } from 'rxjs/operators'
+import { map, mapTo, concat } from 'rxjs/operators'
+import { merge } from 'rxjs'
 import { shallow, mount } from 'enzyme'
 
 describe('refract-react-rxjs', () => {
     interface Effect {
         type: string
-        value: number
+        value?: number
     }
     interface Props {
         value: number
+        setValue: (value: number) => void
     }
 
     const noop = (...args) => void 0
@@ -27,12 +29,36 @@ describe('refract-react-rxjs', () => {
 
     const effectFactory: EffectFactory<Props, Effect> = props => component => {
         const value$ = component.observe<number>('value')
+        const valueSet$ = component.observe<number>('setValue')
+        const mount$ = component.mount
+        const unmount$ = component.unmount
 
-        return value$.pipe(
-            map(value => ({
-                type: 'MyEffect',
-                value
-            }))
+        return merge<Effect>(
+            value$.pipe(
+                map(value => ({
+                    type: 'ValueChange',
+                    value
+                }))
+            ),
+
+            valueSet$.pipe(
+                map(value => ({
+                    type: 'ValueSet',
+                    value
+                }))
+            ),
+
+            mount$.pipe(
+                mapTo({
+                    type: 'Start'
+                })
+            ),
+
+            unmount$.pipe(
+                mapTo({
+                    type: 'Stop'
+                })
+            )
         )
     }
 
@@ -42,24 +68,48 @@ describe('refract-react-rxjs', () => {
         )(() => React.createElement('div'))
     })
 
-    it('should observe props changing', () => {
+    it('should observe component changes', () => {
         const effectValueHandler = jest.fn()
+        const setValue = jest.fn()
         const WithEffects = withEffects<Props, Effect>(
             () => effectValueHandler
-        )(effectFactory)(() => React.createElement('div'))
+        )(effectFactory)(({ setValue }) =>
+            React.createElement('button', {
+                onClick: () => setValue(10)
+            })
+        )
 
-        const component = mount(React.createElement(WithEffects, { value: 1 }))
+        const component = mount(
+            React.createElement(WithEffects, { value: 1, setValue })
+        )
 
         expect(component.prop('value')).toBe(1)
         expect(effectValueHandler).toHaveBeenCalledWith({
-            type: 'MyEffect',
+            type: 'ValueChange',
             value: 1
+        })
+
+        expect(effectValueHandler).toHaveBeenCalledWith({
+            type: 'Start'
         })
 
         component.setProps({ value: 2 })
         expect(effectValueHandler).toHaveBeenCalledWith({
-            type: 'MyEffect',
+            type: 'ValueChange',
             value: 2
+        })
+
+        component.simulate('click')
+
+        expect(effectValueHandler).toHaveBeenCalledWith({
+            type: 'ValueSet',
+            value: 10
+        })
+
+        component.unmount()
+
+        expect(effectValueHandler).toHaveBeenCalledWith({
+            type: 'Stop'
         })
     })
 })

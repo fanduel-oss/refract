@@ -14,11 +14,12 @@ export type EffectFactory<P, E> = (
 
 export const subscribeToSink = <T>(
     sink: Stream<T>,
-    next: (val: T) => void
+    next: (val: T) => void,
+    error?: (error: any) => void
 ): Subscription =>
     sink.subscribe({
         next,
-        error: () => void 0,
+        error,
         complete: () => void 0
     })
 

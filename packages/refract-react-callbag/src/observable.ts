@@ -32,10 +32,12 @@ export type EffectFactory<P, E> = (
 
 export const subscribeToSink = <T>(
     sink: Sink<T>,
-    next: (val: T) => void
+    next: (val: T) => void,
+    error?: (error: any) => void
 ): Subscription =>
     toObs(sink).subscribe({
-        next
+        next,
+        error
     })
 
 export const createObservable = <T>(subscribe): Source<T> => {

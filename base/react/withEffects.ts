@@ -10,12 +10,15 @@ import {
     EffectFactory
 } from './observable'
 
-export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
-    effectFactory: EffectFactory<P, E>
-) => (BaseComponent: React.ComponentType<P>): React.ComponentClass<P> =>
+export const withEffects = <P, E>(
+    effectHandler: EffectHandler<P, E>,
+    errorHandler?: (err: any) => void
+) => (effectFactory: EffectFactory<P, E>) => (
+    BaseComponent: React.ComponentType<P>
+): React.ComponentClass<P> =>
     class WithEffects extends React.Component<P> {
         private listeners: Listeners
-        private modifiedProps: object
+        private modifiedProps: object = {}
         private component: ObservableComponent
         private sinkSubscription: Subscription
 
@@ -35,19 +38,22 @@ export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
             })
 
             const unmountObservable = createObservable<any>(listener => {
-                this.listeners.mount = this.listeners.mount.concat(listener)
+                this.listeners.unmount = this.listeners.unmount.concat(listener)
 
-                return () => this.listeners.mount.filter(l => l !== listener)
+                return () => this.listeners.unmount.filter(l => l !== listener)
             })
 
             const createPropObservable = <T>(propName: string) =>
                 typeof this.props[propName] === 'function'
                     ? createObservable<T>(listener => {
+                          const initialProp =
+                              this.modifiedProps[propName] ||
+                              this.props[propName]
+
                           this.modifiedProps[propName] = (...args) => {
                               listener.next(args[0])
 
-                              return (this.modifiedProps[propName] ||
-                                  this.props[propName])(...args)
+                              return initialProp(...args)
                           }
 
                           return () => {
@@ -79,7 +85,8 @@ export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
 
             this.sinkSubscription = subscribeToSink<E>(
                 sinkObservable,
-                effectHandler(this.props)
+                effectHandler(this.props),
+                errorHandler
             )
 
             this.sendNext()
@@ -99,7 +106,10 @@ export const withEffects = <P, E>(effectHandler: EffectHandler<P, E>) => (
         }
 
         public render() {
-            return React.createElement(BaseComponent, this.props)
+            return React.createElement(
+                BaseComponent,
+                Object.assign({}, this.props, this.modifiedProps)
+            )
         }
 
         private sendNext(prevProps?: P) {
