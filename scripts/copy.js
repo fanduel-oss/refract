@@ -6,7 +6,13 @@ const copyFile = util.promisify(fs.copyFile)
 
 const getPackages = require('../packages')
 const reactPackages = getPackages('react')
-const reactFiles = ['baseTypes.ts', 'index.ts', 'withEffects.ts']
+const reactFiles = [
+    'baseTypes.ts',
+    'index.ts',
+    'withEffects.ts',
+    '__tests__/index.ts',
+    '__tests__/types.ts'
+]
 
 async function copyBaseFiles() {
     const files = reactPackages.reduce(
