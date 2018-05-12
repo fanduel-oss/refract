@@ -1,5 +1,6 @@
-import * as fromObs from 'callbag-from-obs'
-import * as toObs from 'callbag-to-obs'
+import $$observable from 'symbol-observable'
+const fromObs = require('callbag-from-obs')
+const toObs = require('callbag-to-obs')
 
 export interface Callbag<I, O> {
     (t: 0, d: Callbag<O, I>): void
@@ -46,6 +47,9 @@ export const createObservable = <T>(subscribe): Source<T> => {
             const unsubscribe = subscribe(listener)
 
             return { unsubscribe }
+        },
+        [$$observable]() {
+            return this
         }
     }
 
