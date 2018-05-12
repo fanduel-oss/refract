@@ -1,4 +1,5 @@
 import { from, Stream, Subscriber as Listener } from 'most'
+import $$observable from 'symbol-observable'
 
 export { Listener }
 
@@ -33,6 +34,9 @@ export const createObservable = <T>(subscribe): Stream<T> => {
             const unsubscribe = subscribe(listener)
 
             return { unsubscribe }
+        },
+        [$$observable]() {
+            return this
         }
     }
 

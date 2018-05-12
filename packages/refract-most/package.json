@@ -10,5 +10,8 @@
     "peerDependencies": {
         "most": "^1.0.0",
         "react": ">= 15.0.0 < 16.0.0"
+    },
+    "dependencies": {
+        "symbol-observable": "~1.2.0"
     }
 }
