@@ -6,20 +6,22 @@ const copyFile = util.promisify(fs.copyFile)
 
 const getPackages = require('../packages')
 const reactPackages = getPackages('react')
-const reactFiles = [
-    'baseTypes.ts',
-    'index.ts',
-    'withEffects.ts',
-    '__tests__/index.ts',
-    '__tests__/types.ts'
-]
+const filesPerMainLib = {
+    react: ['baseTypes.ts', 'index.ts', 'withEffects.ts', '__tests__/index.ts'],
+    redux: ['baseTypes.ts', 'index.ts', 'refractEnhancer.ts']
+}
 
-async function copyBaseFiles() {
-    const files = reactPackages.reduce(
+async function copyAll() {
+    await copyBaseFiles('react')
+    await copyBaseFiles('redux')
+}
+
+async function copyBaseFiles(mainLib) {
+    const files = getPackages(mainLib).reduce(
         (copyPromises, package) =>
             copyPromises.concat(
-                reactFiles.map(file => ({
-                    src: path.resolve(__dirname, '..', 'base', 'react', file),
+                filesPerMainLib[mainLib].map(file => ({
+                    src: path.resolve(__dirname, '..', 'base', mainLib, file),
                     dest: path.resolve(
                         __dirname,
                         '..',
@@ -40,4 +42,4 @@ async function copyBaseFiles() {
     }
 }
 
-copyBaseFiles()
+copyAll()

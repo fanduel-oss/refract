@@ -1,5 +1,5 @@
 const prefix = 'refract'
-const supportedMainLibraries = ['react']
+const supportedMainLibraries = ['react', 'redux']
 const supportedObservableLibraries = ['rxjs', 'xstream', 'most', 'callbag']
 
 const listMainLibPackages = mainLib =>
