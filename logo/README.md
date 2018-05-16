@@ -4,7 +4,7 @@ This is the official Refract logo. It comes both as a full logo and as a symbol,
 
 Please don't use any other logos to represent Refract!
 
-## Symbol
+## Symbol
 
 ![Refract Symbol](refract-symbol.png)
 
