@@ -8,7 +8,12 @@ const getPackages = require('../packages')
 const reactPackages = getPackages('react')
 const filesPerMainLib = {
     react: ['baseTypes.ts', 'index.ts', 'withEffects.ts', '__tests__/index.ts'],
-    redux: ['baseTypes.ts', 'index.ts', 'refractEnhancer.ts']
+    redux: [
+        'baseTypes.ts',
+        'index.ts',
+        'refractEnhancer.ts',
+        '__tests__/index.ts'
+    ]
 }
 
 async function copyAll() {

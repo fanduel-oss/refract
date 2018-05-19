@@ -3,7 +3,7 @@ import { withEffects, EffectHandler, ObservableComponent } from '../index'
 import effectFactory, { Effect, Props } from './effectFactory'
 import { shallow, mount } from 'enzyme'
 
-describe('refract-rxjs', () => {
+describe(require('../../package.json').name, () => {
     const noop = (...args) => void 0
 
     const effectHandler: EffectHandler<Props, Effect> = props => (
