@@ -1,8 +1,29 @@
 ![Refract](logo/refract-logo-colour.png)
 
-### Master your app's side-effects through the power of streams.
+### Master your app's side-effects in React through the power of reactive programming.
 
 Observe any producer, cause any effect. Refract lets you observe anything within your app - changes to props, data passed to callbacks, dispatched redux actions, updated redux state, window event listeners, and much more. Using your chosen stream library, you react to the streams of events, and produce any effect you choose.
+
+
+# Why?
+
+With functional programming and components becoming an increasingly popular option for building UIs, we've become used to unidirectional data flows, view / state separation and immutable data.
+
+```
+               +------------+
+         +----->   State    +-----+
+         |     +------------+     |
+Setter / |                        | Getter /
+Action   |                        | Selector
+         |     +------------+     |
+         +-----+    View    <-----+
+               +------------+
+```
+
+However, the loop above doesn't exist in a vacuum! Various external effects compose the business logic of an app: network requests, time, data persistence, analytics, etc. State mutations (`setState`, reducers), state getters and render functions are in principle always pure. As a result, interaction handlers such as `onClick` or lifecycle methods such as `componentDidMount` handle side-effects in an imperative way.
+
+Refract sits between your state and your view. It allows you to leverage the power of reactive programming to handle side-effects declaratively. For a more in-depth introduction, head to [why Refract?](./docs/introduction/why.md). To check how Refract compares to solutions like redux-saga or redux-observable, read our [comparison guide](./docs/introduction/comparison.md).
+
 
 # Packages
 
