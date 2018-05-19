@@ -2,7 +2,14 @@ import xs, { Stream, Listener } from 'xstream'
 import dropRepeats from 'xstream/extra/dropRepeats'
 import { Selector } from './baseTypes'
 
-export const observe = store => {
+export interface ObserveFn {
+    <T>(
+        actionTypeOrListener: string | Selector<T>,
+        withInitialValue?: boolean
+    ): Stream<T>
+}
+
+export const observeFactory = (store): ObserveFn => {
     const storeObservable = xs.from(store)
 
     return <T>(actionOrSelector: string | Selector<T>): Stream<T> => {

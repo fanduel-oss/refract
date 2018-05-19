@@ -2,7 +2,14 @@ import { from, Stream, Subscriber as Listener } from 'most'
 import $$observable from 'symbol-observable'
 import { Selector } from './baseTypes'
 
-export const observe = store => {
+export interface ObserveFn {
+    <T>(
+        actionTypeOrListener: string | Selector<T>,
+        withInitialValue?: boolean
+    ): Stream<T>
+}
+
+export const observeFactory = (store): ObserveFn => {
     const storeObservable = from(store)
 
     return <T>(actionOrSelector: string | Selector<T>): Stream<T> => {

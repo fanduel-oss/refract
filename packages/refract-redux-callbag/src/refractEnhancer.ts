@@ -7,7 +7,7 @@ import {
     Action
 } from 'redux'
 
-import { observe, ObserveFn } from './observable'
+import { observeFactory, ObserveFn } from './observable'
 import { AddActionListener, ActionListener, EnhancerOptions } from './baseTypes'
 
 declare module 'redux' {
@@ -76,7 +76,7 @@ export default function refractStoreEnhancer<
             }
         }
 
-        store.observe = observe(store)
+        store.observe = observeFactory(store)
 
         return store as Store<S, A>
     }

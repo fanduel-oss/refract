@@ -29,7 +29,7 @@ export interface Listener<T> {
     complete: (val?: T) => void
 }
 
-export const observe = store => {
+export const observeFactory = (store): ObserveFn => {
     const storeObservable = fromObs(store)
 
     return <T>(

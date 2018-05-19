@@ -10,7 +10,7 @@ export interface ObserveFn {
     ): Observable<T>
 }
 
-export const observe = (store): ObserveFn => {
+export const observeFactory = (store): ObserveFn => {
     const storeObservable = from(store)
 
     return <T>(actionOrSelector, withInitialValue = true) => {
