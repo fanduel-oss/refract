@@ -19,9 +19,9 @@ Available packages:
 
 # The Gist - Usage With React
 
-The example below uses `refract-most` to implement a debounced fetch request based on the component's props. Every time a new request resolves, it updates the parent's state with the effect's value.
+The example below uses `refract-most` to implement a debounced fetch request based on the component's props.
 
-[A fully-functional demo of this example in each streaming library is available here.]()
+Every time the `username` prop changes, its new value is sent to the observer. The observer debounces the stream of values before sending a request to the GitHub API, then waits until the request is resolved. Each time a request resolves, the handler calls `setState` with the effect's value. [A fully-functional demo of this example in each streaming library is available here.]()
 
 Events are observed by an `effectFactory`, which outputs a stream of effects.
 
