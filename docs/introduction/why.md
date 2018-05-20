@@ -15,7 +15,7 @@ Action   |                        | Selector
                +------------+
 ```
 
-However, the loop above doesn't exist in a vacuum! Various external effects compose the business logic of an app: network requests, time, data persistence, analytics, etc. State mutations (`setState`, reducers), state getters and render functions are in principle always pure. As a result, interaction handlers such as `onClick` or lifecycle methods such as `componentDidMount` handle side-effects in an imperative way.
+However, the loop above doesn't exist in a vacuum! Various external effects compose the business logic of an app: network requests, time, data persistence, analytics, etc. State mutations (`setState`, reducers), state getters and render functions are in principle always pure. As a result, interaction handlers such as `onClick` or lifecycle methods such as `componentDidMount` handle side-effects imperatively.
 
 
 ## Functional and declarative

@@ -6,8 +6,10 @@ The benefits of Refract are:
 - it collocates side-effects with your components and they only run when your components run: great for code splitting and performance
 - it leverages existing reactive programming libraries: RxJS, xstream, most and callbag
 - it doesn't prescribe a state container solution
+- it uses props for dependency injection (effects factory and handler have access to initial props)
 
 We think Refract is superior to all libraries named below with the exception of redux-cycles, which benefits from Cycle.js declarative and reactive awesomeness: Refract can achieve similar results, see advanced topic for achieving [fully declarative effects](../advanced/fully-declarative.md)
+
 
 ## Redux-based solutions
 
@@ -23,20 +25,20 @@ Most of those solutions have a limited scope: they observe actions, and dispatch
 
 ### redux-saga
 
-[Redux-saga](https://redux-saga.js.org/) is a powerful solution to express side-effects and is the leader on its space. However like similar redux-based solutions, it is limited to dispatching actions as a result observing actions. Redux-saga introduces its own DSL and time-based operators. It makes the learning curve steep and adds size to your bundle and requires you to learn it, without being able to re-use it outside Redux. "Sagas" can be added dynamically, but they can't be removed.
+[Redux-saga](https://redux-saga.js.org/) is a powerful solution to express side-effects and is the leader on its space. However like similar redux-based solutions, it is limited to dispatching actions as a result observing actions. Redux-saga introduces its own DSL and time-based operators. Learning curve is steep, it adds size to your project and it is not re-usable outside Redux. "Sagas" can be added dynamically, but they can't be removed.
 
 ### redux-observable
 
-[Redux-observable](https://redux-observable.js.org/) is simlar to redux-saga, and offers another powerful solution. It has the same limitations of action to action effects. It leverages RxJS for declaring them, which can be used outside your redux store. Reactive programming is not easy to learn and the learning curve of redux-observable is also steep. However it can be worth the investment: reactive programming is getting more and more attention these days. Redux-observable allows you to use other reactive libraries (xstream, most) but on top of RxJS, which is unfortunately shipped by default. Finally, it is possible to dynamically add "epics", but it isn't possible to remove any.
+[Redux-observable](https://redux-observable.js.org/) is similar to redux-saga and offers another powerful solution. It is also limited to action to action effects. It leverages RxJS for declaring them, which can be used outside your redux store. Reactive programming is not easy to learn and the learning curve of redux-observable is also steep. However it can be worth the investment: reactive programming is getting more and more attention these days, deservedly so! Redux-observable allows you to use other reactive libraries (xstream, most) but on top of RxJS, which is unfortunately shipped by default. Finally it is possible to dynamically add "epics", but it isn't possible to remove any.
 
 ### redux-loop
 
-[Redux-loop](https://redux-loop.js.org/) embeds side-effect logic in your reducers. It is not limited to reacting to actions and you can also react to state changes. But effects can only be actions and it adds complexity to your reducers, not separating concerns of state mutation and side-effects. Redux-loop is not as powerful as redux-saga or redux-observable with time-based effects and can't perform operations like debouncing, throttling, etc.
+[Redux-loop](https://redux-loop.js.org/) embeds side-effect logic in your reducers. It is not limited to reacting to actions and you can also react to state changes. But effects can only be actions and it adds complexity to your reducers, not separating concerns of state mutation and side-effects. Redux-loop is not as powerful as redux-saga or redux-observable with time-based effects.
 
 
 ## redux-cycles
 
-I'm not listing [redux-cycles](https://github.com/cyclejs-community/redux-cycles) in the list of redux-based solutions: it is more a Cycle.js based solution by adding redux observability to it, and it benefits from its mighty power to plug Redux in its declarative and reactive model. Like redux-observable or Refract, it leverages reactive programming, can be used with various libraries (most, RxJS, xstream) but requires xstream by default.
+I'm not listing [redux-cycles](https://github.com/cyclejs-community/redux-cycles) in the list of redux-based solutions: it is more a Cycle.js based solution and ads redux observability to it. It benefits from the mighty power of Cycle.js and its declarative and reactive architecture. It leverages reactive programming and can be used with various libraries (most, RxJS, xstream), but requires xstream by default.
 
 
 ## react-side-effect
