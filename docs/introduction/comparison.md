@@ -23,11 +23,11 @@ Most of those solutions have a limited scope: they observe actions, and dispatch
 
 ### redux-saga
 
-[Redux-saga](https://redux-saga.js.org/) is a powerful solution to express side-effects and is the leader on its space. However like similar redux-based solutions, it is limited to dispatching actions as a result observing actions. Redux-saga introduces its own DSL and time-based operators. It makes the learning curve steep and adds size to your bundle and requires you to learn it, without being able to re-use it outside Redux.
+[Redux-saga](https://redux-saga.js.org/) is a powerful solution to express side-effects and is the leader on its space. However like similar redux-based solutions, it is limited to dispatching actions as a result observing actions. Redux-saga introduces its own DSL and time-based operators. It makes the learning curve steep and adds size to your bundle and requires you to learn it, without being able to re-use it outside Redux. "Sagas" can be added dynamically, but they can't be removed.
 
 ### redux-observable
 
-[Redux-observable](https://redux-observable.js.org/) is simlar to redux-saga, and offers another powerful solution. It has the same limitations of action to action effects. It leverages RxJS for declaring them, which can be used outside your redux store. Reactive programming is not easy to learn and the learning curve of redux-observable is also steep. However it can be worth the investment: reactive programming is getting more and more attention these days. Redux-observable allows you to use other reactive libraries (xstream, most) but on top of RxJS, which is unfortunately shipped by default.
+[Redux-observable](https://redux-observable.js.org/) is simlar to redux-saga, and offers another powerful solution. It has the same limitations of action to action effects. It leverages RxJS for declaring them, which can be used outside your redux store. Reactive programming is not easy to learn and the learning curve of redux-observable is also steep. However it can be worth the investment: reactive programming is getting more and more attention these days. Redux-observable allows you to use other reactive libraries (xstream, most) but on top of RxJS, which is unfortunately shipped by default. Finally, it is possible to dynamically add "epics", but it isn't possible to remove any.
 
 ### redux-loop
 
