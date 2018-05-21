@@ -5,7 +5,6 @@ const util = require('util')
 const copyFile = util.promisify(fs.copyFile)
 
 const getPackages = require('../packages')
-const reactPackages = getPackages('react')
 const filesPerMainLib = {
     react: ['baseTypes.ts', 'index.ts', 'withEffects.ts', '__tests__/index.ts'],
     redux: [
