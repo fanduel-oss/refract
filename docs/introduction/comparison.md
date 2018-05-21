@@ -25,11 +25,11 @@ Most of those solutions have a limited scope: they observe actions, and dispatch
 
 ### redux-saga
 
-[Redux-saga](https://redux-saga.js.org/) is a powerful solution to express side-effects and is the leader on its space. However like similar redux-based solutions, it is limited to dispatching actions as a result observing actions. Redux-saga introduces its own DSL and time-based operators. Learning curve is steep, it adds size to your project and it is not re-usable outside Redux. "Sagas" can be added dynamically, but they can't be removed.
+[Redux-saga](https://redux-saga.js.org/) is a powerful solution to express side-effects and is the leader on its space. However like similar redux-based solutions, it is limited to dispatching actions as a result of observing actions. Redux-saga introduces its own DSL and time-based operators. Learning curve is steep, it adds size to your project and it is not re-usable outside Redux. "Sagas" can be added dynamically, but they can't be removed.
 
 ### redux-observable
 
-[Redux-observable](https://redux-observable.js.org/) is similar to redux-saga and offers another powerful solution. It is also limited to action to action effects. It leverages RxJS for declaring them, which can be used outside your redux store. Reactive programming is not easy to learn and the learning curve of redux-observable is also steep. However it can be worth the investment: reactive programming is getting more and more attention these days, deservedly so! Redux-observable allows you to use other reactive libraries (xstream, most) but on top of RxJS, which is unfortunately shipped by default. Finally it is possible to dynamically add "epics", but it isn't possible to remove any.
+[Redux-observable](https://redux-observable.js.org/) is similar to redux-saga and offers another powerful solution. It is also limited to action-to-action effects. It leverages RxJS for declaring them, which can be used outside your redux store. Reactive programming is not easy to learn and the learning curve of redux-observable is also steep. However it can be worth the investment: reactive programming is getting more and more attention these days, deservedly so! Redux-observable allows you to use other reactive libraries (xstream, most) but on top of RxJS, which is unfortunately shipped by default. Finally it is possible to dynamically add "epics", but it isn't possible to remove any.
 
 ### redux-loop
 
@@ -43,4 +43,4 @@ I'm not listing [redux-cycles](https://github.com/cyclejs-community/redux-cycles
 
 ## react-side-effect
 
-[React-side-effect](https://github.com/gaearon/react-side-effect) allows to have declarative side-effects within React, by reacting to prop changes. It is a great solution for basic needs. If it shares similarities with Refract, it cannot react to prop functions being called. It is also not able to create time-based effects, and side-effects can't use props (no possible dependency injection).
+[React-side-effect](https://github.com/gaearon/react-side-effect) allows declarative side-effects within React, by reacting to prop changes. It is a great solution for basic needs. While it shares similarities with Refract, it cannot react to prop functions being called. It is also not able to create time-based effects, and side-effects can't use props (no possible dependency injection).

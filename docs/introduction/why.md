@@ -51,7 +51,7 @@ const imperativeSideEffectHandler = (effect) => {
 }
 ```
 
-`declarativeStorageSideEffect` is pure while `imperactiveSideEffectHandler` is not. Every application will have to imperative and impure code: `declarativeStorageSideEffect` can't exist whithout `imperativeStorageSideEffect`. But it is best for imperative code to be isolated and as high as possible in your application.
+`declarativeStorageSideEffect` is pure while `imperactiveSideEffectHandler` is not. Every application will have imperative and impure code: `declarativeStorageSideEffect` can't exist whithout `imperativeStorageSideEffect`. But it is best for imperative code to be isolated and as high as possible in your application.
 
 Declarative side-effects have two main benefits:
 - easier to test (pure functions)
@@ -62,7 +62,7 @@ Declarative side-effects have two main benefits:
 
 We want to separate the main action of our code (setting a filter) from the resulting actions (storage, analytics): our application should be able to function without them, or if they fail. Have you ever had a bad experience on the web, a form you try to submit but nothing happens? Only to realise when you open the console that something is failing due to your ad blocker? This is terrible!
 
-The key to reactive programming is observability: we need to be able to observe changes in your app, get notified when they happen so we can trigger side-effects. Reactive programming works really well for side-effects: effects are just data. It is also a remarquable abstraction encouraging declarative programming and which can concisely express time-based operations (throttle, debounce, etc.).
+The key to reactive programming is observability: we need to be able to observe changes in your app, get notified when they happen so we can trigger side-effects. Reactive programming works really well for side-effects: effects are just data. It is also a remarkable abstraction encouraging declarative programming and which can concisely express time-based operations (throttle, debounce, etc.).
 
 We have seen a lot of side-effect management libraries in redux, due to the observability of its actions (with middleware). It is entirely possible to move side-effects handling to React, and to not have to rely on redux.
 
