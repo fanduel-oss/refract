@@ -1,6 +1,6 @@
 {
     "name": "refract-most",
-    "version": "1.0.0-1",
+    "version": "1.0.0-2",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
