@@ -1,0 +1,17 @@
+{
+    "name": "refract-example-rxjs-counter",
+    "dependencies": {
+        "react": "16.1.1",
+        "react-dom": "16.1.1",
+        "react-scripts": "1.0.10",
+        "react-state-hoc": "~2.0.0",
+        "refract-rxjs": "~1.0.0-2"
+    },
+    "version": "0.0.0",
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
+}
