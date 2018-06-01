@@ -6,7 +6,7 @@ const Layout = ({ activeTab, setActiveTab }) => (
     <div>
         <Tabs activeTab={activeTab} setActiveTab={setActiveTab}>
             <Tabs.Item name="ObiWan">
-                <p>This is not the tab you're looking for.</p>
+                <p>This is not the tab you&apos;re looking for.</p>
             </Tabs.Item>
             <Tabs.Item name="Yoda">
                 <p>Seagulls... stop it now!</p>
@@ -18,7 +18,8 @@ const Layout = ({ activeTab, setActiveTab }) => (
 
         <p>
             As a side-effect of selecting a tab, the URL changes. The state is
-            also synced when the browser's back or forward buttons are clicked.
+            also synced when the browser&apos;s back or forward buttons are
+            clicked.
         </p>
     </div>
 )
