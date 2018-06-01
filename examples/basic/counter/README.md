@@ -14,4 +14,4 @@ The end result is a counter which infinitely counts upwards after the user click
 
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./basic/counter/callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/callbag) | [`code`](./basic/counter/most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/most)  | [`code`](./basic/counter/rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/rxjs)  | [`code`](./basic/counter/xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/xstream)  |
+| [`code`](./callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/callbag) | [`code`](./most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/most)  | [`code`](./rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/rxjs)  | [`code`](./xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/xstream)  |
