@@ -9,7 +9,7 @@ In this example, a set of tabs are rendered to the screen, with the currently ac
 Two sources are observed in this example:
 
 - The `setActiveTab` callback function.
-- the `window.popstate` event.
+- The `window.popstate` event.
 
 In addition, a single event is fired when the `effectFactory` initiates, which sets the initial state to `initialProps.activeTab`.
 
