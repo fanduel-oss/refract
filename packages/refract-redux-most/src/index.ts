@@ -1,4 +1,4 @@
 import refractEnhancer from './refractEnhancer'
-import { EnhancerOptions } from './baseTypes'
+import { EnhancerOptions, ObserveOptions } from './baseTypes'
 
-export { refractEnhancer, EnhancerOptions }
+export { refractEnhancer, EnhancerOptions, ObserveOptions }

@@ -1,19 +1,23 @@
 import { from, Observable, PartialObserver as Listener } from 'rxjs'
 import { map, distinctUntilChanged, startWith } from 'rxjs/operators'
-import { Selector } from './baseTypes'
+import { Selector, ObserveOptions } from './baseTypes'
 import { Store } from 'redux'
 
 export interface ObserveFn {
     <T>(
         actionTypeOrListener: string | Selector<T>,
-        withInitialValue?: boolean
+        options: Partial<ObserveOptions>
     ): Observable<T>
 }
 
 export const observeFactory = (store): ObserveFn => {
     const storeObservable = from(store)
 
-    return <T>(actionOrSelector, withInitialValue = true) => {
+    return <T>(actionOrSelector, opts: Partial<ObserveOptions>) => {
+        const options: ObserveOptions = {
+            initialValue: true,
+            ...opts
+        }
         if (typeof actionOrSelector === 'string') {
             return Observable.create((Listener: Partial<Listener<T>>) => {
                 const unsubscribe = store.addActionListener(actionOrSelector)
@@ -25,7 +29,7 @@ export const observeFactory = (store): ObserveFn => {
         if (typeof actionOrSelector === 'function') {
             const operators = [
                 map(actionOrSelector),
-                withInitialValue &&
+                options.initialValue &&
                     startWith(actionOrSelector(store.getState())),
                 distinctUntilChanged<T>()
             ].filter(Boolean)
