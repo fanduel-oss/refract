@@ -1,8 +1,8 @@
-import { Selector } from './baseTypes'
+import { Selector, ObserveOptions } from './baseTypes'
 export interface ObserveFn {
     <T>(
         actionTypeOrListener: string | Selector<T>,
-        withInitialValue?: boolean
+        options: Partial<ObserveOptions>
     ): Source<T>
 }
 export interface Callbag<I, O> {

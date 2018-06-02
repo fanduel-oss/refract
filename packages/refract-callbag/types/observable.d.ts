@@ -1,3 +1,4 @@
+import { ObserveOptions } from './baseTypes'
 export interface Callbag<I, O> {
     (t: 0, d: Callbag<O, I>): void
     (t: 1, d: I): void
@@ -14,7 +15,10 @@ export interface Subscription {
     unsubscribe(): void
 }
 export interface ObservableComponent {
-    observe: <T = any>(propName: string) => Source<T>
+    observe: <T = any>(
+        propName: string,
+        options: Partial<ObserveOptions>
+    ) => Source<T>
     mount: Source<any>
     unmount: Source<any>
 }
