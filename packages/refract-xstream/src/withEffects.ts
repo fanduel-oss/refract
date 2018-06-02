@@ -75,7 +75,7 @@ export const withEffects = <P, E>(
                         this.listeners[listenerType][propName] || []
                     ).concat(listener)
 
-                    if (options.initialValue) {
+                    if (listenerType === 'props' && options.initialValue) {
                         listener.next(this.props[propName])
                     }
 
