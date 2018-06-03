@@ -40,7 +40,8 @@ export const observeFactory = (store): ObserveFn => {
             return fromObs({
                 subscribe(listener: Listener<T>) {
                     const unsubscribe = store.addActionListener(
-                        actionOrSelector
+                        actionOrSelector,
+                        listener.next.bind(listener)
                     )
 
                     return { unsubscribe }
