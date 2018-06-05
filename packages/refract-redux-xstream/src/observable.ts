@@ -19,6 +19,7 @@ export const observeFactory = (store): ObserveFn => {
             return xs.create({
                 start(listener: Partial<Listener<T>>) {
                     unsubscribe = store.addActionListener(
+                        actionOrSelector,
                         listener.next.bind(listener)
                     )
                 },

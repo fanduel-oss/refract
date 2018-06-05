@@ -15,8 +15,11 @@ export const observeFactory = (store): ObserveFn => {
 
     return <T>(actionOrSelector, withInitialValue = true) => {
         if (typeof actionOrSelector === 'string') {
-            return Observable.create((Listener: Partial<Listener<T>>) => {
-                const unsubscribe = store.addActionListener(actionOrSelector)
+            return Observable.create((listener: Partial<Listener<T>>) => {
+                const unsubscribe = store.addActionListener(
+                    actionOrSelector,
+                    listener.next.bind(listener)
+                )
 
                 return unsubscribe
             })
