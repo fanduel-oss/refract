@@ -1,7 +1,11 @@
 import xs, { Stream, Listener, Subscription } from 'xstream'
+import { ObserveOptions } from './baseTypes'
 export { Listener, Subscription }
 export interface ObservableComponent {
-    observe: <T>(propName: string) => Stream<T>
+    observe: <T>(
+        propName: string,
+        options: Partial<ObserveOptions>
+    ) => Stream<T>
     mount: Stream<any>
     unmount: Stream<any>
 }

@@ -12,3 +12,7 @@ export interface Listeners {
 }
 
 export type EffectHandler<P, E> = (intialProps: P) => (val: E) => void
+
+export interface ObserveOptions {
+    initialValue: boolean
+}

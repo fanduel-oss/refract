@@ -1,7 +1,11 @@
 import { Observable, PartialObserver as Listener, Subscription } from 'rxjs'
+import { ObserveOptions } from './baseTypes'
 export { Listener, Subscription }
 export interface ObservableComponent {
-    observe: <T>(propName: string) => Observable<T>
+    observe: <T>(
+        propName: string,
+        options: Partial<ObserveOptions>
+    ) => Observable<T>
     mount: Observable<any>
     unmount: Observable<any>
 }

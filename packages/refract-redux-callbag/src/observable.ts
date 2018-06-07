@@ -5,12 +5,12 @@ const map = require('callbag-map')
 const pipe = require('callbag-pipe')
 const startWith = require('callbag-start-with')
 
-import { Selector } from './baseTypes'
+import { Selector, ObserveOptions } from './baseTypes'
 
 export interface ObserveFn {
     <T>(
         actionTypeOrListener: string | Selector<T>,
-        withInitialValue?: boolean
+        options: Partial<ObserveOptions>
     ): Source<T>
 }
 
@@ -34,8 +34,12 @@ export const observeFactory = (store): ObserveFn => {
 
     return <T>(
         actionOrSelector: string | Selector<T>,
-        withInitialValue = true
+        opts: Partial<ObserveOptions>
     ): Source<T> => {
+        const options: ObserveOptions = {
+            initialValue: true,
+            ...opts
+        }
         if (typeof actionOrSelector === 'string') {
             return fromObs({
                 subscribe(listener: Listener<T>) {
@@ -53,11 +57,14 @@ export const observeFactory = (store): ObserveFn => {
         }
 
         if (typeof actionOrSelector === 'function') {
-            return pipe(
+            const operators = [
                 map(actionOrSelector),
-                startWith(actionOrSelector(store.getState())),
+                options.initialValue &&
+                    startWith(actionOrSelector(store.getState())),
                 dropRepeats()
-            )
+            ].filter(Boolean)
+
+            return pipe(storeObservable, ...operators)
         }
     }
 }

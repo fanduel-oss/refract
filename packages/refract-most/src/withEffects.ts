@@ -1,6 +1,11 @@
 import * as React from 'react'
 
-import { PropListeners, Listeners, EffectHandler } from './baseTypes'
+import {
+    PropListeners,
+    Listeners,
+    EffectHandler,
+    ObserveOptions
+} from './baseTypes'
 import {
     Subscription,
     Listener,
@@ -52,7 +57,14 @@ export const withEffects = <P, E>(
                 return () => this.listeners.unmount.filter(l => l !== listener)
             })
 
-            const createPropObservable = <T>(propName: string) => {
+            const createPropObservable = <T>(
+                propName: string,
+                opts: Partial<ObserveOptions>
+            ) => {
+                const options: ObserveOptions = {
+                    initialValue: true,
+                    ...opts
+                }
                 const listenerType =
                     typeof this.props[propName] === 'function'
                         ? 'fnProps'
@@ -62,6 +74,10 @@ export const withEffects = <P, E>(
                     this.listeners[listenerType][propName] = (
                         this.listeners[listenerType][propName] || []
                     ).concat(listener)
+
+                    if (listenerType === 'props' && options.initialValue) {
+                        listener.next(this.props[propName])
+                    }
 
                     return () => {
                         this.listeners[listenerType][propName].filter(
@@ -74,8 +90,10 @@ export const withEffects = <P, E>(
             this.component = {
                 mount: mountObservable,
                 unmount: unmountObservable,
-                observe: <T>(propName: string) =>
-                    createPropObservable<T>(propName)
+                observe: <T>(
+                    propName: string,
+                    options: Partial<ObserveOptions>
+                ) => createPropObservable<T>(propName, options)
             }
 
             const sinkObservable = effectFactory(this.props)(this.component)
@@ -85,8 +103,6 @@ export const withEffects = <P, E>(
                 effectHandler(this.props),
                 errorHandler
             )
-
-            this.sendNext()
         }
 
         public componentDidMount() {
