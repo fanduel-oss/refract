@@ -1,5 +1,5 @@
 {
-    "name": "refract-example",
+    "name": "refract-example-callbag-debounced-fetch",
     "dependencies": {
         "callbag-debounce": "~2.1.2",
         "react": "16.1.1",
