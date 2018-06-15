@@ -1,0 +1,21 @@
+{
+    "name": "refract-example-most-redux-fetch",
+    "dependencies": {
+        "most": "1.7.3",
+        "react": "~16.4.1",
+        "react-dom": "16.1.1",
+        "react-redux": "5.0.7",
+        "react-scripts": "1.0.10",
+        "react-state-hoc": "~2.0.0",
+        "redux": "4.0.0",
+        "refract-most": "~1.0.0-3",
+        "refract-redux-most": "~1.0.0-1"
+    },
+    "version": "0.0.0",
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
+}
