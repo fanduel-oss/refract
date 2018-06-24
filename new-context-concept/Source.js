@@ -6,12 +6,14 @@ class RefractSource extends Component {
     constructor(allProps) {
         super(allProps)
 
+        const { refractContext, ...props } = allProps
+
         const {
             effectFactory,
             effectHandler,
             errorHandler,
-            ...props
-        } = allProps
+            dependencies
+        } = refractContext
 
         this.listeners = {
             mount: [],
@@ -63,9 +65,10 @@ class RefractSource extends Component {
             observe: propName => createPropObservable(propName)
         }
 
-        const sinkObservable = effectFactory(
-            this.filterUnobservableProps(this.props)
-        )(this.component)
+        const sinkObservable = effectFactory({
+            ...dependencies,
+            ...props
+        })(this.component)
 
         this.sinkSubscription = subscribeToSink(
             sinkObservable,
@@ -74,18 +77,6 @@ class RefractSource extends Component {
         )
 
         this.sendNext()
-    }
-
-    filterUnobservableProps(allProps) {
-        const {
-            children,
-            effectFactory,
-            effectHandler,
-            errorHandler,
-            ...props
-        } = allProps
-
-        return props
     }
 
     componentDidMount() {

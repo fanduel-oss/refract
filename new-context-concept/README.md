@@ -17,7 +17,7 @@ const App = () => (
             effectHandler={effectHandler}
             errorHandler={errorHandler}
             store={store}
-            router={router}
+            dependencies={{ api, router }}
         >
             <App />
         </RefractProvider>

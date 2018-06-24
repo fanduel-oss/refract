@@ -2,23 +2,28 @@ import React, { Component } from 'react'
 import RefractContext from './Context'
 
 export default class RefractProvider extends Component {
-    constructor(allProps) {
-        super(allProps)
+    constructor(props) {
+        super(props)
 
-        const { children, effectHandler, errorHandler, ...props } = this.props
+        const { effectHandler, errorHandler, store } = props
 
-        this.effectHandler = effectHandler(props)
-        this.errorHandler = errorHandler(props)
+        // should we pass dependencies through to the consumers?
+        const dependencies = Object.assign({}, props.dependencies)
+
+        if (store) {
+            dependencies.store = { observe: store.observe }
+        }
+
+        this.context = {
+            effectHandler: effectHandler(deps),
+            errorHandler: errorHandler(deps),
+            dependencies
+        }
     }
 
     render() {
         return (
-            <RefractContext.Provider
-                value={{
-                    effectHandler: this.effectHandler,
-                    errorHandler: this.errorHandler
-                }}
-            >
+            <RefractContext.Provider value={{ refractContext: this.context }}>
                 {this.props.children}
             </RefractContext.Provider>
         )
