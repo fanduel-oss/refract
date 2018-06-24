@@ -22,8 +22,11 @@ export default class RefractProvider extends Component {
 
         this.context = {
             dependencies: consumerDependencies,
-            dispatchEffect: effectHandler(handlerDependencies),
-            dispatchError: errorHandler(handlerDependencies)
+            dispatchEffect: effectHandler(handlerDependencies)
+        }
+
+        if (errorHandler) {
+            this.context.dispatchError = errorHandler(handlerDependencies)
         }
     }
 
