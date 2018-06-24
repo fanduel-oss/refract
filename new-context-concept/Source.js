@@ -6,14 +6,8 @@ class RefractSource extends Component {
     constructor(allProps) {
         super(allProps)
 
-        const { refractContext, ...props } = allProps
-
-        const {
-            effectFactory,
-            effectHandler,
-            errorHandler,
-            dependencies
-        } = refractContext
+        const { effectFactory, refractContext, ...props } = allProps
+        const { dependencies, dispatchEffect, dispatchError } = refractContext
 
         this.listeners = {
             mount: [],
@@ -72,8 +66,8 @@ class RefractSource extends Component {
 
         this.sinkSubscription = subscribeToSink(
             sinkObservable,
-            effectHandler,
-            errorHandler
+            dispatchEffect,
+            dispatchError
         )
 
         this.sendNext()

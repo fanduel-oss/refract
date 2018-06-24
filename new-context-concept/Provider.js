@@ -5,19 +5,25 @@ export default class RefractProvider extends Component {
     constructor(props) {
         super(props)
 
-        const { effectHandler, errorHandler, store } = props
+        const { dependencies, effectHandler, errorHandler, store } = props
 
-        // should we pass dependencies through to the consumers?
-        const dependencies = Object.assign({}, props.dependencies)
+        // should we pass all dependencies through to the consumers?
+        const consumerDependencies = store
+            ? Object.assign({}, dependencies, {
+                  store: { observe: store.observe }
+              })
+            : dependencies
 
-        if (store) {
-            dependencies.store = { observe: store.observe }
-        }
+        const handlerDependencies = store
+            ? Object.assign({}, dependencies, {
+                  store: { dispatch: store.dispatch }
+              })
+            : dependencies
 
         this.context = {
-            effectHandler: effectHandler(deps),
-            errorHandler: errorHandler(deps),
-            dependencies
+            dependencies: consumerDependencies,
+            dispatchEffect: effectHandler(handlerDependencies),
+            dispatchError: errorHandler(handlerDependencies)
         }
     }
 
