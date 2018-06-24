@@ -100,7 +100,9 @@ class RefractSource extends Component {
     }
 
     render() {
-        return this.props.children(this.decoratedProps)
+        return typeof this.props.children === 'function'
+            ? this.props.children(this.decoratedProps)
+            : this.props.children
     }
 
     sendNext(prevProps) {
