@@ -25,7 +25,7 @@ const App = () => (
 )
 ```
 
-The `RefractProvider` would wrap a context provider. It takes an `effectHandler` and an `errorHandler` plus any number of other `props`, and calls `effectHandler(props)` and `errorHandler(props)` in its constructor. It'd put the resulting functions (with signature `(effect) => void` or `(error) => void`) into context.
+The `RefractProvider` would wrap a context provider. It takes an `effectHandler` and an `errorHandler` plus any number of `dependencies` and a redux `store` as props, and calls `effectHandler(dependencies)` and `errorHandler(dependencies)` in its constructor. It'd put the resulting functions (with signature `(effect) => void` or `(error) => void`) into context.
 
 ```js
 import { Refract } from 'refract'
@@ -52,7 +52,7 @@ const MyComponent = props => (
 export default MyComponent
 ```
 
-The other main change is that you can use `Refract` as a component inside a component tree. It takes an `effectFactory` plus any number of `props` to observe. Same internal logic as the current `withEffects` hoc internally, but pulls the `effectHandler` and `errorHandler` out of the RefractContext. Decorated props are exposed via a render function.
+The other main change is that you can use `Refract` as a component inside a component tree. It takes an `effectFactory` plus any number of `props` to observe. Same internal logic as the current `withEffects` hoc internally, but pulls `dependencies`, `dispatchEffect`, and `dispatchError` handlers out of the RefractContext. Decorated props are exposed via a render function.
 
 ```js
 import { withRefract } from 'refract'
