@@ -44,7 +44,7 @@ Refract's `component.observe` function lets you observe your React props. It han
 `component.observe` takes one required argument, plus an optional second argument:
 
 *   `propName` _(string)_: the name of the prop which you wish to observe.
-*   `options` _(object)_: an object which alters the stream returned by `component.observe`.
+*   `options` _(object)_: an optional object which configures the stream returned by `component.observe`.
 
     Available options:
 

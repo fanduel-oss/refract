@@ -28,7 +28,7 @@ import { withEffects } from 'refract-rxjs'
 const CounterWithEffects = withEffects(handler)(aperture)(Counter)
 ```
 
-This new `CounterWithEffects` component now includes the side-effect logic included in our `handler` and `aperture` (which we will explore shortly), and renders the original `Counter` presentational component unaltered. It can be used just like any other component:
+This new `CounterWithEffects` component now includes the side-effect logic included in our `handler` and `aperture`, and renders the original `Counter` presentational component unaltered. It can be used just like any other component:
 
 ```js
 class Container extends Component {
@@ -48,5 +48,3 @@ class Container extends Component {
     }
 }
 ```
-
-[Now we're ready to observe changes inside React!](observing-react.md)
