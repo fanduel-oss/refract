@@ -1,7 +1,6 @@
 # Usage
 
-Make sure you have read [The Gist section of the main README](../../README.md#the-gist) before looking at the usage docs!
-
+* [Introduction](introduction.md)
 * [Installation](installation.md)
 * [Connecting To React](connecting-to-react.md)
 * [Observing React](observing-react.md)
