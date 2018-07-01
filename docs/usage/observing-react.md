@@ -58,8 +58,6 @@ const aperture = initialProps => component => {
 }
 ```
 
-_(Note: those variables have a $ sign after them to signify that they are streams. If you're unfamiliar with streams, we recommend reading Andre Staltz's [The introduction to Reactive Programming you've been missing](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754))_
-
 ### Observing Values
 
 Values are the primitive props you pass into your components: numbers, strings, booleans, objects, etc.
