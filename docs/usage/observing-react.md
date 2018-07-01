@@ -102,7 +102,7 @@ This example does not significantly differ from the `value` example above, but i
 
 In the case of function props, the `initialValue` option is not applicable.
 
-## Observing Lifecycle Events
+## Observing Lifecycle Events
 
 The remaining two properties on the `component` object are `component.mount` and `component.unmount`.
 
