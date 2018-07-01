@@ -4,7 +4,7 @@
 
 Refract builds upon two ideas which have been embraced by the React community: `separating presentational and container components`, plus `higher-order components` (hocs).
 
-If you're unfamiliar with these concepts, the best places to start are [Dan Abramov's article explaining presentational/container components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0), and the [React documentation page explaining hocs](https://reactjs.org/docs/higher-order-components.html). These concepts are important, and will help you build more scalable applications, so don't skip those links!
+If you're unfamiliar with these concepts, the best places to start are [`Dan Abramov's article explaining presentational/container components`](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0), and the [`React documentation page explaining hocs`](https://reactjs.org/docs/higher-order-components.html). These concepts are important, and will help you build more scalable applications, so don't skip those links!
 
 ## Where Refract Belongs
 

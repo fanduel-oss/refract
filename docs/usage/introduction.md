@@ -2,7 +2,7 @@
 
 The usage section of the docs explores the intended use of Refract, focusing on each concept or feature in isolation.
 
-If you are unfamiliar with reactive programming, we recommend reading Andre Staltz's article [The introduction to Reactive Programming you've been missing](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754) before reading these docs. Reactive programming is central to Refract, so some understanding of the paradigm will be essential.
+If you are unfamiliar with reactive programming, we recommend reading Andre Staltz's article [`The introduction to Reactive Programming you've been missing`](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754) before reading these docs. Reactive programming is central to Refract, so some understanding of the paradigm will be essential.
 
 ---
 
