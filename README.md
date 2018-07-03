@@ -45,14 +45,18 @@ Every time the `username` prop changes, its new value is sent into the stream. T
 const aperture = (initialProps) => (component) => {
     return component.observe('username').pipe(
         debounce(2000),
-        map(username => ({ type: 'localstorage',  payload: username }))
+        map(username => ({
+            type: 'localstorage',
+            name: 'username',
+            value: username
+        }))
     )
 }
 
 const handler = (initialProps) => (effect) => {
     switch (effect.type) {
         case 'localstorage':
-            localstorage.setItem('username', effect.payload)
+            localstorage.setItem(effect.name, effect.value)
             return
     }
 }
