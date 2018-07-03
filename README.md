@@ -61,7 +61,7 @@ const handler = (initialProps) => (effect) => {
     }
 }
 
-const WrappedComponent = withEffects(handler)(aperture)(Component)
+const WrappedComponent = withEffects(handler)(aperture)(BaseComponent)
 ```
 
 ### Aperture

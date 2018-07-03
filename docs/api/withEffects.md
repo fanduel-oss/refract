@@ -16,23 +16,23 @@ withEffects = (handler, errorHandler?) => (aperture) => (BaseComponent) => {
 
 ## Arguments
 
-1. `handler` _(function)_: a function which causes side-effects in response to `effect` objects.
+1. `handler` _(function)_: a function which causes side-effects in response to `effect` values.
 
     Signature: `(initialProps) => (effect) => { /* handle effects here */ }`
 
     * The `initialProps` are all props passed into the `WrappedComponent`.
-    * The `effect` is each event emitted by your `aperture`.
+    * The `effect` is each value emitted by your `aperture`.
     * Within the body of the function, you call any side-effects imperatively.
 
-1. `errorHandler` _(function)_: an _optional_ function which causes side-effects in response to `error` objects.
+1. `errorHandler` _(function)_: an _optional_ function for catching an error coming from `aperture`. Typically used for logging errors.
 
     Signature: `(initialProps) => (effect) => { /* handle effects here */ }`
 
     * The `initialProps` are all props passed into the `WrappedComponent`.
-    * The `effect` is each event emitted by your `aperture`.
+    * The `effect` is each value emitted by your `aperture`.
     * Within the body of the function, you call any side-effects imperatively.
 
-1. `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` objects in response.
+1. `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
 
     Signature: `(initialProps) => (component) => { return effectStream }`.
 
@@ -55,15 +55,22 @@ const BaseComponent = ({ value, onChange }) => (
     <input value={value} onChange={onChange} />
 )
 
-const aperture = initialProps => component =>
-    component.observe('value').pipe(
-        filter(Boolean),
-        map(analyticsEvent => ({ analyticsEvent }))
+const aperture = (initialProps) => (component) => {
+    return component.observe('username').pipe(
+        debounce(2000),
+        map(username => ({
+            type: 'localstorage',
+            name: 'username',
+            value: username
+        }))
     )
+}
 
-const handler = initialProps => effect => {
-    if (effect.analyticsEvent) {
-        initialProps.analyticsProvider.send(effect.analyticsEvent)
+const handler = (initialProps) => (effect) => {
+    switch (effect.type) {
+        case 'localstorage':
+            localstorage.setItem(effect.name, effect.value)
+            return
     }
 }
 
