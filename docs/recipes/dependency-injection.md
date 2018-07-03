@@ -90,7 +90,7 @@ const MyView = props => (
 
 Which is definitely a lot nicer!
 
-But we can do better - instead of importing and connecting our Refract context every time we use `withEffects`, we can enhance the default `withEffects` hoc by wrapping it with our context once in a `sideEffects.js` file:
+But we can do better - instead of importing and connecting our Refract context every time we use `withEffects`, we can enhance the default `withEffects` HoC by wrapping it with our context once in a `sideEffects.js` file:
 
 ```js
 import { createContext } from 'react'

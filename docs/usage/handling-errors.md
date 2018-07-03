@@ -14,7 +14,7 @@ This type of error is often handled via internal logic within an `aperture`'s st
 
 Unexpected errors are any which you cannot plan for.
 
-They are usually some kind of exception which has been thrown within your logic, and due to their nature it's not possible to plan for them before they occur.
+They are usually some kind of exception which has been thrown within your logic, causing your stream to collapse, and due to their nature it's not possible to plan for them before they occur.
 
 This type of error is handled via an `errorHandler`, an optional function which can be passed into `withEffects` along with the main `handler`. This is intended to be a way for you to log unexpected errors, so that you can investigate and fix any issues which emerge when your app is being used in the real world.
 
@@ -22,6 +22,6 @@ An `errorHandler` has an identical function signature to a `handler`, but with a
 
 ```js
 const errorHandler = (initialProps) => (error) => {
-    /* handle errors here */
+    /* handle error here */
 }
 ```

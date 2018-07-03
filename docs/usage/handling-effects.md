@@ -25,15 +25,15 @@ One flexible pattern would be to structure your effect objects to allow calling 
 ```js
 const handler = (initialProps) => (effect) => {
     if (effect.analytics) {
-        initialProps.analytics.push(effect.analytics)
+        initialProps.analytics.push(effect.payload)
     }
 
     if (effect.dispatch) {
-        initialProps.store.dispatch(effect.dispatch)
+        initialProps.store.dispatch(effect.payload)
     }
 
-    if (effect.navigate) {
-        initialProps.router.navigate(effect.navigate)
+    if (effect.localstorage) {
+        localstorage.setItem(effect.payload.name, effect.payload.value)
     }
 
     // ...etc

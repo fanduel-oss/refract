@@ -1,6 +1,6 @@
 # Why Refract?
 
-As JavaScript single-page applications have matured, it has become clear that there is a conflict at their heart.
+As JavaScript applications have matured, it has become clear that there is a conflict at their heart.
 
 The ideal we aim for is a **composable component-based architecture**, using functional programming principles and unidirectional data flow. The benefits of this ideal are apps which are **more predictable, more testable, and more maintainable**.
 

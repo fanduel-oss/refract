@@ -30,51 +30,6 @@ ReactDOM.render(
 
 This pattern is likely to change in future when Redux moves to React's new context API.
 
-## Exposing Your Router
-
-Another side-effect you may wish to cause is navigation within your app.
-
-### With Router5
-
-At FanDuel, we use [`router5`](https://router5.js.org/) for routing. It is a framework and view library agnostic router, and provides a very powerful and configurable routing solution which works particularly well with Redux. It also works well with Refract!
-
-Similar to Redux's `createStore`, to use router5 you create an instance of the router by calling a `createRouter` function, and pass the returned router instance into a provider.
-
-This router instance can be passed into Refract, for easy imperative navigation. For example, using both Redux and router5:
-
-```js
-import { Provider } from 'redux'
-import { RouterProvider } from 'react-router5'
-import { withEffects } from 'refract-rxjs'
-
-import createRouter from './create-router'
-import configureStore from './create-store'
-import App from './components/App'
-
-const router = createRouter()
-const store = configureStore(router)
-const AppWithEffects = withEffects(handler)(aperture)(App)
-
-const WrappedApp = (
-    <Provider store={store}>
-        <RouterProvider router={router}>
-            <AppWithEffects store={store} router={router} />
-        </RouterProvider>
-    </Provider>
-)
-
-router.start(() => {
-    ReactDOM.render(
-        WrappedApp,
-        document.getElementById('root')
-    )
-})
-```
-
-### With React-Router
-
-TODO: Test with react-router and write an example!
-
 ## Other Dependencies
 
 Because dependencies are simply passed into Refract as props, you can easily add any dependency you need - all you have to do is add more props!
