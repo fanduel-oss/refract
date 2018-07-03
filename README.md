@@ -1,16 +1,16 @@
 ![Refract](logo/refract-logo-colour.png)
 
-### Master your app's side-effects
+### Master your app's effects through the power of reactive programming
 
-Refract lets you isolate your app's side effects - API calls, analytics, logging, etc - so that you can write your code in a clear, pure, and declarative fashion.
+Refract lets you isolate your app's side effects - API calls, analytics, logging, etc - so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
-You can use Refract either with vanilla React alone, or with React & Redux.
+Refract is an extensible library built for React. In addition we provide a Redux integration, which can also serve as a template for integrations with other libraries.
 
 # Why?
 
 Component-based architecture and functional programming have become an increasingly popular approach for building UIs. They help make apps more predictable, more testable, and more maintainable.
 
-However, our apps don't exist in a vacuum! They need to make network requests, handle data persistence, log analytics, deal with changing time, and so on. Any non-trivial app depends on any number of these external effects.
+However, our apps don't exist in a vacuum! They need to make network requests, handle data persistence, log analytics, deal with changing time, and so on. Any non-trivial app has to handle any number of these external effects.
 
 These side-effects hold us back from writing fully declarative code. Wouldn't it be nice to cleanly separate them from our apps?
 
@@ -37,20 +37,23 @@ npm install --save refract-rxjs
 
 # The Gist
 
-The example below uses `refract-rxjs` to send events to analytics.
+The example below uses `refract-rxjs` to send data to localstorage.
 
-Every time the `clickCount` prop changes, its new value is sent to the observer. The observer filters the stream of data to remove any falsy values, then maps any truthy values into an object under the key `analyticsEvent`. Each time an event passes through this pipeline, the handler calls `analyticsProvider.send` with the effect's `analyticsEvent` property.
+Every time the `username` prop changes, its new value is sent into the stream. The stream debounces the input for two seconds, then maps it into an object (with a `type` of `localstorage`) under the key `payload`. Each time an effect is emitted from this pipeline, the handler calls `localstorage.setItem` with the effect's `payload` property.
 
 ```js
 const aperture = (initialProps) => (component) => {
-    return component.observe('clickCount')
-        .filter(Boolean)
-        .map(analyticsEvent => ({ analyticsEvent }))
+    return component.observe('username').pipe(
+        debounce(2000),
+        map(username => ({ type: 'localstorage',  payload: username }))
+    )
 }
 
 const handler = (initialProps) => (effect) => {
-    if (effect.analyticsEvent) {
-        initialProps.analyticsProvider.send(effect.analyticsEvent)
+    switch (effect.type) {
+        case 'localstorage':
+            localstorage.setItem('username', effect.payload)
+            return
     }
 }
 
@@ -59,7 +62,7 @@ const WrappedComponent = withEffects(handler)(aperture)(Component)
 
 ### Aperture
 
-An `aperture` controls the streams of data which enter Refract. It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` objects in response.
+An `aperture` controls the streams of data entering Refract. It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect`s.
 
 Signature: `(initialProps) => (component) => { return effectStream }`.
 * The `initialProps` are all props passed into the `WrappedComponent`.
