@@ -125,7 +125,7 @@ Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent 
 
 ### Discuss
 
-[Everyone is welcome to join our discussion channel - `#refract` on the Reactiflux Discord server.]()
+[Everyone is welcome to join our discussion channel - `#refract` on the Reactiflux Discord server.](https://discord.gg/fqk86GH)
 
 ### Articles
 

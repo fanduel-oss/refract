@@ -5,4 +5,4 @@ _Add directions to places someone could go to learn more after reading through t
 * Link to Refract basics tutorial series on Medium.
 * Link to examples in repo.
 * Link to API docs.
-* Link to Discord channel.
+* [Link to Discord channel.](https://discord.gg/fqk86GH)
