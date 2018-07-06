@@ -34,7 +34,7 @@ If you pass in a function, `store.observe` will treat it as a Redux selector, an
 ```js
 const storeShape = {
     users: {
-        username: {
+        FanDuelUser: {
             balance: 999,
             ...user
         }

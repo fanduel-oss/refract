@@ -14,14 +14,14 @@ Each will be more thoroughly explored through examples, but starting with a roug
 
 An `aperture` controls the streams of data which enter Refract.
 
-It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` objects in response.
+It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
 
 ## Handler
 
-A `handler` is a function which causes side-effects in response to any `effect` object output by the `aperture`.
+A `handler` is a function which causes side-effects in response to any `effect` value output by the `aperture`.
 
 ## Error Handler
 
-An `errorHandler` is a function which causes side-effects in response to any `error` object output by the `aperture`.
+An `errorHandler` is a function which causes side-effects in response to any `error` value output by the `aperture`.
 
 _TODO: make sure any other useful terms have been added here, and link everything through to more thorough explanations elsewhere_

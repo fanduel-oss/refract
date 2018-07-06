@@ -105,7 +105,7 @@ const enhancedWithEffects = (handler, errorHandler) => aperture => BaseComponent
     )
 
 export {
-    RefractProvider: RefractContext.Provider.
+    RefractProvider: RefractContext.Provider
     withEffects: enhancedWithEffects
 }
 ```

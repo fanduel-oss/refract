@@ -39,4 +39,3 @@ const handler = (initialProps) => (effect) => {
     // ...etc
 }
 ```
-}
