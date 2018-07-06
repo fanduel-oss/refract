@@ -70,7 +70,7 @@ An `aperture` controls the streams of data entering Refract. It is a function wh
 
 Signature: `(initialProps) => (component) => { return effectStream }`.
 * The `initialProps` are all props passed into the `WrappedComponent`.
-* The `component` is an object containing a number of event sources that you can observe.
+* The `component` is an object which lets you observe your React component.
 * Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
 
 ### Handler

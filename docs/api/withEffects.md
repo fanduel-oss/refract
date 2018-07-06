@@ -18,26 +18,26 @@ withEffects = (handler, errorHandler?) => (aperture) => (BaseComponent) => {
 
 1. `handler` _(function)_: a function which causes side-effects in response to `effect` values.
 
-    Signature: `(initialProps) => (effect) => { /* handle effects here */ }`
+    Signature: `(initialProps) => (effect) => { /* handle effect here */ }`
 
     * The `initialProps` are all props passed into the `WrappedComponent`.
     * The `effect` is each value emitted by your `aperture`.
-    * Within the body of the function, you call any side-effects imperatively.
+    * Within the body of the function, you cause any side-effect you wish.
 
-1. `errorHandler` _(function)_: an _optional_ function for catching an error coming from `aperture`. Typically used for logging errors.
+1. `errorHandler` _(function)_: an _optional_ function for catching any unexpected errors thrown within your `aperture`. Typically used for logging errors.
 
-    Signature: `(initialProps) => (effect) => { /* handle effects here */ }`
+    Signature: `(initialProps) => (error) => { /* handle error here */ }`
 
     * The `initialProps` are all props passed into the `WrappedComponent`.
-    * The `effect` is each value emitted by your `aperture`.
-    * Within the body of the function, you call any side-effects imperatively.
+    * The `error` is each value emitted by your `aperture`.
+    * Within the body of the function, you cause any side-effect you wish.
 
 1. `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
 
     Signature: `(initialProps) => (component) => { return effectStream }`.
 
     * The `initialProps` are all props passed into the `WrappedComponent`.
-    * The `component` is an object containing a number of event sources that you can observe.
+    * The `component` is an object which lets you observe your React component.
     * Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
 
 1. `BaseComponent` _(React component)_: any react component.
@@ -51,8 +51,8 @@ withEffects = (handler, errorHandler?) => (aperture) => (BaseComponent) => {
 ```js
 import { withEffects } from 'refract-rxjs'
 
-const BaseComponent = ({ value, onChange }) => (
-    <input value={value} onChange={onChange} />
+const BaseComponent = ({ username, onChange }) => (
+    <input value={username} onChange={onChange} />
 )
 
 const aperture = (initialProps) => (component) => {
