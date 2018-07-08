@@ -12,7 +12,7 @@ export interface ObservableComponent {
 export interface Subscription {
     unsubscribe(): void
 }
-export declare type EffectFactory<P, E> = (
+export declare type Aperture<P, E> = (
     props: P
 ) => (component: ObservableComponent) => Stream<E>
 export declare const subscribeToSink: <T>(

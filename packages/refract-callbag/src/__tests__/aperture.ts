@@ -1,6 +1,6 @@
-import { merge } from 'most'
+import { merge, map } from 'callbag-basics'
 
-import { EffectFactory } from '../index'
+import { Aperture } from '../index'
 
 export interface Effect {
     type: string
@@ -12,31 +12,31 @@ export interface Props {
     setValue: (value: number) => void
 }
 
-const effectFactory: EffectFactory<Props, Effect> = props => component => {
+const aperture: Aperture<Props, Effect> = props => component => {
     const value$ = component.observe<number>('value')
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
     const unmount$ = component.unmount
 
-    return merge<Effect>(
-        value$.map(value => ({
+    return merge(
+        map(value => ({
             type: 'ValueChange',
             value
-        })),
+        }))(value$),
 
-        valueSet$.map(value => ({
+        map(value => ({
             type: 'ValueSet',
             value
-        })),
+        }))(valueSet$),
 
-        mount$.constant({
+        map(() => ({
             type: 'Start'
-        }),
+        }))(mount$),
 
-        unmount$.constant({
+        map(() => ({
             type: 'Stop'
-        })
+        }))(unmount$)
     )
 }
 
-export default effectFactory
+export default aperture

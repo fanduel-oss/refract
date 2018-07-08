@@ -9,7 +9,7 @@ export interface ObservableComponent {
     mount: Stream<any>
     unmount: Stream<any>
 }
-export declare type EffectFactory<P, E> = (
+export declare type Aperture<P, E> = (
     props: P
 ) => (component: ObservableComponent) => Stream<E>
 export declare const subscribeToSink: <T>(

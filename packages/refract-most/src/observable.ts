@@ -17,7 +17,7 @@ export interface Subscription {
     unsubscribe(): void
 }
 
-export type EffectFactory<P, E> = (
+export type Aperture<P, E> = (
     props: P
 ) => (component: ObservableComponent) => Stream<E>
 
