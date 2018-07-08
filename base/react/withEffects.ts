@@ -24,6 +24,7 @@ export const withEffects = <P, E>(
     class WithEffects extends React.Component<P> {
         private listeners: Listeners
         private decoratedProps: Partial<P> = {}
+        private valuePropNames: string[]
         private component: ObservableComponent
         private sinkSubscription: Subscription
 
@@ -33,15 +34,20 @@ export const withEffects = <P, E>(
             this.listeners = {
                 mount: [],
                 unmount: [],
+                allProps: [],
                 props: {},
                 fnProps: {}
             }
+
+            this.valuePropNames = []
 
             Object.keys(props).forEach(propName => {
                 const prop = props[propName]
 
                 if (typeof prop === 'function') {
                     this.decorateProp(prop, propName)
+                } else {
+                    this.valuePropNames.push(propName)
                 }
             })
 
@@ -65,18 +71,41 @@ export const withEffects = <P, E>(
                     initialValue: true,
                     ...opts
                 }
-                const listenerType =
-                    typeof this.props[propName] === 'function'
+                const listenerType = propName
+                    ? typeof this.props[propName] === 'function'
                         ? 'fnProps'
                         : 'props'
+                    : 'allProps'
 
                 return createObservable<T>(listener => {
-                    this.listeners[listenerType][propName] = (
-                        this.listeners[listenerType][propName] || []
-                    ).concat(listener)
+                    if (listenerType !== 'allProps') {
+                        this.listeners[listenerType][propName] = (
+                            this.listeners[listenerType][propName] || []
+                        ).concat(listener)
+                    }
 
-                    if (listenerType === 'props' && options.initialValue) {
-                        listener.next(this.props[propName])
+                    if (options.initialValue) {
+                        if (listenerType === 'props') {
+                            listener.next(this.props[propName])
+                        }
+
+                        if (listenerType === 'allProps') {
+                            listener.next(
+                                this.valuePropNames.reduce(
+                                    (acc, propName) =>
+                                        Object.assign(acc, {
+                                            [propName]: this.props[propName]
+                                        }),
+                                    {}
+                                )
+                            )
+                        }
+                    }
+
+                    if (listenerType === 'allProps') {
+                        return () => {
+                            this.listeners.allProps.filter(l => l !== listener)
+                        }
                     }
 
                     return () => {
@@ -139,13 +168,31 @@ export const withEffects = <P, E>(
         }
 
         private sendNext(prevProps?: P) {
-            Object.keys(this.listeners.props).forEach(propName => {
-                const prop = this.props[propName]
+            const propNames = this.listeners.allProps.length
+                ? this.valuePropNames
+                : Object.keys(this.listeners.props)
 
-                if (!prevProps || prevProps[propName] !== prop) {
-                    this.listeners.props[propName].forEach(l => l.next(prop))
-                }
-            })
+            const propsToSend = propNames.reduce(
+                (acc, propName) => {
+                    const prop = this.props[propName]
+
+                    if (!prevProps || prevProps[propName] !== prop) {
+                        this.listeners.props[propName].forEach(l =>
+                            l.next(prop)
+                        )
+
+                        acc.props[propName] = prop
+                        acc.send = true
+                    }
+
+                    return acc
+                },
+                { props: {}, send: false }
+            )
+
+            if (propsToSend.send) {
+                this.listeners.allProps.forEach(l => l.next(propsToSend.props))
+            }
         }
 
         private decorateProp(prop, propName) {
