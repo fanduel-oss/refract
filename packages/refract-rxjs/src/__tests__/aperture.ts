@@ -1,7 +1,7 @@
 import { map, mapTo, concat } from 'rxjs/operators'
 import { merge } from 'rxjs'
 
-import { EffectFactory } from '../index'
+import { Aperture } from '../index'
 
 export interface Effect {
     type: string
@@ -13,7 +13,7 @@ export interface Props {
     setValue: (value: number) => void
 }
 
-const effectFactory: EffectFactory<Props, Effect> = props => component => {
+const aperture: Aperture<Props, Effect> = props => component => {
     const value$ = component.observe<number>('value')
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
@@ -48,4 +48,4 @@ const effectFactory: EffectFactory<Props, Effect> = props => component => {
     )
 }
 
-export default effectFactory
+export default aperture

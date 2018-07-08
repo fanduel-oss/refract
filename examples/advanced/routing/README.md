@@ -4,20 +4,20 @@
 
 In this example, a set of tabs are rendered to the screen, with the currently active tab stored in React state.
 
-#### EffectFactory
+#### Aperture
 
 Two sources are observed in this example:
 
 - The `setActiveTab` callback function.
 - The `window.popstate` event.
 
-In addition, a single event is fired when the `effectFactory` initiates, which sets the initial state to `initialProps.activeTab`.
+In addition, a single event is fired when the `aperture` initiates, which sets the initial state to `initialProps.activeTab`.
 
 All three are simply mapped to objects with the desired structure, and merged into a single stream.
 
-#### EffectHandler
+#### Handler
 
-If the effect's type is `NAVIGATION`, the `effectHandler` calculates the new browser url, and pushes it to `window.history`.
+If the effect's type is `NAVIGATION`, the `handler` calculates the new browser url, and pushes it to `window.history`.
 
 If the effect's type is `STATE`, it calls `setState` with the new state.
 

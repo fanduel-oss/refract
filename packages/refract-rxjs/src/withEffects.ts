@@ -1,24 +1,19 @@
 import * as React from 'react'
 
-import {
-    PropListeners,
-    Listeners,
-    EffectHandler,
-    ObserveOptions
-} from './baseTypes'
+import { PropListeners, Listeners, Handler, ObserveOptions } from './baseTypes'
 import {
     Subscription,
     Listener,
     createObservable,
     ObservableComponent,
     subscribeToSink,
-    EffectFactory
+    Aperture
 } from './observable'
 
 export const withEffects = <P, E>(
-    effectHandler: EffectHandler<P, E>,
+    handler: Handler<P, E>,
     errorHandler?: (err: any) => void
-) => (effectFactory: EffectFactory<P, E>) => (
+) => (aperture: Aperture<P, E>) => (
     BaseComponent: React.ComponentType<P>
 ): React.ComponentClass<P> =>
     class WithEffects extends React.Component<P> {
@@ -96,11 +91,11 @@ export const withEffects = <P, E>(
                 ) => createPropObservable<T>(propName, options)
             }
 
-            const sinkObservable = effectFactory(this.props)(this.component)
+            const sinkObservable = aperture(this.props)(this.component)
 
             this.sinkSubscription = subscribeToSink<E>(
                 sinkObservable,
-                effectHandler(this.props),
+                handler(this.props),
                 errorHandler
             )
         }

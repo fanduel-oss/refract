@@ -6,7 +6,7 @@ import withState from 'react-state-hoc'
 
 import Layout from './Layout'
 
-const effectHandler = ({ setState }) => (effect = {}) => {
+const handler = ({ setState }) => (effect = {}) => {
     if (effect.type === 'NAVIGATION') {
         const path = document.location.pathname
         const search = effect.state.activeTab
@@ -21,7 +21,7 @@ const effectHandler = ({ setState }) => (effect = {}) => {
     }
 }
 
-const effectFactory = initialProps => component => {
+const aperture = initialProps => component => {
     const activeTab$ = component.observe('setActiveTab')
 
     return merge(
@@ -49,7 +49,7 @@ const initialState = { activeTab: null }
 const mapSetStateToProps = { setActiveTab: activeTab => ({ activeTab }) }
 
 const App = withState(initialState, mapSetStateToProps)(
-    withEffects(effectHandler)(effectFactory)(Layout)
+    withEffects(handler)(aperture)(Layout)
 )
 
 render(<App />, document.getElementById('root'))

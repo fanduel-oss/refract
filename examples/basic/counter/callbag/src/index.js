@@ -8,7 +8,7 @@ import { map, pipe } from 'callbag-basics'
 
 import Layout from './Layout'
 
-const effectHandler = props => effect => {
+const handler = props => effect => {
     if (effect.type === 'INCREASE') {
         props.setState(({ count }) => ({ count: count + 1 }))
     }
@@ -18,7 +18,7 @@ const effectHandler = props => effect => {
     }
 }
 
-const effectFactory = props => component => {
+const aperture = props => component => {
     const direction$ = component.observe('direction')
 
     const tick$ = interval(1000)
@@ -31,7 +31,7 @@ const initialState = { count: 0, direction: 'NONE' }
 const mapSetStateToProps = { setDirection: direction => ({ direction }) }
 
 const App = withState(initialState, mapSetStateToProps)(
-    withEffects(effectHandler)(effectFactory)(Layout)
+    withEffects(handler)(aperture)(Layout)
 )
 
 render(<App />, document.getElementById('root'))

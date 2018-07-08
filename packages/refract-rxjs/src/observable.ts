@@ -12,7 +12,7 @@ export interface ObservableComponent {
     unmount: Observable<any>
 }
 
-export type EffectFactory<P, E> = (
+export type Aperture<P, E> = (
     props: P
 ) => (component: ObservableComponent) => Observable<E>
 
