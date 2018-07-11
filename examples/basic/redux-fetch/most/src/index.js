@@ -8,7 +8,7 @@ import Layout from './Layout'
 import { actionCreators, actionTypes, selectors } from './store'
 import store from './setupStore'
 
-const effectHandler = ({ store }) => effect => {
+const handler = ({ store }) => effect => {
     if (effect.type === actionTypes.ERROR_RECEIVE) {
         console.log(effect)
     }
@@ -22,7 +22,7 @@ const effectHandler = ({ store }) => effect => {
     }
 }
 
-const effectFactory = ({ store }) => component => {
+const aperture = ({ store }) => component => {
     const combined$ = combine(
         (x, y) => [x, y],
         store.observe(actionTypes.USER_REQUEST),
@@ -53,7 +53,7 @@ const effectFactory = ({ store }) => component => {
     return merge(requestUser$, selectUser$)
 }
 
-const App = withEffects(effectHandler)(effectFactory)(Layout)
+const App = withEffects(handler)(aperture)(Layout)
 
 render(
     <Provider store={store}>
