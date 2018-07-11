@@ -21,7 +21,7 @@ export const withEffects = <P, E>(
 ) => (effectFactory: EffectFactory<P, E>) => (
     BaseComponent: React.ComponentType<P>
 ): React.ComponentClass<P> =>
-    class WithEffects extends React.Component<P> {
+    class WithEffects extends React.PureComponent<P> {
         private listeners: Listeners
         private decoratedProps: Partial<P> = {}
         private valuePropNames: string[]
@@ -168,30 +168,20 @@ export const withEffects = <P, E>(
         }
 
         private sendNext(prevProps?: P) {
-            const propNames = this.listeners.allProps.length
-                ? this.valuePropNames
-                : Object.keys(this.listeners.props)
+            Object.keys(this.listeners.props).forEach(propName => {
+                const prop = this.props[propName]
 
-            const propsToSend = propNames.reduce(
-                (acc, propName) => {
-                    const prop = this.props[propName]
+                if (!prevProps || prevProps[propName] !== prop) {
+                    this.listeners.props[propName].forEach(l => l.next(prop))
+                }
+            })
 
-                    if (!prevProps || prevProps[propName] !== prop) {
-                        this.listeners.props[propName].forEach(l =>
-                            l.next(prop)
-                        )
+            if (this.listeners.allProps.length) {
+                const props = this.valuePropNames.reduce((acc, propName) =>
+                    Object.assign(acc, this.props[propName], {})
+                )
 
-                        acc.props[propName] = prop
-                        acc.send = true
-                    }
-
-                    return acc
-                },
-                { props: {}, send: false }
-            )
-
-            if (propsToSend.send) {
-                this.listeners.allProps.forEach(l => l.next(propsToSend.props))
+                this.listeners.allProps.forEach(l => l.next(props))
             }
         }
 
