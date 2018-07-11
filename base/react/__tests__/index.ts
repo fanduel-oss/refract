@@ -1,21 +1,19 @@
 import * as React from 'react'
-import { withEffects, EffectHandler, ObservableComponent } from '../index'
-import effectFactory, { Effect, Props } from './effectFactory'
+import { withEffects, Handler, ObservableComponent } from '../index'
+import aperture, { Effect, Props } from './aperture'
 import { shallow, mount } from 'enzyme'
 
 describe(require('../../package.json').name, () => {
     const noop = (...args) => void 0
 
-    const effectHandler: EffectHandler<Props, Effect> = props => (
-        value: Effect
-    ) => {
+    const handler: Handler<Props, Effect> = props => (value: Effect) => {
         noop(value)
     }
 
     it('should create a HoC', () => {
-        const WithEffects = withEffects<Props, Effect>(effectHandler)(
-            effectFactory
-        )(() => React.createElement('div'))
+        const WithEffects = withEffects<Props, Effect>(handler)(aperture)(() =>
+            React.createElement('div')
+        )
     })
 
     it('should observe component changes', () => {
@@ -23,7 +21,7 @@ describe(require('../../package.json').name, () => {
         const setValue = () => void 0
         const WithEffects = withEffects<Props, Effect>(
             () => effectValueHandler
-        )(effectFactory)(({ setValue }) =>
+        )(aperture)(({ setValue }) =>
             React.createElement('button', {
                 onClick: () => setValue(10)
             })

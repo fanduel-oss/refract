@@ -6,13 +6,13 @@ import { fromPromise } from 'most'
 
 import Layout from './Layout'
 
-const effectHandler = ({ setState }) => effect => {
+const handler = ({ setState }) => effect => {
     if (effect.type === 'USER_DATA_RECEIVE') {
         setState({ data: effect.payload })
     }
 }
 
-const effectFactory = () => ({ observe }) =>
+const aperture = () => ({ observe }) =>
     observe('username')
         .filter(Boolean)
         .debounce(1000)
@@ -28,7 +28,7 @@ const initialState = { data: null, username: '' }
 const mapSetStateToProps = { setUsername: username => ({ username }) }
 
 const App = withState(initialState, mapSetStateToProps)(
-    withEffects(effectHandler)(effectFactory)(Layout)
+    withEffects(handler)(aperture)(Layout)
 )
 
 render(<App />, document.getElementById('root'))

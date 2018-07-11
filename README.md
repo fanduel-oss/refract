@@ -1,33 +1,24 @@
 ![Refract](logo/refract-logo-colour.png)
 
-### Master your app's side-effects in React through the power of reactive programming.
+### Master your app's effects through the power of reactive programming
 
-Observe any producer, cause any effect. Refract lets you observe anything within your app - changes to props, data passed to callbacks, dispatched redux actions, updated redux state, window event listeners, and much more. Using your chosen stream library, you react to the streams of events, and produce any effect you choose.
+Refract lets you isolate your app's side effects - API calls, analytics, logging, etc - so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
+Refract is an extensible library built for React. In addition we provide a Redux integration, which can also serve as a template for integrations with other libraries.
 
 # Why?
 
-With functional programming and components becoming an increasingly popular option for building UIs, we've become used to unidirectional data flows, view / state separation and immutable data.
+Component-based architecture and functional programming have become an increasingly popular approach for building UIs. They help make apps more predictable, more testable, and more maintainable.
 
-```
-               +------------+
-         +----->   State    +-----+
-         |     +------------+     |
-Setter / |                        | Getter /
-Action   |                        | Selector
-         |     +------------+     |
-         +-----+    View    <-----+
-               +------------+
-```
+However, our apps don't exist in a vacuum! They need to make network requests, handle data persistence, log analytics, deal with changing time, and so on. Any non-trivial app has to handle any number of these external effects.
 
-However, the loop above doesn't exist in a vacuum! Various external effects compose the business logic of an app: network requests, time, data persistence, analytics, etc. State mutations (`setState`, reducers), state getters and render functions are in principle always pure. As a result, interaction handlers such as `onClick` or lifecycle methods such as `componentDidMount` handle side-effects imperatively.
+These side-effects hold us back from writing fully declarative code. Wouldn't it be nice to cleanly separate them from our apps?
 
-Refract sits between your state and your view. It allows you to leverage the power of reactive programming to handle side-effects declaratively. For a more in-depth introduction, head to [why Refract?](./docs/introduction/why.md). To check how Refract compares to solutions like redux-saga or redux-observable, read our [comparison guide](./docs/introduction/comparison.md).
+Refract solves this problem for you. [For an in-depth introduction, head to `Why Refract`.](./docs/introduction/why-refract.md)
 
+# Installation
 
-# Packages
-
-Refract is available for a number of stream libraries. For each stream library, a Refract integration is available for both React and Redux.
+Refract is available for a number of reactive programming libraries. For each library, a Refract integration is available for both React and Redux.
 
 Available packages:
 
@@ -38,65 +29,79 @@ Available packages:
 | **[RxJS](https://github.com/reactivex/rxjs)** | refract-rxjs | refract-redux-rxjs |
 | **[xstream](https://github.com/staltz/xstream)** | refract-xstream | refract-redux-xstream |
 
-# The Gist - Usage With React
-
-The example below uses `refract-most` to implement a debounced fetch request based on the component's props.
-
-Every time the `username` prop changes, its new value is sent to the observer. The observer debounces the stream of values before sending a request to the GitHub API, then waits until the request is resolved. Each time a request resolves, the handler calls `setState` with the effect's value. [A fully-functional demo of this example in each streaming library is available here.]()
-
-Events are observed by an `effectFactory`, which outputs a stream of effects.
-
-The effect stream is observed by an `effectHandler`, which causes side-effects in response to each effect.
-
-These two functions are consumed by a `withEffects` hoc, which implements your side-effect logic as a React component.
-
-```js
-const effectFactory = (initialProps) => (component) => {
-  return component.observe('username')
-    .debounce(250)
-    .flatMap(username =>
-      fromPromise(fetch(`https://api.github.com/users/${username}`))
-    )
-    .map(response => response.json())
-    .awaitPromises()
-}
-
-const effectHandler = (initialProps) => (event) => {
-  initialProps.setState({ data: event })
-}
-
-const WrappedComponent = withEffects(effectHandler)(effectFactory)(Component)
-```
-
-### effectFactory
-
-An `effectFactory` is a function with the signature `(initialProps) => (component) => { return effectStream }`.
-
-The `initialProps` are props passed in to the `withEffects` hoc. The `component` is an object containing a number of event sources you can observe. Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
-
-### effectHandler
-
-An `effectHandler` is a function with the signature `(initialProps) => (effect) => { /* handle effects here */ }`.
-
-The `initialProps` are props passed into the `withEffects` hoc. The `effect` is each event emitted by your `effectFactory`.
-
-*Note that in the example above, `setState` is a prop passed into the `WrappedComponent` by its parent - `<WrappedComponent setState={setState} username={username} />`.*
-
-### withEffects
-
-The `withEffects` hoc expects an `effectHandler`, an `effectFactory`, and a `Component`, and returns a new component which implements your side-effect handling logic.
-
-# Installation
-
 To use the latest stable version, simply `npm install` the package you want to use:
 
 ```
 npm install --save refract-rxjs
 ```
 
+# The Gist
+
+The example below uses `refract-rxjs` to send data to localstorage.
+
+Every time the `username` prop changes, its new value is sent into the stream. The stream debounces the input for two seconds, then maps it into an object (with a `type` of `localstorage`) under the key `payload`. Each time an effect is emitted from this pipeline, the handler calls `localstorage.setItem` with the effect's `payload` property.
+
+```js
+const aperture = (initialProps) => (component) => {
+    return component.observe('username').pipe(
+        debounce(2000),
+        map(username => ({
+            type: 'localstorage',
+            name: 'username',
+            value: username
+        }))
+    )
+}
+
+const handler = (initialProps) => (effect) => {
+    switch (effect.type) {
+        case 'localstorage':
+            localstorage.setItem(effect.name, effect.value)
+            return
+    }
+}
+
+const WrappedComponent = withEffects(handler)(aperture)(BaseComponent)
+```
+
+### Aperture
+
+An `aperture` controls the streams of data entering Refract. It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect`s.
+
+Signature: `(initialProps) => (component) => { return effectStream }`.
+* The `initialProps` are all props passed into the `WrappedComponent`.
+* The `component` is an object containing a number of event sources that you can observe.
+* Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
+
+### Handler
+
+A `handler` is a function which causes side-effects in response to any `effect` object output by the `aperture`.
+
+Signature: `(initialProps) => (effect) => { /* handle effects here */ }`.
+* The `initialProps` are all props passed into the `WrappedComponent`.
+* The `effect` is each event emitted by your `aperture`.
+* Within the body of the function, you call any side-effects imperatively.
+
+### withEffects
+
+The `withEffects` higher-order component implements your side-effect logic as a React component.
+
+Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent }`
+* The hoc takes in three curried arguments:
+    * A `handler` function
+    * An `aperture` function
+    * A React `Component`
+* The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
+
+# Learn Refract
+
+*Links through to tutorial.*
+
 # Documentation
 
 *Links through to docs sub-pages.*
+
+# Examples
 
 # Contributions
 
@@ -120,7 +125,7 @@ npm install --save refract-rxjs
 
 ### Discuss
 
-[Everyone is welcome to join our discussion channel - `#refract` on the Reactiflux Discord server.]()
+[Everyone is welcome to join our discussion channel - `#refract` on the Reactiflux Discord server.](https://discord.gg/fqk86GH)
 
 ### Articles
 

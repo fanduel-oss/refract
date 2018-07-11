@@ -1,10 +1,10 @@
 /// <reference types="react" />
 import * as React from 'react'
-import { EffectHandler } from './baseTypes'
-import { EffectFactory } from './observable'
+import { Handler } from './baseTypes'
+import { Aperture } from './observable'
 export declare const withEffects: <P, E>(
-    effectHandler: EffectHandler<P, E>,
+    handler: Handler<P, E>,
     errorHandler?: (err: any) => void
 ) => (
-    effectFactory: EffectFactory<P, E>
+    aperture: Aperture<P, E>
 ) => (BaseComponent: React.ComponentType<P>) => React.ComponentClass<P>

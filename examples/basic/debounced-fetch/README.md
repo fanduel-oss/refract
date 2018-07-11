@@ -4,7 +4,7 @@
 
 This basic example renders a single text input which prompts for a GitHub username; the current `username` of this input is stored in React component state.
 
-#### EffectFactory
+#### Aperture
 
 Only one source is observed:
 
@@ -14,9 +14,9 @@ Every time the input's `username` changes, the new username is passed to the str
 
 After debouncing, a fetch request is made and resolved; the response of this request is output as an effect with a type of `USER_DATA_RECEIVE`.
 
-#### EffectHandler
+#### Handler
 
-The Refract `effectHandler` sets the payload of any effect with a type of `USER_DATA_RECEIVE` into state, ready to be displayed in the UI.
+The Refract `handler` sets the payload of any effect with a type of `USER_DATA_RECEIVE` into state, ready to be displayed in the UI.
 
 #### Result
 
