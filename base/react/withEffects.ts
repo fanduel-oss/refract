@@ -177,8 +177,9 @@ export const withEffects = <P, E>(
             })
 
             if (this.listeners.allProps.length) {
-                const props = this.valuePropNames.reduce((acc, propName) =>
-                    Object.assign(acc, this.props[propName], {})
+                const props = this.valuePropNames.reduce(
+                    (acc, propName) => Object.assign(acc, this.props[propName]),
+                    {}
                 )
 
                 this.listeners.allProps.forEach(l => l.next(props))
