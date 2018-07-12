@@ -24,7 +24,6 @@ export const withEffects = <P, E>(
     class WithEffects extends React.PureComponent<P> {
         private listeners: Listeners
         private decoratedProps: Partial<P> = {}
-        private valuePropNames: string[]
         private component: ObservableComponent
         private sinkSubscription: Subscription
 
@@ -39,15 +38,11 @@ export const withEffects = <P, E>(
                 fnProps: {}
             }
 
-            this.valuePropNames = []
-
             Object.keys(props).forEach(propName => {
                 const prop = props[propName]
 
                 if (typeof prop === 'function') {
                     this.decorateProp(prop, propName)
-                } else {
-                    this.valuePropNames.push(propName)
                 }
             })
 
@@ -78,27 +73,13 @@ export const withEffects = <P, E>(
                     : 'allProps'
 
                 return createObservable<T>(listener => {
-                    if (listenerType !== 'allProps') {
-                        this.listeners[listenerType][propName] = (
-                            this.listeners[listenerType][propName] || []
-                        ).concat(listener)
-                    }
-
                     if (options.initialValue) {
                         if (listenerType === 'props') {
                             listener.next(this.props[propName])
                         }
 
                         if (listenerType === 'allProps') {
-                            listener.next(
-                                this.valuePropNames.reduce(
-                                    (acc, propName) =>
-                                        Object.assign(acc, {
-                                            [propName]: this.props[propName]
-                                        }),
-                                    {}
-                                )
-                            )
+                            listener.next(this.props)
                         }
                     }
 
@@ -107,6 +88,10 @@ export const withEffects = <P, E>(
                             this.listeners.allProps.filter(l => l !== listener)
                         }
                     }
+
+                    this.listeners[listenerType][propName] = (
+                        this.listeners[listenerType][propName] || []
+                    ).concat(listener)
 
                     return () => {
                         this.listeners[listenerType][propName].filter(
@@ -177,12 +162,7 @@ export const withEffects = <P, E>(
             })
 
             if (this.listeners.allProps.length) {
-                const props = this.valuePropNames.reduce(
-                    (acc, propName) => Object.assign(acc, this.props[propName]),
-                    {}
-                )
-
-                this.listeners.allProps.forEach(l => l.next(props))
+                this.listeners.allProps.forEach(l => l.next(this.props))
             }
         }
 
