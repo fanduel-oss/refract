@@ -7,7 +7,7 @@ export { Listener }
 export interface ObservableComponent {
     observe: <T>(
         propName: string,
-        options: Partial<ObserveOptions>
+        options?: Partial<ObserveOptions>
     ) => Stream<T>
     mount: Stream<any>
     unmount: Stream<any>

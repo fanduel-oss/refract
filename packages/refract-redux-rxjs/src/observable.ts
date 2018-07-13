@@ -6,14 +6,14 @@ import { Store } from 'redux'
 export interface ObserveFn {
     <T>(
         actionTypeOrListener: string | Selector<T>,
-        options: Partial<ObserveOptions>
+        options?: Partial<ObserveOptions>
     ): Observable<T>
 }
 
 export const observeFactory = (store): ObserveFn => {
     const storeObservable = from(store)
 
-    return <T>(actionOrSelector, opts: Partial<ObserveOptions>) => {
+    return <T>(actionOrSelector, opts?: Partial<ObserveOptions>) => {
         const options: ObserveOptions = {
             initialValue: true,
             ...opts

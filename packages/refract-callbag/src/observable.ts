@@ -25,7 +25,7 @@ export interface Subscription {
 export interface ObservableComponent {
     observe: <T = any>(
         propName: string,
-        options: Partial<ObserveOptions>
+        options?: Partial<ObserveOptions>
     ) => Source<T>
     mount: Source<any>
     unmount: Source<any>
