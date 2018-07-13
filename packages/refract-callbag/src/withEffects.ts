@@ -87,7 +87,7 @@ export const withEffects = <P, E>(
                 unmount: unmountObservable,
                 observe: <T>(
                     propName: string,
-                    options: Partial<ObserveOptions>
+                    options?: Partial<ObserveOptions>
                 ) => createPropObservable<T>(propName, options)
             }
 

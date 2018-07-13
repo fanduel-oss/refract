@@ -10,7 +10,7 @@ import { Selector, ObserveOptions } from './baseTypes'
 export interface ObserveFn {
     <T>(
         actionTypeOrListener: string | Selector<T>,
-        options: Partial<ObserveOptions>
+        options?: Partial<ObserveOptions>
     ): Source<T>
 }
 
@@ -34,7 +34,7 @@ export const observeFactory = (store): ObserveFn => {
 
     return <T>(
         actionOrSelector: string | Selector<T>,
-        opts: Partial<ObserveOptions>
+        opts?: Partial<ObserveOptions>
     ): Source<T> => {
         const options: ObserveOptions = {
             initialValue: true,
