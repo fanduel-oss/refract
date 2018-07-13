@@ -12,7 +12,7 @@ import {
 
 export const withEffects = <P, E>(
     handler: Handler<P, E>,
-    errorHandler?: (err: any) => void
+    errorHandler?: Handler<P, E>
 ) => (aperture: Aperture<P, E>) => (
     BaseComponent: React.ComponentType<P>
 ): React.ComponentClass<P> =>
@@ -96,7 +96,7 @@ export const withEffects = <P, E>(
             this.sinkSubscription = subscribeToSink<E>(
                 sinkObservable,
                 handler(this.props),
-                errorHandler
+                errorHandler(this.props)
             )
         }
 
