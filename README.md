@@ -107,7 +107,9 @@ Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent 
 
 ### Guidelines
 
-*Brief description and link through to full guidelines.*
+We welcome many forms of contribution from anyone who wishes to get involved.
+
+Before getting started, please read through our [contributing guidelines](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md).
 
 ### Contributors
 
@@ -121,7 +123,7 @@ Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent 
 
 ### License
 
-[Refract is available under the X license.]()
+[Refract is available under the MIT license.](LICENSE)
 
 ### Discuss
 
