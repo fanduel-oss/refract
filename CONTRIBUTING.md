@@ -2,7 +2,7 @@
 
 Thanks for considering making a contribution to Refract! We want to make contributing as easy and transparent as possible, no matter how you wish to add to the project. By contributing, you agree to abide by our [code of conduct](./CODE_OF_CONDUCT.md).
 
-## Reporting Issues & Asking Questions
+# Reporting Issues & Asking Questions
 
 Before opening an issue, please search the issue tracker to make sure your issue hasn't already been reported.
 
@@ -30,7 +30,7 @@ It is a good idea to structure your code and question in a way that is easy to u
 
 Please keep in mind that people spend their free time trying to help you!
 
-## Contributing
+# Contributing
 
 If you don't have a specific contribution in mind, take a look at the issue tracker to find a list of open issues which need attention.
 
