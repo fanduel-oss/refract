@@ -1,6 +1,12 @@
 import * as React from 'react'
 
-import { PropListeners, Listeners, Handler, ObserveOptions } from './baseTypes'
+import {
+    PropListeners,
+    Listeners,
+    Handler,
+    ErrorHandler,
+    ObserveOptions
+} from './baseTypes'
 import {
     Subscription,
     Listener,
@@ -12,7 +18,7 @@ import {
 
 export const withEffects = <P, E>(
     handler: Handler<P, E>,
-    errorHandler?: Handler<P, E>
+    errorHandler?: ErrorHandler<P>
 ) => (aperture: Aperture<P, E>) => (
     BaseComponent: React.ComponentType<P>
 ): React.ComponentClass<P> =>

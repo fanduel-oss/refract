@@ -9,6 +9,7 @@ export interface Listeners {
     fnProps: PropListeners
 }
 export declare type Handler<P, E> = (intialProps: P) => (val: E) => void
+export declare type ErrorHandler<P> = (intialProps: P) => (error: any) => void
 export interface ObserveOptions {
     initialValue: boolean
 }
