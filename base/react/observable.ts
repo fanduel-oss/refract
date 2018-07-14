@@ -5,7 +5,7 @@ export { Listener, Subscription }
 
 export interface ObservableComponent {
     observe: <T>(
-        propName: string,
+        propName?: string,
         options?: Partial<ObserveOptions>
     ) => Observable<T>
     mount: Observable<any>

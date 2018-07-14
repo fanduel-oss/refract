@@ -22,7 +22,7 @@ export const withEffects = <P, E>(
 ) => (aperture: Aperture<P, E>) => (
     BaseComponent: React.ComponentType<P>
 ): React.ComponentClass<P> =>
-    class WithEffects extends React.Component<P> {
+    class WithEffects extends React.PureComponent<P> {
         private listeners: Listeners
         private decoratedProps: Partial<P> = {}
         private component: ObservableComponent
@@ -34,6 +34,7 @@ export const withEffects = <P, E>(
             this.listeners = {
                 mount: [],
                 unmount: [],
+                allProps: [],
                 props: {},
                 fnProps: {}
             }
@@ -59,26 +60,43 @@ export const withEffects = <P, E>(
             })
 
             const createPropObservable = <T>(
-                propName: string,
+                propName?: string,
                 opts?: Partial<ObserveOptions>
             ) => {
                 const options: ObserveOptions = {
                     initialValue: true,
                     ...opts
                 }
-                const listenerType =
-                    typeof this.props[propName] === 'function'
+                const listenerType = propName
+                    ? typeof this.props[propName] === 'function'
                         ? 'fnProps'
                         : 'props'
+                    : 'allProps'
 
                 return createObservable<T>(listener => {
+                    if (options.initialValue) {
+                        if (listenerType === 'props') {
+                            listener.next(this.props[propName])
+                        }
+
+                        if (listenerType === 'allProps') {
+                            listener.next(this.props)
+                        }
+                    }
+
+                    if (listenerType === 'allProps') {
+                        this.listeners.allProps = this.listeners.allProps.concat(
+                            listener
+                        )
+
+                        return () => {
+                            this.listeners.allProps.filter(l => l !== listener)
+                        }
+                    }
+
                     this.listeners[listenerType][propName] = (
                         this.listeners[listenerType][propName] || []
                     ).concat(listener)
-
-                    if (listenerType === 'props' && options.initialValue) {
-                        listener.next(this.props[propName])
-                    }
 
                     return () => {
                         this.listeners[listenerType][propName].filter(
@@ -92,7 +110,7 @@ export const withEffects = <P, E>(
                 mount: mountObservable,
                 unmount: unmountObservable,
                 observe: <T>(
-                    propName: string,
+                    propName?: string,
                     options?: Partial<ObserveOptions>
                 ) => createPropObservable<T>(propName, options)
             }
@@ -102,7 +120,7 @@ export const withEffects = <P, E>(
             this.sinkSubscription = subscribeToSink<E>(
                 sinkObservable,
                 handler(this.props),
-                errorHandler(this.props)
+                errorHandler ? errorHandler(this.props) : undefined
             )
         }
 
@@ -147,6 +165,8 @@ export const withEffects = <P, E>(
                     this.listeners.props[propName].forEach(l => l.next(prop))
                 }
             })
+
+            this.listeners.allProps.forEach(l => l.next(this.props))
         }
 
         private decorateProp(prop, propName) {
