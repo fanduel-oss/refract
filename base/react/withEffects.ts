@@ -84,6 +84,8 @@ export const withEffects = <P, E>(
                     }
 
                     if (listenerType === 'allProps') {
+                        this.listeners.allProps.concat(listener)
+
                         return () => {
                             this.listeners.allProps.filter(l => l !== listener)
                         }
