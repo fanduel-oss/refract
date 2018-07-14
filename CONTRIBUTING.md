@@ -14,11 +14,11 @@ Write proposals and bug reports with as much detail as possible - the more infor
 
 For example, a good bug report includes as much detail as possible:
 
-- A quick summary and/or background.
-- Steps to reproduce - with sample code wherever possible.
-- What you expected to happen.
-- What actually happened.
-- Notes - for example why you think this might be happening, or solutions you tried which didn't work.
+*   A quick summary and/or background.
+*   Steps to reproduce - with sample code wherever possible.
+*   What you expected to happen.
+*   What actually happened.
+*   Notes - for example why you think this might be happening, or solutions you tried which didn't work.
 
 ### Getting Help
 
@@ -40,24 +40,30 @@ For non-trivial changes, please open an issue with a proposal for a new feature 
 
 However, sometimes the best way to start a conversation is to send a pull request which demonstrates your idea.
 
-Refract provides multiple packages to provide first-class support for multiple reactive programming libraries. Unless your change is small, please first submit a PR containing changes to the `base` version only. Once the feature (and any potential API change) has been reviewed, the final step is to implement the same changes in the `packages`.
-
 Use your judgement to decide the best approach!
 
 In general, the contribution workflow looks like this:
 
-1. Open a new issue in the Issue tracker, and discuss with others.
-1. Fork the repo and create a new branch based off master.
-1. Write your code, committing regularly to your feature branch with clear commit messages.
-1. If you've added code that should be tested, add tests.
-1. If you've changed APIs, update the documentation.
-1. Ensure the test suite passes and that there are no linting errors.
-1. Submit a pull request, referencing any issues it addresses!
-1. Once code has been reviewed and given tentative approval, copy into the various packages for final approval.
+1.  Open a new issue in the Issue tracker, and discuss with others.
+1.  Fork the repo and create a new branch based off master.
+1.  Write your code, committing regularly to your feature branch with clear commit messages.
+1.  If you've added code that should be tested, add tests.
+1.  If you've changed APIs, update the documentation.
+1.  Ensure the test suite passes and that there are no linting errors.
+1.  Submit a pull request, referencing any issues it addresses!
+1.  Once code has been reviewed and given tentative approval, copy into the various packages for final approval.
 
 Please try to keep your pull request focused in scope and avoid including unrelated commits!
 
 After you have submitted your pull request, we'll try to get back to you as soon as possible. We may suggest some changes or improvements.
+
+Refract provides multiple packages to provide first-class support for multiple reactive programming libraries. As a result:
+
+*   Unless your change is small, please first submit a PR containing changes to the `base` version only.
+*   Once the feature (and any potential API change) has been reviewed, the final step is to implement the same changes in the `packages`.
+
+    *   Please use `yarn copy` (or `npm run copy`) to automatically copy your changes to the packages, instead of doing so manually.
+    *   Remember to verify that the automated changes are correct before pushing!
 
 ### Documentation
 
