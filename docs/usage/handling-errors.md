@@ -12,16 +12,22 @@ This type of error is often handled via internal logic within an `aperture`'s st
 
 ## Unexpected Errors
 
-Unexpected errors are any which you cannot plan for.
-
-They are usually some kind of exception which has been thrown within your logic, causing your stream to collapse, and due to their nature it's not possible to plan for them before they occur.
+Unexpected errors are any which you cannot plan for. They are usually some kind of exception which has been thrown within your logic, causing your stream to collapse.
 
 This type of error is handled via an `errorHandler`, an optional function which can be passed into `withEffects` along with the main `handler`. This is intended to be a way for you to log unexpected errors, so that you can investigate and fix any issues which emerge when your app is being used in the real world.
 
 An `errorHandler` has an identical function signature to a `handler`, but with an `error` instead of an `effect` passed in as the second argument:
 
 ```js
-const errorHandler = (initialProps) => (error) => {
+const errorHandler = initialProps => error => {
     /* handle error here */
 }
 ```
+
+## Recovering from unexpected errors
+
+If an unexpected error occurs, it will cause your `aperture` function to no longer work and emit effects! Stream libraries have ways to catch or ignore those errors so they don't propagate and cause entire streams to terminate!
+
+*   For RxJS, you call look at [this guide](https://alligator.io/rxjs/simple-error-handling/) and [that guide](https://xgrommx.github.io/rx-book/content/getting_started_with_rxjs/creating_and_querying_observable_sequences/error_handling.html). These guides are not up to date so make sure you look up operators in the [RxJS documentation](http://reactivex.io/rxjs).
+*   With xstream, [use the `replaceError` operator](https://github.com/staltz/xstream#-replaceerrorreplace)
+*   With most, [use the `recoverWith` operator](https://github.com/cujojs/most/blob/master/docs/api.md#handling-errors)
