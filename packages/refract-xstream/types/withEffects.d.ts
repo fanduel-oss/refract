@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import * as React from 'react'
-import { ErrorHandler, Handler } from './baseTypes'
+import { Handler, ErrorHandler } from './baseTypes'
 import { Aperture } from './observable'
 export declare const withEffects: <P, E>(
     handler: Handler<P, E>,

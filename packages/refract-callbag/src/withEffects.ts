@@ -60,7 +60,7 @@ export const withEffects = <P, E>(
 
             const createPropObservable = <T>(
                 propName: string,
-                opts: Partial<ObserveOptions>
+                opts?: Partial<ObserveOptions>
             ) => {
                 const options: ObserveOptions = {
                     initialValue: true,
