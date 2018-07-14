@@ -1,16 +1,8 @@
 import $$observable from 'symbol-observable'
+import { Source, Sink } from 'callbag'
 const fromObs = require('callbag-from-obs')
 const toObs = require('callbag-to-obs')
 import { ObserveOptions } from './baseTypes'
-
-export interface Callbag<I, O> {
-    (t: 0, d: Callbag<O, I>): void
-    (t: 1, d: I): void
-    (t: 2, d?: any): void
-}
-
-export type Source<T> = Callbag<void, T>
-export type Sink<T> = Callbag<T, void>
 
 export interface Listener<T> {
     next: (val: T) => void
