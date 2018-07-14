@@ -49,12 +49,12 @@ Refract is available for a number of reactive programming libraries. For each li
 
 Available packages:
 
-| | [React](https://github.com/facebook/react) | [Redux](https://github.com/reduxjs/redux) |
-| --- | --- | --- |
-| **[Callbag](https://github.com/callbag/callbag)** | refract-callbag | refract-redux-callbag |
-| **[Most](https://github.com/cujojs/most)** | refract-most | refract-redux-most |
-| **[RxJS](https://github.com/reactivex/rxjs)** | refract-rxjs | refract-redux-rxjs |
-| **[xstream](https://github.com/staltz/xstream)** | refract-xstream | refract-redux-xstream |
+|                                                   | [React](https://github.com/facebook/react) | [Redux](https://github.com/reduxjs/redux) |
+| ------------------------------------------------- | ------------------------------------------ | ----------------------------------------- |
+| **[Callbag](https://github.com/callbag/callbag)** | refract-callbag                            | refract-redux-callbag                     |
+| **[Most](https://github.com/cujojs/most)**        | refract-most                               | refract-redux-most                        |
+| **[RxJS](https://github.com/reactivex/rxjs)**     | refract-rxjs                               | refract-redux-rxjs                        |
+| **[xstream](https://github.com/staltz/xstream)**  | refract-xstream                            | refract-redux-xstream                     |
 
 To use the latest stable version, simply `npm install` the package you want to use:
 
@@ -69,7 +69,7 @@ The example below uses `refract-rxjs` to send data to localstorage.
 Every time the `username` prop changes, its new value is sent into the stream. The stream debounces the input for two seconds, then maps it into an object (with a `type` of `localstorage`) under the key `payload`. Each time an effect is emitted from this pipeline, the handler calls `localstorage.setItem` with the effect's `payload` property.
 
 ```js
-const aperture = (initialProps) => (component) => {
+const aperture = initialProps => component => {
     return component.observe('username').pipe(
         debounce(2000),
         map(username => ({
@@ -80,7 +80,7 @@ const aperture = (initialProps) => (component) => {
     )
 }
 
-const handler = (initialProps) => (effect) => {
+const handler = initialProps => effect => {
     switch (effect.type) {
         case 'localstorage':
             localstorage.setItem(effect.name, effect.value)
@@ -96,41 +96,44 @@ const WrappedComponent = withEffects(handler)(aperture)(BaseComponent)
 An `aperture` controls the streams of data entering Refract. It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect`s.
 
 Signature: `(initialProps) => (component) => { return effectStream }`.
-* The `initialProps` are all props passed into the `WrappedComponent`.
-* The `component` is an object which lets you observe your React component.
-* Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
+
+*   The `initialProps` are all props passed into the `WrappedComponent`.
+*   The `component` is an object which lets you observe your React component.
+*   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
 
 ### Handler
 
 A `handler` is a function which causes side-effects in response to any `effect` object output by the `aperture`.
 
 Signature: `(initialProps) => (effect) => { /* handle effects here */ }`.
-* The `initialProps` are all props passed into the `WrappedComponent`.
-* The `effect` is each event emitted by your `aperture`.
-* Within the body of the function, you call any side-effects imperatively.
+
+*   The `initialProps` are all props passed into the `WrappedComponent`.
+*   The `effect` is each event emitted by your `aperture`.
+*   Within the body of the function, you call any side-effects imperatively.
 
 ### withEffects
 
 The `withEffects` higher-order component implements your side-effect logic as a React component.
 
 Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent }`
-* The hoc takes in three curried arguments:
-    * A `handler` function
-    * An `aperture` function
-    * A React `Component`
-* The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
+
+*   The hoc takes in three curried arguments:
+    *   A `handler` function
+    *   An `aperture` function
+    *   A React `Component`
+*   The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
 
 # Learn Refract
 
-*Links through to tutorial.*
+_Links through to tutorial._
 
 # Documentation
 
-*Links through to docs sub-pages.*
+_Links through to docs sub-pages._
 
 # Examples
 
-# Contributions
+# Contributing
 
 ### Guidelines
 
@@ -140,7 +143,7 @@ Before getting started, please read through our [contributing guidelines](CONTRI
 
 ### Contributors
 
-*Links to contributors.*
+_Links to contributors._
 
 # Links
 
@@ -158,5 +161,5 @@ Before getting started, please read through our [contributing guidelines](CONTRI
 
 ### Articles
 
-- [The introduction to Reactive Programming you've been missing
-](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754) by [@andrestaltz](https://twitter.com/andrestaltz)
+*   [The introduction to Reactive Programming you've been missing
+    ](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754) by [@andrestaltz](https://twitter.com/andrestaltz)
