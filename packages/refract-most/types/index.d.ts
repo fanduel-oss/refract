@@ -1,10 +1,11 @@
 import { withEffects } from './withEffects'
-import { ObservableComponent, EffectFactory } from './observable'
-import { EffectHandler, ObserveOptions } from './baseTypes'
+import { ObservableComponent, Aperture } from './observable'
+import { ErrorHandler, Handler, ObserveOptions } from './baseTypes'
 export {
     withEffects,
     ObservableComponent,
-    EffectFactory,
-    EffectHandler,
+    Aperture,
+    Handler,
+    ErrorHandler,
     ObserveOptions
 }

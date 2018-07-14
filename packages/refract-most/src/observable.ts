@@ -7,7 +7,7 @@ export { Listener }
 export interface ObservableComponent {
     observe: <T>(
         propName: string,
-        options: Partial<ObserveOptions>
+        options?: Partial<ObserveOptions>
     ) => Stream<T>
     mount: Stream<any>
     unmount: Stream<any>
@@ -17,7 +17,7 @@ export interface Subscription {
     unsubscribe(): void
 }
 
-export type EffectFactory<P, E> = (
+export type Aperture<P, E> = (
     props: P
 ) => (component: ObservableComponent) => Stream<E>
 

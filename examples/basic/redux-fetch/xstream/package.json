@@ -1,0 +1,20 @@
+{
+    "name": "refract-example-xstream-redux-fetch",
+    "dependencies": {
+        "react": "~16.4.1",
+        "react-dom": "16.1.1",
+        "react-scripts": "1.0.10",
+        "react-state-hoc": "~2.0.0",
+        "redux": "~4.0.0",
+        "refract-redux-xstream": "~1.0.0-1",
+        "refract-xstream": "~1.0.0-3",
+        "xstream": "~11.4.0"
+    },
+    "version": "0.0.0",
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
+}

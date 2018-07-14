@@ -12,7 +12,9 @@ export interface Listeners {
     fnProps: PropListeners
 }
 
-export type EffectHandler<P, E> = (intialProps: P) => (val: E) => void
+export type Handler<P, E> = (intialProps: P) => (val: E) => void
+
+export type ErrorHandler<P> = (intialProps: P) => (error: any) => void
 
 export interface ObserveOptions {
     initialValue: boolean

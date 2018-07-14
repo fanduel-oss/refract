@@ -6,13 +6,13 @@ export { Listener, Subscription }
 export interface ObservableComponent {
     observe: <T>(
         propName: string,
-        options: Partial<ObserveOptions>
+        options?: Partial<ObserveOptions>
     ) => Observable<T>
     mount: Observable<any>
     unmount: Observable<any>
 }
 
-export type EffectFactory<P, E> = (
+export type Aperture<P, E> = (
     props: P
 ) => (component: ObservableComponent) => Observable<E>
 

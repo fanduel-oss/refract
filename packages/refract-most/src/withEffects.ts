@@ -3,7 +3,8 @@ import * as React from 'react'
 import {
     PropListeners,
     Listeners,
-    EffectHandler,
+    Handler,
+    ErrorHandler,
     ObserveOptions
 } from './baseTypes'
 import {
@@ -12,13 +13,13 @@ import {
     createObservable,
     ObservableComponent,
     subscribeToSink,
-    EffectFactory
+    Aperture
 } from './observable'
 
 export const withEffects = <P, E>(
-    effectHandler: EffectHandler<P, E>,
-    errorHandler?: (err: any) => void
-) => (effectFactory: EffectFactory<P, E>) => (
+    handler: Handler<P, E>,
+    errorHandler?: ErrorHandler<P>
+) => (aperture: Aperture<P, E>) => (
     BaseComponent: React.ComponentType<P>
 ): React.ComponentClass<P> =>
     class WithEffects extends React.Component<P> {
@@ -59,7 +60,7 @@ export const withEffects = <P, E>(
 
             const createPropObservable = <T>(
                 propName: string,
-                opts: Partial<ObserveOptions>
+                opts?: Partial<ObserveOptions>
             ) => {
                 const options: ObserveOptions = {
                     initialValue: true,
@@ -92,16 +93,16 @@ export const withEffects = <P, E>(
                 unmount: unmountObservable,
                 observe: <T>(
                     propName: string,
-                    options: Partial<ObserveOptions>
+                    options?: Partial<ObserveOptions>
                 ) => createPropObservable<T>(propName, options)
             }
 
-            const sinkObservable = effectFactory(this.props)(this.component)
+            const sinkObservable = aperture(this.props)(this.component)
 
             this.sinkSubscription = subscribeToSink<E>(
                 sinkObservable,
-                effectHandler(this.props),
-                errorHandler
+                handler(this.props),
+                errorHandler(this.props)
             )
         }
 

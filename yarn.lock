@@ -4263,13 +4263,13 @@ rimraf@^2.5.4, rimraf@^2.6.1:
     glob "^7.0.5"
 
 rollup-plugin-typescript2@~0.14.1:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-typescript2/-/rollup-plugin-typescript2-0.14.0.tgz#b24c1019facdcfb100beff5673e0b229e9c79475"
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-typescript2/-/rollup-plugin-typescript2-0.15.1.tgz#7b35d0eaa6ad5a54a253ed158a565b99d8f15372"
   dependencies:
     fs-extra "^5.0.0"
     resolve "^1.7.1"
     rollup-pluginutils "^2.0.1"
-    tslib "^1.9.0"
+    tslib "1.9.2"
 
 rollup-pluginutils@^2.0.1:
   version "2.1.0"
@@ -4879,6 +4879,10 @@ ts-jest@~22.4.5:
     lodash "^4.17.10"
     pkg-dir "^2.0.0"
     yargs "^11.0.0"
+
+tslib@1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.2.tgz#8be0cc9a1f6dc7727c38deb16c2ebd1a2892988e"
 
 tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.0"

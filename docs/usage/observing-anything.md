@@ -1,12 +1,10 @@
 # Observing Anything
 
-Your `aperture` receives all initial props passed to your component. By passing observable data sources as props, you can observe anything you wish and trigger side-effects in response.
-
-This is a good way to inject any observable data source via `initialProps` can therefore be used to trigger effects. What you have to do is to pass the props you need to `withEffects`: see [Dependency injection](./dependency-injection.md)
+As explained in the [dependency injection](./dependency-injection.md) documentation, you can add dependencies to your `aperture` via React props. By passing observable data sources as props, you can observe anything you wish, and trigger side-effects in response.
 
 In addition, your `aperture` is a blank slate, and allows you to observe anything which exists in the global context such as time or events.
 
-## Events
+## Events
 
 By using your streaming library's utilities aimed at creating observables, you can respond to any events available in JavaScript.
 
@@ -47,4 +45,4 @@ const aperture = initialProps => component => {
 
 ## Custom Dependencies
 
-It's also possible to create your own dependencies with custom methods similar to our `component.observe` and `store.observe`, and expose them through dependency injection via props. If you do, please publish it so that others can use it too!
+It's also possible to create your own dependencies with custom methods similar to our `component.observe` and `store.observe`, and expose them through dependency injection via props. If you do, please publish them so that others can use it too!

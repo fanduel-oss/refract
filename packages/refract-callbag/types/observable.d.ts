@@ -17,12 +17,12 @@ export interface Subscription {
 export interface ObservableComponent {
     observe: <T = any>(
         propName: string,
-        options: Partial<ObserveOptions>
+        options?: Partial<ObserveOptions>
     ) => Source<T>
     mount: Source<any>
     unmount: Source<any>
 }
-export declare type EffectFactory<P, E> = (
+export declare type Aperture<P, E> = (
     props: P
 ) => (component: ObservableComponent) => Sink<E>
 export declare const subscribeToSink: <T>(

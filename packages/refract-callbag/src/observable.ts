@@ -25,13 +25,13 @@ export interface Subscription {
 export interface ObservableComponent {
     observe: <T = any>(
         propName: string,
-        options: Partial<ObserveOptions>
+        options?: Partial<ObserveOptions>
     ) => Source<T>
     mount: Source<any>
     unmount: Source<any>
 }
 
-export type EffectFactory<P, E> = (
+export type Aperture<P, E> = (
     props: P
 ) => (component: ObservableComponent) => Sink<E>
 

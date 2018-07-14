@@ -4,7 +4,7 @@
 
 This basic example involves a `counter` which the user can toggle between `incrementing`, `decrementing`, and `paused` states. The parent component has a simple state: `{ counter: 0, direction: 'NONE' }`. The buttons in the UI alter the `direction` state.
 
-#### EffectFactory
+#### Aperture
 
 Two sources are observed:
 
@@ -15,7 +15,7 @@ Every time `setDirection` is called, the value it was called with is dispatched.
 
 These two sources are then merged; the resulting stream contains a new effect every second, which contains the current direction as its `type`.
 
-#### EffectHandler
+#### Handler
 
 Simply increments or decrements the state whenever an effect is dispatched with the correct effect type.
 
