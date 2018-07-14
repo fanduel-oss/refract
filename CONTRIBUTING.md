@@ -40,6 +40,8 @@ For non-trivial changes, please open an issue with a proposal for a new feature 
 
 However, sometimes the best way to start a conversation is to send a pull request which demonstrates your idea.
 
+Refract provides multiple packages to provide first-class support for multiple reactive programming libraries. Unless your change is small, please first submit a PR containing changes to the `base` version only. Once the feature (and any potential API change) has been reviewed, the final step is to implement the same changes in the `packages`.
+
 Use your judgement to decide the best approach!
 
 In general, the contribution workflow looks like this:
@@ -51,6 +53,7 @@ In general, the contribution workflow looks like this:
 1. If you've changed APIs, update the documentation.
 1. Ensure the test suite passes and that there are no linting errors.
 1. Submit a pull request, referencing any issues it addresses!
+1. Once code has been reviewed and given tentative approval, copy into the various packages for final approval.
 
 Please try to keep your pull request focused in scope and avoid including unrelated commits!
 
