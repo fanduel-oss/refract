@@ -4,7 +4,7 @@
 
 This basic example renders a single text input which prompts for a GitHub username. When the user submits the form (either by clicking the button or pressing return), it dispatches a plain action to Redux.
 
-Inside the Refract `aperture`, two observables are observed: the `USER_REQUEST` action, and the `getUsers`  selector. Every time an action with the type `USER_REQUEST` is dispatched to the store, it is passed to the stream; every time the `users` object in the redux store changes, it is also passed to the stream.
+Inside the Refract `aperture`, two observables are observed: the `USER_REQUEST` action, and the `getUsers` selector. Every time an action with the type `USER_REQUEST` is dispatched to the store, it is passed to the stream; every time the `users` object in the redux store changes, it is also passed to the stream.
 
 These two streams are combined into one `combined$` - each time anything is sent to either stream, this new stream emits a new tuple containing the most recent value from _both_ source streams.
 
@@ -14,6 +14,8 @@ The Refract `handler` inspects the type of each effect, and causes different eff
 
 The end result is a form with some complex conditional, asynchronous logic built in an easily maintainable way.
 
+<!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/callbag) | [`code`](./most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/most)  | [`code`](./rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/rxjs)  | [`code`](./xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/xstream)  |
+| [`code`](./callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/callbag) | [`code`](./most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/most) | [`code`](./rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/rxjs) | [`code`](./xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/xstream) |
+<!-- prettier-ignore-end -->
