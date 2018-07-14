@@ -51,7 +51,8 @@ input {
     width: 100%;
 }
 
-input:hover {
+input:hover,
+input.success {
     border-color: #50B979;
 }
 
@@ -78,6 +79,10 @@ input.error {
     border-radius: 50%;
     max-width: 100px;
     margin: 0 auto 10px;
+}
+
+.success {
+    color: #50B979;
 }
 
 .error {
