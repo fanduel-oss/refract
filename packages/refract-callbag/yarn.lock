@@ -18,6 +18,10 @@ callbag-to-obs@~1.0.0:
   dependencies:
     symbol-observable "^1.2.0"
 
+callbag@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/callbag/-/callbag-1.1.0.tgz#9cbbc3352832da43e764d588ed43121d4b09c42a"
+
 symbol-observable@^1.2.0, symbol-observable@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
