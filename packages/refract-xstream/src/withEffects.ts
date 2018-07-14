@@ -120,7 +120,7 @@ export const withEffects = <P, E>(
             this.sinkSubscription = subscribeToSink<E>(
                 sinkObservable,
                 handler(this.props),
-                errorHandler(this.props)
+                errorHandler ? errorHandler(this.props) : undefined
             )
         }
 
