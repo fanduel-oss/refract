@@ -1,6 +1,33 @@
-![Refract](logo/refract-logo-colour.png)
+<p align="center">
+    <a href="#"><img src="./logo/refract-logo-colour.png" height="70" /></a>
+</p><br/>
 
-### Master your app's effects through the power of reactive programming
+<p align="center">
+    Master your React app's effects through the<br/>
+    power of reactive programming.
+</p>
+<br/>
+
+<p align="center">
+    <a href="#why"><strong>Why?</strong></a> ·
+    <a href="#installation"><strong>Install</strong></a> ·
+    <a href="#the-gist"><strong>The gist</strong></a> ·
+    <a href="#learn-refract"><strong>Learn</strong></a> ·
+    <a href="#contributing"><strong>Contribute</strong></a> ·
+    <a href="#discuss"><strong>Discuss</strong></a>
+</p>
+<br/>
+
+<p align="center">
+    <img src="https://img.shields.io/bundlephobia/minzip/refract-rxjs.svg" alt="Library size">
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
+    </a>
+    <a href="https://github.com/prettier/prettier">
+        <img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="Styled with Prettier">
+    </a>
+</p>
+<br/>
 
 Refract lets you isolate your app's side effects - API calls, analytics, logging, etc - so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
