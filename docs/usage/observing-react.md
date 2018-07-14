@@ -28,9 +28,10 @@ class Container extends Component {
         return (
             <InputWithEffects
                 value={this.state.currentValue}
-                onChange={(newValue) => this.setState({
+                onChange={newValue => this.setState({
                     currentValue: newValue
                 })}
+                {...otherProps}
             />
         )
     }
@@ -39,11 +40,11 @@ class Container extends Component {
 
 ## Observing Props
 
-Refract's `component.observe` function lets you observe your React props. It handles two different use cases: observing values, and observing functions.
+Refract's `component.observe` function lets you observe your React props. It handles three different use cases: observing values, observing functions, and observing all props.
 
 `component.observe` takes one required argument, plus an optional second argument:
 
-*   `propName` _(string)_: the name of the prop which you wish to observe.
+*   `propName` _(string)_: an optional string, the name of the prop which you wish to observe.
 *   `options` _(object)_: an optional object which configures the stream returned by `component.observe`.
 
     Available options:
@@ -99,6 +100,26 @@ const aperture = initialProps => component => {
 This example does not significantly differ from the `value` example above, but in more complex situations it can be extremely useful to observe arguments passed to callbacks in addition to values passed via props.
 
 In the case of function props, the `initialValue` option is not applicable.
+
+### Observing All Props
+
+In some cases, within your `aperture` you might wish to use the current value of all your component's props. While this is possible via manually calling `component.observe('prop')` for each of the props you wish to include and then combining all of the resulting streams, this is a lot of setup for a simple feature.
+
+Instead, when you do not specify a `propName`, `component.observe` will return a stream which emits a new object each time _any_ prop changes. This object will contain all of your component's props. _(note: change detection in this case is determined by React: withEffects is implemented as a PureComponent)_
+
+For example, if you wanted to just send all props through to your `handler` every time one of them changes:
+
+```js
+const aperture = initialProps => component =>
+    component.observe()
+```
+
+To specify an `options` object while observing all props, simply pass `undefined` as the first argument to `component.observe`:
+
+```js
+const aperture = initialProps => component =>
+    component.observe(undefined, { initialValue: false })
+```
 
 ## Observing Lifecycle Events
 
