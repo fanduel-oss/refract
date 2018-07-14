@@ -85,7 +85,9 @@ export const withEffects = <P, E>(
                     }
 
                     if (listenerType === 'allProps') {
-                        this.listeners.allProps.concat(listener)
+                        this.listeners.allProps = this.listeners.allProps.concat(
+                            listener
+                        )
 
                         return () => {
                             this.listeners.allProps.filter(l => l !== listener)
@@ -164,9 +166,7 @@ export const withEffects = <P, E>(
                 }
             })
 
-            if (this.listeners.allProps.length) {
-                this.listeners.allProps.forEach(l => l.next(this.props))
-            }
+            this.listeners.allProps.forEach(l => l.next(this.props))
         }
 
         private decorateProp(prop, propName) {
