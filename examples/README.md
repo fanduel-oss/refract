@@ -2,6 +2,7 @@
 
 ## Examples
 
+<!-- prettier-ignore-start -->
 | | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- | --- |
 | Basic |
@@ -11,3 +12,4 @@
 | |
 | Advanced |
 | **[Routing](./advanced/routing)** | [`code`](./advanced/routing/callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/routing/callbag) | [`code`](./advanced/routing/most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/routing/most)  | [`code`](./advanced/routing/rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/routing/rxjs)  | [`code`](./advanced/routing/xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/routing/xstream)  |
+<!-- prettier-ignore-end -->

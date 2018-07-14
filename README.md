@@ -49,12 +49,14 @@ Refract is available for a number of reactive programming libraries. For each li
 
 Available packages:
 
-|                                                   | [React](https://github.com/facebook/react) | [Redux](https://github.com/reduxjs/redux) |
-| ------------------------------------------------- | ------------------------------------------ | ----------------------------------------- |
-| **[Callbag](https://github.com/callbag/callbag)** | refract-callbag                            | refract-redux-callbag                     |
-| **[Most](https://github.com/cujojs/most)**        | refract-most                               | refract-redux-most                        |
-| **[RxJS](https://github.com/reactivex/rxjs)**     | refract-rxjs                               | refract-redux-rxjs                        |
-| **[xstream](https://github.com/staltz/xstream)**  | refract-xstream                            | refract-redux-xstream                     |
+<!-- prettier-ignore-start -->
+| | [React](https://github.com/facebook/react) | [Redux](https://github.com/reduxjs/redux) |
+| --- | --- | --- |
+| **[Callbag](https://github.com/callbag/callbag)** | refract-callbag | refract-redux-callbag |
+| **[Most](https://github.com/cujojs/most)** | refract-most | refract-redux-most |
+| **[RxJS](https://github.com/reactivex/rxjs)** | refract-rxjs | refract-redux-rxjs |
+| **[xstream](https://github.com/staltz/xstream)** | refract-xstream | refract-redux-xstream |
+<!-- prettier-ignore-end -->
 
 To use the latest stable version, simply `npm install` the package you want to use:
 
