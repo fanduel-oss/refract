@@ -41,7 +41,7 @@
     },
     "lint-staged": {
         "*.ts": ["prettier --write", "tslint", "git add"],
-        "*.{js,json}": ["prettier --write", "git add"]
+        "*.{js,json,md}": ["prettier --write", "git add"]
     },
     "jest": {
         "transform": {
