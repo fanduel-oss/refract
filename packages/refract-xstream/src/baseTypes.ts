@@ -7,6 +7,7 @@ export interface PropListeners {
 export interface Listeners {
     mount: Array<Partial<Listener<any>>>
     unmount: Array<Partial<Listener<any>>>
+    allProps: Array<Partial<Listener<any>>>
     props: PropListeners
     fnProps: PropListeners
 }
