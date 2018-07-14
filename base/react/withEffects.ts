@@ -59,8 +59,8 @@ export const withEffects = <P, E>(
             })
 
             const createPropObservable = <T>(
-                propName: string,
-                opts: Partial<ObserveOptions>
+                propName?: string,
+                opts?: Partial<ObserveOptions>
             ) => {
                 const options: ObserveOptions = {
                     initialValue: true,
@@ -107,8 +107,8 @@ export const withEffects = <P, E>(
                 mount: mountObservable,
                 unmount: unmountObservable,
                 observe: <T>(
-                    propName: string,
-                    options: Partial<ObserveOptions>
+                    propName?: string,
+                    options?: Partial<ObserveOptions>
                 ) => createPropObservable<T>(propName, options)
             }
 
