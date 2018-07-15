@@ -9,7 +9,8 @@
         "ordered-imports": false,
         "callable-types": false,
         "no-reference-import": false,
-        "no-var-requires": false
+        "no-var-requires": false,
+        "ban-types": false
     },
     "rulesDirectory": []
 }
