@@ -1,9 +1,10 @@
 {
-    "name": "refract-example",
     "dependencies": {
-        "react": "16.1.1",
-        "react-dom": "16.1.1",
-        "react-scripts": "1.0.10"
+        "most": "~1.7.3",
+        "react": "16.4.1",
+        "react-dom": "16.4.1",
+        "react-scripts": "1.0.10",
+        "refract-most": "~1.0.0-4"
     },
     "version": "0.0.0",
     "scripts": {
