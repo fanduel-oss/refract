@@ -20,13 +20,14 @@ const aperture = () => ({ observe }) =>
     observe('username')
         .filter(Boolean)
         .debounce(1000)
-        .flatMap(username =>
+        .map(username =>
             fromPromise(
                 fetch(`https://api.github.com/users/${username}`).then(res =>
                     res.json()
                 )
             )
         )
+        .switchLatest()
         .map(({ message }) => ({
             type: message === 'Not Found' ? 'USERNAME_AVAILABLE' : 'USER_FOUND'
         }))

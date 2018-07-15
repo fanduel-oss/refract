@@ -31,13 +31,14 @@ const aperture = ({ store }) => component => {
 
     const requestUser$ = combined$
         .filter(([request, users]) => !Boolean(users[request.payload]))
-        .chain(([{ payload: username }]) =>
+        .map(([{ payload: username }]) =>
             fromPromise(
                 fetch(`https://api.github.com/users/${username}`).then(res =>
                     res.json()
                 )
             )
         )
+        .switchLatest()
         .map(
             ({ message, ...response }) =>
                 Boolean(message)

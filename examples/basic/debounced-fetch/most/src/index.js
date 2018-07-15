@@ -16,9 +16,10 @@ const aperture = () => ({ observe }) =>
     observe('username')
         .filter(Boolean)
         .debounce(1000)
-        .flatMap(username =>
+        .map(username =>
             fromPromise(fetch(`https://api.github.com/users/${username}`))
         )
+        .switchLatest()
         .map(response => response.json())
         .awaitPromises()
         .map(payload => ({ type: 'USER_DATA_RECEIVE', payload }))
