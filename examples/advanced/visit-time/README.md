@@ -24,6 +24,8 @@ The end result is a stopwatch counting the number of milliseconds spent on the p
 -   switch between tabs, and you'll notice the counter hasn't moved while the example tab was hidden
 -   toggle your navigator online status (can be done via devtools)
 
-| callbag                        | most                        | RxJS                        | xstream                        |
-| ------------------------------ | --------------------------- | --------------------------- | ------------------------------ |
-| [`code`](./callbag) [`live`]() | [`code`](./most) [`live`]() | [`code`](./rxjs) [`live`]() | [`code`](./xstream) [`live`]() |
+<!-- prettier-ignore-start -->
+| callbag | most | RxJS | xstream |
+| --- | --- | --- | --- |
+| [`code`](./callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/visit-time/callbag) | [`code`](./most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/visit-time/most)  | [`code`](./rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/visit-time/rxjs)  | [`code`](./xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/visit-time/xstream)  |
+<!-- prettier-ignore-end -->
