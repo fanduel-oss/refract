@@ -1,0 +1,17 @@
+{
+    "dependencies": {
+        "most": "~1.7.3",
+        "react": "16.4.1",
+        "react-dom": "16.4.1",
+        "react-scripts": "1.0.10",
+        "react-state-hoc": "~3.0.0",
+        "refract-most": "~1.0.0-5"
+    },
+    "version": "0.0.0",
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
+}
