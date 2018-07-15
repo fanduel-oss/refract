@@ -6,7 +6,13 @@ const copyFile = util.promisify(fs.copyFile)
 
 const getPackages = require('../packages')
 const filesPerMainLib = {
-    react: ['baseTypes.ts', 'index.ts', 'withEffects.ts', '__tests__/index.ts'],
+    react: [
+        'baseTypes.ts',
+        'index.ts',
+        'withEffects.ts',
+        'compose.ts',
+        '__tests__/index.ts'
+    ],
     redux: [
         'baseTypes.ts',
         'index.ts',
