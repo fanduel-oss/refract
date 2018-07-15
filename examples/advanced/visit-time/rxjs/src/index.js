@@ -53,7 +53,7 @@ const handler = ({ resume, pause, tick }) => effect => {
         tick(Date.now())
     }
 }
-const errorHandler = () => err => console.err(err)
+const errorHandler = () => err => console.error(err)
 
 const initialState = { lastResumeTimestamp: null, totalTime: 0, runningTime: 0 }
 
