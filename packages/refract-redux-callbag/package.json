@@ -1,6 +1,6 @@
 {
     "name": "refract-redux-callbag",
-    "version": "1.0.0-2",
+    "version": "1.0.0-3",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
