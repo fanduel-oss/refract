@@ -1,4 +1,4 @@
-# 🏠 [Home](../../../) / [Examples](../../) / [Basic](../) / Counter
+# 🏠 [Home](../../) / [Examples](../) / Counter
 
 ## Counter
 
@@ -26,5 +26,5 @@ The end result is a counter which infinitely counts upwards after the user click
 <!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/callbag) | [`code`](./most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/most)  | [`code`](./rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/rxjs)  | [`code`](./xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/counter/xstream)  |
+| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/counter/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/counter/most)  | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/counter/rxjs)  | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/counter/xstream)  |
 <!-- prettier-ignore-end -->

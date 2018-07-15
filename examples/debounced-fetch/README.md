@@ -1,4 +1,4 @@
-# 🏠 [Home](../../../) / [Examples](../../) / [Basic](../) / Debounced Fetch
+# 🏠 [Home](../../) / [Examples](../) / Debounced Fetch
 
 ## Debounced Fetch
 
@@ -25,5 +25,5 @@ The end result is a debounced fetch request based on input's current value, with
 <!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/debounced-fetch/callbag) | [`code`](./most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/debounced-fetch/most)  | [`code`](./rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/debounced-fetch/rxjs)  | [`code`](./xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/debounced-fetch/xstream)  |
+| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/debounced-fetch/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/debounced-fetch/most)  | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/debounced-fetch/rxjs)  | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/debounced-fetch/xstream)  |
 <!-- prettier-ignore-end -->

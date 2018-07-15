@@ -1,4 +1,4 @@
-# 🏠 [Home](../../../) / [Examples](../../) / [Advanced](../) / Routing
+# 🏠 [Home](../../) / [Examples](../) / Routing
 
 ## Routing
 
@@ -28,5 +28,5 @@ The end result is a set of tabs whose state is pushed to the browser url as a si
 <!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/routing/callbag) | [`code`](./most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/routing/most)  | [`code`](./rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/routing/rxjs)  | [`code`](./xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/advanced/routing/xstream)  |
+| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/routing/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/routing/most)  | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/routing/rxjs)  | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/routing/xstream)  |
 <!-- prettier-ignore-end -->

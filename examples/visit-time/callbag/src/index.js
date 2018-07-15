@@ -21,14 +21,8 @@ const aperture = () => component => {
     )
     const online$ = pipe(
         merge(
-            pipe(
-                fromEvent(window, 'online'),
-                map(() => true)
-            ),
-            pipe(
-                fromEvent(window, 'offline'),
-                map(() => false)
-            )
+            pipe(fromEvent(window, 'online'), map(() => true)),
+            pipe(fromEvent(window, 'offline'), map(() => false))
         ),
         startWith(isOnline())
     )

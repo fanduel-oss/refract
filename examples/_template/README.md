@@ -1,4 +1,4 @@
-# 🏠 [Home](../../../) / [Examples](../../) / [Basic](../) / <Example Name>
+# 🏠 [Home](../../) / [Examples](../) / <Example Name>
 
 ## <Example Name>
 
@@ -19,5 +19,5 @@ _Description of result_
 <!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/.../callbag) | [`code`](./most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/.../most)  | [`code`](./rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/.../rxjs)  | [`code`](./xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/.../xstream)  |
+| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/.../callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/.../most)  | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/.../rxjs)  | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/.../xstream)  |
 <!-- prettier-ignore-end -->
