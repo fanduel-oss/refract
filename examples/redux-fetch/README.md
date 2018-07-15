@@ -1,4 +1,4 @@
-# 🏠 [Home](../../../) / [Examples](../../) / [Basic](../) / Redux Fetch
+# 🏠 [Home](../../) / [Examples](../) / Redux Fetch
 
 ## Redux Fetch
 
@@ -17,5 +17,5 @@ The end result is a form with some complex conditional, asynchronous logic built
 <!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/callbag) | [`code`](./most) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/most) | [`code`](./rxjs) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/rxjs) | [`code`](./xstream) [`live`](https://stackblitz.com/github/troch/refract/tree/master/examples/basic/redux-fetch/xstream) |
+| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/redux-fetch/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/redux-fetch/most) | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/redux-fetch/rxjs) | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/redux-fetch/xstream) |
 <!-- prettier-ignore-end -->
