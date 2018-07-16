@@ -2,7 +2,6 @@ import $$observable from 'symbol-observable'
 import { Callbag, Source, Sink } from 'callbag'
 const fromObs = require('callbag-from-obs')
 const toObs = require('callbag-to-obs')
-import { ObserveOptions } from './baseTypes'
 
 export interface Listener<T> {
     next: (val: T) => void
@@ -15,10 +14,7 @@ export interface Subscription {
 }
 
 export interface ObservableComponent {
-    observe: <T = any>(
-        propName: string,
-        options?: Partial<ObserveOptions>
-    ) => Source<T>
+    observe: <T = any>(propName: string) => Source<T>
     mount: Source<any>
     unmount: Source<any>
 }

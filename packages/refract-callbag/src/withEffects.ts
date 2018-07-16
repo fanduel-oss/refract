@@ -1,12 +1,6 @@
 import * as React from 'react'
 
-import {
-    PropListeners,
-    Listeners,
-    Handler,
-    ErrorHandler,
-    ObserveOptions
-} from './baseTypes'
+import { PropListeners, Listeners, Handler, ErrorHandler } from './baseTypes'
 import {
     Subscription,
     Listener,
@@ -59,14 +53,7 @@ export const withEffects = <P, E>(
                 return () => this.listeners.unmount.filter(l => l !== listener)
             })
 
-            const createPropObservable = <T>(
-                propName?: string,
-                opts?: Partial<ObserveOptions>
-            ) => {
-                const options: ObserveOptions = {
-                    initialValue: true,
-                    ...opts
-                }
+            const createPropObservable = <T>(propName?: string) => {
                 const listenerType = propName
                     ? typeof this.props[propName] === 'function'
                         ? 'fnProps'
@@ -74,17 +61,9 @@ export const withEffects = <P, E>(
                     : 'allProps'
 
                 return createObservable<T>(listener => {
-                    if (options.initialValue) {
-                        if (listenerType === 'props') {
-                            listener.next(this.props[propName])
-                        }
-
-                        if (listenerType === 'allProps') {
-                            listener.next(this.props)
-                        }
-                    }
-
                     if (listenerType === 'allProps') {
+                        listener.next(this.props)
+
                         this.listeners.allProps = this.listeners.allProps.concat(
                             listener
                         )
@@ -92,6 +71,10 @@ export const withEffects = <P, E>(
                         return () => {
                             this.listeners.allProps.filter(l => l !== listener)
                         }
+                    }
+
+                    if (listenerType === 'props') {
+                        listener.next(this.props[propName])
                     }
 
                     this.listeners[listenerType][propName] = (
@@ -109,10 +92,8 @@ export const withEffects = <P, E>(
             this.component = {
                 mount: mountObservable,
                 unmount: unmountObservable,
-                observe: <T>(
-                    propName?: string,
-                    options?: Partial<ObserveOptions>
-                ) => createPropObservable<T>(propName, options)
+                observe: <T>(propName?: string) =>
+                    createPropObservable<T>(propName)
             }
 
             const sinkObservable = aperture(this.props)(this.component)

@@ -28,9 +28,11 @@ class Container extends Component {
         return (
             <InputWithEffects
                 value={this.state.currentValue}
-                onChange={newValue => this.setState({
-                    currentValue: newValue
-                })}
+                onChange={newValue =>
+                    this.setState({
+                        currentValue: newValue
+                    })
+                }
                 {...otherProps}
             />
         )
@@ -42,22 +44,19 @@ class Container extends Component {
 
 Refract's `component.observe` function lets you observe your React props. It handles three different use cases: observing values, observing functions, and observing all props.
 
-`component.observe` takes one required argument, plus an optional second argument:
+`component.observe` takes one optional argument:
 
-*   `propName` _(string)_: an optional string, the name of the prop which you wish to observe.
-*   `options` _(object)_: an optional object which configures the stream returned by `component.observe`.
-
-    Available options:
-
-    *   `initialValue` _(boolean)_: specifies whether the stream should be initialised with the current observed prop value (default: `true`).
+-   `propName` _(string)_: an optional string, the name of the prop which you wish to observe.
 
 ```js
 const aperture = initialProps => component => {
     const onChange$ = component.observe('onChange')
-    const value$ = component.observe('value', { initialValue: false })
+    const value$ = component.observe('value')
     /* create effects here */
 }
 ```
+
+When observing values, the returned stream is initialised with the current observed prop value. If you wish to only observe subsequent changes, you can "drop" the first value: search for a `drop` operator in the reactive programming library you use.
 
 ### Observing Values
 
@@ -73,9 +72,7 @@ For example, if we want to observe the `value` prop in our aperture, and only ca
 const aperture = initialProps => component => {
     const value$ = component.observe('value')
 
-    return value$.pipe(
-        filter(string => string.length > 5)
-    )
+    return value$.pipe(filter(string => string.length > 5))
 }
 ```
 
@@ -91,15 +88,11 @@ For example, if we want to observe arguments passed to the `onChange` prop to ac
 const aperture = initialProps => component => {
     const onChange$ = component.observe('onChange')
 
-    return onChange$.pipe(
-        filter(string => string.length > 5)
-    )
+    return onChange$.pipe(filter(string => string.length > 5))
 }
 ```
 
-This example does not significantly differ from the `value` example above, but in more complex situations it can be extremely useful to observe arguments passed to callbacks in addition to values passed via props.
-
-In the case of function props, the `initialValue` option is not applicable.
+This example does not significantly differ from the `value` example above (the stream won't be initialised with a value), but in more complex situations it can be extremely useful to observe arguments passed to callbacks in addition to values passed via props.
 
 ### Observing All Props
 
@@ -110,15 +103,7 @@ Instead, when you do not specify a `propName`, `component.observe` will return a
 For example, if you wanted to just send all props through to your `handler` every time one of them changes:
 
 ```js
-const aperture = initialProps => component =>
-    component.observe()
-```
-
-To specify an `options` object while observing all props, simply pass `undefined` as the first argument to `component.observe`:
-
-```js
-const aperture = initialProps => component =>
-    component.observe(undefined, { initialValue: false })
+const aperture = initialProps => component => component.observe()
 ```
 
 ## Observing Lifecycle Events
@@ -137,9 +122,7 @@ It can be useful to defer any logic until a component has been mounted.
 const aperture = initialProps => component => {
     const mount$ = component.mount
 
-    return mount$.pipe(
-        mapTo('Component mounted!')
-    )
+    return mount$.pipe(mapTo('Component mounted!'))
 }
 ```
 
@@ -153,9 +136,7 @@ It can be useful to trigger side-effects when a component is about to be unmount
 const aperture = initialProps => component => {
     const unmount$ = component.unmount
 
-    return unmount$.pipe(
-        mapTo('Component unmounted!')
-    )
+    return unmount$.pipe(mapTo('Component unmounted!'))
 }
 ```
 

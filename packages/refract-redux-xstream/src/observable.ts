@@ -1,25 +1,15 @@
 import xs, { Stream, Listener } from 'xstream'
 import dropRepeats from 'xstream/extra/dropRepeats'
-import { Selector, ObserveOptions } from './baseTypes'
+import { Selector } from './baseTypes'
 
 export interface ObserveFn {
-    <T>(
-        actionTypeOrListener: string | Selector<T>,
-        options?: Partial<ObserveOptions>
-    ): Stream<T>
+    <T>(actionTypeOrListener: string | Selector<T>): Stream<T>
 }
 
 export const observeFactory = (store): ObserveFn => {
     const storeObservable = xs.from(store)
 
-    return <T>(
-        actionOrSelector: string | Selector<T>,
-        opts?: Partial<ObserveOptions>
-    ): Stream<T> => {
-        const options: ObserveOptions = {
-            initialValue: true,
-            ...opts
-        }
+    return <T>(actionOrSelector: string | Selector<T>): Stream<T> => {
         if (typeof actionOrSelector === 'string') {
             let unsubscribe
 
@@ -38,13 +28,10 @@ export const observeFactory = (store): ObserveFn => {
         }
 
         if (typeof actionOrSelector === 'function') {
-            const selectorObservable = storeObservable.map(actionOrSelector)
-
-            return options.initialValue
-                ? selectorObservable
-                      .startWith(actionOrSelector(store.getState()))
-                      .compose(dropRepeats())
-                : selectorObservable.compose(dropRepeats())
+            return storeObservable
+                .map(actionOrSelector)
+                .startWith(actionOrSelector(store.getState()))
+                .compose(dropRepeats())
         }
     }
 }

@@ -1,5 +1,4 @@
 import { Callbag, Source, Sink } from 'callbag'
-import { ObserveOptions } from './baseTypes'
 export interface Listener<T> {
     next: (val: T) => void
     error: (err: any) => void
@@ -9,10 +8,7 @@ export interface Subscription {
     unsubscribe(): void
 }
 export interface ObservableComponent {
-    observe: <T = any>(
-        propName: string,
-        options?: Partial<ObserveOptions>
-    ) => Source<T>
+    observe: <T = any>(propName: string) => Source<T>
     mount: Source<any>
     unmount: Source<any>
 }
