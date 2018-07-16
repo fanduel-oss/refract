@@ -1,9 +1,6 @@
 import { Stream } from 'most'
-import { Selector, ObserveOptions } from './baseTypes'
+import { Selector } from './baseTypes'
 export interface ObserveFn {
-    <T>(
-        actionTypeOrListener: string | Selector<T>,
-        options?: Partial<ObserveOptions>
-    ): Stream<T>
+    <T>(actionTypeOrListener: string | Selector<T>): Stream<T>
 }
 export declare const observeFactory: (store: any) => ObserveFn

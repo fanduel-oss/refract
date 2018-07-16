@@ -1,11 +1,7 @@
 import { Stream, Subscriber as Listener } from 'most'
-import { ObserveOptions } from './baseTypes'
 export { Listener }
 export interface ObservableComponent {
-    observe: <T>(
-        propName: string,
-        options?: Partial<ObserveOptions>
-    ) => Stream<T>
+    observe: <T>(propName: string) => Stream<T>
     mount: Stream<any>
     unmount: Stream<any>
 }
