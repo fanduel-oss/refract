@@ -15,7 +15,3 @@ export interface Listeners {
 export type Handler<P, E> = (intialProps: P) => (val: E) => void
 
 export type ErrorHandler<P> = (intialProps: P) => (error: any) => void
-
-export interface ObserveOptions {
-    initialValue: boolean
-}
