@@ -22,7 +22,10 @@ const aperture = props => component => {
 
     const tick$ = interval(1000)
 
-    return tick$.pipe(withLatestFrom(direction$), map(([, type]) => ({ type })))
+    return tick$.pipe(
+        withLatestFrom(direction$),
+        map(([, type]) => ({ type }))
+    )
 }
 
 const initialState = { count: 0, direction: 'NONE' }

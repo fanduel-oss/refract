@@ -23,7 +23,10 @@ const aperture = props => component => {
 
     const tick$ = interval(1000)
 
-    return pipe(combine(tick$, direction$), map(([, type]) => ({ type })))
+    return pipe(
+        combine(tick$, direction$),
+        map(([, type]) => ({ type }))
+    )
 }
 
 const initialState = { count: 0, direction: 'NONE' }
