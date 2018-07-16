@@ -8,7 +8,3 @@ export type AddActionListener = (
     listener: ActionListener
 ) => UnsubscribeFn
 export type Selector<T> = (state: object) => T
-
-export interface ObserveOptions {
-    initialValue: boolean
-}
