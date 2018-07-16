@@ -3,6 +3,8 @@ const fs = require('fs')
 const util = require('util')
 
 const copyFile = util.promisify(fs.copyFile)
+const readFile = util.promisify(fs.readFile)
+const writeFile = util.promisify(fs.writeFile)
 
 const getPackages = require('../packages')
 const filesPerMainLib = {
@@ -21,9 +23,13 @@ const filesPerMainLib = {
     ]
 }
 
+copyAll()
+
 async function copyAll() {
     await copyBaseFiles('react')
+    await copyBaseReadme('react')
     await copyBaseFiles('redux')
+    await copyBaseReadme('redux')
 }
 
 async function copyBaseFiles(mainLib) {
@@ -31,15 +37,8 @@ async function copyBaseFiles(mainLib) {
         (copyPromises, package) =>
             copyPromises.concat(
                 filesPerMainLib[mainLib].map(file => ({
-                    src: path.resolve(__dirname, '..', 'base', mainLib, file),
-                    dest: path.resolve(
-                        __dirname,
-                        '..',
-                        'packages',
-                        package,
-                        'src',
-                        file
-                    )
+                    src: getBaseFilePath(mainLib, file),
+                    dest: getPackageFilePath(package, path.join('src', file))
                 }))
             ),
         []
@@ -52,4 +51,27 @@ async function copyBaseFiles(mainLib) {
     }
 }
 
-copyAll()
+async function copyBaseReadme(mainLib) {
+    try {
+        const readme = await readFile(
+            path.resolve(__dirname, '..', 'base', mainLib, 'README.tpl.md')
+        )
+
+        await getPackages(mainLib).map(package =>
+            writeFile(
+                getPackageFilePath(package, 'README.md'),
+                readme.toString().replace(/LIBRARY_NAME/g, package)
+            )
+        )
+    } catch (e) {
+        console.error(e.toString())
+    }
+}
+
+function getBaseFilePath(mainLib, file) {
+    return path.resolve(__dirname, '..', 'base', mainLib, file)
+}
+
+function getPackageFilePath(package, file) {
+    return path.resolve(__dirname, '..', 'packages', package, file)
+}

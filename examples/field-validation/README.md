@@ -2,13 +2,19 @@
 
 ## Field Validation
 
+<!-- prettier-ignore-start -->
+| callbag | most | RxJS | xstream |
+| --- | --- | --- | --- |
+| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/field-validation/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/field-validation/most) | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/field-validation/rxjs) | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/field-validation/xstream) |
+<!-- prettier-ignore-end -->
+
 This basic example renders a single text input which prompts for a GitHub username; the current `username` of this input is stored in React component state.
 
 #### Aperture
 
 Only one source is observed:
 
-*   The `username` prop.
+-   The `username` prop.
 
 Every time the input's `username` changes, the new username is passed to the stream. Any blank strings are filtered from the stream, and then the usernames are debounced for one second.
 
@@ -21,9 +27,3 @@ The Refract `handler` toggles the `available` state appropriately depending on t
 #### Result
 
 The end result is an input field with asynchronous validation handled as a side-effect.
-
-<!-- prettier-ignore-start -->
-| callbag | most | RxJS | xstream |
-| --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/field-validation/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/field-validation/most) | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/field-validation/rxjs) | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/field-validation/xstream) |
-<!-- prettier-ignore-end -->
