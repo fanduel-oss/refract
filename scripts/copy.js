@@ -29,6 +29,7 @@ async function copyAll() {
     await copyBaseFiles('react')
     await copyBaseReadme('react')
     await copyBaseFiles('redux')
+    await copyBaseReadme('redux')
 }
 
 async function copyBaseFiles(mainLib) {
