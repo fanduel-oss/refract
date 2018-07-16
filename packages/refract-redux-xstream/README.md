@@ -20,6 +20,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/bundlephobia/minzip/refract-redux-xstream.svg" alt="Library size">
+    <img src="https://img.shields.io/npm/v/refract-redux-xstream.svg?maxAge=3600&label=refract-redux-xstream">
     <a href="https://opensource.org/licenses/MIT">
         <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
     </a>
