@@ -45,4 +45,7 @@ const mapDispatchToProps = dispatch => ({
     selectUser: userId => () => dispatch(actionCreators.selectUser(userId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Users)

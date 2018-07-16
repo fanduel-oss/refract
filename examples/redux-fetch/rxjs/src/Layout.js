@@ -33,6 +33,7 @@ const initialState = { data: null, username: '' }
 
 const mapSetStateToProps = { setUsername: username => ({ username }) }
 
-export default connect(null, mapDispatchToProps)(
-    withState(initialState, mapSetStateToProps)(Layout)
-)
+export default connect(
+    null,
+    mapDispatchToProps
+)(withState(initialState, mapSetStateToProps)(Layout))
