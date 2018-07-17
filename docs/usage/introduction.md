@@ -23,5 +23,3 @@ A `handler` is a function which causes side-effects in response to any `effect` 
 ## Error Handler
 
 An `errorHandler` is a function which causes side-effects in response to any `error` value output by the `aperture`.
-
-_TODO: make sure any other useful terms have been added here, and link everything through to more thorough explanations elsewhere_

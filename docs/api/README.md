@@ -1,4 +1,5 @@
 # API Reference
 
-* [withEffects](withEffects.md)
-* [refractEnhancer](refractEnhancer.md)
+*   [compose](compose.md)
+*   [withEffects](withEffects.md)
+*   [refractEnhancer](refractEnhancer.md)
