@@ -8,6 +8,8 @@ import { filter, flatten, map, merge, pipe } from 'callbag-basics'
 
 import Layout from './Layout'
 
+const toState = payload => ({ type: 'SET_STATE', payload })
+
 const aperture = intialProps => component => {
     const search$ = component.observe('search')
 
@@ -23,16 +25,16 @@ const aperture = intialProps => component => {
             )
         ),
         flatten,
-        map(({ items = [] }) => items),
-        map(payload => ({ type: 'USER_SUGGESTIONS_RECEIVE', payload }))
+        map(({ items = [] }) => items.slice(0, 10)),
+        map(suggestions => ({ suggestions })),
+        map(toState)
     )
 
     const clearSuggestions$ = pipe(
         search$,
         filter(search => search === ''),
-        map(() => ({
-            type: 'USER_SUGGESTIONS_CLEAR'
-        }))
+        map(() => ({ suggestions: [] })),
+        map(toState)
     )
 
     const user$ = pipe(
@@ -47,23 +49,16 @@ const aperture = intialProps => component => {
             )
         ),
         flatten,
-        map(payload => ({ type: 'USER_RECEIVE', payload }))
+        map(user => ({ user })),
+        map(toState)
     )
 
     return merge(suggestions$, clearSuggestions$, user$)
 }
 
 const handler = initialProps => effect => {
-    if (effect.type === 'USER_SUGGESTIONS_CLEAR') {
-        initialProps.setState({ suggestions: [] })
-    }
-
-    if (effect.type === 'USER_SUGGESTIONS_RECEIVE') {
-        initialProps.setState({ suggestions: effect.payload.slice(0, 10) })
-    }
-
-    if (effect.type === 'USER_RECEIVE') {
-        initialProps.setState({ user: effect.payload })
+    if (effect.type === 'SET_STATE') {
+        initialProps.setState(effect.payload)
     }
 }
 const errorHandler = () => err => console.error(err)
