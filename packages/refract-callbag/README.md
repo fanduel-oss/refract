@@ -64,7 +64,7 @@ Available packages:
 
 The example below uses `refract-rxjs` to send data to localstorage.
 
-Every time the `username` prop changes, its new value is sent into the stream. The stream debounces the input for two seconds, then maps it into an object (with a `type` of `localstorage`) under the key `payload`. Each time an effect is emitted from this pipeline, the handler calls `localstorage.setItem` with the effect's `payload` property.
+Every time the `username` prop changes, its new value is sent into the stream. The stream debounces the input for two seconds, then maps it into an object (with a `type` of `localstorage`) under the key `value`. Each time an effect with the correct type is emitted from this pipeline, the handler calls `localstorage.setItem` with the effect's `name` and `value` properties.
 
 ```js
 const aperture = initialProps => component => {
@@ -95,9 +95,9 @@ An `aperture` controls the streams of data entering Refract. It is a function wh
 
 Signature: `(initialProps) => (component) => { return effectStream }`.
 
--   The `initialProps` are all props passed into the `WrappedComponent`.
--   The `component` is an object which lets you observe your React component.
--   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
+*   The `initialProps` are all props passed into the `WrappedComponent`.
+*   The `component` is an object which lets you observe your React component.
+*   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
 
 ### Handler
 
@@ -105,9 +105,9 @@ A `handler` is a function which causes side-effects in response to any `effect` 
 
 Signature: `(initialProps) => (effect) => { /* handle effects here */ }`.
 
--   The `initialProps` are all props passed into the `WrappedComponent`.
--   The `effect` is each event emitted by your `aperture`.
--   Within the body of the function, you call any side-effects imperatively.
+*   The `initialProps` are all props passed into the `WrappedComponent`.
+*   The `effect` is each event emitted by your `aperture`.
+*   Within the body of the function, you call any side-effects imperatively.
 
 ### withEffects
 
@@ -115,11 +115,11 @@ The `withEffects` higher-order component implements your side-effect logic as a 
 
 Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent }`
 
--   The hoc takes in three curried arguments:
-    -   A `handler` function
-    -   An `aperture` function
-    -   A React `Component`
--   The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
+*   The hoc takes in three curried arguments:
+    *   A `handler` function
+    *   An `aperture` function
+    *   A React `Component`
+*   The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
 
 # Documentation
 
