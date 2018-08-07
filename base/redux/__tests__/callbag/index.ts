@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
-import { refractEnhancer } from '../index'
+import { refractEnhancer } from '../../../../packages/refract-redux-callbag/src'
 
-describe(require('../../package.json').name, () => {
+describe('refract-redux-callbag', () => {
     it('should work', () => {
         interface State {
             name: string

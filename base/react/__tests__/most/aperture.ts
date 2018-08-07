@@ -1,6 +1,6 @@
-import { merge, map } from 'callbag-basics'
+import { merge } from 'most'
 
-import { Aperture } from '../index'
+import { Aperture } from '../../../../packages/refract-most/src'
 
 export interface Effect {
     type: string
@@ -18,24 +18,24 @@ const aperture: Aperture<Props, Effect> = props => component => {
     const mount$ = component.mount
     const unmount$ = component.unmount
 
-    return merge(
-        map(value => ({
+    return merge<Effect>(
+        value$.map(value => ({
             type: 'ValueChange',
             value
-        }))(value$),
+        })),
 
-        map(value => ({
+        valueSet$.map(value => ({
             type: 'ValueSet',
             value
-        }))(valueSet$),
+        })),
 
-        map(() => ({
+        mount$.constant({
             type: 'Start'
-        }))(mount$),
+        }),
 
-        map(() => ({
+        unmount$.constant({
             type: 'Stop'
-        }))(unmount$)
+        })
     )
 }
 
