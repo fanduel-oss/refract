@@ -15,6 +15,7 @@
         "@types/enzyme": "~3.1.10",
         "@types/jest": "~22.2.3",
         "@types/react": "~16.3.14",
+        "callbag": "~1.1.0",
         "callbag-basics": "~3.0.0",
         "callbag-from-obs": "~1.2.0",
         "callbag-to-obs": "~1.0.0",

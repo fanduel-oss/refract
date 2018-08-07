@@ -13,7 +13,13 @@ const filesPerMainLib = {
         'index.ts',
         'withEffects.ts',
         'compose.ts',
-        '__tests__/index.ts'
+        '__tests__/index.ts',
+        reactiveLib => ({
+            src: `observable${
+                reactiveLib === 'rxjs' ? '' : `_${reactiveLib}`
+            }.ts`,
+            dest: 'observable.ts'
+        })
     ],
     redux: [
         'baseTypes.ts',
@@ -36,10 +42,25 @@ async function copyBaseFiles(mainLib) {
     const files = getPackages(mainLib).reduce(
         (copyPromises, package) =>
             copyPromises.concat(
-                filesPerMainLib[mainLib].map(file => ({
-                    src: getBaseFilePath(mainLib, file),
-                    dest: getPackageFilePath(package, path.join('src', file))
-                }))
+                filesPerMainLib[mainLib].map(fileName => {
+                    let srcFileName, destFileName
+                    if (typeof fileName === 'function') {
+                        const files = fileName(package.obsLib)
+                        srcFileName = files.src
+                        destFileName = files.dest
+                    } else {
+                        srcFileName = fileName
+                        destFileName = fileName
+                    }
+
+                    return {
+                        src: getBaseFilePath(mainLib, srcFileName),
+                        dest: getPackageFilePath(
+                            package.name,
+                            path.join('src', destFileName)
+                        )
+                    }
+                })
             ),
         []
     )
@@ -59,8 +80,8 @@ async function copyBaseReadme(mainLib) {
 
         await getPackages(mainLib).map(package =>
             writeFile(
-                getPackageFilePath(package, 'README.md'),
-                readme.toString().replace(/LIBRARY_NAME/g, package)
+                getPackageFilePath(package.name, 'README.md'),
+                readme.toString().replace(/LIBRARY_NAME/g, package.name)
             )
         )
     } catch (e) {

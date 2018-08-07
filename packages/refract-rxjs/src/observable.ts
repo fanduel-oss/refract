@@ -3,13 +3,13 @@ import { Observable, PartialObserver as Listener, Subscription } from 'rxjs'
 export { Listener, Subscription }
 
 export interface ObservableComponent {
-    observe: <T>(propName: string) => Observable<T>
+    observe: <T>(propName?: string) => Observable<T>
     mount: Observable<any>
     unmount: Observable<any>
 }
 
 export type Aperture<P, E> = (
-    props: P
+    initialProps: P
 ) => (component: ObservableComponent) => Observable<E>
 
 export const subscribeToSink = <T>(
