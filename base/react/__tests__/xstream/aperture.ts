@@ -16,6 +16,7 @@ const aperture: Aperture<Props, Effect> = props => component => {
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
     const unmount$ = component.unmount
+    const linkClick$ = component.signal<any>('linkClick')
 
     return xs.merge<Effect>(
         value$.map(value => ({
@@ -34,6 +35,10 @@ const aperture: Aperture<Props, Effect> = props => component => {
 
         unmount$.mapTo({
             type: 'Stop'
+        }),
+
+        linkClick$.mapTo({
+            type: 'LinkClick'
         })
     )
 }

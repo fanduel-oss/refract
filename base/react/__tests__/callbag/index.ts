@@ -25,10 +25,17 @@ describe('refract-callbag', () => {
         const setValue = () => void 0
         const WithEffects = withEffects<Props, Effect>(
             () => effectValueHandler
-        )(aperture)(({ setValue }) =>
-            React.createElement('button', {
-                onClick: () => setValue(10)
-            })
+        )(aperture)(({ setValue, pushSignal }) =>
+            React.createElement('div', {}, [
+                React.createElement('button', {
+                    key: 'button',
+                    onClick: () => setValue(10)
+                }),
+                React.createElement('a', {
+                    key: 'link',
+                    onClick: pushSignal('linkClick')
+                })
+            ])
         )
 
         const component = mount(
@@ -51,7 +58,7 @@ describe('refract-callbag', () => {
             value: 2
         })
 
-        component.simulate('click')
+        component.find('button').simulate('click')
 
         expect(effectValueHandler).toHaveBeenCalledWith({
             type: 'ValueSet',
@@ -59,11 +66,17 @@ describe('refract-callbag', () => {
         })
 
         component.setProps({ setValue: () => void 0 })
-        component.simulate('click')
+        component.find('button').simulate('click')
 
         expect(effectValueHandler).toHaveBeenCalledWith({
             type: 'ValueSet',
             value: 10
+        })
+
+        component.find('a').simulate('click')
+
+        expect(effectValueHandler).toHaveBeenCalledWith({
+            type: 'LinkClick'
         })
 
         component.unmount()
