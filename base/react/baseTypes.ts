@@ -10,11 +10,11 @@ export interface Listeners {
     allProps: Array<Partial<Listener<any>>>
     props: KeyedListeners
     fnProps: KeyedListeners
-    signal: KeyedListeners
+    event: KeyedListeners
 }
 
 export type Handler<P, E> = (intialProps: P) => (val: E) => void
 
 export type ErrorHandler<P> = (intialProps: P) => (error: any) => void
 
-export type PushSignal = (signalName: string) => <T>(val: T) => void
+export type PushSignal = (eventName: string) => <T>(val: T) => void

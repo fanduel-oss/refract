@@ -25,7 +25,7 @@ describe('refract-rxjs', () => {
         const setValue = () => void 0
         const WithEffects = withEffects<Props, Effect>(
             () => effectValueHandler
-        )(aperture)(({ setValue, pushSignal }) =>
+        )(aperture)(({ setValue, pushEvent }) =>
             React.createElement('div', {}, [
                 React.createElement('button', {
                     key: 'button',
@@ -33,7 +33,7 @@ describe('refract-rxjs', () => {
                 }),
                 React.createElement('a', {
                     key: 'link',
-                    onClick: pushSignal('linkClick')
+                    onClick: pushEvent('linkClick')
                 })
             ])
         )
