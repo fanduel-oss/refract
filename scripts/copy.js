@@ -25,7 +25,13 @@ const filesPerMainLib = {
         'baseTypes.ts',
         'index.ts',
         'refractEnhancer.ts',
-        '__tests__/index.ts'
+        '__tests__/index.ts',
+        reactiveLib => ({
+            src: `observable${
+                reactiveLib === 'rxjs' ? '' : `_${reactiveLib}`
+            }.ts`,
+            dest: 'observable.ts'
+        })
     ]
 }
 
