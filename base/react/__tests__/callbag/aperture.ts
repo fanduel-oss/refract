@@ -1,5 +1,6 @@
-import xs from 'xstream'
-import { Aperture } from '../index'
+import { merge, map } from 'callbag-basics'
+
+import { Aperture } from '../../../../packages/refract-callbag/src'
 
 export interface Effect {
     type: string
@@ -17,24 +18,24 @@ const aperture: Aperture<Props, Effect> = props => component => {
     const mount$ = component.mount
     const unmount$ = component.unmount
 
-    return xs.merge<Effect>(
-        value$.map(value => ({
+    return merge(
+        map(value => ({
             type: 'ValueChange',
             value
-        })),
+        }))(value$),
 
-        valueSet$.map(value => ({
+        map(value => ({
             type: 'ValueSet',
             value
-        })),
+        }))(valueSet$),
 
-        mount$.mapTo({
+        map(() => ({
             type: 'Start'
-        }),
+        }))(mount$),
 
-        unmount$.mapTo({
+        map(() => ({
             type: 'Stop'
-        })
+        }))(unmount$)
     )
 }
 

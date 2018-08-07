@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
-import { refractEnhancer } from '../index'
+import { refractEnhancer } from '../../../../packages/refract-redux-xstream/src'
 
-describe(require('../../package.json').name, () => {
+describe('refract-redux-xstream', () => {
     it('should work', () => {
         interface State {
             name: string

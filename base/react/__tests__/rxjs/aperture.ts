@@ -1,7 +1,7 @@
 import { map, mapTo, concat } from 'rxjs/operators'
 import { merge } from 'rxjs'
 
-import { Aperture } from '../index'
+import { Aperture } from '../../../../packages/refract-rxjs/src'
 
 export interface Effect {
     type: string

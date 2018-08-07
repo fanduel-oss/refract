@@ -1,9 +1,13 @@
 import * as React from 'react'
-import { withEffects, Handler, ObservableComponent } from '../index'
+import {
+    withEffects,
+    Handler,
+    ObservableComponent
+} from '../../../../packages/refract-xstream/src'
 import aperture, { Effect, Props } from './aperture'
 import { shallow, mount } from 'enzyme'
 
-describe(require('../../package.json').name, () => {
+describe('refract-xstream', () => {
     const noop = (...args) => void 0
 
     const handler: Handler<Props, Effect> = props => (value: Effect) => {

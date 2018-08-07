@@ -1,6 +1,5 @@
-import { merge } from 'most'
-
-import { Aperture } from '../index'
+import xs from 'xstream'
+import { Aperture } from '../../../../packages/refract-xstream/src'
 
 export interface Effect {
     type: string
@@ -18,7 +17,7 @@ const aperture: Aperture<Props, Effect> = props => component => {
     const mount$ = component.mount
     const unmount$ = component.unmount
 
-    return merge<Effect>(
+    return xs.merge<Effect>(
         value$.map(value => ({
             type: 'ValueChange',
             value
@@ -29,11 +28,11 @@ const aperture: Aperture<Props, Effect> = props => component => {
             value
         })),
 
-        mount$.constant({
+        mount$.mapTo({
             type: 'Start'
         }),
 
-        unmount$.constant({
+        unmount$.mapTo({
             type: 'Stop'
         })
     )

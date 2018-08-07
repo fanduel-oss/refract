@@ -48,7 +48,7 @@
         "transform": {
             "^.+\\.ts$": "ts-jest"
         },
-        "testRegex": "packages/.*/src/__tests__/index.ts$",
+        "testRegex": "base/.*/__tests__/.*/index.ts$",
         "moduleFileExtensions": ["ts", "js"],
         "setupFiles": ["<rootDir>/test.config.js"],
         "globals": {
