@@ -15,6 +15,7 @@ export interface Subscription {
 
 export interface ObservableComponent {
     observe: <T = any>(propName: string) => Source<T>
+    signal: <T>(signalName: string) => Source<T>
     mount: Source<any>
     unmount: Source<any>
 }

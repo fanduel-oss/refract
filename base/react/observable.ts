@@ -4,6 +4,7 @@ export { Listener, Subscription }
 
 export interface ObservableComponent {
     observe: <T>(propName?: string) => Observable<T>
+    signal: <T>(signalName: string) => Observable<T>
     mount: Observable<any>
     unmount: Observable<any>
 }
