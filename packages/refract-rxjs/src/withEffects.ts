@@ -1,6 +1,12 @@
 import * as React from 'react'
 
-import { PropListeners, Listeners, Handler, ErrorHandler } from './baseTypes'
+import {
+    KeyedListeners,
+    Listeners,
+    Handler,
+    ErrorHandler,
+    PushEvent
+} from './baseTypes'
 import {
     Subscription,
     Listener,
@@ -14,13 +20,14 @@ export const withEffects = <P, E>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
 ) => (aperture: Aperture<P, E>) => (
-    BaseComponent: React.ComponentType<P>
+    BaseComponent: React.ComponentType<P & { pushEvent: PushEvent }>
 ): React.ComponentClass<P> =>
     class WithEffects extends React.PureComponent<P> {
         private listeners: Listeners
         private decoratedProps: Partial<P> = {}
         private component: ObservableComponent
         private sinkSubscription: Subscription
+        private pushEvent: PushEvent
 
         constructor(props: any, context: any) {
             super(props, context)
@@ -30,7 +37,13 @@ export const withEffects = <P, E>(
                 unmount: [],
                 allProps: [],
                 props: {},
-                fnProps: {}
+                fnProps: {},
+                event: {}
+            }
+
+            this.pushEvent = (eventName: string) => <T>(val: T) => {
+                const listeners = this.listeners.event[eventName] || []
+                listeners.forEach(listener => listener.next(val))
             }
 
             Object.keys(props).forEach(propName => {
@@ -89,11 +102,25 @@ export const withEffects = <P, E>(
                 })
             }
 
+            const createSignalObservable = <T>(eventName: string) => {
+                return createObservable<T>(listener => {
+                    this.listeners.event[eventName] = (
+                        this.listeners.event[eventName] || []
+                    ).concat(listener)
+
+                    return () => {
+                        this.listeners.event[eventName].filter(
+                            l => l !== listener
+                        )
+                    }
+                })
+            }
+
             this.component = {
                 mount: mountObservable,
                 unmount: unmountObservable,
-                observe: <T>(propName?: string) =>
-                    createPropObservable<T>(propName)
+                observe: createPropObservable,
+                event: createSignalObservable
             }
 
             const sinkObservable = aperture(this.props)(this.component)
@@ -134,7 +161,9 @@ export const withEffects = <P, E>(
         public render() {
             return React.createElement(
                 BaseComponent,
-                Object.assign({}, this.props, this.decoratedProps)
+                Object.assign({}, this.props, this.decoratedProps, {
+                    pushEvent: this.pushEvent
+                })
             )
         }
 
