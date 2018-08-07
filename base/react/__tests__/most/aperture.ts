@@ -17,6 +17,7 @@ const aperture: Aperture<Props, Effect> = props => component => {
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
     const unmount$ = component.unmount
+    const linkClick$ = component.signal<any>('linkClick')
 
     return merge<Effect>(
         value$.map(value => ({
@@ -35,6 +36,10 @@ const aperture: Aperture<Props, Effect> = props => component => {
 
         unmount$.constant({
             type: 'Stop'
+        }),
+
+        linkClick$.constant({
+            type: 'LinkClick'
         })
     )
 }

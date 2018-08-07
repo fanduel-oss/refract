@@ -18,6 +18,7 @@ const aperture: Aperture<Props, Effect> = props => component => {
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
     const unmount$ = component.unmount
+    const linkClick$ = component.signal<any>('linkClick')
 
     return merge<Effect>(
         value$.pipe(
@@ -43,6 +44,12 @@ const aperture: Aperture<Props, Effect> = props => component => {
         unmount$.pipe(
             mapTo({
                 type: 'Stop'
+            })
+        ),
+
+        linkClick$.pipe(
+            mapTo({
+                type: 'LinkClick'
             })
         )
     )
