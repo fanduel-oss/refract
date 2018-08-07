@@ -5,7 +5,7 @@ import {
     Listeners,
     Handler,
     ErrorHandler,
-    PushSignal
+    PushEvent
 } from './baseTypes'
 import {
     Subscription,
@@ -20,14 +20,14 @@ export const withEffects = <P, E>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
 ) => (aperture: Aperture<P, E>) => (
-    BaseComponent: React.ComponentType<P & { pushEvent: PushSignal }>
+    BaseComponent: React.ComponentType<P & { pushEvent: PushEvent }>
 ): React.ComponentClass<P> =>
     class WithEffects extends React.PureComponent<P> {
         private listeners: Listeners
         private decoratedProps: Partial<P> = {}
         private component: ObservableComponent
         private sinkSubscription: Subscription
-        private pushEvent: PushSignal
+        private pushEvent: PushEvent
 
         constructor(props: any, context: any) {
             super(props, context)
