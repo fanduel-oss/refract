@@ -2,7 +2,8 @@
     "compilerOptions": {
         "target": "es5",
         "esModuleInterop": true,
-        "lib": ["es2015", "es2015.symbol", "es2015.symbol.wellknown", "dom"]
+        "lib": ["es2015", "es2015.symbol", "es2015.symbol.wellknown", "dom"],
+        "jsx": "react"
     },
     "exclude": []
 }

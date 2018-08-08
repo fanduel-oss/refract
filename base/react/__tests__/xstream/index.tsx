@@ -3,11 +3,11 @@ import {
     withEffects,
     Handler,
     ObservableComponent
-} from '../../../../packages/refract-rxjs/src'
+} from '../../../../packages/refract-xstream/src'
 import aperture, { Effect, Props } from './aperture'
 import { shallow, mount } from 'enzyme'
 
-describe('refract-rxjs', () => {
+describe('refract-xstream', () => {
     const noop = (...args) => void 0
 
     const handler: Handler<Props, Effect> = props => (value: Effect) => {
@@ -15,8 +15,8 @@ describe('refract-rxjs', () => {
     }
 
     it('should create a HoC', () => {
-        const WithEffects = withEffects<Props, Effect>(handler)(aperture)(() =>
-            React.createElement('div')
+        const WithEffects = withEffects<Props, Effect>(handler)(aperture)(
+            () => <div />
         )
     })
 
@@ -25,18 +25,12 @@ describe('refract-rxjs', () => {
         const setValue = () => void 0
         const WithEffects = withEffects<Props, Effect>(
             () => effectValueHandler
-        )(aperture)(({ setValue, pushEvent }) =>
-            React.createElement('div', {}, [
-                React.createElement('button', {
-                    key: 'button',
-                    onClick: () => setValue(10)
-                }),
-                React.createElement('a', {
-                    key: 'link',
-                    onClick: pushEvent('linkClick')
-                })
-            ])
-        )
+        )(aperture)(({ setValue, pushEvent }) => (
+            <div>
+                <button onClick={() => setValue(10)} />
+                <a onClick={pushEvent('linkClick')} />
+            </div>
+        ))
 
         const component = mount(
             React.createElement(WithEffects, { value: 1, setValue })

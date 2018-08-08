@@ -15,8 +15,8 @@ describe('refract-callbag', () => {
     }
 
     it('should create a HoC', () => {
-        const WithEffects = withEffects<Props, Effect>(handler)(aperture)(() =>
-            React.createElement('div')
+        const WithEffects = withEffects<Props, Effect>(handler)(aperture)(
+            () => <div />
         )
     })
 
@@ -25,18 +25,12 @@ describe('refract-callbag', () => {
         const setValue = () => void 0
         const WithEffects = withEffects<Props, Effect>(
             () => effectValueHandler
-        )(aperture)(({ setValue, pushEvent }) =>
-            React.createElement('div', {}, [
-                React.createElement('button', {
-                    key: 'button',
-                    onClick: () => setValue(10)
-                }),
-                React.createElement('a', {
-                    key: 'link',
-                    onClick: pushEvent('linkClick')
-                })
-            ])
-        )
+        )(aperture)(({ setValue, pushEvent }) => (
+            <div>
+                <button onClick={() => setValue(10)} />
+                <a onClick={pushEvent('linkClick')} />
+            </div>
+        ))
 
         const component = mount(
             React.createElement(WithEffects, { value: 1, setValue })
