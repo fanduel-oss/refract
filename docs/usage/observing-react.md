@@ -46,7 +46,7 @@ Refract's `component.observe` function lets you observe your React props. It han
 
 `component.observe` takes one optional argument:
 
--   `propName` _(string)_: an optional string, the name of the prop which you wish to observe.
+*   `propName` _(string)_: an optional string, the name of the prop which you wish to observe.
 
 ```js
 const aperture = initialProps => component => {
@@ -104,6 +104,34 @@ For example, if you wanted to just send all props through to your `handler` ever
 
 ```js
 const aperture = initialProps => component => component.observe()
+```
+
+## Observing Events
+
+In some cases you might want to observe a particular event such as a click on an hyperlink, without having a prop to observe. You might also want to use Refract for all your application mutations and effects, without piggy backing on existing mutations.
+
+`withEffects` injects a method `pushEvent` to your components, so you can inform Refract of events happening inside your components. We use a callback because we aim to offer an universal solution not tied to a specific renderer (web, native). That way we don't have to use refs or low-level platform-specific primitives.
+
+### Pushing events
+
+`pushEvent` is a curried function which takes an event name (`eventName`) and a value:
+
+```js
+function MyComponent({ pushEvent }) {
+    return <button onClick={pushEvent('buttonClick')}>Click me!</button>
+}
+```
+
+### Observing events
+
+In your aperture, you can observe events by simply invoking `component.event(eventName)`.
+
+```js
+const aperture = initialProps => component => {
+    const buttonClick$ = component.event('buttonClick';)
+
+    return buttonClick$.pipe(mapTo('Button clicked!'))
+}
 ```
 
 ## Observing Lifecycle Events
