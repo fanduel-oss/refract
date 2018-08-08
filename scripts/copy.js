@@ -45,27 +45,38 @@ async function copyAll() {
 async function copyBaseFiles(mainLib) {
     const files = getPackages(mainLib).reduce(
         (copyPromises, package) =>
-            copyPromises.concat(
-                filesPerMainLib[mainLib].map(fileName => {
-                    let srcFileName, destFileName
-                    if (typeof fileName === 'function') {
-                        const files = fileName(package.obsLib)
-                        srcFileName = files.src
-                        destFileName = files.dest
-                    } else {
-                        srcFileName = fileName
-                        destFileName = fileName
+            copyPromises
+                .concat([
+                    {
+                        src: getBaseFilePath('all', 'tsconfig.json'),
+                        dest: getPackageFilePath(package.name, 'tsconfig.json')
+                    },
+                    {
+                        src: getBaseFilePath('all', '.npmignore'),
+                        dest: getPackageFilePath(package.name, '.npmignore')
                     }
+                ])
+                .concat(
+                    filesPerMainLib[mainLib].map(fileName => {
+                        let srcFileName, destFileName
+                        if (typeof fileName === 'function') {
+                            const files = fileName(package.obsLib)
+                            srcFileName = files.src
+                            destFileName = files.dest
+                        } else {
+                            srcFileName = fileName
+                            destFileName = fileName
+                        }
 
-                    return {
-                        src: getBaseFilePath(mainLib, srcFileName),
-                        dest: getPackageFilePath(
-                            package.name,
-                            path.join('src', destFileName)
-                        )
-                    }
-                })
-            ),
+                        return {
+                            src: getBaseFilePath(mainLib, srcFileName),
+                            dest: getPackageFilePath(
+                                package.name,
+                                path.join('src', destFileName)
+                            )
+                        }
+                    })
+                ),
         []
     )
 
