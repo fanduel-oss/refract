@@ -41,15 +41,15 @@
         "xstream": "~11.2.0"
     },
     "lint-staged": {
-        "*.ts": ["prettier --write", "tslint", "git add"],
+        "*.{ts,tsx}": ["prettier --write", "tslint", "git add"],
         "*.{js,json,md}": ["prettier --write", "git add"]
     },
     "jest": {
         "transform": {
-            "^.+\\.ts$": "ts-jest"
+            "^.+\\.tsx?$": "ts-jest"
         },
-        "testRegex": "base/.*/__tests__/.*/index.ts$",
-        "moduleFileExtensions": ["ts", "js"],
+        "testRegex": "base/.*/__tests__/.*/index.tsx?$",
+        "moduleFileExtensions": ["ts", "tsx", "js"],
         "setupFiles": ["<rootDir>/test.config.js"],
         "globals": {
             "ts-jest": {
