@@ -5,6 +5,7 @@ const util = require('util')
 const copyFile = util.promisify(fs.copyFile)
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
+const mkdir = util.promisify(fs.mkdir)
 
 const getPackages = require('../packages')
 const filesPerMainLib = {
@@ -81,7 +82,12 @@ async function copyBaseFiles(mainLib) {
     )
 
     try {
-        await Promise.all(files.map(({ src, dest }) => copyFile(src, dest)))
+        await Promise.all([
+            ...getPackages().map(({ name }) =>
+                mkdir(getPackageFilePath(name, 'src')).catch(() => {})
+            ),
+            ...files.map(({ src, dest }) => copyFile(src, dest))
+        ])
     } catch (e) {
         console.error(e.toString())
     }

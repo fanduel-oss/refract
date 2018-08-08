@@ -1,5 +1,6 @@
-/packages/*/index.js
-/packages/*/index.es.js
+/packages/*/*
+/packages/*/yarn.lock
+/packages/*/package.json
 node_modules/
 *.log
 .DS_Store
