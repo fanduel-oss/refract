@@ -5,7 +5,8 @@
     "scripts": {
         "init": "lerna bootstrap",
         "copy": "node ./scripts/copy",
-        "prebuild": "npm run copy",
+        "generatePackages": "node ./scripts/generatePkg",
+        "prebuild": "npm run copy && npm run generatePackages",
         "build": "rollup -c rollup.config.js",
         "postbuild": "prettier --write 'packages/*/types/*.ts'",
         "test": "jest",

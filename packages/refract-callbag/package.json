@@ -10,9 +10,6 @@
     "peerDependencies": {
         "react": ">= 15.0.0 < 17.0.0"
     },
-    "devDependencies": {
-        "callbag-map": "~1.0.1"
-    },
     "dependencies": {
         "callbag": "~1.1.0",
         "callbag-from-obs": "~1.2.0",
