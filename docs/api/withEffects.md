@@ -9,38 +9,38 @@ Used to enhance a plain React component, wrapping it in a WithEffects component 
 ## Signature
 
 ```js
-withEffects = (handler, errorHandler?) => (aperture) => (BaseComponent) => {
+withEffects = (handler, errorHandler?) => aperture => BaseComponent => {
     return WrappedComponent
 }
 ```
 
 ## Arguments
 
-1. `handler` _(function)_: a function which causes side-effects in response to `effect` values.
+1.  `handler` _(function)_: a function which causes side-effects in response to `effect` values.
 
     Signature: `(initialProps) => (effect) => { /* handle effect here */ }`
 
-    * The `initialProps` are all props passed into the `WrappedComponent`.
-    * The `effect` is each value emitted by your `aperture`.
-    * Within the body of the function, you cause any side-effect you wish.
+    *   The `initialProps` are all props passed into the `WrappedComponent`.
+    *   The `effect` is each value emitted by your `aperture`.
+    *   Within the body of the function, you cause any side-effect you wish.
 
-1. `errorHandler` _(function)_: an _optional_ function for catching any unexpected errors thrown within your `aperture`. Typically used for logging errors.
+1.  `errorHandler` _(function)_: an _optional_ function for catching any unexpected errors thrown within your `aperture`. Typically used for logging errors.
 
     Signature: `(initialProps) => (error) => { /* handle error here */ }`
 
-    * The `initialProps` are all props passed into the `WrappedComponent`.
-    * The `error` is each value emitted by your `aperture`.
-    * Within the body of the function, you cause any side-effect you wish.
+    *   The `initialProps` are all props passed into the `WrappedComponent`.
+    *   The `error` is each value emitted by your `aperture`.
+    *   Within the body of the function, you cause any side-effect you wish.
 
-1. `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
+1.  `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
 
     Signature: `(initialProps) => (component) => { return effectStream }`.
 
-    * The `initialProps` are all props passed into the `WrappedComponent`.
-    * The `component` is an object which lets you observe your React component.
-    * Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
+    *   The `initialProps` are all props passed into the `WrappedComponent`.
+    *   The `component` is an object which lets you observe your React component: see [Observing React](../usage/observing-react.md)
+    *   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
 
-1. `BaseComponent` _(React component)_: any react component.
+1.  `BaseComponent` _(React component)_: any react component.
 
 ## Returns
 
@@ -55,7 +55,7 @@ const BaseComponent = ({ username, onChange }) => (
     <input value={username} onChange={onChange} />
 )
 
-const aperture = (initialProps) => (component) => {
+const aperture = initialProps => component => {
     return component.observe('username').pipe(
         debounce(2000),
         map(username => ({
@@ -66,7 +66,7 @@ const aperture = (initialProps) => (component) => {
     )
 }
 
-const handler = (initialProps) => (effect) => {
+const handler = initialProps => effect => {
     switch (effect.type) {
         case 'localstorage':
             localstorage.setItem(effect.name, effect.value)
@@ -79,5 +79,5 @@ const WrappedComponent = withEffects(handler)(aperture)(BaseComponent)
 
 ## Tips
 
-* Take a look at our recipe for [`dependency injection`](../recipes/dependency-injection.md) into your Refract components.
-* `withEffects` is curried so that you can re-use a bound `handler` (and `errorHandler`) with multiple different `apertures`.
+*   Take a look at our recipe for [`dependency injection`](../recipes/dependency-injection.md) into your Refract components.
+*   `withEffects` is curried so that you can re-use a bound `handler` (and `errorHandler`) with multiple different `apertures`.
