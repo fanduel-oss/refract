@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "init": "lerna bootstrap",
+        "init": "lerna bootstrap && npm run prebuild",
         "copy": "node ./scripts/copy",
         "generatePackages": "node ./scripts/generatePkg",
         "prebuild": "npm run copy && npm run generatePackages",
