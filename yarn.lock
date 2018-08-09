@@ -600,6 +600,10 @@ callbag-concat@1.0.x:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/callbag-concat/-/callbag-concat-1.0.1.tgz#9023732ab2a3c5b98e06628e6eb603da2e696280"
 
+callbag-drop-repeats@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/callbag-drop-repeats/-/callbag-drop-repeats-1.0.0.tgz#bfa4d765880875435746948ec9076b979569e89b"
+
 callbag-filter@1.0.x:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/callbag-filter/-/callbag-filter-1.0.1.tgz#82d3b80231cf890fd6e0d61c3a33cd09dcb52570"
@@ -638,7 +642,7 @@ callbag-interval@1.0.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/callbag-interval/-/callbag-interval-1.0.0.tgz#a88063300b835b594afc2793c08b4df2e0d4e058"
 
-callbag-map@1.0.x:
+callbag-map@1.0.x, callbag-map@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/callbag-map/-/callbag-map-1.0.1.tgz#a5bcd41cde60c226cdd22f5868beb7b2ecd6c167"
 
@@ -646,7 +650,7 @@ callbag-merge@2.0.x:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/callbag-merge/-/callbag-merge-2.0.1.tgz#69c2c031fdb40964fe766399fb5af21f50d3270e"
 
-callbag-pipe@1.1.x:
+callbag-pipe@1.1.x, callbag-pipe@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/callbag-pipe/-/callbag-pipe-1.1.1.tgz#f9d9f651f0bb64bc78d91f7132d738f066e3a4cf"
 
@@ -661,6 +665,10 @@ callbag-share@1.0.x:
 callbag-skip@1.0.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/callbag-skip/-/callbag-skip-1.0.0.tgz#91f60c434d1a7aba02b8b7ef1aad82da0a805ceb"
+
+callbag-start-with@~2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/callbag-start-with/-/callbag-start-with-2.1.1.tgz#42e378248475c5009e1934a07d58444bd0a083a2"
 
 callbag-take@1.0.x:
   version "1.0.0"
@@ -4722,7 +4730,7 @@ symbol-observable@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.1.tgz#8340fc4702c3122df5d22288f88283f513d3fdd4"
 
-symbol-observable@1.2.0, symbol-observable@^1.0.2, symbol-observable@^1.2.0:
+symbol-observable@1.2.0, symbol-observable@^1.0.2, symbol-observable@^1.2.0, symbol-observable@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
 

@@ -1,6 +1,5 @@
 /packages/*/*
-/packages/*/yarn.lock
-/packages/*/package.json
+!/packages/*/package.json
 node_modules/
 *.log
 .DS_Store
