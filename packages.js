@@ -9,6 +9,28 @@ const peerDependencies = {
     xstream: '>= 1.0.0 < 12.0.0',
     most: '^1.0.0'
 }
+const baseDependencies = {
+    callbag: {
+        callbag: '~1.1.0',
+        'callbag-from-obs': '~1.2.0',
+        'symbol-observable': '~1.2.0'
+    },
+    most: {
+        'symbol-observable': '~1.2.0'
+    }
+}
+
+const extraDependencies = {
+    'refract-callbag': {
+        'callbag-to-obs': '~1.0.0'
+    },
+    'refract-redux-callbag': {
+        'callbag-drop-repeats': '~1.0.0',
+        'callbag-map': '~1.0.1',
+        'callbag-pipe': '~1.1.1',
+        'callbag-start-with': '~2.1.1'
+    }
+}
 
 const sortObject = object =>
     Object.keys(object)
@@ -19,20 +41,29 @@ const sortObject = object =>
         }, {})
 
 const listMainLibPackages = mainLib =>
-    supportedObservableLibraries.map(obsLib => ({
-        mainLib,
-        obsLib,
-        peerDependencies: sortObject({
-            [mainLib]: peerDependencies[mainLib],
-            ...(peerDependencies[obsLib]
-                ? { [obsLib]: peerDependencies[obsLib] }
-                : {})
-        }),
-        name:
+    supportedObservableLibraries.map(obsLib => {
+        const name =
             mainLib === 'react'
                 ? `${prefix}-${obsLib}`
                 : `${prefix}-${mainLib}-${obsLib}`
-    }))
+
+        return {
+            mainLib,
+            obsLib,
+            peerDependencies: sortObject({
+                [mainLib]: peerDependencies[mainLib],
+                ...(peerDependencies[obsLib]
+                    ? { [obsLib]: peerDependencies[obsLib] }
+                    : {})
+            }),
+            dependencies: sortObject({
+                ...baseDependencies[mainLib],
+                ...baseDependencies[obsLib],
+                ...extraDependencies[name]
+            }),
+            name
+        }
+    })
 
 const getPackages = mainLib =>
     mainLib
