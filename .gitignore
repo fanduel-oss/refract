@@ -1,5 +1,6 @@
 /packages/*/*
 !/packages/*/package.json
 node_modules/
+/*.tgz
 *.log
 .DS_Store
