@@ -3,14 +3,16 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "init": "lerna bootstrap && npm run prebuild",
+        "init": "npm run prebuild",
         "copy": "node ./scripts/copy",
         "generatePackages": "node ./scripts/generatePkg",
         "prebuild": "npm run copy && npm run generatePackages",
         "build": "rollup -c rollup.config.js",
         "postbuild": "prettier --write 'packages/*/types/*.ts'",
         "test": "jest",
-        "precommit": "lint-staged"
+        "precommit": "lint-staged",
+        "prerelease": "npm run build",
+        "release": "node ./scripts/publish"
     },
     "devDependencies": {
         "@types/enzyme": "~3.1.10",
@@ -31,7 +33,6 @@
         "husky": "~0.14.3",
         "inquirer": "~6.1.0",
         "jest": "~22.4.3",
-        "lerna": "^2.9.0",
         "lint-staged": "~7.0.5",
         "most": "~1.7.3",
         "node-fetch": "~2.2.0",
