@@ -16,13 +16,14 @@ async function publish() {
         process.exit(1)
     }
 
-    checkDependencies()
-
     const checkingSpinner = ora('Checking packages').start()
+
+    await checkDependencies()
+
     const changedPackages = await detectChanges()
     checkingSpinner.stop()
 
-    const newVersions = await promptNewVersions()
+    const newVersions = await promptNewVersions(changedPackages)
 
     changedPackages.forEach(async () => {
         await updateVersion(package, changedPackages[package.name])

@@ -1,7 +1,7 @@
 const inquirer = require('inquirer')
 const semver = require('semver')
 
-module.exports = function promptNewVersions() {
+module.exports = function promptNewVersions(changedPackages) {
     return inquirer.prompt(
         changedPackages
             .map(({ name, version }) => {

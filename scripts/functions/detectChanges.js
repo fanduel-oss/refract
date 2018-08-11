@@ -22,7 +22,7 @@ module.exports = function detectChanges() {
 
                 exec(`npm pack ./packages/${name}`)
                     .then(() => checksumFile(`./${name}-${version}.tgz`))
-                    .catch(err => console.log(err) || null)
+                    .catch(err => null)
             ]).then(
                 ([last, current]) =>
                     last === current ? undefined : { name, version }
