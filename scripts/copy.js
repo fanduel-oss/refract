@@ -5,6 +5,7 @@ const util = require('util')
 const copyFile = util.promisify(fs.copyFile)
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
+const mkdir = util.promisify(fs.mkdir)
 
 const getPackages = require('../packages')
 const filesPerMainLib = {
@@ -45,32 +46,48 @@ async function copyAll() {
 async function copyBaseFiles(mainLib) {
     const files = getPackages(mainLib).reduce(
         (copyPromises, package) =>
-            copyPromises.concat(
-                filesPerMainLib[mainLib].map(fileName => {
-                    let srcFileName, destFileName
-                    if (typeof fileName === 'function') {
-                        const files = fileName(package.obsLib)
-                        srcFileName = files.src
-                        destFileName = files.dest
-                    } else {
-                        srcFileName = fileName
-                        destFileName = fileName
+            copyPromises
+                .concat([
+                    {
+                        src: getBaseFilePath('all', 'tsconfig.json'),
+                        dest: getPackageFilePath(package.name, 'tsconfig.json')
+                    },
+                    {
+                        src: getBaseFilePath('all', '.npmignore'),
+                        dest: getPackageFilePath(package.name, '.npmignore')
                     }
+                ])
+                .concat(
+                    filesPerMainLib[mainLib].map(fileName => {
+                        let srcFileName, destFileName
+                        if (typeof fileName === 'function') {
+                            const files = fileName(package.obsLib)
+                            srcFileName = files.src
+                            destFileName = files.dest
+                        } else {
+                            srcFileName = fileName
+                            destFileName = fileName
+                        }
 
-                    return {
-                        src: getBaseFilePath(mainLib, srcFileName),
-                        dest: getPackageFilePath(
-                            package.name,
-                            path.join('src', destFileName)
-                        )
-                    }
-                })
-            ),
+                        return {
+                            src: getBaseFilePath(mainLib, srcFileName),
+                            dest: getPackageFilePath(
+                                package.name,
+                                path.join('src', destFileName)
+                            )
+                        }
+                    })
+                ),
         []
     )
 
     try {
-        await Promise.all(files.map(({ src, dest }) => copyFile(src, dest)))
+        getPackages().map(
+            async ({ name }) =>
+                await mkdir(getPackageFilePath(name, 'src')).catch(() => {})
+        )
+
+        files.map(async ({ src, dest }) => await copyFile(src, dest))
     } catch (e) {
         console.error(e.toString())
     }
@@ -82,11 +99,12 @@ async function copyBaseReadme(mainLib) {
             path.resolve(__dirname, '..', 'base', mainLib, 'README.tpl.md')
         )
 
-        await getPackages(mainLib).map(package =>
-            writeFile(
-                getPackageFilePath(package.name, 'README.md'),
-                readme.toString().replace(/LIBRARY_NAME/g, package.name)
-            )
+        getPackages(mainLib).map(
+            async package =>
+                await writeFile(
+                    getPackageFilePath(package.name, 'README.md'),
+                    readme.toString().replace(/LIBRARY_NAME/g, package.name)
+                )
         )
     } catch (e) {
         console.error(e.toString())
