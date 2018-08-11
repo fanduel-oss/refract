@@ -5,6 +5,7 @@ const ora = require('ora')
 
 const exec = util.promisify(child_process.exec)
 
+const checkDependencies = require('./functions/checkDependencies')
 const detectChanges = require('./functions/detectChanges')
 const updateVersion = require('./functions/updateVersion')
 const promptNewVersions = require('./functions/promptVersions')
@@ -14,6 +15,8 @@ async function publish() {
         console.error('Working directory must be root of the repository')
         process.exit(1)
     }
+
+    checkDependencies()
 
     const checkingSpinner = ora('Checking packages').start()
     const changedPackages = await detectChanges()
