@@ -82,12 +82,12 @@ async function copyBaseFiles(mainLib) {
     )
 
     try {
-        await Promise.all([
-            ...getPackages().map(({ name }) =>
-                mkdir(getPackageFilePath(name, 'src')).catch(() => {})
-            ),
-            ...files.map(({ src, dest }) => copyFile(src, dest))
-        ])
+        getPackages().map(
+            async ({ name }) =>
+                await mkdir(getPackageFilePath(name, 'src')).catch(() => {})
+        )
+
+        files.map(async ({ src, dest }) => await copyFile(src, dest))
     } catch (e) {
         console.error(e.toString())
     }
@@ -99,11 +99,12 @@ async function copyBaseReadme(mainLib) {
             path.resolve(__dirname, '..', 'base', mainLib, 'README.tpl.md')
         )
 
-        await getPackages(mainLib).map(package =>
-            writeFile(
-                getPackageFilePath(package.name, 'README.md'),
-                readme.toString().replace(/LIBRARY_NAME/g, package.name)
-            )
+        getPackages(mainLib).map(
+            async package =>
+                await writeFile(
+                    getPackageFilePath(package.name, 'README.md'),
+                    readme.toString().replace(/LIBRARY_NAME/g, package.name)
+                )
         )
     } catch (e) {
         console.error(e.toString())

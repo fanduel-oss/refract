@@ -9,9 +9,9 @@ const getPackages = require('../packages')
 generatePackages()
 
 async function generatePackages() {
-    const packageBase = require('../base/all/package.base.json')
-    const promises = getPackages().map(
-        ({ name, dependencies, peerDependencies }) => {
+    try {
+        const packageBase = require('../base/all/package.base.json')
+        getPackages().map(async ({ name, dependencies, peerDependencies }) => {
             const existingPackage = require(`../packages/${name}/package.json`)
             const finalPackage = {
                 ...existingPackage,
@@ -21,15 +21,11 @@ async function generatePackages() {
                 ...(Object.keys(dependencies).length ? { dependencies } : {})
             }
 
-            return writeFile(
+            await writeFile(
                 path.join(__dirname, '..', 'packages', name, 'package.json'),
                 JSON.stringify(finalPackage, null, 4) + '\n'
             )
-        }
-    )
-
-    try {
-        await Promise.all(promises)
+        })
     } catch (e) {
         console.error(e.toString())
     }

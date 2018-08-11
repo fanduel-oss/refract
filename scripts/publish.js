@@ -1,56 +1,51 @@
 const child_process = require('child_process')
+const path = require('path')
 const util = require('util')
-const inquirer = require('inquirer')
-const semver = require('semver')
 const ora = require('ora')
 
 const exec = util.promisify(child_process.exec)
 
 const detectChanges = require('./functions/detectChanges')
+const updateVersion = require('./functions/updateVersion')
+const promptNewVersions = require('./functions/promptVersions')
 
 async function publish() {
-    const spinner = ora('Checking packages').start()
+    if (process.cwd() !== path.resolve(__dirname, '..')) {
+        console.error('Working directory must be root of the repository')
+        process.exit(1)
+    }
+
+    const checkingSpinner = ora('Checking packages').start()
     const changedPackages = await detectChanges()
-    spinner.stop()
-    const answers = await inquirer.prompt(
-        changedPackages.map(({ name, version }) => {
-            const major = semver.inc(version, 'major')
-            const minor = semver.inc(version, 'minor')
-            const patch = semver.inc(version, 'patch')
-            const premajor = semver.inc(version, 'premajor')
-            const prerelease = semver.inc(version, 'prerelease')
+    checkingSpinner.stop()
 
-            return {
-                type: 'list',
-                name: name,
-                message: `${name} (${version})`,
-                choices: [
-                    {
-                        value: major,
-                        name: `Major: ${major}`
-                    },
-                    {
-                        value: minor,
-                        name: `Minor: ${minor}`
-                    },
-                    {
-                        value: patch,
-                        name: `Patch: ${patch}`
-                    },
-                    {
-                        value: premajor,
-                        name: `Pre-major: ${premajor}`
-                    },
-                    {
-                        value: prerelease,
-                        name: `Pre-release: ${prerelease}`
-                    }
-                ]
-            }
-        })
-    )
+    const newVersions = await promptNewVersions()
 
-    console.log(answers)
+    changedPackages.forEach(async () => {
+        await updateVersion(package, changedPackages[package.name])
+    })
+
+    await exec(`git add -A`)
+    await exec(`git commit -m "Publish"`)
+
+    const publishingSpinner = ora('').start()
+
+    changedPackages.forEach(async ({ name }) => {
+        publishingSpinner.text = `Publishing ${name}`
+        await exec(`npm publish ./packages/${name}`)
+        await exec(`git tag ${name}@${newVersions[name]}`)
+    })
+
+    publishingSpinner.stop()
+    console.log('Packages published')
+
+    const pushingSpinner = ora('Pushing tags').start()
+
+    await exec('git push origin HEAD')
+    await exec(`git push --tags`)
+
+    pushingSpinner.stop()
+    console.log('All done!')
 }
 
 publish()
