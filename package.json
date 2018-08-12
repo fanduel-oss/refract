@@ -10,6 +10,7 @@
         "prebuild": "npm run generatePackages && npm run copy",
         "build": "rollup -c rollup.config.js",
         "postbuild": "prettier --write 'packages/*/types/*.ts'",
+        "pretest": "npm run copy",
         "test": "jest",
         "precommit": "lint-staged",
         "prerelease": "npm run build",

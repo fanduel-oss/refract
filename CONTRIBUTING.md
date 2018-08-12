@@ -57,13 +57,11 @@ Please try to keep your pull request focused in scope and avoid including unrela
 
 After you have submitted your pull request, we'll try to get back to you as soon as possible. We may suggest some changes or improvements.
 
-Refract provides multiple packages to provide first-class support for multiple reactive programming libraries. As a result:
+Refract provides multiple packages to provide first-class support for multiple reactive programming libraries and component libraries. We use a monorepo for all packages but we don't follow a traditional approach usually found with Lerna or Bolt: instead we treat packages as a build target.
 
-*   Unless your change is small, please first submit a PR containing changes to the `base` version only.
-*   Once the feature (and any potential API change) has been reviewed, the final step is to implement the same changes in the `packages`.
-
-    *   Please use `yarn copy` (or `npm run copy`) to automatically copy your changes to the packages, instead of doing so manually.
-    *   Remember to verify that the automated changes are correct before pushing!
+*   After cloning, the repo should initialise itself after you've installed dependencies.
+*   You'll find all editable code in the `base` directory.
+*   Tests run against packages (files are copied across before tests run). But you can manually copy them by running `yarn copy` (or `npm run copy`).
 
 ### Documentation
 
