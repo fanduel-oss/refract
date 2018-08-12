@@ -3,11 +3,11 @@ import {
     withEffects,
     Handler,
     ObservableComponent
-} from '../../../../packages/refract-preact-rxjs/src'
-import aperture, { Effect, Props } from '../../react/rxjs/aperture'
+} from '../../../../packages/refract-preact-most/src'
+import aperture, { Effect, Props } from '../../react/most/aperture'
 import { shallow, mount } from 'enzyme'
 
-describe('refract-preact-rxjs', () => {
+describe('refract-preact-most', () => {
     const noop = (...args) => void 0
 
     const handler: Handler<Props, Effect> = props => (value: Effect) => {

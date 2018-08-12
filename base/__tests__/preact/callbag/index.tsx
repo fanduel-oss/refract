@@ -3,11 +3,11 @@ import {
     withEffects,
     Handler,
     ObservableComponent
-} from '../../../../packages/refract-preact-rxjs/src'
-import aperture, { Effect, Props } from '../../react/rxjs/aperture'
+} from '../../../../packages/refract-preact-callbag/src'
+import aperture, { Effect, Props } from '../../react/callbag/aperture'
 import { shallow, mount } from 'enzyme'
 
-describe('refract-preact-rxjs', () => {
+describe('refract-preact-callbag', () => {
     const noop = (...args) => void 0
 
     const handler: Handler<Props, Effect> = props => (value: Effect) => {
