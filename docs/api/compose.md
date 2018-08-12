@@ -1,10 +1,10 @@
 # compose
 
-Used for composing functions from right to left, it is a very useful utility for composing higher-order components in React.
+Used for composing functions from right to left, it is a very useful utility for composing higher-order components in React, Inferno or Preact.
 
 ## Packages
 
-`compose` is provided by our React packages - `refract-callbag`, `refract-most`, `refract-rxjs`, and `refract-xstream`.
+`compose` is provided by our React, Inferno or Preact packages - `refract-*`, `refract-inferno-*`, `refract-preact-*`.
 
 ## Signature
 
@@ -23,10 +23,7 @@ import { connect } from 'react-redux'
 import { withEffects, compose } from 'refract-rxjs'
 
 const WrappedComponent = compose(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    ),
+    connect(mapStateToProps, mapDispatchToProps),
     withEffects(handler)(aperture)
 )(BaseComponent)
 ```

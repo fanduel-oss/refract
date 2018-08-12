@@ -1,6 +1,6 @@
 # API Reference
 
-### React Packages
+### React, Inferno and Preact Packages
 
 *   [compose](compose.md)
 *   [withEffects](withEffects.md)

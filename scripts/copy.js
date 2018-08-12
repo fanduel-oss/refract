@@ -40,9 +40,9 @@ async function copyAll() {
     await copyBaseFiles('react')
     await copyBaseReadme('react')
     await copyBaseFiles('preact')
-    // await copyBaseReadme('preact')
+    await copyBaseReadme('preact')
     await copyBaseFiles('inferno')
-    // await copyBaseReadme('inferno')
+    await copyBaseReadme('inferno')
     await copyBaseFiles('redux')
     await copyBaseReadme('redux')
 }
@@ -96,7 +96,13 @@ async function copyBaseFiles(mainLib) {
 async function copyBaseReadme(mainLib) {
     try {
         const readme = await readFile(
-            path.resolve(__dirname, '..', 'base', mainLib, 'README.tpl.md')
+            path.resolve(
+                __dirname,
+                '..',
+                'base',
+                mainLib === 'redux' ? 'redux' : 'react',
+                'README.tpl.md'
+            )
         )
 
         getPackages(mainLib).map(
