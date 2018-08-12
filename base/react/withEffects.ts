@@ -28,7 +28,7 @@ export const withEffects = <P, E>(
             this.triggerMount()
         }
 
-        public componentWillReceiveProps(nextProps) {
+        public componentWillReceiveProps(nextProps: P) {
             this.reDecorateProps(nextProps)
         }
 
@@ -41,6 +41,10 @@ export const withEffects = <P, E>(
         }
 
         public render() {
-            return React.createElement(BaseComponent, this.getChildProps())
+            return React.createElement(
+                BaseComponent,
+                this.getChildProps(),
+                this.props.children
+            )
         }
     }

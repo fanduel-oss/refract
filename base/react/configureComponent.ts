@@ -29,6 +29,10 @@ const configureComponent = <P, E>(
     }
 
     const decorateProp = (prop, propName) => {
+        if (propName === 'children') {
+            return
+        }
+
         decoratedProps[propName] = (...args) => {
             ;(listeners.fnProps[propName] || []).forEach(l => l.next(args[0]))
 
@@ -122,7 +126,7 @@ const configureComponent = <P, E>(
             }
         })
 
-        listeners.allProps.forEach(l => l.next(this.props))
+        listeners.allProps.forEach(l => l.next(instance.props))
     }
 
     instance.reDecorateProps = nextProps => {
@@ -149,10 +153,13 @@ const configureComponent = <P, E>(
         sinkSubscription.unsubscribe()
     }
 
-    instance.getChildProps = () =>
-        Object.assign({}, instance.props, decoratedProps, {
+    instance.getChildProps = () => {
+        const { children, ...props } = instance.props
+
+        return Object.assign({}, props, decoratedProps, {
             pushEvent
         })
+    }
 }
 
 export default configureComponent
