@@ -41,6 +41,8 @@ async function copyAll() {
     await copyBaseReadme('react')
     await copyBaseFiles('preact')
     // await copyBaseReadme('preact')
+    await copyBaseFiles('inferno')
+    // await copyBaseReadme('inferno')
     await copyBaseFiles('redux')
     await copyBaseReadme('redux')
 }

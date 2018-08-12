@@ -26,9 +26,9 @@ async function generatePackages() {
             }
 
             const finalPackage = {
+                name,
                 ...existingPackage,
                 ...packageBase,
-                name,
                 peerDependencies,
                 ...(Object.keys(dependencies).length ? { dependencies } : {})
             }

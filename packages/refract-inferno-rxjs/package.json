@@ -1,0 +1,14 @@
+{
+    "name": "refract-inferno-rxjs",
+    "version": "0.0.0",
+    "main": "index.js",
+    "jsnext:main": "index.es.js",
+    "module": "index.es.js",
+    "typings": "types/index.d.ts",
+    "sideEffects": false,
+    "license": "MIT",
+    "peerDependencies": {
+        "inferno": "^5.0.0",
+        "rxjs": "^6.0.0"
+    }
+}

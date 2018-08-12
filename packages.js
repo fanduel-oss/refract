@@ -1,11 +1,12 @@
 const prefix = 'refract'
-const supportedMainLibraries = ['react', 'redux', 'preact']
+const supportedMainLibraries = ['react', 'redux', 'preact', 'inferno']
 const supportedObservableLibraries = ['rxjs', 'xstream', 'most', 'callbag']
 
 const peerDependencies = {
     react: '>= 15.0.0 < 17.0.0',
     redux: '>= 3.0.0 < 5.0.0',
     preact: '^8.0.0',
+    inferno: '^5.0.0',
     rxjs: '^6.0.0',
     xstream: '>= 1.0.0 < 12.0.0',
     most: '^1.0.0'
