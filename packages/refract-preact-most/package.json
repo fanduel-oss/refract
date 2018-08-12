@@ -1,0 +1,17 @@
+{
+    "name": "refract-preact-most",
+    "version": "0.0.0",
+    "main": "index.js",
+    "jsnext:main": "index.es.js",
+    "module": "index.es.js",
+    "typings": "types/index.d.ts",
+    "sideEffects": false,
+    "license": "MIT",
+    "peerDependencies": {
+        "most": "^1.0.0",
+        "preact": "^8.0.0"
+    },
+    "dependencies": {
+        "symbol-observable": "~1.2.0"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "name": "refract-preact-xstream",
+    "version": "0.0.0",
+    "main": "index.js",
+    "jsnext:main": "index.es.js",
+    "module": "index.es.js",
+    "typings": "types/index.d.ts",
+    "sideEffects": false,
+    "license": "MIT",
+    "peerDependencies": {
+        "preact": "^8.0.0",
+        "xstream": ">= 1.0.0 < 12.0.0"
+    }
+}
