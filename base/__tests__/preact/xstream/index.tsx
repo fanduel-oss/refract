@@ -5,7 +5,7 @@ import {
     ObservableComponent
 } from '../../../../packages/refract-preact-xstream/src'
 import aperture, { Effect, Props } from '../../react/xstream/aperture'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 
 describe('refract-preact-xstream', () => {
     const noop = (...args) => void 0

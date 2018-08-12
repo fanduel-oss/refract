@@ -5,7 +5,7 @@ import {
     ObservableComponent
 } from '../../../../packages/refract-preact-callbag/src'
 import aperture, { Effect, Props } from '../../react/callbag/aperture'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 
 describe('refract-preact-callbag', () => {
     const noop = (...args) => void 0
