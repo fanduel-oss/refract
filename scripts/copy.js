@@ -12,7 +12,10 @@ const filesPerBaseDir = {
     react: [
         'baseTypes.ts',
         'index.ts',
-        'withEffects.ts',
+        ({ mainLib }) => ({
+            src: `withEffects${mainLib === 'react' ? '' : `_${mainLib}`}.ts`,
+            dest: 'withEffects.ts'
+        }),
         'compose.ts',
         'configureComponent.ts',
         ({ obsLib }) => ({
