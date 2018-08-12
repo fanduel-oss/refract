@@ -14,6 +14,7 @@ const filesPerMainLib = {
         'index.ts',
         'withEffects.ts',
         'compose.ts',
+        'configureComponent.ts',
         reactiveLib => ({
             src: `observable${
                 reactiveLib === 'rxjs' ? '' : `_${reactiveLib}`

@@ -4,6 +4,7 @@
     "version": "0.0.0",
     "scripts": {
         "init": "npm run prebuild",
+        "prepare": "npm run prebuild",
         "copy": "node ./scripts/copy",
         "generatePackages": "node ./scripts/generatePkg",
         "prebuild": "npm run copy && npm run generatePackages",
