@@ -90,7 +90,7 @@ const configureComponent = <P, E>(
         })
     }
 
-    const createSignalObservable = <T>(eventName: string) => {
+    const createEventObservable = <T>(eventName: string) => {
         return createObservable<T>(listener => {
             listeners.event[eventName] = (
                 listeners.event[eventName] || []
@@ -106,7 +106,7 @@ const configureComponent = <P, E>(
         mount: mountObservable,
         unmount: unmountObservable,
         observe: createPropObservable,
-        event: createSignalObservable
+        event: createEventObservable
     }
 
     const sinkObservable = aperture(instance.props)(component)
