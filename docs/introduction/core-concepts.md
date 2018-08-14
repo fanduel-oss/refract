@@ -15,7 +15,27 @@ Action   |                        | Selector
 
 However, the loop above doesn't exist in a vacuum! Various external effects compose the business logic of an app: network requests, time, data persistence, analytics, etc. State mutations (`setState`, reducers), state getters and render functions are in principle always pure. As a result, interaction handlers such as `onClick` or lifecycle methods such as `componentDidMount` handle side-effects imperatively.
 
-## Functional and declarative
+## Separation of concerns
+
+Refract allows you to cleanly separate concerns in your app: you can extract effects and side-effects into their own functions. We tend to distinguish side-effects (things happening outside your application: analytics, data persistance, ...) to effects (things happening inside your application: network requests, setting state, ...).
+
+### Side-effects
+
+Your application should be able to function with or without its side-effects: for instance, how many times have you experienced a website not working? Only to realise that your ad blocker had blocked a third party script, causing a missing analytic function to crash the whole app!
+
+With Refract, you can wrap side-effects around your container components, and ensure that your application works with or without them.
+
+### Effects
+
+For effects, your application shouldn't be able to function without them. For instance, you can look at the typeahead example: without input debouncing and network requests, the input component would lose its main functionality.
+
+In the case of effects, Refract helps you separate them in different logical units, increasing maintainability of your apps and promoting code re-use. Read [Thinking in Refract](./thinking-in-refract.md) for a more detailed explanation.
+
+## Paradigms
+
+Refract makes use of functional and reactive principles to manage effects and side-effects. Reactive programming especially is extremely powerful in its ability to chain time-based operations without breaking a sweat: Refract offers a great way to gradually use it in component-based applications (React, Inferno and Preact).
+
+### Functional and declarative
 
 Perhaps this is familiar:
 
@@ -52,10 +72,10 @@ const imperativeSideEffectHandler = effect => {
 
 Declarative side-effects have two main benefits:
 
--   easier to test (pure functions)
--   only one place is concerned with the "how" (imperative code)
+*   easier to test (pure functions)
+*   only one place is concerned with the "how" (imperative code)
 
-## Reactive
+### Reactive
 
 We want to separate the main action of our code (setting a filter) from the resulting actions (storage, analytics): our application should be able to function without them, or if they fail. Have you ever had a bad experience on the web, a form you try to submit but nothing happens? Only to realise when you open the console that something is failing due to your ad blocker? This is terrible!
 
