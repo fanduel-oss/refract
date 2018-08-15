@@ -11,7 +11,7 @@ const getPackages = require('../../packages')
 
 module.exports = function detectChanges() {
     return Promise.all(
-        getPackages().map(({ name }) => {
+        getPackages(process.env.MAIN_LIB).map(({ name }) => {
             const { version } = require(`../../packages/${name}/package.json`)
 
             return Promise.all([
