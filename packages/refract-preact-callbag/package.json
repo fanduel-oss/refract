@@ -1,6 +1,6 @@
 {
     "name": "refract-preact-callbag",
-    "version": "0.0.0",
+    "version": "1.0.0-0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",

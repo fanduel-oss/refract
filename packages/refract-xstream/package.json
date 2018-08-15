@@ -1,6 +1,6 @@
 {
     "name": "refract-xstream",
-    "version": "1.0.0-7",
+    "version": "1.0.0-8",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
