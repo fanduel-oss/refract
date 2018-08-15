@@ -1,0 +1,95 @@
+html,
+body,
+button,
+input,
+.selection {
+    display: block;
+    font-family: Ubuntu, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 20px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+p:not(:first-child),
+.card {
+    margin-top: 1em;
+}
+
+input,
+.selection {
+    font-size: 1rem;
+    outline: none;
+    padding: 5px;
+}
+
+input {
+    border: 1px solid;
+    width: 100%;
+}
+
+input:hover {
+    border-color: #50b979;
+}
+
+input:focus {
+    border-color: #225bc1;
+}
+
+.form {
+    position: relative;
+}
+
+.selection {
+    margin: 1px;
+    opacity: .3;
+    position: absolute;
+    top: 0;
+}
+
+.options {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    list-style: none;
+    line-height: 2;
+}
+
+.options li {
+    padding: 0 4px;
+}
+
+.options li:nth-child(2n) {
+    background: #fcfcfc;
+}
+
+.options li:focus,
+.options li:hover {
+    background: #225bc1;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.card {
+    border-radius: 6px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+	display: inline-block;
+	padding: 10px;
+	text-align: center;
+	color: #333;
+    text-decoration: none;
+    width: 170px;
+}
+
+.avatar {
+    border-radius: 50%;
+    max-width: 100px;
+    margin: 0 auto 10px;
+}

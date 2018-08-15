@@ -3,47 +3,124 @@ const fs = require('fs')
 const util = require('util')
 
 const copyFile = util.promisify(fs.copyFile)
+const readFile = util.promisify(fs.readFile)
+const writeFile = util.promisify(fs.writeFile)
+const mkdir = util.promisify(fs.mkdir)
 
 const getPackages = require('../packages')
-const filesPerMainLib = {
-    react: ['baseTypes.ts', 'index.ts', 'withEffects.ts', '__tests__/index.ts'],
+const filesPerBaseDir = {
+    react: [
+        'baseTypes.ts',
+        'index.ts',
+        ({ mainLib }) => ({
+            src: `withEffects${mainLib === 'react' ? '' : `_${mainLib}`}.ts`,
+            dest: 'withEffects.ts'
+        }),
+        'compose.ts',
+        'configureComponent.ts',
+        ({ obsLib }) => ({
+            src: `observable${obsLib === 'rxjs' ? '' : `_${obsLib}`}.ts`,
+            dest: 'observable.ts'
+        })
+    ],
     redux: [
         'baseTypes.ts',
         'index.ts',
         'refractEnhancer.ts',
-        '__tests__/index.ts'
+        ({ obsLib }) => ({
+            src: `observable${obsLib === 'rxjs' ? '' : `_${obsLib}`}.ts`,
+            dest: 'observable.ts'
+        })
     ]
 }
 
+copyAll()
+
 async function copyAll() {
     await copyBaseFiles('react')
+    await copyBaseReadme('react')
+    await copyBaseFiles('preact')
+    await copyBaseReadme('preact')
+    await copyBaseFiles('inferno')
+    await copyBaseReadme('inferno')
     await copyBaseFiles('redux')
+    await copyBaseReadme('redux')
 }
 
 async function copyBaseFiles(mainLib) {
     const files = getPackages(mainLib).reduce(
         (copyPromises, package) =>
-            copyPromises.concat(
-                filesPerMainLib[mainLib].map(file => ({
-                    src: path.resolve(__dirname, '..', 'base', mainLib, file),
-                    dest: path.resolve(
-                        __dirname,
-                        '..',
-                        'packages',
-                        package,
-                        'src',
-                        file
-                    )
-                }))
-            ),
+            copyPromises
+                .concat([
+                    {
+                        src: getBaseFilePath('all', '.npmignore'),
+                        dest: getPackageFilePath(package.name, '.npmignore')
+                    }
+                ])
+                .concat(
+                    filesPerBaseDir[package.baseDir].map(fileName => {
+                        let srcFileName, destFileName
+                        if (typeof fileName === 'function') {
+                            const files = fileName(package)
+                            srcFileName = files.src
+                            destFileName = files.dest
+                        } else {
+                            srcFileName = fileName
+                            destFileName = fileName
+                        }
+
+                        return {
+                            src: getBaseFilePath(package.baseDir, srcFileName),
+                            dest: getPackageFilePath(
+                                package.name,
+                                path.join('src', destFileName)
+                            )
+                        }
+                    })
+                ),
         []
     )
 
     try {
-        await Promise.all(files.map(({ src, dest }) => copyFile(src, dest)))
+        getPackages().map(
+            async ({ name }) =>
+                await mkdir(getPackageFilePath(name, 'src')).catch(() => {})
+        )
+
+        files.map(async ({ src, dest }) => await copyFile(src, dest))
     } catch (e) {
         console.error(e.toString())
     }
 }
 
-copyAll()
+async function copyBaseReadme(mainLib) {
+    try {
+        const readme = await readFile(
+            path.resolve(
+                __dirname,
+                '..',
+                'base',
+                mainLib === 'redux' ? 'redux' : 'react',
+                'README.tpl.md'
+            )
+        )
+
+        getPackages(mainLib).map(
+            async package =>
+                await writeFile(
+                    getPackageFilePath(package.name, 'README.md'),
+                    readme.toString().replace(/LIBRARY_NAME/g, package.name)
+                )
+        )
+    } catch (e) {
+        console.error(e.toString())
+    }
+}
+
+function getBaseFilePath(baseDir, file) {
+    return path.resolve(__dirname, '..', 'base', baseDir, file)
+}
+
+function getPackageFilePath(package, file) {
+    return path.resolve(__dirname, '..', 'packages', package, file)
+}

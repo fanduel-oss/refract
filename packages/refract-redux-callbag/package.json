@@ -1,6 +1,6 @@
 {
     "name": "refract-redux-callbag",
-    "version": "1.0.0-2",
+    "version": "1.0.0-5",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
@@ -11,10 +11,12 @@
         "redux": ">= 3.0.0 < 5.0.0"
     },
     "dependencies": {
+        "callbag": "~1.1.0",
         "callbag-drop-repeats": "~1.0.0",
         "callbag-from-obs": "~1.2.0",
         "callbag-map": "~1.0.1",
         "callbag-pipe": "~1.1.1",
-        "callbag-start-with": "~2.1.1"
+        "callbag-start-with": "~2.1.1",
+        "symbol-observable": "~1.2.0"
     }
 }

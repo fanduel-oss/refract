@@ -3,7 +3,7 @@
 </p><br/>
 
 <p align="center">
-    Master your React app's effects through the<br/>
+    Master your component's effects through the<br/>
     power of reactive programming.
 </p>
 <br/>
@@ -31,7 +31,7 @@
 
 Refract lets you isolate your app's side effects - API calls, analytics, logging, etc - so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
-Refract is an extensible library built for React. In addition we provide a Redux integration, which can also serve as a template for integrations with other libraries.
+Refract is an extensible library built for React, with bindings available for Inferno and Preact. In addition we provide a Redux integration, which can also serve as a template for integrations with other libraries.
 
 # Why?
 
@@ -45,17 +45,17 @@ Refract solves this problem for you. [For an in-depth introduction, head to `Why
 
 # Installation
 
-Refract is available for a number of reactive programming libraries. For each library, a Refract integration is available for both React and Redux.
+Refract is available for a number of reactive programming libraries. For each library, a Refract integration is available for React, Inferno, Preact and Redux.
 
 Available packages:
 
 <!-- prettier-ignore-start -->
-| | [React](https://github.com/facebook/react) | [Redux](https://github.com/reduxjs/redux) |
-| --- | --- | --- |
-| **[Callbag](https://github.com/callbag/callbag)** | refract-callbag | refract-redux-callbag |
-| **[Most](https://github.com/cujojs/most)** | refract-most | refract-redux-most |
-| **[RxJS](https://github.com/reactivex/rxjs)** | refract-rxjs | refract-redux-rxjs |
-| **[xstream](https://github.com/staltz/xstream)** | refract-xstream | refract-redux-xstream |
+| | [React](https://github.com/facebook/react) | [Inferno](https://infernojs.org/) | [Preact](https://preactjs.com/) | [Redux](https://github.com/reduxjs/redux) |
+| --- | --- | --- | --- | --- |
+| **[Callbag](https://github.com/callbag/callbag)** | refract-callbag | refract-inferno-callbag | refact-preact-callbag | refract-redux-callbag |
+| **[Most](https://github.com/cujojs/most)** | refract-most | refract-inferno-most | refact-preact-most | refract-redux-most |
+| **[RxJS](https://github.com/reactivex/rxjs)** | refract-rxjs | refract-inferno-rxjs | refact-preact-rxjs | refract-redux-rxjs |
+| **[xstream](https://github.com/staltz/xstream)** | refract-xstream | refract-inferno-xstream | refact-preact-xstream | refract-redux-xstream |
 <!-- prettier-ignore-end -->
 
 To use the latest stable version, simply `npm install` the package you want to use:
@@ -68,7 +68,7 @@ npm install --save refract-rxjs
 
 The example below uses `refract-rxjs` to send data to localstorage.
 
-Every time the `username` prop changes, its new value is sent into the stream. The stream debounces the input for two seconds, then maps it into an object (with a `type` of `localstorage`) under the key `payload`. Each time an effect is emitted from this pipeline, the handler calls `localstorage.setItem` with the effect's `payload` property.
+Every time the `username` prop changes, its new value is sent into the stream. The stream debounces the input for two seconds, then maps it into an object (with a `type` of `localstorage`) under the key `value`. Each time an effect with the correct type is emitted from this pipeline, the handler calls `localstorage.setItem` with the effect's `name` and `value` properties.
 
 ```js
 const aperture = initialProps => component => {

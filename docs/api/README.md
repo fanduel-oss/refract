@@ -1,4 +1,10 @@
 # API Reference
 
-* [withEffects](withEffects.md)
-* [refractEnhancer](refractEnhancer.md)
+### React, Inferno and Preact Packages
+
+*   [compose](compose.md)
+*   [withEffects](withEffects.md)
+
+### Redux Packages
+
+*   [refractEnhancer](refractEnhancer.md)

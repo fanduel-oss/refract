@@ -1,7 +1,7 @@
 import typescript from 'rollup-plugin-typescript2'
 
 const getPackages = require('./packages')
-const packages = getPackages()
+const packages = getPackages().map(pkg => pkg.name)
 const formats = {
     es: 'index.es.js',
     cjs: 'index.js'

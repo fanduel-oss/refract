@@ -1,0 +1,18 @@
+{
+    "name": "refract-preact-callbag",
+    "version": "0.0.0",
+    "main": "index.js",
+    "jsnext:main": "index.es.js",
+    "module": "index.es.js",
+    "typings": "types/index.d.ts",
+    "sideEffects": false,
+    "license": "MIT",
+    "peerDependencies": {
+        "preact": "^8.0.0"
+    },
+    "dependencies": {
+        "callbag": "~1.1.0",
+        "callbag-from-obs": "~1.2.0",
+        "symbol-observable": "~1.2.0"
+    }
+}

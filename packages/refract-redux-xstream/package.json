@@ -1,6 +1,6 @@
 {
     "name": "refract-redux-xstream",
-    "version": "1.0.0-2",
+    "version": "1.0.0-5",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",

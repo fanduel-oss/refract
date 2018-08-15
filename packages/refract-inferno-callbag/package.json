@@ -1,0 +1,18 @@
+{
+    "name": "refract-inferno-callbag",
+    "version": "0.0.0",
+    "main": "index.js",
+    "jsnext:main": "index.es.js",
+    "module": "index.es.js",
+    "typings": "types/index.d.ts",
+    "sideEffects": false,
+    "license": "MIT",
+    "peerDependencies": {
+        "inferno": "^5.0.0"
+    },
+    "dependencies": {
+        "callbag": "~1.1.0",
+        "callbag-from-obs": "~1.2.0",
+        "symbol-observable": "~1.2.0"
+    }
+}

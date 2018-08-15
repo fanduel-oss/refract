@@ -1,0 +1,13 @@
+html, body, button, input {
+    font-family: Ubuntu, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 20px;
+}
+
+* {
+    box-sizing: border-box;
+}
