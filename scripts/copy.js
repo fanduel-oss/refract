@@ -51,12 +51,23 @@ async function copyBaseFiles(mainLib) {
     const files = getPackages(mainLib).reduce(
         (copyPromises, package) =>
             copyPromises
-                .concat([
-                    {
-                        src: getBaseFilePath('all', '.npmignore'),
-                        dest: getPackageFilePath(package.name, '.npmignore')
-                    }
-                ])
+                .concat(
+                    [
+                        {
+                            src: getBaseFilePath('all', 'tsconfig.json'),
+                            dest: getPackageFilePath(
+                                package.name,
+                                'tsconfig.json'
+                            )
+                        }
+                    ],
+                    [
+                        {
+                            src: getBaseFilePath('all', '.npmignore'),
+                            dest: getPackageFilePath(package.name, '.npmignore')
+                        }
+                    ]
+                )
                 .concat(
                     filesPerBaseDir[package.baseDir].map(fileName => {
                         let srcFileName, destFileName

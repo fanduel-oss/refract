@@ -3,13 +3,28 @@ const supportedMainLibraries = ['react', 'redux', 'preact', 'inferno']
 const supportedObservableLibraries = ['rxjs', 'xstream', 'most', 'callbag']
 
 const peerDependencies = {
-    react: '>= 15.0.0 < 17.0.0',
-    redux: '>= 3.0.0 < 5.0.0',
-    preact: '^8.0.0',
-    inferno: '^5.0.0',
-    rxjs: '^6.0.0',
-    xstream: '>= 1.0.0 < 12.0.0',
-    most: '^1.0.0'
+    react: {
+        react: '>= 15.0.0 < 17.0.0'
+    },
+    redux: {
+        redux: '>= 3.0.0 < 5.0.0'
+    },
+    preact: {
+        preact: '^8.0.0'
+    },
+    inferno: {
+        inferno: '^5.0.0',
+        'inferno-create-element': '^5.0.0'
+    },
+    rxjs: {
+        rxjs: '^6.0.0'
+    },
+    xstream: {
+        xstream: '>= 1.0.0 < 12.0.0'
+    },
+    most: {
+        most: '^1.0.0'
+    }
 }
 const baseDependencies = {
     callbag: {
@@ -24,6 +39,12 @@ const baseDependencies = {
 
 const extraDependencies = {
     'refract-callbag': {
+        'callbag-to-obs': '~1.0.0'
+    },
+    'refract-inferno-callbag': {
+        'callbag-to-obs': '~1.0.0'
+    },
+    'refract-preact-callbag': {
         'callbag-to-obs': '~1.0.0'
     },
     'refract-redux-callbag': {
@@ -53,10 +74,8 @@ const listMainLibPackages = mainLib =>
             mainLib,
             obsLib,
             peerDependencies: sortObject({
-                [mainLib]: peerDependencies[mainLib],
-                ...(peerDependencies[obsLib]
-                    ? { [obsLib]: peerDependencies[obsLib] }
-                    : {})
+                ...peerDependencies[mainLib],
+                ...peerDependencies[obsLib]
             }),
             dependencies: sortObject({
                 ...baseDependencies[mainLib],

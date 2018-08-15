@@ -9,6 +9,7 @@
     "license": "MIT",
     "peerDependencies": {
         "inferno": "^5.0.0",
+        "inferno-create-element": "^5.0.0",
         "most": "^1.0.0"
     },
     "dependencies": {

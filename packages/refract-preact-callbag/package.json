@@ -13,6 +13,7 @@
     "dependencies": {
         "callbag": "~1.1.0",
         "callbag-from-obs": "~1.2.0",
+        "callbag-to-obs": "~1.0.0",
         "symbol-observable": "~1.2.0"
     }
 }

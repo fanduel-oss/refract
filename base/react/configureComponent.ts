@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { Listeners, Handler, ErrorHandler, PushEvent } from './baseTypes'
 import {
     Subscription,
