@@ -55,6 +55,7 @@
         "most": "~1.7.3",
         "node-fetch": "~2.2.0",
         "ora": "~3.0.0",
+        "p-iteration": "~1.1.7",
         "preact": "~8.3.0",
         "prettier": "~1.12.1",
         "react": "~16.3.2",

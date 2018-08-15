@@ -1,6 +1,7 @@
 const path = require('path')
 const ora = require('ora')
 const exec = require('execa')
+const { forEach } = require('p-iteration')
 
 const checkDependencies = require('./functions/checkDependencies')
 const detectChanges = require('./functions/detectChanges')
@@ -22,19 +23,23 @@ async function publish() {
 
     const newVersions = await promptNewVersions(changedPackages)
 
-    changedPackages.forEach(async package => {
+    await forEach(changedPackages, async package => {
         await updateVersion(package, newVersions[package.name])
     })
 
     await exec('git', ['add', '-A'])
-    await exec('git', ['commit', '-m', '"Publish"'])
+    await exec('git', ['commit', '-m', 'Publish'])
 
     const publishingSpinner = ora('').start()
 
-    changedPackages.forEach(async ({ name }) => {
+    await forEach(changedPackages, async ({ name }) => {
         publishingSpinner.text = `Publishing ${name}`
-        await exec('npm', ['publish', `./packages/${name}`])
-        await exec('git', ['tag', `${name}@${newVersions[name]}`])
+        try {
+            await exec('npm', ['publish', `./packages/${name}`])
+            await exec('git', ['tag', `${name}@${newVersions[name]}`])
+        } catch (e) {
+            console.error(e)
+        }
     })
 
     publishingSpinner.stop()
