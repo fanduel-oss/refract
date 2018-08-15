@@ -8,7 +8,12 @@
         "copy": "node ./scripts/copy",
         "generatePackages": "node ./scripts/generatePkg",
         "prebuild": "npm run generatePackages && npm run copy",
-        "build": "rollup -c rollup.config.js",
+        "build":
+            "npm run build:react && npm run build:redux && npm run build:inferno && npm run build:preact",
+        "build:react": "MAIN_LIB=react rollup -c rollup.config.js",
+        "build:redux": "MAIN_LIB=redux rollup -c rollup.config.js",
+        "build:preact": "MAIN_LIB=preact rollup -c rollup.config.js",
+        "build:inferno": "MAIN_LIB=inferno rollup -c rollup.config.js",
         "postbuild": "prettier --write 'packages/*/types/*.ts'",
         "pretest": "npm run copy",
         "test:react": "jest --config base/__tests__/react/jest.config.js",
