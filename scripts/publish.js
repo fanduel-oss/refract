@@ -1,9 +1,6 @@
-const child_process = require('child_process')
 const path = require('path')
-const util = require('util')
 const ora = require('ora')
-
-const exec = util.promisify(child_process.exec)
+const exec = require('execa')
 
 const checkDependencies = require('./functions/checkDependencies')
 const detectChanges = require('./functions/detectChanges')
@@ -29,15 +26,15 @@ async function publish() {
         await updateVersion(package, newVersions[package.name])
     })
 
-    await exec(`git add -A`)
-    await exec(`git commit -m "Publish"`)
+    await exec('git', ['add', '-A'])
+    await exec('git', ['commit', '-m', '"Publish"'])
 
     const publishingSpinner = ora('').start()
 
     changedPackages.forEach(async ({ name }) => {
         publishingSpinner.text = `Publishing ${name}`
-        await exec(`npm publish ./packages/${name}`)
-        await exec(`git tag ${name}@${newVersions[name]}`)
+        await exec('npm', ['publish', `./packages/${name}`])
+        await exec('git', ['tag', `${name}@${newVersions[name]}`])
     })
 
     publishingSpinner.stop()
@@ -45,8 +42,8 @@ async function publish() {
 
     const pushingSpinner = ora('Pushing tags').start()
 
-    await exec('git push origin HEAD')
-    await exec(`git push --tags`)
+    await exec('git', ['push', 'origin', 'HEAD'])
+    await exec('git', ['push', '--tags'])
 
     pushingSpinner.stop()
     console.log('All done!')
