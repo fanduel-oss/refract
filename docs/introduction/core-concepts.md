@@ -17,7 +17,7 @@ However, the loop above doesn't exist in a vacuum! Various external effects comp
 
 ## Separation of concerns
 
-Refract allows you to cleanly separate concerns in your app: you can extract effects and side-effects into their own functions. We tend to distinguish side-effects (things happening outside your application: analytics, data persistance, ...) to effects (things happening inside your application: network requests, setting state, ...).
+Refract allows you to cleanly separate concerns in your app: you can extract effects and side-effects into their own functions. We tend to distinguish side-effects (things happening outside your application: analytics, data persistance, ...) from effects (things happening inside your application: network requests, setting state, ...).
 
 ### Side-effects
 
@@ -27,9 +27,9 @@ With Refract, you can wrap side-effects around your container components, and en
 
 ### Effects
 
-For effects, your application shouldn't be able to function without them. For instance, you can look at the typeahead example: without input debouncing and network requests, the input component would lose its main functionality.
+For effects, your application shouldn't be able to function without them. For instance, you can look at the [typeahead example](../../examples/typeahead): without input debouncing and network requests, the input component would lose its main functionality.
 
-In the case of effects, Refract helps you separate them in different logical units, increasing maintainability of your apps and promoting code re-use. Read [Thinking in Refract](./thinking-in-refract.md) for a more detailed explanation.
+In the case of effects, Refract helps you separate them into different logical units, increasing maintainability of your apps and promoting code re-use. Read [Thinking in Refract](./thinking-in-refract.md) for a more detailed explanation.
 
 ## Paradigms
 
@@ -77,10 +77,8 @@ Declarative side-effects have two main benefits:
 
 ### Reactive
 
-We want to separate the main action of our code (setting a filter) from the resulting actions (storage, analytics): our application should be able to function without them, or if they fail. Have you ever had a bad experience on the web, a form you try to submit but nothing happens? Only to realise when you open the console that something is failing due to your ad blocker? This is terrible!
-
 The key to reactive programming is observability: we need to be able to observe changes in your app, get notified when they happen so we can trigger side-effects. Reactive programming works really well for side-effects: effects are just data. It is also a remarkable abstraction encouraging declarative programming and which can concisely express time-based operations (throttle, debounce, etc.).
 
 We have seen a lot of side-effect management libraries in redux, due to the observability of its actions (with middleware). It is entirely possible to move side-effects handling to React, and to not have to rely on redux.
 
-Too see how Refact compares to other side-effects libraries, check our [comparison guide](./comparison.md). Too see Refract usage, head to [using Refract](./usage.md).
+To see how Refact compares to other side-effects libraries, check our [comparison guide](./comparison.md). To see Refract usage, head to [using Refract](./usage.md).
