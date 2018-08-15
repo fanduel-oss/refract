@@ -1,13 +1,13 @@
-import * as React from 'react'
+import { createElement } from 'inferno-create-element'
 import {
     withEffects,
     Handler,
     ObservableComponent
-} from '../../../../packages/refract-rxjs/src'
-import aperture, { Effect, Props } from './aperture'
-import { shallow, mount } from 'enzyme'
+} from '../../../../packages/refract-inferno-most/src'
+import aperture, { Effect, Props } from '../../react/most/aperture'
+import { mount } from 'enzyme'
 
-describe('refract-rxjs', () => {
+describe('refract-inferno-most', () => {
     const noop = (...args) => void 0
 
     const handler: Handler<Props, Effect> = props => (value: Effect) => {
@@ -33,7 +33,8 @@ describe('refract-rxjs', () => {
         ))
 
         const component = mount(
-            React.createElement(WithEffects, { value: 1, setValue })
+            // @ts-ignore
+            <WithEffects value={1} setValue={setValue} />
         )
 
         expect(component.prop('value')).toBe(1)

@@ -4,3 +4,4 @@ node_modules/
 /*.tgz
 *.log
 .DS_Store
+package-lock.json

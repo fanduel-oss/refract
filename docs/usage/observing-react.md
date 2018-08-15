@@ -1,5 +1,7 @@
 # Observing React
 
+> This document focuses on React, but the same applies to Inferno and Preact
+
 Refract exposes an object called `component` as your `aperture`'s second argument, which allows you to cause side-effects in response to changes within your React app.
 
 ```js

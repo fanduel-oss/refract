@@ -8,16 +8,18 @@ const writeFile = util.promisify(fs.writeFile)
 const mkdir = util.promisify(fs.mkdir)
 
 const getPackages = require('../packages')
-const filesPerMainLib = {
+const filesPerBaseDir = {
     react: [
         'baseTypes.ts',
         'index.ts',
-        'withEffects.ts',
+        ({ mainLib }) => ({
+            src: `withEffects${mainLib === 'react' ? '' : `_${mainLib}`}.ts`,
+            dest: 'withEffects.ts'
+        }),
         'compose.ts',
-        reactiveLib => ({
-            src: `observable${
-                reactiveLib === 'rxjs' ? '' : `_${reactiveLib}`
-            }.ts`,
+        'configureComponent.ts',
+        ({ obsLib }) => ({
+            src: `observable${obsLib === 'rxjs' ? '' : `_${obsLib}`}.ts`,
             dest: 'observable.ts'
         })
     ],
@@ -25,10 +27,8 @@ const filesPerMainLib = {
         'baseTypes.ts',
         'index.ts',
         'refractEnhancer.ts',
-        reactiveLib => ({
-            src: `observable${
-                reactiveLib === 'rxjs' ? '' : `_${reactiveLib}`
-            }.ts`,
+        ({ obsLib }) => ({
+            src: `observable${obsLib === 'rxjs' ? '' : `_${obsLib}`}.ts`,
             dest: 'observable.ts'
         })
     ]
@@ -39,6 +39,10 @@ copyAll()
 async function copyAll() {
     await copyBaseFiles('react')
     await copyBaseReadme('react')
+    await copyBaseFiles('preact')
+    await copyBaseReadme('preact')
+    await copyBaseFiles('inferno')
+    await copyBaseReadme('inferno')
     await copyBaseFiles('redux')
     await copyBaseReadme('redux')
 }
@@ -49,19 +53,15 @@ async function copyBaseFiles(mainLib) {
             copyPromises
                 .concat([
                     {
-                        src: getBaseFilePath('all', 'tsconfig.json'),
-                        dest: getPackageFilePath(package.name, 'tsconfig.json')
-                    },
-                    {
                         src: getBaseFilePath('all', '.npmignore'),
                         dest: getPackageFilePath(package.name, '.npmignore')
                     }
                 ])
                 .concat(
-                    filesPerMainLib[mainLib].map(fileName => {
+                    filesPerBaseDir[package.baseDir].map(fileName => {
                         let srcFileName, destFileName
                         if (typeof fileName === 'function') {
-                            const files = fileName(package.obsLib)
+                            const files = fileName(package)
                             srcFileName = files.src
                             destFileName = files.dest
                         } else {
@@ -70,7 +70,7 @@ async function copyBaseFiles(mainLib) {
                         }
 
                         return {
-                            src: getBaseFilePath(mainLib, srcFileName),
+                            src: getBaseFilePath(package.baseDir, srcFileName),
                             dest: getPackageFilePath(
                                 package.name,
                                 path.join('src', destFileName)
@@ -96,7 +96,13 @@ async function copyBaseFiles(mainLib) {
 async function copyBaseReadme(mainLib) {
     try {
         const readme = await readFile(
-            path.resolve(__dirname, '..', 'base', mainLib, 'README.tpl.md')
+            path.resolve(
+                __dirname,
+                '..',
+                'base',
+                mainLib === 'redux' ? 'redux' : 'react',
+                'README.tpl.md'
+            )
         )
 
         getPackages(mainLib).map(
@@ -111,8 +117,8 @@ async function copyBaseReadme(mainLib) {
     }
 }
 
-function getBaseFilePath(mainLib, file) {
-    return path.resolve(__dirname, '..', 'base', mainLib, file)
+function getBaseFilePath(baseDir, file) {
+    return path.resolve(__dirname, '..', 'base', baseDir, file)
 }
 
 function getPackageFilePath(package, file) {

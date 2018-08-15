@@ -1,5 +1,7 @@
 # Connecting To React
 
+> This document focuses on React, but the same applies to Inferno and Preact
+
 ## Background
 
 Refract builds upon two ideas which have been embraced by the React community: `separating presentational and container components`, plus `higher-order components` (HoCs).
@@ -34,9 +36,7 @@ This new `CounterWithEffects` component now includes the side-effect logic inclu
 class Container extends Component {
     state = { count: 0 }
 
-    increment = () => this.setState(
-        ({ count }) => ({ count: count + 1 })
-    )
+    increment = () => this.setState(({ count }) => ({ count: count + 1 }))
 
     render() {
         return (

@@ -1,10 +1,10 @@
 # withEffects
 
-Used to enhance a plain React component, wrapping it in a WithEffects component which handles side-effects internally. It is a curried higher-order component.
+Used to enhance a plain component, wrapping it in a WithEffects component which handles side-effects internally. It is a curried higher-order component.
 
 ## Packages
 
-`withEffects` is provided by our React packages - `refract-callbag`, `refract-most`, `refract-rxjs`, and `refract-xstream`.
+`withEffects` is provided by our React, Inferno or Preact packages - `refract-*`, `refract-inferno-*`, `refract-preact-*`.
 
 ## Signature
 
@@ -37,7 +37,7 @@ withEffects = (handler, errorHandler?) => aperture => BaseComponent => {
     Signature: `(initialProps) => (component) => { return effectStream }`.
 
     *   The `initialProps` are all props passed into the `WrappedComponent`.
-    *   The `component` is an object which lets you observe your React component: see [Observing React](../usage/observing-react.md)
+    *   The `component` is an object which lets you observe your React, Inferno or Preact component: see [Observing React](../usage/observing-react.md)
     *   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
 
 1.  `BaseComponent` _(React component)_: any react component.
