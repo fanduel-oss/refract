@@ -21,6 +21,11 @@ async function publish() {
     const changedPackages = await detectChanges()
     checkingSpinner.stop()
 
+    if (changedPackages.length === 0) {
+        console.log('Nothing to release!')
+        process.exit(0)
+    }
+
     const newVersions = await promptNewVersions(changedPackages)
 
     await forEach(changedPackages, async package => {
