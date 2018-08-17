@@ -2,8 +2,8 @@
 
 *   [Read Me](../README.md)
 *   [Introduction](./introduction/README.md)
-    *   [Why Refract?](./introduction/why-router5.md)
-    *   [Core Concepts](./introduction/getting-started.md)
+    *   [Why Refract?](./introduction/why-refract.md)
+    *   [Core Concepts](./introduction/core-concepts.md)
     *   [Thinking In Refract](./introduction/thinking-in-refract.md)
     *   [Alternatives](./introduction/alternatives.md)
 *   [Usage](./usage/README.md)
