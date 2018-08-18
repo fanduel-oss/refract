@@ -129,7 +129,7 @@ Documentation is available at [refract.js.org](https://refract.js.org). We aim t
 
 ## Examples
 
-We maintain and will grow overtime a set of examples to illustrate the potential of Refract, as well as providing reactive programming examples: [refract.js.org/examples](https://refract.js.org/examples).
+We maintain and will grow over time a set of examples to illustrate the potential of Refract, as well as providing reactive programming examples: [refract.js.org/examples](https://refract.js.org/examples).
 
 Examples are illustrative and not the idiomatic way to use Refract. Each example is available for the four reactive libraries we support (RxJS, xstream, Most and Callbag), and we provide links to run the code live on [codesandbox.io](https://codesandbox.io). All examples are hosted on this repo, and we welcome pull requests helping us maintaining them.
 
