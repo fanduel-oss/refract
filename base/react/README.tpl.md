@@ -125,7 +125,7 @@ Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent 
 
 ## Documentation
 
-Documentation is available at [refract.js.org](https://refract.js.org). We aim to provide a helpful and thorough documentation: all documentation files are located on this repo and we welcome any pull request helping use achieve that goal.
+Documentation is available at [refract.js.org](https://refract.js.org). We aim to provide a helpful and thorough documentation: all documentation files are located on this repo and we welcome any pull request helping us achieve that goal.
 
 ## Examples
 
