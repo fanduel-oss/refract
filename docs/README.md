@@ -7,7 +7,7 @@
     *   [Thinking In Refract](./introduction/thinking-in-refract.md)
     *   [Alternatives](./introduction/alternatives.md)
 *   [Usage](./usage/README.md)
-    *   [Introduction](./usage/introduction.md)
+    *   [Getting Started](./usage/getting-started.md)
     *   [Installation](./usage/installation.md)
     *   [Connecting To React](./usage/connecting-to-react.md)
     *   [Observing React](./usage/observing-react.md)

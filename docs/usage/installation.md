@@ -15,9 +15,9 @@ Available packages:
 
 The examples below assume you're using `RxJS` - if you're using a different library, use the table above to find the correct package names.
 
-## React Packages
+## React, Inferno and Preact Packages
 
-The React packages don't require much set up - you just need to install the package (usually via `npm` or `yarn`):
+The React, Inferno and Preact packages don't require much set up - you just need to install the package (usually via `npm` or `yarn`):
 
 ```
 npm install --save refract-rxjs
