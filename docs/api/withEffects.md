@@ -79,5 +79,5 @@ const WrappedComponent = withEffects(handler)(aperture)(BaseComponent)
 
 ## Tips
 
-*   Take a look at our recipe for [`dependency injection`](../recipes/dependency-injection.md) into your Refract components.
+*   Take a look at our recipe for [dependency injection](../recipes/dependency-injection.md) into your Refract components.
 *   `withEffects` is curried so that you can re-use a bound `handler` (and `errorHandler`) with multiple different `apertures`.
