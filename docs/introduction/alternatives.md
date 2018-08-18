@@ -9,7 +9,7 @@ The benefits of Refract are:
 1.  **It can observe any source of data** - Component props, Redux actions, Redux state, any data source in your app.
 1.  **It can define any side-effect** - you are fully in control of what can be done and how it is expressed.
 1.  **It colocates side-effects with your components** - they only run when your components run, which is great for code splitting and performance.
-1.  **It leverages existing reactive programming libraries** - you can choose from `RxJS`, `xstream`, `most`, and `callbag`, with no need to learn a domain-specific language.
+1.  **It leverages existing reactive programming libraries** - you can choose from `RxJS`, `xstream`, `most`, and `callbag`, with no need to learn a domain-specific language. For each library, Refract provides strong type definitions.
 1.  **It doesn't prescribe a state container solution.**
 1.  **It uses React props for dependency injection.**
 

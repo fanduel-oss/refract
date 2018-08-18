@@ -125,15 +125,15 @@ Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent 
     *   A React `Component`
 *   The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
 
-# Learn Refract
-
-_Links through to tutorial._
-
 # Documentation
 
-_Links through to docs sub-pages._
+Documentation is available at [refract.js.org](https://refract.js.org). We aim to provide a helpful and thorough documentation: all documentation files are located on this repo and we welcome any pull request helping use achieve that goal.
 
 # Examples
+
+We maintain and will grow overtime a set of examples to illustrate the potential of Refract, as well as providing reactive programming examples: [refract.js.org/examples](https://refract.js.org/examples).
+
+Examples are illustrative and not the idiomatic way to use Refract. Each example is available for the four reactive libraries we support (RxJS, xstream, Most and Callbag), and we provide links to run the code live on [codesandbox.io](https://codesandbox.io). All examples are hosted on this repo, and we welcome pull requests helping us maintaining them.
 
 # Contributing
 
