@@ -23,5 +23,6 @@
     *   [Next Steps](./usage/next-steps.md)
 *   [Recipes](./recipes/README.md)
     *   [Dependency Injection](./recipes/dependency-injection.md)
+*   [Examples](../examples/README.md)
 *   [Glossary](./glossary.md)
 *   [Feedback](./feedback.md)
