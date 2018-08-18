@@ -19,8 +19,6 @@
     *   [Handling Effects](./usage/handling-effects.md)
     *   [Handling Errors](./usage/handling-errors.md)
     *   [Testing](./usage/testing.md)
-    *   [Fully Declarative Effects](./usage/fully-declarative-effects.md)
-    *   [Next Steps](./usage/next-steps.md)
 *   [Recipes](./recipes/README.md)
     *   [Dependency Injection](./recipes/dependency-injection.md)
 *   [Examples](../examples/README.md)

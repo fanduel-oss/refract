@@ -13,7 +13,7 @@ The benefits of Refract are:
 1.  **It doesn't prescribe a state container solution.**
 1.  **It uses React props for dependency injection.**
 
-In our experience, Refract offers advantages in comparison to all libraries named below, with the exception of `redux-cycles`. Refract can achieve similar results to `redux-cycles` - [see our explanation of how to achieve fully declarative effects with Refract](../usage/fully-declarative.md).
+In our experience, Refract offers advantages in comparison to all libraries named below, with the exception of `redux-cycles`. Refract can achieve similar results to `redux-cycles`.
 
 ## redux-thunk
 

@@ -12,5 +12,3 @@
 *   [Handling Effects](./handling-effects.md)
 *   [Handling Errors](./handling-errors.md)
 *   [Testing](./testing.md)
-*   [Fully Declarative Effects](./fully-declarative-effects.md)
-*   [Next Steps](./next-steps.md)
