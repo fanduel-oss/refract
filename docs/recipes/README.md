@@ -1,3 +1,3 @@
 # Recipes
 
-* [Dependency Injection](dependency-injection.md)
+*   [Dependency Injection](./dependency-injection.md)
