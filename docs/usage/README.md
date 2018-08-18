@@ -1,6 +1,6 @@
 # Usage
 
-*   [Introduction](./introduction.md)
+*   [Getting Started](./getting-started.md)
 *   [Installation](./installation.md)
 *   [Connecting To React](./connecting-to-react.md)
 *   [Observing React](./observing-react.md)
