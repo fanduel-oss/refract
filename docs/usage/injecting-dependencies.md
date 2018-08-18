@@ -42,4 +42,4 @@ A naïve approach would be to pass all dependencies down through your app as pro
 
 Instead, we recommend using React's new context API, which is perfect for passing this kind of information through to any arbitrary child within your app.
 
-For an explanation of how to do this, and a tip for how to make the code clean and simple, take a look at the [`dependency-injection`](../recipes/dependency-injection.md) recipe.
+For an explanation of how to do this, and a tip for how to make the code clean and simple, take a look at the [dependency-injection](../recipes/dependency-injection.md) recipe.

@@ -35,7 +35,7 @@ The Redux packages involve an extra step to apply the Refract enhancer to your R
     npm install --save refract-redux-rxjs
     ```
 
-1.  Import the Refract store enhancer and apply it to your redux store. This process is explained in detail in the Redux documentation: [`Configuring your store`](https://redux.js.org/recipes/configuring-your-store).
+1.  Import the Refract store enhancer and apply it to your redux store. This process is explained in detail in the Redux documentation: [Configuring your store](https://redux.js.org/recipes/configuring-your-store).
 
     For example:
 
