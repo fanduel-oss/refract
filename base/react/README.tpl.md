@@ -12,7 +12,7 @@
     <a href="#why"><strong>Why?</strong></a> ·
     <a href="#installation"><strong>Install</strong></a> ·
     <a href="#the-gist"><strong>The gist</strong></a> ·
-    <a href="#documentation"><strong>Learn</strong></a> ·
+    <a href="#learn-refract"><strong>Learn</strong></a> ·
     <a href="#contributing"><strong>Contribute</strong></a> ·
     <a href="#discuss"><strong>Discuss</strong></a>
 </p>
@@ -121,11 +121,13 @@ Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent 
     *   A React `Component`
 *   The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
 
-# Documentation
+# Learn Refract
+
+## Documentation
 
 Documentation is available at [refract.js.org](https://refract.js.org). We aim to provide a helpful and thorough documentation: all documentation files are located on this repo and we welcome any pull request helping use achieve that goal.
 
-# Examples
+## Examples
 
 We maintain and will grow overtime a set of examples to illustrate the potential of Refract, as well as providing reactive programming examples: [refract.js.org/examples](https://refract.js.org/examples).
 
