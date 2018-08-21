@@ -10,5 +10,14 @@
     "peerDependencies": {
         "preact": "^8.0.0",
         "xstream": ">= 1.0.0 < 12.0.0"
-    }
+    },
+    "keywords": ["reactive", "effects", "side-effects", "preact", "xstream"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }

@@ -13,5 +13,14 @@
     },
     "dependencies": {
         "symbol-observable": "~1.2.0"
-    }
+    },
+    "keywords": ["reactive", "effects", "side-effects", "redux", "most"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }

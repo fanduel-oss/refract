@@ -11,5 +11,14 @@
         "inferno": "^5.0.0",
         "inferno-create-element": "^5.0.0",
         "rxjs": "^6.0.0"
-    }
+    },
+    "keywords": ["reactive", "effects", "side-effects", "inferno", "rxjs"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }

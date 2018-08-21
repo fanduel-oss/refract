@@ -37,9 +37,7 @@ ReactDOM.render(
 ```js
 import { withEffects } from 'refract-rxjs'
 
-const MyComponent = props => (
-    <Foo {...props} />
-)
+const MyComponent = props => <Foo {...props} />
 
 export default withEffects(handler)(aperture)(MyComponent)
 ```
@@ -61,7 +59,7 @@ Thankfully, there's a solution for this!
 
 ## Using Context With `react-zap`
 
-We recommend using another tiny library, [`react-zap`](https://github.com/troch/react-zap), which lets you consume React context directly via higher-order components.
+We recommend using another tiny library, [`react-zap`](https://github.com/fanduel-oss/react-zap), which lets you consume React context directly via higher-order components.
 
 At first glance, it might seem obvious to do this:
 
@@ -71,9 +69,7 @@ import { contextToProps } from 'react-zap'
 
 import RefractContext from './refractContext'
 
-const MyComponent = props => (
-    <Foo {...props} />
-)
+const MyComponent = props => <Foo {...props} />
 
 export default contextToProps(RefractContext.Consumer)(
     withEffects(handler)(aperture)(MyComponent)
@@ -83,9 +79,7 @@ export default contextToProps(RefractContext.Consumer)(
 ```js
 import MyComponent from './MyComponent' // includes effects AND context
 
-const MyView = props => (
-    <MyComponent {...props} />
-)
+const MyView = props => <MyComponent {...props} />
 ```
 
 Which is definitely a lot nicer!
@@ -115,9 +109,7 @@ We would now import this enhanced version instead of the plain one whenever crea
 ```js
 import { withEffects } from './sideEffects'
 
-const MyComponent = props => (
-    <Foo {...props} />
-)
+const MyComponent = props => <Foo {...props} />
 
 export default withEffects(handler)(aperture)(MyComponent) // now includes dependencies!
 ```

@@ -12,32 +12,49 @@ generatePackages()
 async function generatePackages() {
     try {
         const packageBase = require('../base/all/package.base.json')
-        getPackages().map(async ({ name, dependencies, peerDependencies }) => {
-            let existingPackage
-
-            await mkdir(path.join(__dirname, '..', 'packages', name)).catch(
-                () => {}
-            )
-
-            try {
-                existingPackage = require(`../packages/${name}/package.json`)
-            } catch (e) {
-                existingPackage = { version: '0.0.0' }
-            }
-
-            const finalPackage = {
+        getPackages().map(
+            async ({
                 name,
-                ...existingPackage,
-                ...packageBase,
-                peerDependencies,
-                ...(Object.keys(dependencies).length ? { dependencies } : {})
-            }
+                mainLib,
+                obsLib,
+                dependencies,
+                peerDependencies
+            }) => {
+                let existingPackage
 
-            await writeFile(
-                path.join(__dirname, '..', 'packages', name, 'package.json'),
-                JSON.stringify(finalPackage, null, 4) + '\n'
-            )
-        })
+                await mkdir(path.join(__dirname, '..', 'packages', name)).catch(
+                    () => {}
+                )
+
+                try {
+                    existingPackage = require(`../packages/${name}/package.json`)
+                } catch (e) {
+                    existingPackage = { version: '0.0.0' }
+                }
+
+                const finalPackage = {
+                    name,
+                    ...existingPackage,
+                    ...packageBase,
+                    peerDependencies,
+                    ...(Object.keys(dependencies).length
+                        ? { dependencies }
+                        : {}),
+                    keywords: packageBase.keywords.concat([mainLib, obsLib])
+                }
+
+                await writeFile(
+                    path.join(
+                        __dirname,
+                        '..',
+                        'packages',
+                        name,
+                        'package.json'
+                    ),
+                    JSON.stringify(finalPackage, null, 4) + '\n'
+                )
+            }
+        )
     } catch (e) {
         console.error(e.toString())
     }

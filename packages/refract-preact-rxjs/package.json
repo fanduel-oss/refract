@@ -10,5 +10,14 @@
     "peerDependencies": {
         "preact": "^8.0.0",
         "rxjs": "^6.0.0"
-    }
+    },
+    "keywords": ["reactive", "effects", "side-effects", "preact", "rxjs"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }

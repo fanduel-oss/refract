@@ -10,5 +10,14 @@
     "peerDependencies": {
         "react": ">= 15.0.0 < 17.0.0",
         "rxjs": "^6.0.0"
-    }
+    },
+    "keywords": ["reactive", "effects", "side-effects", "react", "rxjs"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }
