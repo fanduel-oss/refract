@@ -27,7 +27,7 @@ With Refract, you can wrap side-effects around your container components, and en
 
 ### Effects
 
-For effects, your application shouldn't be able to function without them. For instance, you can look at the [typeahead example](../../examples/typeahead): without input debouncing and network requests, the input component would lose its main functionality.
+For effects, your application shouldn't be able to function without them. For instance, you can look at the [typeahead example](../../examples/typeahead/README.md): without input debouncing and network requests, the input component would lose its main functionality.
 
 In the case of effects, Refract helps you separate them into different logical units, increasing maintainability of your apps and promoting code re-use. Read [Thinking in Refract](./thinking-in-refract.md) for a more detailed explanation.
 
