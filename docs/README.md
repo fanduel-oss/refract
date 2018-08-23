@@ -27,6 +27,7 @@
     *   [Field validation](../examples/field-validation/README.md)
     *   [Redux fetch](../examples/redux-fetch/README.md)
     *   [Routing](../examples/routing/README.md)
+    *   [Typeahead](../examples/typeahead/README.md)
     *   [Visit time](../examples/visit-time/README.md)
 *   [Glossary](./glossary.md)
 *   [Feedback](./feedback.md)
