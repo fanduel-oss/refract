@@ -4364,6 +4364,10 @@ react-reconciler@^0.7.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-state-hoc@~3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-state-hoc/-/react-state-hoc-3.0.0.tgz#b8169bd95f151071d678e12cbd406eb928057347"
+
 react-test-renderer@^16.0.0-0:
   version "16.3.2"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.3.2.tgz#3d1ed74fda8db42521fdf03328e933312214749a"
