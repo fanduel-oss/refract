@@ -20,8 +20,9 @@
         "test:preact": "jest --config base/__tests__/preact/jest.config.js",
         "test:inferno": "jest --config base/__tests__/inferno/jest.config.js",
         "test:redux": "jest --config base/__tests__/redux/jest.config.js",
+        "test:examples": "jest --config examples/jest.config.js",
         "test":
-            "npm run test:react && npm run test:inferno && npm run test:preact && npm run test:redux",
+            "npm run test:react && npm run test:inferno && npm run test:preact && npm run test:redux && npm run test:examples",
         "precommit": "lint-staged",
         "prerelease": "npm run build",
         "release": "node ./scripts/publish"
@@ -30,6 +31,10 @@
         "@types/enzyme": "~3.1.10",
         "@types/jest": "~22.2.3",
         "@types/react": "~16.3.14",
+        "babel-core": "~6.26.3",
+        "babel-jest": "~23.4.2",
+        "babel-preset-env": "~1.7.0",
+        "babel-preset-react": "~6.24.1",
         "callbag": "~1.1.0",
         "callbag-basics": "~3.0.0",
         "callbag-drop-repeats": "~1.0.0",
