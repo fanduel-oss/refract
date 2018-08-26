@@ -19,7 +19,7 @@ describe('refract-redux-rxjs', () => {
     }
     const getName = (state: State): string => state.name
 
-    it('should work', () => {
+    it('should observe redux stores', () => {
         interface State {
             name: string
         }
@@ -55,12 +55,18 @@ describe('refract-redux-rxjs', () => {
         expect(nextName).toHaveBeenCalledTimes(2)
         expect(nextName).toHaveBeenCalledWith('Alfred')
 
+        store.dispatch(nameActionCreator('Alfred'))
+
+        expect(nextNameAction).toHaveBeenCalledTimes(2)
+        // name observable shouldn't have been called again
+        expect(nextName).toHaveBeenCalledTimes(2)
+
         nameSubscription.unsubscribe()
         nameActionSubscription.unsubscribe()
 
         store.dispatch(nameActionCreator('Jose'))
 
-        expect(nextNameAction).toHaveBeenCalledTimes(1)
+        expect(nextNameAction).toHaveBeenCalledTimes(2)
         expect(nextName).toHaveBeenCalledTimes(2)
     })
 })
