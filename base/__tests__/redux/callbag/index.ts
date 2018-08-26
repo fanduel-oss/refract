@@ -1,15 +1,71 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import { refractEnhancer } from '../../../../packages/refract-redux-callbag/src'
+const toObs = require('callbag-to-obs')
 
 describe('refract-redux-callbag', () => {
+    interface State {
+        name: string
+    }
+    const NAME = 'NAME'
+    const nameActionCreator = name => ({
+        type: NAME,
+        payload: name
+    })
+    const nameReducer = (state = '', action) => {
+        if (action.type === NAME) {
+            return action.payload
+        }
+
+        return state
+    }
+    const getName = (state: State): string => state.name
+
     it('should work', () => {
         interface State {
             name: string
         }
-        const reducer = (state = { name: 'refract' }, action) => state
-        const store = createStore(reducer, {}, refractEnhancer<State>())
-        const getName = (state: State): string => state.name
+        const store = createStore(
+            combineReducers({
+                name: nameReducer
+            }),
+            {},
+            refractEnhancer<State>()
+        )
 
-        const name$ = store.observe<string>(getName)
+        const nextName = jest.fn()
+        const nextNameAction = jest.fn()
+
+        const nameSubscription = toObs(
+            store.observe<string>(getName)
+        ).subscribe({
+            next: nextName
+        })
+        const nameActionSubscription = toObs(
+            store.observe<string>(NAME)
+        ).subscribe({
+            next: nextNameAction
+        })
+
+        expect(nextNameAction).not.toHaveBeenCalled()
+        expect(nextName).toHaveBeenCalledTimes(1)
+        expect(nextName).toHaveBeenCalledWith('')
+
+        store.dispatch(nameActionCreator('Alfred'))
+
+        expect(nextNameAction).toHaveBeenCalledTimes(1)
+        expect(nextNameAction).toHaveBeenCalledWith({
+            type: NAME,
+            payload: 'Alfred'
+        })
+        expect(nextName).toHaveBeenCalledTimes(2)
+        expect(nextName).toHaveBeenCalledWith('Alfred')
+
+        nameSubscription.unsubscribe()
+        nameActionSubscription.unsubscribe()
+
+        store.dispatch(nameActionCreator('Jose'))
+
+        expect(nextNameAction).toHaveBeenCalledTimes(1)
+        expect(nextName).toHaveBeenCalledTimes(2)
     })
 })
