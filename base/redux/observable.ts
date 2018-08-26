@@ -25,7 +25,6 @@ export const observeFactory = (store): ObserveFn => {
         if (typeof actionOrSelector === 'function') {
             return storeObservable.pipe<T>(
                 map(actionOrSelector),
-                startWith(actionOrSelector(store.getState())),
                 distinctUntilChanged<T>()
             )
         }
