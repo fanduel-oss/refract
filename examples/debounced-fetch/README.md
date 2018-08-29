@@ -5,7 +5,7 @@
 <!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag/) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/callbag) | [`code`](./most/) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/most)  | [`code`](./rxjs/) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/rxjs)  | [`code`](./xstream/) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/xstream)  |
+| [`code`](https://git.io/fAZPF) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/callbag) | [`code`](https://git.io/fAZX8) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/most)  | [`code`](https://git.io/fAZX9) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/rxjs)  | [`code`](https://git.io/fAZXH) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/xstream)  |
 <!-- prettier-ignore-end -->
 
 This basic example renders a single text input which prompts for a GitHub username; the current `username` of this input is stored in React component state.
