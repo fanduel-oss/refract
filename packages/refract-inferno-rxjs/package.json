@@ -1,5 +1,7 @@
 {
     "name": "refract-inferno-rxjs",
+    "description":
+        "Refract bindings for Inferno with RxJS: master your app effects reactively!",
     "version": "1.0.0-1",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -11,5 +13,21 @@
         "inferno": "^5.0.0",
         "inferno-create-element": "^5.0.0",
         "rxjs": "^6.0.0"
-    }
+    },
+    "keywords": [
+        "functional",
+        "reactive",
+        "effects",
+        "side-effects",
+        "inferno",
+        "rxjs"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }

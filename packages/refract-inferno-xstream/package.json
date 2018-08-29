@@ -1,5 +1,7 @@
 {
     "name": "refract-inferno-xstream",
+    "description":
+        "Refract bindings for Inferno with xstream: master your app effects reactively!",
     "version": "1.0.0-1",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -11,5 +13,21 @@
         "inferno": "^5.0.0",
         "inferno-create-element": "^5.0.0",
         "xstream": ">= 11.3.0 < 12.0.0"
-    }
+    },
+    "keywords": [
+        "functional",
+        "reactive",
+        "effects",
+        "side-effects",
+        "inferno",
+        "xstream"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }

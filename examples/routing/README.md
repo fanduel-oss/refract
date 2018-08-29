@@ -5,7 +5,7 @@
 <!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/routing/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/routing/most)  | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/routing/rxjs)  | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/routing/xstream)  |
+| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/routing/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/routing/most)  | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/routing/rxjs)  | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/routing/xstream)  |
 <!-- prettier-ignore-end -->
 
 In this example, a set of tabs are rendered to the screen, with the currently active tab stored in React state.
@@ -14,8 +14,8 @@ In this example, a set of tabs are rendered to the screen, with the currently ac
 
 Two sources are observed in this example:
 
--   The `setActiveTab` callback function.
--   The `window.popstate` event.
+*   The `setActiveTab` callback function.
+*   The `window.popstate` event.
 
 In addition, a single event is fired when the `aperture` initiates, which sets the initial state to `initialProps.activeTab`.
 

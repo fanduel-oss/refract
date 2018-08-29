@@ -5,7 +5,7 @@
 <!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/debounced-fetch/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/debounced-fetch/most)  | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/debounced-fetch/rxjs)  | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/troch/refract/tree/master/examples/debounced-fetch/xstream)  |
+| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/most)  | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/rxjs)  | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/debounced-fetch/xstream)  |
 <!-- prettier-ignore-end -->
 
 This basic example renders a single text input which prompts for a GitHub username; the current `username` of this input is stored in React component state.
@@ -14,7 +14,7 @@ This basic example renders a single text input which prompts for a GitHub userna
 
 Only one source is observed:
 
--   The `username` prop.
+*   The `username` prop.
 
 Every time the input's `username` changes, the new username is passed to the stream. Any blank strings are filtered from the stream, and then the usernames are debounced for one second.
 
