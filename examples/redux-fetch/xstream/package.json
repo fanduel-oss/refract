@@ -7,8 +7,8 @@
         "react-scripts": "1.0.10",
         "react-state-hoc": "~2.0.0",
         "redux": "~4.0.0",
-        "refract-redux-xstream": "~1.0.0-1",
-        "refract-xstream": "~1.0.0-3",
+        "refract-redux-xstream": "~1.0.0",
+        "refract-xstream": "~1.0.0",
         "xstream": "~11.4.0"
     },
     "version": "0.0.0",
