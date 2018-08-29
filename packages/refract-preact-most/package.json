@@ -1,7 +1,6 @@
 {
     "name": "refract-preact-most",
-    "description":
-        "Refract bindings for Preact with Most: master your app effects reactively!",
+    "description": "Refract bindings for Preact with Most: master your app effects reactively!",
     "version": "1.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
