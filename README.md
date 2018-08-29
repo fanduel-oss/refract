@@ -19,7 +19,9 @@
 <br/>
 
 <p align="center">
-    <img src="https://img.shields.io/bundlephobia/minzip/refract-rxjs.svg" alt="Library size">
+    <a href="https://travis-ci.org/fanduel-oss/refract">
+        <img src="https://travis-ci.org/fanduel-oss/refract.svg" alt="Build">
+    </a>
     <a href="https://opensource.org/licenses/MIT">
         <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
     </a>
