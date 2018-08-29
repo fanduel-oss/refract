@@ -1,17 +1,19 @@
 {
     "name": "refract-xstream",
-    "version": "1.0.0-8",
+    "version": "0.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
     "typings": "types/index.d.ts",
     "sideEffects": false,
     "license": "MIT",
-    "peerDependencies": {
-        "react": ">= 15.0.0 < 17.0.0",
-        "xstream": ">= 1.0.0 < 12.0.0"
-    },
-    "keywords": ["reactive", "effects", "side-effects", "react", "xstream"],
+    "keywords": [
+        "reactive",
+        "effects",
+        "side-effects",
+        "react",
+        "xstream"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/fanduel-oss/refract.git"
@@ -19,5 +21,9 @@
     "bugs": {
         "url": "https://github.com/fanduel-oss/refract/issues"
     },
-    "homepage": "https://refract.js.org"
+    "homepage": "https://refract.js.org",
+    "peerDependencies": {
+        "react": ">= 15.0.0 < 17.0.0",
+        "xstream": ">= 11.3.0 < 12.0.0"
+    }
 }

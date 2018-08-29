@@ -1,6 +1,6 @@
 {
     "name": "refract-redux-rxjs",
-    "version": "1.0.0-6",
+    "version": "1.0.0-7",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
@@ -11,7 +11,13 @@
         "redux": ">= 3.0.0 < 5.0.0",
         "rxjs": "^6.0.0"
     },
-    "keywords": ["reactive", "effects", "side-effects", "redux", "rxjs"],
+    "keywords": [
+        "reactive",
+        "effects",
+        "side-effects",
+        "redux",
+        "rxjs"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/fanduel-oss/refract.git"

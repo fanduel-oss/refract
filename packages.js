@@ -20,7 +20,7 @@ const peerDependencies = {
         rxjs: '^6.0.0'
     },
     xstream: {
-        xstream: '>= 1.0.0 < 12.0.0'
+        xstream: '>= 11.3.0 < 12.0.0'
     },
     most: {
         most: '^1.0.0'
@@ -50,8 +50,7 @@ const extraDependencies = {
     'refract-redux-callbag': {
         'callbag-drop-repeats': '~1.0.0',
         'callbag-map': '~1.0.1',
-        'callbag-pipe': '~1.1.1',
-        'callbag-start-with': '~2.1.1'
+        'callbag-pipe': '~1.1.1'
     }
 }
 

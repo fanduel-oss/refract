@@ -1,6 +1,6 @@
 {
     "name": "refract-callbag",
-    "version": "1.0.0-8",
+    "version": "1.0.0-9",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
@@ -16,7 +16,13 @@
         "callbag-to-obs": "~1.0.0",
         "symbol-observable": "~1.2.0"
     },
-    "keywords": ["reactive", "effects", "side-effects", "react", "callbag"],
+    "keywords": [
+        "reactive",
+        "effects",
+        "side-effects",
+        "react",
+        "callbag"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/fanduel-oss/refract.git"

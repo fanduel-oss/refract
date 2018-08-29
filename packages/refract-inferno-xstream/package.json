@@ -1,18 +1,19 @@
 {
     "name": "refract-inferno-xstream",
-    "version": "1.0.0-0",
+    "version": "0.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
     "typings": "types/index.d.ts",
     "sideEffects": false,
     "license": "MIT",
-    "peerDependencies": {
-        "inferno": "^5.0.0",
-        "inferno-create-element": "^5.0.0",
-        "xstream": ">= 1.0.0 < 12.0.0"
-    },
-    "keywords": ["reactive", "effects", "side-effects", "inferno", "xstream"],
+    "keywords": [
+        "reactive",
+        "effects",
+        "side-effects",
+        "inferno",
+        "xstream"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/fanduel-oss/refract.git"
@@ -20,5 +21,10 @@
     "bugs": {
         "url": "https://github.com/fanduel-oss/refract/issues"
     },
-    "homepage": "https://refract.js.org"
+    "homepage": "https://refract.js.org",
+    "peerDependencies": {
+        "inferno": "^5.0.0",
+        "inferno-create-element": "^5.0.0",
+        "xstream": ">= 11.3.0 < 12.0.0"
+    }
 }

@@ -1,6 +1,6 @@
 {
     "name": "refract-preact-most",
-    "version": "1.0.0-0",
+    "version": "1.0.0-1",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
@@ -14,7 +14,13 @@
     "dependencies": {
         "symbol-observable": "~1.2.0"
     },
-    "keywords": ["reactive", "effects", "side-effects", "preact", "most"],
+    "keywords": [
+        "reactive",
+        "effects",
+        "side-effects",
+        "preact",
+        "most"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/fanduel-oss/refract.git"

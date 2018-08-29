@@ -1,6 +1,6 @@
 {
     "name": "refract-inferno-callbag",
-    "version": "1.0.0-0",
+    "version": "1.0.0-1",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
@@ -17,7 +17,13 @@
         "callbag-to-obs": "~1.0.0",
         "symbol-observable": "~1.2.0"
     },
-    "keywords": ["reactive", "effects", "side-effects", "inferno", "callbag"],
+    "keywords": [
+        "reactive",
+        "effects",
+        "side-effects",
+        "inferno",
+        "callbag"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/fanduel-oss/refract.git"

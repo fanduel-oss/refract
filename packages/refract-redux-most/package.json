@@ -1,6 +1,6 @@
 {
     "name": "refract-redux-most",
-    "version": "1.0.0-6",
+    "version": "1.0.0-7",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
@@ -14,7 +14,13 @@
     "dependencies": {
         "symbol-observable": "~1.2.0"
     },
-    "keywords": ["reactive", "effects", "side-effects", "redux", "most"],
+    "keywords": [
+        "reactive",
+        "effects",
+        "side-effects",
+        "redux",
+        "most"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/fanduel-oss/refract.git"

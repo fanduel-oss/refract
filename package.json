@@ -36,7 +36,6 @@
         "callbag-from-obs": "~1.2.0",
         "callbag-map": "~1.0.1",
         "callbag-pipe": "~1.1.1",
-        "callbag-start-with": "~2.1.1",
         "callbag-to-obs": "~1.0.0",
         "checksum": "~0.1.1",
         "enzyme": "~3.3.0",
@@ -73,7 +72,7 @@
         "tslint": "~5.10.0",
         "tslint-config-prettier": "~1.12.0",
         "typescript": "~2.8.3",
-        "xstream": "~11.2.0"
+        "xstream": "~11.7.0"
     },
     "lint-staged": {
         "*.{ts,tsx}": ["prettier --write", "tslint", "git add"],
