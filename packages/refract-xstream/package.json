@@ -1,5 +1,7 @@
 {
     "name": "refract-xstream",
+    "description":
+        "Refract bindings for React with xstream: master your app effects reactively!",
     "version": "1.0.0-9",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -10,5 +12,21 @@
     "peerDependencies": {
         "react": ">= 15.0.0 < 17.0.0",
         "xstream": ">= 11.3.0 < 12.0.0"
-    }
+    },
+    "keywords": [
+        "functional",
+        "reactive",
+        "effects",
+        "side-effects",
+        "react",
+        "xstream"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }
