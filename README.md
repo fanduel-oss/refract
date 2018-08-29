@@ -145,10 +145,6 @@ We welcome many forms of contribution from anyone who wishes to get involved.
 
 Before getting started, please read through our [contributing guidelines](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md).
 
-### Contributors
-
-_Links to contributors._
-
 # Links
 
 ### Logo
