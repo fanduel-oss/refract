@@ -8,8 +8,8 @@
         "react-scripts": "1.0.10",
         "react-state-hoc": "~2.0.0",
         "redux": "4.0.0",
-        "refract-most": "~1.0.0-3",
-        "refract-redux-most": "~1.0.0-1"
+        "refract-most": "~1.0.0",
+        "refract-redux-most": "~1.0.0"
     },
     "version": "0.0.0",
     "scripts": {
