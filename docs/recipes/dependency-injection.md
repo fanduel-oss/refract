@@ -37,9 +37,7 @@ ReactDOM.render(
 ```js
 import { withEffects } from 'refract-rxjs'
 
-const MyComponent = props => (
-    <Foo {...props} />
-)
+const MyComponent = props => <Foo {...props} />
 
 export default withEffects(handler)(aperture)(MyComponent)
 ```
@@ -71,9 +69,7 @@ import { contextToProps } from 'react-zap'
 
 import RefractContext from './refractContext'
 
-const MyComponent = props => (
-    <Foo {...props} />
-)
+const MyComponent = props => <Foo {...props} />
 
 export default contextToProps(RefractContext.Consumer)(
     withEffects(handler)(aperture)(MyComponent)
@@ -83,9 +79,7 @@ export default contextToProps(RefractContext.Consumer)(
 ```js
 import MyComponent from './MyComponent' // includes effects AND context
 
-const MyView = props => (
-    <MyComponent {...props} />
-)
+const MyView = props => <MyComponent {...props} />
 ```
 
 Which is definitely a lot nicer!
@@ -115,9 +109,7 @@ We would now import this enhanced version instead of the plain one whenever crea
 ```js
 import { withEffects } from './sideEffects'
 
-const MyComponent = props => (
-    <Foo {...props} />
-)
+const MyComponent = props => <Foo {...props} />
 
 export default withEffects(handler)(aperture)(MyComponent) // now includes dependencies!
 ```

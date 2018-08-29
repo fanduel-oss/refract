@@ -1,5 +1,7 @@
 {
     "name": "refract-inferno-callbag",
+    "description":
+        "Refract bindings for Preact with Callbag: master your app effects reactively!",
     "version": "1.0.0-1",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -16,5 +18,14 @@
         "callbag-from-obs": "~1.2.0",
         "callbag-to-obs": "~1.0.0",
         "symbol-observable": "~1.2.0"
-    }
+    },
+    "keywords": ["reactive", "effects", "side-effects", "inferno", "callbag"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }

@@ -1,5 +1,7 @@
 {
     "name": "refract-most",
+    "description":
+        "Refract bindings for React with Most: master your app effects reactively!",
     "version": "1.0.0-9",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -13,5 +15,14 @@
     },
     "dependencies": {
         "symbol-observable": "~1.2.0"
-    }
+    },
+    "keywords": ["reactive", "effects", "side-effects", "react", "most"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }

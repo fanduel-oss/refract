@@ -1,12 +1,23 @@
 {
     "name": "refract-preact-xstream",
-    "version": "1.0.0-1",
+    "description":
+        "Refract bindings for Preact with xstream: master your app effects reactively!",
+    "version": "0.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
     "typings": "types/index.d.ts",
     "sideEffects": false,
     "license": "MIT",
+    "keywords": ["reactive", "effects", "side-effects", "preact", "xstream"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org",
     "peerDependencies": {
         "preact": "^8.0.0",
         "xstream": ">= 11.3.0 < 12.0.0"

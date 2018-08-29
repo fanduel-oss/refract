@@ -4,5 +4,14 @@
     "module": "index.es.js",
     "typings": "types/index.d.ts",
     "sideEffects": false,
-    "license": "MIT"
+    "license": "MIT",
+    "keywords": ["reactive", "effects", "side-effects"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanduel-oss/refract.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fanduel-oss/refract/issues"
+    },
+    "homepage": "https://refract.js.org"
 }
