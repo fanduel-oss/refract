@@ -1,5 +1,7 @@
 {
     "name": "refract-inferno-xstream",
+    "description":
+        "Refract bindings for Preact with xstream: master your app effects reactively!",
     "version": "0.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -7,13 +9,7 @@
     "typings": "types/index.d.ts",
     "sideEffects": false,
     "license": "MIT",
-    "keywords": [
-        "reactive",
-        "effects",
-        "side-effects",
-        "inferno",
-        "xstream"
-    ],
+    "keywords": ["reactive", "effects", "side-effects", "inferno", "xstream"],
     "repository": {
         "type": "git",
         "url": "https://github.com/fanduel-oss/refract.git"

@@ -1,5 +1,7 @@
 {
     "name": "refract-redux-callbag",
+    "description":
+        "Refract bindings for Redux with Callbag: master your app effects reactively!",
     "version": "1.0.0-7",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -18,13 +20,7 @@
         "callbag-pipe": "~1.1.1",
         "symbol-observable": "~1.2.0"
     },
-    "keywords": [
-        "reactive",
-        "effects",
-        "side-effects",
-        "redux",
-        "callbag"
-    ],
+    "keywords": ["reactive", "effects", "side-effects", "redux", "callbag"],
     "repository": {
         "type": "git",
         "url": "https://github.com/fanduel-oss/refract.git"

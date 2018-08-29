@@ -7,6 +7,17 @@ const mkdir = util.promisify(fs.mkdir)
 
 const getPackages = require('../packages')
 
+const libs = {
+    react: 'React',
+    inferno: 'Preact',
+    preact: 'Preact',
+    redux: 'Redux',
+    xstream: 'xstream',
+    rxjs: 'RxJS',
+    most: 'Most',
+    callbag: 'Callbag'
+}
+
 generatePackages()
 
 async function generatePackages() {
@@ -40,6 +51,9 @@ async function generatePackages() {
                     ...(Object.keys(dependencies).length
                         ? { dependencies }
                         : {}),
+                    description: `Refract bindings for ${libs[mainLib]} with ${
+                        libs[obsLib]
+                    }: master your app effects reactively!`,
                     keywords: packageBase.keywords.concat([mainLib, obsLib])
                 }
 
