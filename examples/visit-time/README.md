@@ -5,7 +5,7 @@
 <!-- prettier-ignore-start -->
 | callbag | most | RxJS | xstream |
 | --- | --- | --- | --- |
-| [`code`](./callbag) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/visit-time/callbag) | [`code`](./most) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/visit-time/most)  | [`code`](./rxjs) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/visit-time/rxjs)  | [`code`](./xstream) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/visit-time/xstream)  |
+| [`code`](./callbag/) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/visit-time/callbag) | [`code`](./most/) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/visit-time/most)  | [`code`](./rxjs/) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/visit-time/rxjs)  | [`code`](./xstream/) [`live`](https://codesandbox.io/s/github/fanduel-oss/refract/tree/master/examples/visit-time/xstream)  |
 <!-- prettier-ignore-end -->
 
 This examples renders a stopwatch counting the time a user spends on a page while being online.
