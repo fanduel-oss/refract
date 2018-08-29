@@ -1,0 +1,9 @@
+language: node_js
+cache: yarn
+node_js:
+  - '8'
+before_script:
+  - npm run init
+script:
+  - npm run build
+  - npm test
