@@ -1,4 +1,5 @@
 {
+    "name": "refract-example-callbag-typeahead",
     "dependencies": {
         "callbag-basics": "~3.0.0",
         "callbag-debounce": "~2.1.2",

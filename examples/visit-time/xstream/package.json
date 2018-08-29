@@ -1,5 +1,5 @@
 {
-    "name": "refract-example",
+    "name": "refract-example-xstream-visit-time",
     "dependencies": {
         "react": "16.1.1",
         "react-dom": "16.1.1",

@@ -5,8 +5,10 @@
         "callbag-from-promise": "~1.0.0",
         "react": "~16.4.1",
         "react-dom": "16.1.1",
+        "react-redux": "~5.0.7",
         "react-scripts": "1.0.10",
         "react-state-hoc": "~2.0.0",
+        "redux": "~4.0.0",
         "refract-callbag": "~1.0.0-3",
         "refract-redux-callbag": "~1.0.0-1"
     },

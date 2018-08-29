@@ -1,6 +1,7 @@
 {
     "name": "refract-example-most-counter",
     "dependencies": {
+        "most": "~1.7.3",
         "react": "16.1.1",
         "react-dom": "16.1.1",
         "react-scripts": "1.0.10",

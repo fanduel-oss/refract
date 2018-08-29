@@ -1,4 +1,5 @@
 {
+    "name": "refract-example-most-typeahead",
     "dependencies": {
         "most": "~1.7.3",
         "react": "16.4.1",

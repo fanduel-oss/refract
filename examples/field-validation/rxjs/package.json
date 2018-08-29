@@ -6,7 +6,8 @@
         "react-scripts": "1.0.10",
         "react-state-hoc": "~3.0.0",
         "refract-rxjs": "~1.0.0-4",
-        "rxjs": "~6.2.2"
+        "rxjs": "~6.2.2",
+        "rxjs-compat": "~6.2.2"
     },
     "version": "0.0.0",
     "scripts": {
