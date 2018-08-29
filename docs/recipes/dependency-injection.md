@@ -59,7 +59,7 @@ Thankfully, there's a solution for this!
 
 ## Using Context With `react-zap`
 
-We recommend using another tiny library, [`react-zap`](https://github.com/fanduel-oss/react-zap), which lets you consume React context directly via higher-order components.
+We recommend using another tiny library, [`react-zap`](https://github.com/troch/react-zap), which lets you consume React context directly via higher-order components.
 
 At first glance, it might seem obvious to do this:
 
