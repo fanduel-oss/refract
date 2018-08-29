@@ -1,7 +1,9 @@
 {
     "name": "refract-example-callbag-field-validation",
     "dependencies": {
+        "callbag-basics": "~3.0.0",
         "callbag-debounce": "~2.1.2",
+        "callbag-from-promise": "~1.0.0",
         "react": "16.1.1",
         "react-dom": "16.1.1",
         "react-scripts": "1.0.10",

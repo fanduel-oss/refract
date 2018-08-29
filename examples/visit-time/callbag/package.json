@@ -1,4 +1,5 @@
 {
+    "name": "refract-example-callbag-visit-time",
     "dependencies": {
         "callbag-basics": "~3.0.0",
         "callbag-drop-repeats": "~1.0.0",
