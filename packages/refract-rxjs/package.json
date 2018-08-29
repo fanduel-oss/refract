@@ -2,7 +2,7 @@
     "name": "refract-rxjs",
     "description":
         "Refract bindings for React with RxJS: master your app effects reactively!",
-    "version": "1.0.0-10",
+    "version": "1.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",

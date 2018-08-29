@@ -2,7 +2,7 @@
     "name": "refract-redux-most",
     "description":
         "Refract bindings for Redux with Most: master your app effects reactively!",
-    "version": "1.0.0-8",
+    "version": "1.0.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
