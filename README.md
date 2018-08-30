@@ -11,7 +11,7 @@
 <p align="center">
     <a href="#why"><strong>Why?</strong></a> ·
     <a href="#installation"><strong>Install</strong></a> ·
-    <a href="#the-gist"><strong>The gist</strong></a> ·
+    <a href="#the-gist"><strong>The Gist</strong></a> ·
     <a href="#learn-refract"><strong>Learn</strong></a> ·
     <a href="#contributing"><strong>Contribute</strong></a> ·
     <a href="#discuss"><strong>Discuss</strong></a>

@@ -9,7 +9,7 @@ Thinking reactive will help you think through effects and _vice versa_. This cha
 
 ## Thinking reactive
 
-Reactive programming is renowned for being challenging to learn. It requires a different mental model and the vast majority of us have been wired to think our code imperatively.
+Reactive programming is renowned for being challenging to learn. It requires a different mental model and the vast majority of us have been wired to think of our code imperatively.
 
 Reactive programming isn't more complicated than the rest, but it requires time for your brain to slowly transition to this paradigm. There are more and more resources available online to learn reactive programming, but we recommend [The introduction to Reactive Programming you've been missing
 ](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754).
@@ -27,7 +27,7 @@ Instead of thinking _"While x is going on, y should be in that state"_, you need
 
 When not thinking through effects, we would make the following statements:
 
-*   When a user type characters in the username field, network requests need to be performed to validate the chosen username, while the submitted button is disabled.
+*   When a user types characters in the username field, network requests need to be performed to validate the chosen username, while the submitted button is disabled.
 *   When a user clicks on the submit button, the username value should be posted to the API, while both the submitted button and username field are disabled.
 
 Thinking through effects requires you to isolate each action or event from their resulting effect:

@@ -77,7 +77,7 @@ Declarative side-effects have two main benefits:
 
 ### Reactive
 
-The key to reactive programming is observability: we need to be able to observe changes in your app, get notified when they happen so we can trigger side-effects. Reactive programming works really well for side-effects: effects are just data. It is also a remarkable abstraction encouraging declarative programming and which can concisely express time-based operations (throttle, debounce, etc.).
+The key to reactive programming is observability: we need to be able to observe changes in your app, get notified when they happen so we can trigger side-effects. Reactive programming works really well for side-effects: side-effects are just data. It is also a remarkable abstraction encouraging declarative programming and which can concisely express time-based operations (throttle, debounce, etc.).
 
 We have seen a lot of side-effect management libraries in redux, due to the observability of its actions (with middleware). It is entirely possible to move side-effects handling to React, and to not have to rely on redux.
 
