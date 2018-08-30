@@ -81,4 +81,4 @@ The key to reactive programming is observability: we need to be able to observe 
 
 We have seen a lot of side-effect management libraries in redux, due to the observability of its actions (with middleware). It is entirely possible to move side-effects handling to React, and to not have to rely on redux.
 
-To see how Refact compares to other side-effects libraries, check our [comparison guide](./comparison.md). To see Refract usage, head to [using Refract](./usage.md).
+To see how Refact compares to other side-effects libraries, check our [comparison guide](./alternatives.md). To see Refract usage, head to [using Refract](./usage.md).
