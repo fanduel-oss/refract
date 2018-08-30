@@ -112,7 +112,7 @@ const aperture = initialProps => component => component.observe()
 
 In some cases you might want to observe a particular event such as a click on an hyperlink, without having a prop to observe. You might also want to use Refract for all your application mutations and effects, without piggy backing on existing mutations.
 
-`withEffects` injects a method `pushEvent` to your components, so you can inform Refract of events happening inside your components. We use a callback because we aim to offer an universal solution not tied to a specific renderer (web, native). That way we don't have to use refs or low-level platform-specific primitives.
+`withEffects` injects a method `pushEvent` to your components, so you can inform Refract of events happening inside your components. We use a callback because we aim to offer a universal solution not tied to a specific renderer (web, native). That way we don't have to use refs or low-level platform-specific primitives.
 
 ### Pushing events
 
