@@ -34,6 +34,8 @@ This pattern is likely to change in future when Redux moves to React's new conte
 
 Because dependencies are simply passed into Refract as props, you can easily add any dependency you need - all you have to do is add more props!
 
+To see an example of what a useful dependency might look like, take a look at the [API dependency recipe](../recipes/creating-an-api-dependency.md).
+
 ## Passing Dependencies To Children
 
 You might have noticed a problem with the approach outlined above: how do you pass these dependencies down to any `ComponentWithEffects` which are far further down the React component tree?
