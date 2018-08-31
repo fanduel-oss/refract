@@ -1,14 +1,9 @@
-import { compose, createStore } from 'redux'
+import { createStore } from 'redux'
 import { refractEnhancer } from 'refract-redux-xstream'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import reducers from './store'
 
-let composeEnhancers = compose
-
-if (process.env.NODE_ENV !== 'production') {
-    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-}
-
-const store = createStore(reducers, {}, composeEnhancers(refractEnhancer()))
+const store = createStore(reducers, {}, composeWithDevTools(refractEnhancer()))
 
 export default store
