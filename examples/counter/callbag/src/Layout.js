@@ -5,9 +5,24 @@ const Layout = ({ count, direction, setDirection }) => (
         <p>Current count: {count}</p>
         <p>Current direction: {direction}</p>
         <p>
-            <button onClick={() => setDirection('INCREASE')}>Increase</button>
-            <button onClick={() => setDirection('NONE')}>Pause</button>
-            <button onClick={() => setDirection('DECREASE')}>Decrease</button>
+            <button
+                className={direction === 'INCREASE' && 'active'}
+                onClick={() => setDirection('INCREASE')}
+            >
+                Increase
+            </button>
+            <button
+                className={direction === 'NONE' && 'active'}
+                onClick={() => setDirection('NONE')}
+            >
+                Pause
+            </button>
+            <button
+                className={direction === 'DECREASE' && 'active'}
+                onClick={() => setDirection('DECREASE')}
+            >
+                Decrease
+            </button>
         </p>
     </div>
 )
