@@ -1,10 +1,9 @@
 {
     "name": "refract-example-rxjs-counter",
     "dependencies": {
-        "react": "16.1.1",
-        "react-dom": "16.1.1",
-        "react-scripts": "1.0.10",
-        "react-state-hoc": "~2.0.0",
+        "react": "~16.4.2",
+        "react-dom": "~16.4.2",
+        "react-scripts": "~1.1.5",
         "refract-rxjs": "~1.0.0",
         "rxjs": "~6.2.2",
         "rxjs-compat": "~6.2.2"
