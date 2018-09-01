@@ -1,10 +1,10 @@
 # Creating an API Dependency
 
-The recommended approach to injecting dependencies into your apertures and handlers has been explored elsewhere - both in the [usage section](../usage/injecting-dependencies.md) and in a [dependency injection](./dependency-injection.md) recipe - but an important question has not been covered: what does a dependency look like?
+The recommended approach to injecting dependencies into your apertures and handlers has been explored elsewhere - in the [usage section](../usage/injecting-dependencies.md) and in a [dependency injection](./dependency-injection.md) recipe - but an important question has not been covered: what does a dependency look like?
 
-While each app likely has a small number of obvious dependencies which would clearly be useful inside Refract - such as your router or your Redux store - there are other dependencies which would benefit from the same approach.
+While each app likely has obvious dependencies which would be useful inside Refract - such as your router or your Redux store - there are other dependencies which would benefit from the same approach.
 
-This recipe explores one of the typical dependencies you might find yourself building: and API dependency.
+This recipe explores one of the typical dependencies you might find yourself building: an API dependency.
 
 ## Life Without an API Dependency
 
@@ -12,7 +12,7 @@ If we build an app without a centralised API dependency, we will eventually enco
 
 #### Repetition
 
-Any time we wish to fetch data from an external source, there's some boilerplate we will need to include:
+Take a typical API request using fetch as an example. The request itself might look like this:
 
 ```js
 fetch(`https://api.github.com/users/${username}`)
@@ -29,7 +29,7 @@ const aperture = () => component =>
             fromPromise(
                 fetch(`https://api.github.com/users/${username}`)
                     .then(response => response.json())
-                    .catch(error => ({ error }))
+                    .catch(error => ({ type: RECEIVE_ERROR, error }))
             )
         )
     )
@@ -55,11 +55,13 @@ const aperture = () => component =>
         )
 ```
 
-Neither feels like a clean solution: it's still a lot of overhead for a simple API request.
+Neither feels like a clean solution - it's still a lot of overhead for a simple API request.
 
 #### Flexibility
 
-This approach makes the code harder to change. What if we want to migrate to a new version of the API, or add an extra header to the request, or add some common data transformation to a specific endpoint? We would have to trawl through our app, find every API request, and consider the context of each request to make sure we're refactoring correctly.
+This approach makes the code harder to change. What if we want to migrate to a new version of the API, add an extra header to all requests, or add some common data transformation to a specific endpoint?
+
+To make those changes, we would have to trawl through our app, find every API request, and consider the context of each request to make sure we're refactoring correctly.
 
 #### Testability
 
@@ -97,9 +99,9 @@ const aperture = ({ api }) => component =>
         .pipe(mergeMap(username => api.getUser(username)))
 ```
 
-This is a much cleaner separation of concerns, allowing us to declaratively call our API endpoints, without caring about the implementation details, and without unnecessary repetition.
+This is a much cleaner separation of concerns, allowing us to declaratively call our API endpoints - without caring about the implementation details, and without unnecessary repetition.
 
-When refactoring the API, all the code is in one place, and we no longer have to consider the context in which it is called. When testing, we can easily create a mock dependency, and our apertures remain pure.
+When refactoring the API, all the related code is in one place, and we no longer have to consider the context in which it is called. When testing, we can easily create a mock dependency, and our apertures remain pure.
 
 ## Considerations
 
@@ -109,7 +111,7 @@ If you handle all of your app's side-effects via Refract, you have the opportuni
 
 By using primitives from your streaming library as building blocks, you can simplify features such as request cancellation, retry on error, or complex data transformations. Encapsulating your API into a single dependency lets you consider it in isolation, and makes your code clearer and more consistent.
 
-However, using Refract for everything might not be your goal - or you might need to migrate an existing app over time. In those cases, a centralised dependency would still provide some of those benefits.
+However, using Refract that extensively might not be your goal - or you might need to migrate an existing app over time. In those cases, a centralised dependency would still provide some of those benefits, and could be a natural first step towards migrating.
 
 The main difference in approach is that you would likely return raw promises instead of streams, so that they can be easily used outside Refract. You would still gain from the testability and consistency, and make it easier to refactor in future.
 
