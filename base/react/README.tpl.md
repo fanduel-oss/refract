@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="#"><img src="../../logo/refract-logo-colour.png" height="70" /></a>
+    <a href="#"><img src="https://raw.githubusercontent.com/fanduel-oss/refract/master/logo/refract-logo-colour.png" height="70" /></a>
 </p><br/>
 
 <p align="center">
