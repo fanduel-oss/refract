@@ -7,10 +7,10 @@ Available packages:
 <!-- prettier-ignore-start -->
 | | [React](https://github.com/facebook/react) | [Inferno](https://infernojs.org/) | [Preact](https://preactjs.com/) | [Redux](https://github.com/reduxjs/redux) |
 | --- | --- | --- | --- | --- |
-| **[Callbag](https://github.com/callbag/callbag)** | refract-callbag | refract-inferno-callbag | refact-preact-callbag | refract-redux-callbag |
-| **[Most](https://github.com/cujojs/most)** | refract-most | refract-inferno-most | refact-preact-most | refract-redux-most |
-| **[RxJS](https://github.com/reactivex/rxjs)** | refract-rxjs | refract-inferno-rxjs | refact-preact-rxjs | refract-redux-rxjs |
-| **[xstream](https://github.com/staltz/xstream)** | refract-xstream | refract-inferno-xstream | refact-preact-xstream | refract-redux-xstream |
+| **[Callbag](https://github.com/callbag/callbag)** | refract-callbag | refract-inferno-callbag | refract-preact-callbag | refract-redux-callbag |
+| **[Most](https://github.com/cujojs/most)** | refract-most | refract-inferno-most | refract-preact-most | refract-redux-most |
+| **[RxJS](https://github.com/reactivex/rxjs)** | refract-rxjs | refract-inferno-rxjs | refract-preact-rxjs | refract-redux-rxjs |
+| **[xstream](https://github.com/staltz/xstream)** | refract-xstream | refract-inferno-xstream | refract-preact-xstream | refract-redux-xstream |
 <!-- prettier-ignore-end -->
 
 The examples below assume you're using `RxJS` - if you're using a different library, use the table above to find the correct package names.
