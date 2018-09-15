@@ -1,24 +1,15 @@
 import React from 'react'
 import { render } from 'react-dom'
-import withState from 'react-state-hoc'
+
 import { withEffects } from 'refract-callbag'
 import fromPromise from 'callbag-from-promise'
 import { debounce } from 'callbag-debounce'
 import { filter, flatten, map, pipe } from 'callbag-basics'
 
+import StateContainer from './StateContainer'
 import Layout from './Layout'
 
-const handler = ({ setAvailable }) => effect => {
-    if (effect.type === 'USER_FOUND') {
-        setAvailable('false')
-    } else if (effect.type === 'USERNAME_AVAILABLE') {
-        setAvailable('true')
-    } else {
-        setAvailable(null)
-    }
-}
-
-const aperture = () => ({ observe }) =>
+const aperture = props => ({ observe }) =>
     pipe(
         observe('username'),
         filter(Boolean),
@@ -36,15 +27,23 @@ const aperture = () => ({ observe }) =>
         }))
     )
 
-const initialState = { available: null, username: '' }
+const handler = ({ setAvailable }) => effect => {
+    switch (effect.type) {
+        case 'USER_FOUND':
+            return setAvailable('false')
 
-const mapSetStateToProps = {
-    setAvailable: available => ({ available }),
-    setUsername: username => ({ available: null, username })
+        case 'USERNAME_AVAILABLE':
+            return setAvailable('true')
+
+        default:
+            return setAvailable(null)
+    }
 }
 
-const App = withState(initialState, mapSetStateToProps)(
-    withEffects(handler)(aperture)(Layout)
+const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
+
+const App = () => (
+    <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>
 )
 
 render(<App />, document.getElementById('root'))
