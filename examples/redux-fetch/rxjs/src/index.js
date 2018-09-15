@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
+
 import { withEffects } from 'refract-rxjs'
 import { filter, map, mergeMap } from 'rxjs/operators'
 import { combineLatest } from 'rxjs/observable/combineLatest'
@@ -11,21 +12,7 @@ import Layout from './Layout'
 import { actionCreators, actionTypes, selectors } from './store'
 import store from './setupStore'
 
-const handler = ({ store }) => effect => {
-    if (effect.type === actionTypes.ERROR_RECEIVE) {
-        console.log(effect)
-    }
-
-    if (effect.type === actionTypes.USER_RECEIVE) {
-        store.dispatch(effect)
-    }
-
-    if (effect.type === actionTypes.USER_SELECT) {
-        store.dispatch(effect)
-    }
-}
-
-const aperture = ({ store }) => () => {
+const aperture = ({ store }) => component => {
     const combined$ = combineLatest(
         store.observe(actionTypes.USER_REQUEST),
         store.observe(selectors.getUsers)
@@ -55,6 +42,22 @@ const aperture = ({ store }) => () => {
     )
 
     return merge(requestUser$, selectUser$)
+}
+
+const handler = ({ store }) => effect => {
+    switch (effect.type) {
+        case actionTypes.ERROR_RECEIVE:
+            return console.log(effect)
+
+        case actionTypes.USER_RECEIVE:
+            return store.dispatch(effect)
+
+        case actionTypes.USER_SELECT:
+            return store.dispatch(effect)
+
+        default:
+            return
+    }
 }
 
 const App = withEffects(handler)(aperture)(Layout)

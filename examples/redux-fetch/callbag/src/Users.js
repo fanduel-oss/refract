@@ -20,7 +20,7 @@ const Users = ({ active, selectUser, users }) => {
     const userLinks = Object.values(users).map(user => (
         <UserLink
             key={user.login}
-            selectUser={selectUser(user.login)}
+            selectUser={() => selectUser(user.login)}
             active={active === user.login}
             {...user}
         />
@@ -41,11 +41,8 @@ const mapStateToProps = state => ({
     active: selectors.getActive(state),
     users: selectors.getUsers(state)
 })
-const mapDispatchToProps = dispatch => ({
-    selectUser: userId => () => dispatch(actionCreators.selectUser(userId))
-})
+const mapDispatchToProps = {
+    selectUser: actionCreators.selectUser
+}
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Users)
+export default connect(mapStateToProps, mapDispatchToProps)(Users)
