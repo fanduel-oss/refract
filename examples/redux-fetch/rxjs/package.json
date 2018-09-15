@@ -5,7 +5,6 @@
         "react-dom": "16.1.1",
         "react-redux": "~5.0.7",
         "react-scripts": "1.0.10",
-        "react-state-hoc": "~2.0.0",
         "redux": "~4.0.0",
         "redux-devtools-extension": "~2.13.5",
         "refract-redux-rxjs": "~1.0.0",
