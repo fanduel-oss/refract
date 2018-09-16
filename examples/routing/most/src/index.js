@@ -1,25 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
+
 import { withEffects } from 'refract-most'
 import { fromEvent, merge, just } from 'most'
-import withState from 'react-state-hoc'
 
+import StateContainer from './StateContainer'
 import Layout from './Layout'
-
-const handler = ({ setState }) => (effect = {}) => {
-    if (effect.type === 'NAVIGATION') {
-        const path = document.location.pathname
-        const search = effect.state.activeTab
-            ? `?tab=${effect.state.activeTab}`
-            : ''
-        const methodName = effect.replace ? 'replaceState' : 'pushState'
-        window.history[methodName](effect.state, null, `${path}${search}`)
-    }
-
-    if (effect.type === 'STATE') {
-        setState(effect.state)
-    }
-}
 
 const aperture = initialProps => component => {
     const activeTab$ = component.observe('setActiveTab')
@@ -44,12 +30,29 @@ const aperture = initialProps => component => {
     )
 }
 
-const initialState = { activeTab: null }
+const handler = ({ setState }) => effect => {
+    switch (effect.type) {
+        case 'NAVIGATION':
+            const path = document.location.pathname
+            const search = effect.state.activeTab
+                ? `?tab=${effect.state.activeTab}`
+                : ''
+            const methodName = effect.replace ? 'replaceState' : 'pushState'
+            window.history[methodName](effect.state, null, `${path}${search}`)
+            return
 
-const mapSetStateToProps = { setActiveTab: activeTab => ({ activeTab }) }
+        case 'STATE':
+            return setState(effect.state)
 
-const App = withState(initialState, mapSetStateToProps)(
-    withEffects(handler)(aperture)(Layout)
+        default:
+            return
+    }
+}
+
+const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
+
+const App = () => (
+    <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>
 )
 
 render(<App />, document.getElementById('root'))

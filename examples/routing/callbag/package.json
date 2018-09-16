@@ -6,7 +6,6 @@
         "react": "16.1.1",
         "react-dom": "16.1.1",
         "react-scripts": "1.0.10",
-        "react-state-hoc": "~2.0.0",
         "refract-callbag": "~1.0.0"
     },
     "version": "0.0.0",
