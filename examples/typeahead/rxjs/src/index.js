@@ -1,17 +1,18 @@
 import React from 'react'
 import { render } from 'react-dom'
+
 import { withEffects } from 'refract-rxjs'
-import withState from 'react-state-hoc'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { debounce, filter, flatMap, map } from 'rxjs/operators'
 import { merge } from 'rxjs/observable/merge'
 import { timer } from 'rxjs/observable/timer'
 
+import StateContainer from './StateContainer'
 import Layout from './Layout'
 
 const toState = payload => ({ type: 'SET_STATE', payload })
 
-const aperture = intialProps => component => {
+const aperture = props => component => {
     const search$ = component.observe('search')
 
     const suggestions$ = search$.pipe(
@@ -54,17 +55,21 @@ const aperture = intialProps => component => {
     return merge(suggestions$, clearSuggestions$, user$)
 }
 
-const handler = initialProps => effect => {
-    if (effect.type === 'SET_STATE') {
-        initialProps.setState(effect.payload)
+const handler = ({ setState }) => effect => {
+    switch (effect.type) {
+        case 'SET_STATE':
+            return setState(effect.payload)
+
+        default:
+            return
     }
 }
 const errorHandler = () => err => console.error(err)
 
-const initialState = { search: '', selection: '', sugestions: [], user: null }
+const LayoutWithEffects = withEffects(handler, errorHandler)(aperture)(Layout)
 
-const AppWithEffects = withState(initialState)(
-    withEffects(handler, errorHandler)(aperture)(Layout)
+const App = () => (
+    <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>
 )
 
-render(<AppWithEffects />, document.getElementById('root'))
+render(<App />, document.getElementById('root'))
