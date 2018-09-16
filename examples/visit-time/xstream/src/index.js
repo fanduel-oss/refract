@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import withState from 'react-state-hoc'
+
 import { withEffects, compose } from 'refract-xstream'
 import xs from 'xstream'
 import fromEvent from 'xstream/extra/fromEvent'
@@ -41,12 +42,18 @@ const aperture = () => component => {
 }
 
 const handler = ({ resume, pause, tick }) => effect => {
-    if (effect.type === 'RESUME') {
-        resume(Date.now())
-    } else if (effect.type === 'PAUSE') {
-        pause(Date.now())
-    } else if (effect.type === 'TICK') {
-        tick(Date.now())
+    switch (effect.type) {
+        case 'RESUME':
+            return resume(Date.now())
+
+        case 'PAUSE':
+            return pause(Date.now())
+
+        case 'TICK':
+            return tick(Date.now())
+
+        default:
+            return
     }
 }
 const errorHandler = () => err => console.error(err)
