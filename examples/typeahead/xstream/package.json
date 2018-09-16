@@ -4,7 +4,6 @@
         "react": "16.4.1",
         "react-dom": "16.4.1",
         "react-scripts": "1.0.10",
-        "react-state-hoc": "~3.0.0",
         "refract-xstream": "~1.0.0",
         "xstream": "~11.7.0"
     },
