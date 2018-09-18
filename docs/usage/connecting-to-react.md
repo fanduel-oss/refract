@@ -29,8 +29,8 @@ import { withEffects } from 'refract-rxjs'
 
 // Note that the handler and aperture are explained later in the docs,
 // these empty functions are just placeholders
-const aperture = () => {}
-const handler = () => {}
+const aperture = initialProps => component => {}
+const handler = initialProps => effect => {}
 //
 
 const CounterWithEffects = withEffects(handler)(aperture)(Counter)
