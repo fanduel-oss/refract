@@ -27,6 +27,12 @@ If we want to cause side-effects in response to changes in the props being passe
 ```js
 import { withEffects } from 'refract-rxjs'
 
+// Note that the handler and aperture are explained later in the docs,
+// these empty functions are just placeholders
+const aperture = () => {}
+const handler = () => {}
+//
+
 const CounterWithEffects = withEffects(handler)(aperture)(Counter)
 ```
 
