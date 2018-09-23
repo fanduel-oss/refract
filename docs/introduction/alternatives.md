@@ -49,7 +49,7 @@ Redux-loop is not as powerful as redux-saga or redux-observable with time-based 
 
 ## redux-cycles
 
-[Redux-cycles](https://github.com/cyclejs-community/redux-cycles) is a Cycle.js-based solution which adds redux observability. It benefits from the mighty power of Cycle.js and its declarative and reactive architecture. It leverages reactive programming and can be used with various libraries (most, RxJS, xstream), but requires xstream by default.
+[Redux-cycles](https://github.com/cyclejs-community/redux-cycles) is a Cycle.js-based solution which adds Redux observability. It benefits from the mighty power of Cycle.js and its declarative and reactive architecture. It leverages reactive programming and can be used with various libraries (most, RxJS, xstream), but requires xstream by default.
 
 ## react-side-effect
 

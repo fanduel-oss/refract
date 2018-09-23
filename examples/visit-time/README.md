@@ -14,8 +14,8 @@ This examples renders a stopwatch counting the time a user spends on a page whil
 
 Two sources observed:
 
-*   The visibility status of the page (See [page visibility API](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API)
-*   The online status of the navigator (See [online and offline events](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events)
+*   The visibility status of the page (See [page visibility API](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API))
+*   The online status of the navigator (See [online and offline events](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/Online_and_offline_events))
 
 Every time the page becomes visible and online, the stopwatch resumes. If the page becomes either offline or hidden, the stopwatch pauses.
 

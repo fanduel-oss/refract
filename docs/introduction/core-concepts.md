@@ -68,7 +68,7 @@ const imperativeSideEffectHandler = effect => {
 }
 ```
 
-`declarativeStorageSideEffect` is pure while `imperactiveSideEffectHandler` is not. Every application will have imperative and impure code: `declarativeStorageSideEffect` can't exist whithout `imperativeStorageSideEffect`. But it is best for imperative code to be isolated and as high as possible in your application.
+`declarativeStorageSideEffect` is pure while `imperativeSideEffectHandler` is not. Every application will have imperative and impure code: `declarativeStorageSideEffect` can't exist without `imperativeStorageSideEffect`. But it is best for imperative code to be isolated and as high as possible in your application.
 
 Declarative side-effects have two main benefits:
 
@@ -79,6 +79,6 @@ Declarative side-effects have two main benefits:
 
 The key to reactive programming is observability: we need to be able to observe changes in your app, get notified when they happen so we can trigger side-effects. Reactive programming works really well for side-effects: side-effects are just data. It is also a remarkable abstraction encouraging declarative programming and which can concisely express time-based operations (throttle, debounce, etc.).
 
-We have seen a lot of side-effect management libraries in redux, due to the observability of its actions (with middleware). It is entirely possible to move side-effects handling to React, and to not have to rely on redux.
+We have seen a lot of side-effect management libraries in Redux, due to the observability of its actions (with middleware). It is entirely possible to move side-effects handling to React, and to not have to rely on Redux.
 
 To see how Refact compares to other side-effects libraries, check our [comparison guide](./alternatives.md). To see Refract usage, head to [using Refract](../usage/getting-started.md).
