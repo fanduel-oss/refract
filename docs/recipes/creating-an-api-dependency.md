@@ -117,7 +117,7 @@ The main difference in approach is that you would likely return raw promises ins
 
 #### Runtime Configuration
 
-Another significant advantage to this approach is that it can simplify runtime API configuration. For example, if you need to pass some data along with every request, you can achieve this by instantiating your api dependency inside a callack function:
+Another significant advantage to this approach is that it can simplify runtime API configuration. For example, if you need to pass some data along with every request, you can achieve this by instantiating your api dependency inside a callback function:
 
 ```js
 const createApiDependency = ({ apiUrl, client }) => {

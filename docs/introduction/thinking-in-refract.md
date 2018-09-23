@@ -35,7 +35,7 @@ Thinking through effects requires you to isolate each action or event from their
 *   On each new character typed in the username field, the form status should transition to 'validating'
 *   When the form status transitions to 'validating', the submit button should be disabled
 *   When the form status transitions to 'validating', a network request should be made to the API for validating the chosen username
-*   When a request to validate the chosen username is sent any previous request should be cancelled
+*   When a request to validate the chosen username is sent, any previous request should be cancelled
 *   When the username validation response is received, the form validation status should be updated
 *   When the submit button is clicked, the form status should transition to 'ready'
 *   When the form status transitions to 'ready', the form should be disabled

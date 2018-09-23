@@ -28,6 +28,6 @@ const errorHandler = initialProps => error => {
 
 If an unexpected error occurs, it will cause your `aperture` function to no longer work and emit effects! Stream libraries have ways to catch or ignore those errors so they don't propagate and cause entire streams to terminate!
 
-*   For RxJS, you call look at [this guide](https://alligator.io/rxjs/simple-error-handling/) and [that guide](https://xgrommx.github.io/rx-book/content/getting_started_with_rxjs/creating_and_querying_observable_sequences/error_handling.html). These guides are not up to date so make sure you look up operators in the [RxJS documentation](http://reactivex.io/rxjs).
+*   For RxJS, you can look at [this guide](https://alligator.io/rxjs/simple-error-handling/) and [that guide](https://xgrommx.github.io/rx-book/content/getting_started_with_rxjs/creating_and_querying_observable_sequences/error_handling.html). These guides are not up to date so make sure you look up operators in the [RxJS documentation](http://reactivex.io/rxjs).
 *   With xstream, [use the `replaceError` operator](https://github.com/staltz/xstream#-replaceerrorreplace)
 *   With most, [use the `recoverWith` operator](https://github.com/cujojs/most/blob/master/docs/api.md#handling-errors)
