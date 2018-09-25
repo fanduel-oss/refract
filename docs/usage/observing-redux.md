@@ -29,7 +29,7 @@ Each observed action is passed into your stream with all its data - including th
 
 ## Observing State
 
-If you pass in a function, `store.observe` will treat it as a Redux selector, and return a stream which subscribes to the state using your function. Any time the selected slice of state changes, its new value will be piped to your stream.
+If you pass in a function, `store.observe` will treat it as a Redux selector, and return a stream which subscribes to the state using your function. It is initialised with the selector current value and any time the selected slice of state changes, its new value will be piped to your stream if changed (`===` comparison).
 
 ```js
 const storeShape = {
