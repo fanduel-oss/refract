@@ -2,7 +2,7 @@
 
 _Before you can observe your Redux store, make sure you have used dependency injection to expose it to your Refract components!_
 
-Refract adds a method to your store called `observe`, which you can use to observe Redux from inside your `aperture`.
+Refract adds a method to your store called `observe` (see [Getting Started](./getting-started.md)), which you can use to observe Redux from inside your `aperture`.
 
 ```js
 const aperture = initialProps => component => {
@@ -29,7 +29,7 @@ Each observed action is passed into your stream with all its data - including th
 
 ## Observing State
 
-If you pass in a function, `store.observe` will treat it as a Redux selector, and return a stream which subscribes to the state using your function. Any time the selected slice of state changes, its new value will be piped to your stream.
+If you pass in a function, `store.observe` will treat it as a Redux selector, and return a stream which subscribes to the state using your function, initialised with the selector's current value. Any time the selected slice of state changes, its new value will be piped to your stream if changed (`===` comparison).
 
 ```js
 const storeShape = {

@@ -8,8 +8,7 @@
         "copy": "node ./scripts/copy",
         "generatePackages": "node ./scripts/generatePkg",
         "prebuild": "npm run generatePackages && npm run copy",
-        "build":
-            "npm run build:react && npm run build:redux && npm run build:inferno && npm run build:preact",
+        "build": "npm run build:react && npm run build:redux && npm run build:inferno && npm run build:preact",
         "build:react": "MAIN_LIB=react rollup -c rollup.config.js",
         "build:redux": "MAIN_LIB=redux rollup -c rollup.config.js",
         "build:preact": "MAIN_LIB=preact rollup -c rollup.config.js",
@@ -20,8 +19,7 @@
         "test:preact": "jest --config base/__tests__/preact/jest.config.js",
         "test:inferno": "jest --config base/__tests__/inferno/jest.config.js",
         "test:redux": "jest --config base/__tests__/redux/jest.config.js",
-        "test":
-            "npm run test:react && npm run test:inferno && npm run test:preact && npm run test:redux",
+        "test": "npm run test:react && npm run test:inferno && npm run test:preact && npm run test:redux",
         "precommit": "lint-staged",
         "prerelease": "npm run build",
         "release": "node ./scripts/publish"
@@ -36,6 +34,7 @@
         "callbag-from-obs": "~1.2.0",
         "callbag-map": "~1.0.1",
         "callbag-pipe": "~1.1.1",
+        "callbag-start-with": "~3.1.0",
         "callbag-to-obs": "~1.0.0",
         "checksum": "~0.1.1",
         "enzyme": "~3.3.0",
@@ -75,7 +74,14 @@
         "xstream": "~11.7.0"
     },
     "lint-staged": {
-        "*.{ts,tsx}": ["prettier --write", "tslint", "git add"],
-        "*.{js,md}": ["prettier --write", "git add"]
+        "*.{ts,tsx}": [
+            "prettier --write",
+            "tslint",
+            "git add"
+        ],
+        "*.{js,md}": [
+            "prettier --write",
+            "git add"
+        ]
     }
 }
