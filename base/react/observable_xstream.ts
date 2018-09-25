@@ -1,4 +1,5 @@
 import xs, { Stream, Listener, Subscription } from 'xstream'
+import { PushEvent } from './baseTypes'
 
 export { Listener, Subscription }
 
@@ -7,6 +8,7 @@ export interface ObservableComponent {
     event: <T>(eventName: string) => Stream<T>
     mount: Stream<any>
     unmount: Stream<any>
+    pushEvent: PushEvent
 }
 
 export type Aperture<P, E> = (

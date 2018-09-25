@@ -11,7 +11,11 @@ import {
 const configureComponent = <P, E>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
-) => (aperture: Aperture<P, E>, instance: any) => {
+) => (
+    aperture: Aperture<P, E>,
+    instance: any,
+    isValidElement?: (val: any) => boolean
+) => {
     instance.state = {
         children: null
     }
@@ -31,7 +35,11 @@ const configureComponent = <P, E>(
         const effectHandler = handler(initialProps)
 
         return effect => {
-            if (effect && effect.type === PROPS_EFFECT) {
+            if (isValidElement && isValidElement(effect)) {
+                setState({
+                    children: effect
+                })
+            } else if (effect && effect.type === PROPS_EFFECT) {
                 setState(effect.payload)
             } else {
                 effectHandler(effect)
@@ -132,7 +140,8 @@ const configureComponent = <P, E>(
         mount: mountObservable,
         unmount: unmountObservable,
         observe: createPropObservable,
-        event: createEventObservable
+        event: createEventObservable,
+        pushEvent
     }
 
     const sinkObservable = aperture(instance.props)(component)

@@ -1,4 +1,5 @@
 import { Observable, PartialObserver as Listener, Subscription } from 'rxjs'
+import { PushEvent } from './baseTypes'
 
 export { Listener, Subscription }
 
@@ -7,6 +8,7 @@ export interface ObservableComponent {
     event: <T>(eventName: string) => Observable<T>
     mount: Observable<any>
     unmount: Observable<any>
+    pushEvent: PushEvent
 }
 
 export type Aperture<P, E> = (

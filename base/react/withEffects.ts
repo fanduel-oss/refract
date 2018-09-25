@@ -4,6 +4,9 @@ import configureComponent from './configureComponent'
 
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { Aperture } from './observable'
+import { ReactElement } from 'react'
+
+const Empty = () => null
 
 export const withEffects = <P, E, CP = P>(
     handler: Handler<P, E>,
@@ -11,7 +14,10 @@ export const withEffects = <P, E, CP = P>(
 ) => (aperture: Aperture<P, E>) => (
     BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }>
 ): React.ComponentClass<P> =>
-    class WithEffects extends React.PureComponent<P> {
+    class WithEffects extends React.PureComponent<
+        P,
+        { children: ReactElement<any> | null }
+    > {
         private triggerMount: () => void
         private triggerUnmount: () => void
         private reDecorateProps: (nextProps: P) => void
@@ -23,7 +29,11 @@ export const withEffects = <P, E, CP = P>(
         constructor(props: any, context: any) {
             super(props, context)
 
-            configureComponent(handler, errorHandler)(aperture, this)
+            configureComponent(handler, errorHandler)(
+                aperture,
+                this,
+                React.isValidElement
+            )
         }
 
         public componentDidMount() {
@@ -36,6 +46,7 @@ export const withEffects = <P, E, CP = P>(
         }
 
         public componentDidUpdate(prevProps: P) {
+            this.unmounted = true
             this.pushProps(prevProps)
         }
 
@@ -45,6 +56,10 @@ export const withEffects = <P, E, CP = P>(
         }
 
         public render() {
+            if (this.state.children) {
+                return this.state.children
+            }
+
             return React.createElement(BaseComponent, this.getChildProps())
         }
     }
