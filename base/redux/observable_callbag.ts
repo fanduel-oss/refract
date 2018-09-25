@@ -4,6 +4,7 @@ const fromObs = require('callbag-from-obs')
 const dropRepeats = require('callbag-drop-repeats')
 const map = require('callbag-map')
 const pipe = require('callbag-pipe')
+const startWith = require('callbag-start-with')
 
 import { Selector } from './baseTypes'
 
@@ -38,7 +39,14 @@ export const observeFactory = (store): ObserveFn => {
         }
 
         if (typeof actionOrSelector === 'function') {
-            return pipe(storeObservable, map(actionOrSelector), dropRepeats())
+            const initialValue: T = actionOrSelector(store.getState())
+
+            return pipe(
+                storeObservable,
+                map(actionOrSelector),
+                startWith(initialValue),
+                dropRepeats()
+            )
         }
     }
 }

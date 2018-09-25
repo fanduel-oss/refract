@@ -27,7 +27,12 @@ export const observeFactory = (store): ObserveFn => {
         }
 
         if (typeof actionOrSelector === 'function') {
-            return storeObservable.map(actionOrSelector).skipRepeats()
+            const initialValue: T = actionOrSelector(store.getState())
+
+            return storeObservable
+                .map(actionOrSelector)
+                .startWith(initialValue)
+                .skipRepeats()
         }
     }
 }

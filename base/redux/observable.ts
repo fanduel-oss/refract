@@ -23,8 +23,11 @@ export const observeFactory = (store): ObserveFn => {
         }
 
         if (typeof actionOrSelector === 'function') {
+            const initialValue: T = actionOrSelector(store.getState())
+
             return storeObservable.pipe<T>(
                 map(actionOrSelector),
+                startWith(initialValue),
                 distinctUntilChanged<T>()
             )
         }
