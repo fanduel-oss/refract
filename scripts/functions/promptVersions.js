@@ -48,10 +48,12 @@ module.exports = function promptNewVersions(changedPackages) {
                 type: 'confirm',
                 name: 'confirmed',
                 message: newVersions =>
-                    `The following packages will be released:\n${changedPackages.map(
-                        ({ name, version }) =>
-                            `${name}: ${version} -> ${newVersions[name]}\n`
-                    )}`
+                    `The following packages will be released:\n${changedPackages
+                        .filter(({ name }) => newVersions[name])
+                        .map(
+                            ({ name, version }) =>
+                                `${name}: ${version} -> ${newVersions[name]}\n`
+                        )}`
             })
     )
 }
