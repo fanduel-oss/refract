@@ -29,7 +29,11 @@ async function publish() {
     const newVersions = await promptNewVersions(changedPackages)
 
     await forEach(changedPackages, async package => {
-        await updateVersion(package, newVersions[package.name])
+        const newVersion = newVersions[package.name]
+
+        return (await newVersion)
+            ? updateVersion(package, newVersions[package.name])
+            : Promise.resolve()
     })
 
     await exec('git', ['add', '-A'])

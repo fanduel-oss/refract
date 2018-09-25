@@ -17,6 +17,10 @@ module.exports = function promptNewVersions(changedPackages) {
                     message: `${name} (${version})`,
                     choices: [
                         {
+                            value: null,
+                            name: 'Skip'
+                        },
+                        {
                             value: major,
                             name: `Major: ${major}`
                         },
