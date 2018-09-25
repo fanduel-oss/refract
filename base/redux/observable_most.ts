@@ -1,4 +1,4 @@
-import { from, Stream, Subscriber as Listener } from 'most'
+import { from, Stream, Subscriber as Listener, of } from 'most'
 import $$observable from 'symbol-observable'
 import { Selector } from './baseTypes'
 
@@ -31,7 +31,7 @@ export const observeFactory = (store): ObserveFn => {
 
             return storeObservable
                 .map(actionOrSelector)
-                .startWith(initialValue)
+                .merge(of(initialValue))
                 .skipRepeats()
         }
     }

@@ -50,7 +50,8 @@ const extraDependencies = {
     'refract-redux-callbag': {
         'callbag-drop-repeats': '~1.0.0',
         'callbag-map': '~1.0.1',
-        'callbag-pipe': '~1.1.1'
+        'callbag-pipe': '~1.1.1',
+        'callbag-start-with': '~3.1.0'
     }
 }
 
