@@ -18,6 +18,8 @@ export const withEffects = <P, E, CP = P>(
         private reDecorateProps: (nextProps: P) => void
         private pushProps: (props: P) => void
         private getChildProps: () => CP & { pushEvent: PushEvent }
+        private mounted: boolean = false
+        private unmounted: boolean = false
 
         constructor(props: any, context: any) {
             super(props, context)
@@ -26,6 +28,7 @@ export const withEffects = <P, E, CP = P>(
         }
 
         public componentDidMount() {
+            this.mounted = true
             this.triggerMount()
         }
 
@@ -38,6 +41,7 @@ export const withEffects = <P, E, CP = P>(
         }
 
         public componentWillUnmount() {
+            this.unmounted = true
             this.triggerUnmount()
         }
 
