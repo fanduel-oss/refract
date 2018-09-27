@@ -6,6 +6,12 @@ import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { Aperture } from './observable'
 import { ReactElement } from 'react'
 
+export interface State {
+    replace?: boolean
+    props?: any
+    children: React.ReactNode | null
+}
+
 const Empty = () => null
 
 export const withEffects = <P, E, CP = P>(
@@ -14,10 +20,7 @@ export const withEffects = <P, E, CP = P>(
 ) => (aperture: Aperture<P, E>) => (
     BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }> = Empty
 ): React.ComponentClass<P> =>
-    class WithEffects extends React.PureComponent<
-        P,
-        { children: ReactElement<any> | null }
-    > {
+    class WithEffects extends React.PureComponent<P, State> {
         private triggerMount: () => void
         private triggerUnmount: () => void
         private reDecorateProps: (nextProps: P) => void

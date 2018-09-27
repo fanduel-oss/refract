@@ -1,10 +1,16 @@
-import { Component, ComponentType, ComponentClass } from 'inferno'
+import { Component, ComponentType, ComponentClass, VNode } from 'inferno'
 import { createElement } from 'inferno-create-element'
 
 import configureComponent from './configureComponent'
 
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { Aperture } from './observable'
+
+export interface State {
+    replace?: boolean
+    props?: any
+    children: VNode | null
+}
 
 const Empty = () => null
 
@@ -22,7 +28,7 @@ export const withEffects = <P, E, CP = P>(
 ) => (aperture: Aperture<P, E>) => (
     BaseComponent: ComponentType<CP & { pushEvent: PushEvent }> = Empty
 ): ComponentClass<P> =>
-    class WithEffects extends Component<P> {
+    class WithEffects extends Component<P, State> {
         private triggerMount: () => void
         private triggerUnmount: () => void
         private reDecorateProps: (nextProps: P) => void
@@ -60,6 +66,10 @@ export const withEffects = <P, E, CP = P>(
         }
 
         public render() {
+            if (this.state.children) {
+                return this.state.children
+            }
+
             return createElement(BaseComponent, this.getChildProps())
         }
     }

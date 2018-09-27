@@ -1,3 +1,4 @@
+import { VNode } from 'inferno'
 import { createElement } from 'inferno-create-element'
 import {
     withEffects,
@@ -10,7 +11,8 @@ import {
     toPropsAperture,
     asPropsAperture,
     Effect,
-    Props
+    Props,
+    createRenderingAperture
 } from '../../react/xstream/aperture'
 import { mount } from 'enzyme'
 
@@ -135,5 +137,24 @@ describe('refract-inferno-xstream', () => {
 
         expect(props.prop).toBe('hello')
         expect(props.newProp).toBe('hello world')
+    })
+
+    it('should render virtual elements', () => {
+        const hander = () => () => void 0
+        interface Props {
+            prop: string
+        }
+        const aperture = createRenderingAperture<VNode>(prop => (
+            <div>{prop}</div>
+        ))
+        const WithEffects = withEffects<Props, VNode>(hander)(aperture)()
+
+        const node = mount(
+            // @ts-ignore
+            <WithEffects prop="hello" />
+        )
+
+        expect(node.text()).toBe('hello')
+        expect(node.find('div').exists()).toBe(true)
     })
 })
