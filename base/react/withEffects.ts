@@ -5,18 +5,18 @@ import configureComponent from './configureComponent'
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { Aperture } from './observable'
 
-export const withEffects = <P, E>(
+export const withEffects = <P, E, CP = P>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
 ) => (aperture: Aperture<P, E>) => (
-    BaseComponent: React.ComponentType<P & { pushEvent: PushEvent }>
+    BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }>
 ): React.ComponentClass<P> =>
     class WithEffects extends React.PureComponent<P> {
         private triggerMount: () => void
         private triggerUnmount: () => void
         private reDecorateProps: (nextProps: P) => void
         private pushProps: (props: P) => void
-        private getChildProps: () => P & { pushEvent: PushEvent }
+        private getChildProps: () => CP & { pushEvent: PushEvent }
 
         constructor(props: any, context: any) {
             super(props, context)
