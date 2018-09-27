@@ -31,9 +31,16 @@
 </p>
 <br/>
 
-Refract lets you isolate your app's side effects - API calls, analytics, logging, etc - so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
+Refract lets you handle your component effects and side-effects, so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
-Refract is an extensible library built for React, with bindings available for Inferno and Preact. In addition we provide a Redux integration, which can also serve as a template for integrations with other libraries.
+Reactive programming in React? Refract makes it possible, and you can choose how far you go with it, with only a single higher-order component:
+
+*   For [isolating side effects](LINK TO USAGE) like API calls, analytics, logging, etc.
+*   For [manipulating and injecting component props](LINK TO USAGE), including [replacing Redux `connect` HoC](LINK TO RECIPE)
+*   For [containing and handling state](LINK TO USAGE)
+*   For [rendering](LINK TO USAGE), the ultimate reactive step
+
+Refract is built for React, with bindings available for Inferno and Preact. In addition we provide a Redux integration, which can also serve as a template for integrations with other libraries.
 
 # Why?
 
