@@ -2,9 +2,16 @@ import { createElement } from 'inferno-create-element'
 import {
     withEffects,
     Handler,
-    ObservableComponent
+    ObservableComponent,
+    PropEffect
 } from '../../../../packages/refract-inferno-most/src'
-import { aperture, Effect, Props } from '../../react/most/aperture'
+import {
+    aperture,
+    toPropsAperture,
+    asPropsAperture,
+    Effect,
+    Props
+} from '../../react/most/aperture'
 import { mount } from 'enzyme'
 
 describe('refract-inferno-most', () => {
@@ -79,5 +86,54 @@ describe('refract-inferno-most', () => {
         expect(effectValueHandler).toHaveBeenCalledWith({
             type: 'Stop'
         })
+    })
+
+    it('should map props to wrapped component', () => {
+        interface Props {
+            prop: string
+        }
+        interface ChildProps {
+            newProp: string
+        }
+        const BaseComponent = jest.fn().mockReturnValue(<div />)
+        const hander = () => () => void 0
+        const WithEffects = withEffects<Props, PropEffect, ChildProps>(hander)(
+            asPropsAperture
+        )(BaseComponent)
+
+        mount(
+            // @ts-ignore
+            <WithEffects prop="hello" />
+        )
+
+        const props = BaseComponent.mock.calls[0][0]
+
+        expect(props.prop).toBeUndefined()
+        expect(props.newProp).toBe('hello world')
+    })
+
+    it('should add props to wrapped component', () => {
+        interface Props {
+            prop: string
+        }
+        interface ChildProps {
+            prop: string
+            newProp: string
+        }
+        const BaseComponent = jest.fn().mockReturnValue(<div />)
+        const hander = () => () => void 0
+        const WithEffects = withEffects<Props, PropEffect, ChildProps>(hander)(
+            toPropsAperture
+        )(BaseComponent)
+
+        mount(
+            // @ts-ignore
+            <WithEffects prop="hello" />
+        )
+
+        const props = BaseComponent.mock.calls[0][0]
+
+        expect(props.prop).toBe('hello')
+        expect(props.newProp).toBe('hello world')
     })
 })
