@@ -1,4 +1,5 @@
 import { Listeners, Handler, ErrorHandler, PushEvent } from './baseTypes'
+import { PROPS_EFFECT } from './effects'
 import {
     Subscription,
     createObservable,
@@ -11,6 +12,33 @@ const configureComponent = <P, E>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
 ) => (aperture: Aperture<P, E>, instance: any) => {
+    instance.state = {
+        children: null
+    }
+
+    const setState = state => {
+        if (!instance.unmounted) {
+            return
+        }
+        if (instance.mounted) {
+            instance.setState(state)
+        } else {
+            instance.state = state
+        }
+    }
+
+    const finalHandler = initialProps => {
+        const effectHandler = handler(initialProps)
+
+        return effect => {
+            if (effect && effect.type === PROPS_EFFECT) {
+                setState(effect.payload)
+            } else {
+                effectHandler(effect)
+            }
+        }
+    }
+
     const listeners: Listeners = {
         mount: [],
         unmount: [],
@@ -111,7 +139,7 @@ const configureComponent = <P, E>(
 
     const sinkSubscription: Subscription = subscribeToSink<E>(
         sinkObservable,
-        handler(instance.props),
+        finalHandler(instance.props),
         errorHandler ? errorHandler(instance.props) : undefined
     )
 
@@ -152,9 +180,19 @@ const configureComponent = <P, E>(
     }
 
     instance.getChildProps = () => {
-        const { children, ...props } = instance.props
+        const { props = {}, replace } = instance.state
 
-        return Object.assign({}, props, decoratedProps, {
+        if (replace === true) {
+            return Object.assign({}, props, {
+                pushEvent
+            })
+        } else if (replace === false) {
+            return Object.assign({}, instance.props, decoratedProps, props, {
+                pushEvent
+            })
+        }
+
+        return Object.assign({}, instance.props, decoratedProps, {
             pushEvent
         })
     }

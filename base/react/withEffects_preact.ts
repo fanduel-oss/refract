@@ -41,6 +41,6 @@ export const withEffects = <P, E>(
         }
 
         public render() {
-            return h(BaseComponent, this.getChildProps(), this.props.children)
+            return h(BaseComponent, this.getChildProps())
         }
     }

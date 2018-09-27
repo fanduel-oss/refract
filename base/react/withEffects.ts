@@ -41,10 +41,6 @@ export const withEffects = <P, E>(
         }
 
         public render() {
-            return React.createElement(
-                BaseComponent,
-                this.getChildProps(),
-                this.props.children
-            )
+            return React.createElement(BaseComponent, this.getChildProps())
         }
     }

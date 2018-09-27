@@ -11,6 +11,7 @@ const getPackages = require('../packages')
 const filesPerBaseDir = {
     react: [
         'baseTypes.ts',
+        'effects.ts',
         'index.ts',
         ({ mainLib }) => ({
             src: `withEffects${mainLib === 'react' ? '' : `_${mainLib}`}.ts`,
