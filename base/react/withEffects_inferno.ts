@@ -6,11 +6,21 @@ import configureComponent from './configureComponent'
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { Aperture } from './observable'
 
+const Empty = () => null
+
+const isValidElement = (value: any): boolean =>
+    Boolean(value) &&
+    typeof value === 'object' &&
+    'children' in value &&
+    'childFlags' in value &&
+    'flags' in value &&
+    'parentVNode' in value
+
 export const withEffects = <P, E, CP = P>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
 ) => (aperture: Aperture<P, E>) => (
-    BaseComponent: ComponentType<CP & { pushEvent: PushEvent }>
+    BaseComponent: ComponentType<CP & { pushEvent: PushEvent }> = Empty
 ): ComponentClass<P> =>
     class WithEffects extends Component<P> {
         private triggerMount: () => void
@@ -24,7 +34,11 @@ export const withEffects = <P, E, CP = P>(
         constructor(props: any, context: any) {
             super(props, context)
 
-            configureComponent(handler, errorHandler)(aperture, this)
+            configureComponent(handler, errorHandler)(
+                aperture,
+                this,
+                isValidElement
+            )
         }
 
         public componentDidMount() {

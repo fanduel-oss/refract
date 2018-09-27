@@ -12,7 +12,7 @@ export const withEffects = <P, E, CP = P>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
 ) => (aperture: Aperture<P, E>) => (
-    BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }>
+    BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }> = Empty
 ): React.ComponentClass<P> =>
     class WithEffects extends React.PureComponent<
         P,
