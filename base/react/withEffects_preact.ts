@@ -5,18 +5,20 @@ import configureComponent from './configureComponent'
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { Aperture } from './observable'
 
-export const withEffects = <P, E>(
+export const withEffects = <P, E, CP = P>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
 ) => (aperture: Aperture<P, E>) => (
-    BaseComponent: ComponentFactory<P & { pushEvent: PushEvent }>
+    BaseComponent: ComponentFactory<CP & { pushEvent: PushEvent }>
 ): ComponentFactory<P> =>
     class WithEffects extends Component<P> {
         private triggerMount: () => void
         private triggerUnmount: () => void
         private reDecorateProps: (nextProps: P) => void
         private pushProps: (props: P) => void
-        private getChildProps: () => P & { pushEvent: PushEvent }
+        private getChildProps: () => CP & { pushEvent: PushEvent }
+        private mounted: boolean = false
+        private unmounted: boolean = false
 
         constructor(props: P) {
             super(props)
@@ -25,6 +27,7 @@ export const withEffects = <P, E>(
         }
 
         public componentDidMount() {
+            this.mounted = true
             this.triggerMount()
         }
 
@@ -37,10 +40,11 @@ export const withEffects = <P, E>(
         }
 
         public componentWillUnmount() {
+            this.unmounted = true
             this.triggerUnmount()
         }
 
         public render() {
-            return h(BaseComponent, this.getChildProps(), this.props.children)
+            return h(BaseComponent, this.getChildProps())
         }
     }

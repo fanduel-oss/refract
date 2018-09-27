@@ -4,7 +4,7 @@ import {
     Handler,
     ObservableComponent
 } from '../../../../packages/refract-preact-most/src'
-import aperture, { Effect, Props } from '../../react/most/aperture'
+import { aperture, Effect, Props } from '../../react/most/aperture'
 import { mount } from 'enzyme'
 
 describe('refract-preact-most', () => {
