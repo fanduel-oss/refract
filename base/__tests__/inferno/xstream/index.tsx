@@ -4,7 +4,7 @@ import {
     Handler,
     ObservableComponent
 } from '../../../../packages/refract-inferno-xstream/src'
-import aperture, { Effect, Props } from '../../react/xstream/aperture'
+import { aperture, Effect, Props } from '../../react/xstream/aperture'
 import { mount } from 'enzyme'
 
 describe('refract-inferno-xstream', () => {

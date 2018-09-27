@@ -4,7 +4,7 @@ import {
     Handler,
     ObservableComponent
 } from '../../../../packages/refract-inferno-callbag/src'
-import aperture, { Effect, Props } from '../../react/callbag/aperture'
+import { aperture, Effect, Props } from '../../react/callbag/aperture'
 import { mount } from 'enzyme'
 
 describe('refract-inferno-callbag', () => {

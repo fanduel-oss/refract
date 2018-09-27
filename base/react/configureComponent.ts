@@ -17,7 +17,7 @@ const configureComponent = <P, E>(
     }
 
     const setState = state => {
-        if (!instance.unmounted) {
+        if (instance.unmounted) {
             return
         }
         if (instance.mounted) {

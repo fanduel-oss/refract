@@ -4,7 +4,7 @@ import {
     Handler,
     ObservableComponent
 } from '../../../../packages/refract-inferno-rxjs/src'
-import aperture, { Effect, Props } from '../../react/rxjs/aperture'
+import { aperture, Effect, Props } from '../../react/rxjs/aperture'
 import { mount } from 'enzyme'
 
 describe('refract-inferno-rxjs', () => {

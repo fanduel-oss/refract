@@ -1,6 +1,11 @@
-import { merge, map } from 'callbag-basics'
+import { merge, map, pipe } from 'callbag-basics'
 
-import { Aperture } from '../../../../packages/refract-callbag/src'
+import {
+    Aperture,
+    toProps,
+    asProps,
+    PropEffect
+} from '../../../../packages/refract-callbag/src'
 
 export interface Effect {
     type: string
@@ -12,7 +17,7 @@ export interface Props {
     setValue: (value: number) => void
 }
 
-const aperture: Aperture<Props, Effect> = props => component => {
+export const aperture: Aperture<Props, Effect> = props => component => {
     const value$ = component.observe<number>('value')
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
@@ -44,4 +49,33 @@ const aperture: Aperture<Props, Effect> = props => component => {
     )
 }
 
-export default aperture
+export interface SourceProps {
+    prop: string
+}
+interface SinkProps {
+    newProp: string
+}
+
+export const asPropsAperture: Aperture<
+    SourceProps,
+    PropEffect<SinkProps>
+> = () => component =>
+    pipe(
+        component.observe(),
+        map(({ prop }) => ({
+            newProp: `${prop} world`
+        })),
+        map(asProps)
+    )
+
+export const toPropsAperture: Aperture<
+    SourceProps,
+    PropEffect<SinkProps>
+> = () => component =>
+    pipe(
+        component.observe(),
+        map(({ prop }) => ({
+            newProp: `${prop} world`
+        })),
+        map(toProps)
+    )
