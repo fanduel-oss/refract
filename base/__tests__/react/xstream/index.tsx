@@ -10,7 +10,8 @@ import {
     toPropsAperture,
     asPropsAperture,
     Effect,
-    Props
+    Props,
+    createRenderingAperture
 } from './aperture'
 import { mount } from 'enzyme'
 
@@ -127,5 +128,23 @@ describe('refract-xstream', () => {
         const props = BaseComponent.mock.calls[0][0]
         expect(props.prop).toBe('hello')
         expect(props.newProp).toBe('hello world')
+    })
+
+    it('should render virtual elements', () => {
+        const hander = () => () => void 0
+        interface Props {
+            prop: string
+        }
+        const aperture = createRenderingAperture<React.ReactNode>(prop => (
+            <div>{prop}</div>
+        ))
+        const WithEffects = withEffects<Props, React.ReactNode>(hander)(
+            aperture
+        )()
+
+        const node = mount(<WithEffects prop="hello" />)
+
+        expect(node.text()).toBe('hello')
+        expect(node.find('div').exists()).toBe(true)
     })
 })
