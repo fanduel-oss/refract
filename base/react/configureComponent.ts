@@ -40,7 +40,30 @@ const configureComponent = <P, E>(
                     children: effect
                 })
             } else if (effect && effect.type === PROPS_EFFECT) {
-                setState(effect.payload)
+                const { payload } = effect
+                if (payload.replace) {
+                    setState({
+                        replace: payload.replace,
+                        props: Object.keys(payload.props || {}).reduce(
+                            (props, propName) => {
+                                const prop = payload.props[propName]
+
+                                if (
+                                    propName !== 'children' &&
+                                    typeof prop === 'function'
+                                ) {
+                                    decorateProp(props, prop, propName)
+                                } else {
+                                    props[propName] = prop
+                                }
+                                return props
+                            },
+                            {}
+                        )
+                    })
+                } else {
+                    setState(payload)
+                }
             } else {
                 effectHandler(effect)
             }
@@ -62,12 +85,12 @@ const configureComponent = <P, E>(
         )
     }
 
-    const decorateProp = (prop, propName) => {
+    const decorateProp = (container, prop, propName) => {
         if (propName === 'children') {
             return
         }
 
-        decoratedProps[propName] = (...args) => {
+        container[propName] = (...args) => {
             ;(listeners.fnProps[propName] || []).forEach(l => l.next(args[0]))
 
             return prop(...args)
@@ -76,7 +99,7 @@ const configureComponent = <P, E>(
 
     Object.keys(instance.props).forEach(propName => {
         if (typeof instance.props[propName] === 'function') {
-            decorateProp(instance.props[propName], propName)
+            decorateProp(decoratedProps, instance.props[propName], propName)
         }
     })
 
@@ -170,7 +193,7 @@ const configureComponent = <P, E>(
                 typeof instance.props[propName] === 'function' &&
                 nextProps[propName] !== instance.props[propName]
             ) {
-                decorateProp(nextProps[propName], propName)
+                decorateProp(decoratedProps, nextProps[propName], propName)
             }
         })
     }
