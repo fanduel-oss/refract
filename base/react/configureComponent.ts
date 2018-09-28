@@ -8,6 +8,11 @@ import {
     Aperture
 } from './observable'
 
+const shallowEquals = (left, right) =>
+    left === right ||
+    (Object.keys(left).length === Object.keys(right).length &&
+        Object.keys(left).every(leftKey => left[leftKey] === right[leftKey]))
+
 const configureComponent = <P, E>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
@@ -17,7 +22,9 @@ const configureComponent = <P, E>(
     isValidElement?: (val: any) => boolean
 ) => {
     instance.state = {
-        children: null
+        children: null,
+        props: {},
+        decoratedProps: {}
     }
 
     const setState = state => {
@@ -41,29 +48,28 @@ const configureComponent = <P, E>(
                 })
             } else if (effect && effect.type === PROPS_EFFECT) {
                 const { payload } = effect
-                if (payload.replace) {
-                    setState({
-                        replace: payload.replace,
-                        props: Object.keys(payload.props || {}).reduce(
-                            (props, propName) => {
-                                const prop = payload.props[propName]
 
-                                if (
-                                    propName !== 'children' &&
-                                    typeof prop === 'function'
-                                ) {
-                                    decorateProp(props, prop, propName)
-                                } else {
-                                    props[propName] = prop
-                                }
-                                return props
-                            },
-                            {}
-                        )
-                    })
-                } else {
-                    setState(payload)
-                }
+                setState({
+                    replace: payload.replace,
+                    props: payload.props,
+                    decoratedProps: Object.keys(payload.props || {}).reduce(
+                        (props, propName) => {
+                            const prop = payload.props[propName]
+                            const previousProp = instance.state.props[propName]
+
+                            if (
+                                propName !== 'children' &&
+                                typeof prop === 'function' &&
+                                prop !== previousProp
+                            ) {
+                                decorateProp(props, prop, propName)
+                            }
+
+                            return props
+                        },
+                        {}
+                    )
+                })
             } else {
                 effectHandler(effect)
             }
@@ -190,6 +196,7 @@ const configureComponent = <P, E>(
     instance.reDecorateProps = nextProps => {
         Object.keys(nextProps).forEach(propName => {
             if (
+                propName !== 'children' &&
                 typeof instance.props[propName] === 'function' &&
                 nextProps[propName] !== instance.props[propName]
             ) {
@@ -212,21 +219,55 @@ const configureComponent = <P, E>(
     }
 
     instance.getChildProps = () => {
-        const { props = {}, replace } = instance.state
-
-        if (replace === true) {
-            return Object.assign({}, props, {
-                pushEvent
-            })
-        } else if (replace === false) {
-            return Object.assign({}, instance.props, decoratedProps, props, {
-                pushEvent
-            })
+        const { state } = instance
+        const stateProps = {
+            ...state.props,
+            ...state.decoratedProps
         }
 
-        return Object.assign({}, instance.props, decoratedProps, {
+        if (state.replace === true) {
+            return { ...stateProps, pushEvent }
+        }
+
+        const componentProps = {
+            ...instance.props,
+            ...(decoratedProps as object),
             pushEvent
-        })
+        }
+
+        if (state.replace === false) {
+            return {
+                ...componentProps,
+                ...stateProps
+            }
+        }
+
+        return componentProps
+    }
+
+    instance.havePropsChanged = (newProps, newState) => {
+        const { state } = instance
+
+        if (state.children) {
+            return state.children !== newState.children
+        }
+
+        const haveStatePropsChanged = !shallowEquals(
+            state.props,
+            newState.props
+        )
+
+        if (newState.replace === true) {
+            return haveStatePropsChanged
+        }
+
+        const havePropsChanged = !shallowEquals(instance.props, newProps)
+
+        if (newState.replace === false) {
+            return havePropsChanged || haveStatePropsChanged
+        }
+
+        return havePropsChanged
     }
 }
 

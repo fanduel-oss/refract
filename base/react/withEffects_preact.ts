@@ -1,10 +1,4 @@
-import {
-    h,
-    Component,
-    ComponentFactory,
-    ComponentConstructor,
-    VNode
-} from 'preact'
+import { h, Component, ComponentFactory, VNode } from 'preact'
 
 import configureComponent from './configureComponent'
 
@@ -13,7 +7,8 @@ import { Aperture } from './observable'
 
 export interface State {
     replace?: boolean
-    props?: any
+    props: object
+    decoratedProps: object
     children: VNode | null
 }
 
@@ -36,6 +31,7 @@ export const withEffects = <P, E, CP = P>(
     class WithEffects extends Component<P, State> {
         private triggerMount: () => void
         private triggerUnmount: () => void
+        private havePropsChanged: (nextProps: P, nextState: State) => boolean
         private reDecorateProps: (nextProps: P) => void
         private pushProps: (props: P) => void
         private getChildProps: () => CP & { pushEvent: PushEvent }
@@ -59,6 +55,10 @@ export const withEffects = <P, E, CP = P>(
 
         public componentWillReceiveProps(nextProps) {
             this.reDecorateProps(nextProps)
+        }
+
+        public shouldComponentUpdate(nextProps, nextState) {
+            return this.havePropsChanged(nextProps, nextState)
         }
 
         public componentDidUpdate(prevProps: P) {
