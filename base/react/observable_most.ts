@@ -1,5 +1,6 @@
 import { from, Stream, Subscriber as Listener } from 'most'
 import $$observable from 'symbol-observable'
+import { PushEvent } from './baseTypes'
 
 export { Listener }
 
@@ -8,6 +9,7 @@ export interface ObservableComponent {
     event: <T>(eventName: string) => Stream<T>
     mount: Stream<any>
     unmount: Stream<any>
+    pushEvent: PushEvent
 }
 
 export interface Subscription {

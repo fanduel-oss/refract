@@ -2,6 +2,7 @@ import $$observable from 'symbol-observable'
 import { Callbag, Source, Sink } from 'callbag'
 const fromObs = require('callbag-from-obs')
 const toObs = require('callbag-to-obs')
+import { PushEvent } from './baseTypes'
 
 export interface Listener<T> {
     next: (val: T) => void
@@ -18,6 +19,7 @@ export interface ObservableComponent {
     event: <T>(eventName: string) => Source<T>
     mount: Source<any>
     unmount: Source<any>
+    pushEvent: PushEvent
 }
 
 export type Aperture<P, E> = (

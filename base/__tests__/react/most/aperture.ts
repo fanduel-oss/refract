@@ -77,3 +77,12 @@ export const toPropsAperture: Aperture<
             newProp: `${prop} world`
         }))
         .map(toProps)
+
+export const createRenderingAperture = <VNode>(
+    render: (prop: string) => VNode
+) => {
+    const aperture: Aperture<SourceProps, VNode> = () => component =>
+        component.observe('prop').map(render)
+
+    return aperture
+}
