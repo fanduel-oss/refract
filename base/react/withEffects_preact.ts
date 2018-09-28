@@ -1,10 +1,4 @@
-import {
-    h,
-    Component,
-    ComponentFactory,
-    ComponentConstructor,
-    VNode
-} from 'preact'
+import { h, Component, ComponentFactory, VNode } from 'preact'
 
 import configureComponent from './configureComponent'
 
@@ -12,8 +6,8 @@ import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { Aperture } from './observable'
 
 export interface State {
-    replace?: boolean
-    props?: any
+    props: object
+    decoratedProps: object
     children: VNode | null
 }
 

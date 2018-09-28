@@ -8,7 +8,8 @@ import { ReactElement } from 'react'
 
 export interface State {
     replace?: boolean
-    props?: any
+    props: object
+    decoratedProps: object
     children: React.ReactNode | null
 }
 
