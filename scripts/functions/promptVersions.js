@@ -8,8 +8,8 @@ module.exports = function promptNewVersions(changedPackages) {
                 const major = semver.inc(version, 'major')
                 const minor = semver.inc(version, 'minor')
                 const patch = semver.inc(version, 'patch')
-                const premajor = semver.inc(version, 'premajor')
-                const prerelease = semver.inc(version, 'prerelease')
+                const premajor = semver.inc(version, 'premajor', 'rc')
+                const prerelease = semver.inc(version, 'prerelease', 'rc')
 
                 return {
                     type: 'list',
@@ -35,11 +35,11 @@ module.exports = function promptNewVersions(changedPackages) {
                         version.includes('-')
                             ? {
                                   value: prerelease,
-                                  name: `Pre-release: ${prerelease}`
+                                  name: `Release candidate: ${prerelease}`
                               }
                             : {
                                   value: premajor,
-                                  name: `Pre-major: ${premajor}`
+                                  name: `Release candidate: ${premajor}`
                               }
                     ]
                 }
