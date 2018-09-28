@@ -8,6 +8,11 @@ import {
     Aperture
 } from './observable'
 
+const shallowEquals = (left, right) =>
+    left === right ||
+    (Object.keys(left).length === Object.keys(right).length &&
+        Object.keys(left).every(leftKey => left[leftKey] === right[leftKey]))
+
 const configureComponent = <P, E>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
@@ -238,6 +243,31 @@ const configureComponent = <P, E>(
         }
 
         return componentProps
+    }
+
+    instance.havePropsChanged = (newProps, newState) => {
+        const { state } = instance
+
+        if (state.children) {
+            return state.children !== newState.children
+        }
+
+        const haveStatePropsChanged = !shallowEquals(
+            state.props,
+            newState.props
+        )
+
+        if (newState.replace === true) {
+            return haveStatePropsChanged
+        }
+
+        const havePropsChanged = !shallowEquals(instance.props, newProps)
+
+        if (newState.replace === false) {
+            return havePropsChanged || haveStatePropsChanged
+        }
+
+        return havePropsChanged
     }
 }
 
