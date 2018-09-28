@@ -49,7 +49,6 @@ export const withEffects = <P, E, CP = P>(
         }
 
         public componentDidUpdate(prevProps: P) {
-            this.unmounted = true
             this.pushProps(prevProps)
         }
 
