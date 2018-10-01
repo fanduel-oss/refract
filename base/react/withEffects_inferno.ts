@@ -23,6 +23,13 @@ const isValidElement = (value: any): boolean =>
     'flags' in value &&
     'parentVNode' in value
 
+const isComponentClass = (ComponentClass: any): boolean =>
+    Boolean(
+        ComponentClass &&
+            ComponentClass.prototype &&
+            ComponentClass.prototype.componentDidMount
+    )
+
 export const withEffects = <P, E, CP = P>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
@@ -45,7 +52,8 @@ export const withEffects = <P, E, CP = P>(
             configureComponent(handler, errorHandler)(
                 aperture,
                 this,
-                isValidElement
+                isValidElement,
+                isComponentClass
             )
         }
 

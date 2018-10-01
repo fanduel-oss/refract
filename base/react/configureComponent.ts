@@ -19,7 +19,8 @@ const configureComponent = <P, E>(
 ) => (
     aperture: Aperture<P, E>,
     instance: any,
-    isValidElement?: (val: any) => boolean
+    isValidElement: (val: any) => boolean = () => false,
+    isComponentClass: (val: any) => boolean = () => false
 ) => {
     instance.state = {
         children: null,
@@ -42,7 +43,7 @@ const configureComponent = <P, E>(
         const effectHandler = handler(initialProps)
 
         return effect => {
-            if (isValidElement && isValidElement(effect)) {
+            if (isValidElement(effect)) {
                 setState({
                     children: effect
                 })
@@ -58,7 +59,6 @@ const configureComponent = <P, E>(
                             const previousProp = instance.state.props[propName]
 
                             if (
-                                propName !== 'children' &&
                                 typeof prop === 'function' &&
                                 prop !== previousProp
                             ) {
@@ -92,7 +92,7 @@ const configureComponent = <P, E>(
     }
 
     const decorateProp = (container, prop, propName) => {
-        if (propName === 'children') {
+        if (propName === 'children' || isComponentClass(prop)) {
             return
         }
 
@@ -196,7 +196,6 @@ const configureComponent = <P, E>(
     instance.reDecorateProps = nextProps => {
         Object.keys(nextProps).forEach(propName => {
             if (
-                propName !== 'children' &&
                 typeof instance.props[propName] === 'function' &&
                 nextProps[propName] !== instance.props[propName]
             ) {

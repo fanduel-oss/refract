@@ -13,6 +13,13 @@ export interface State {
     children: React.ReactNode | null
 }
 
+const isComponentClass = (ComponentClass: any): boolean =>
+    Boolean(
+        ComponentClass &&
+            ComponentClass.prototype &&
+            ComponentClass.prototype.isReactComponent
+    )
+
 const Empty = () => null
 
 export const withEffects = <P, E, CP = P>(
@@ -37,7 +44,8 @@ export const withEffects = <P, E, CP = P>(
             configureComponent(handler, errorHandler)(
                 aperture,
                 this,
-                React.isValidElement
+                React.isValidElement,
+                isComponentClass
             )
         }
 
