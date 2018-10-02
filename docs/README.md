@@ -15,6 +15,8 @@
     *   [Observing Redux](./usage/observing-redux.md)
     *   [Observing Anything](./usage/observing-anything.md)
     *   [Handling Effects](./usage/handling-effects.md)
+    *   [Pushing to props](./pushing-to-props.md)
+    *   [Rendering components](./rendering-components.md)
     *   [Handling Errors](./usage/handling-errors.md)
     *   [Testing](./usage/testing.md)
 *   [Recipes](./recipes/README.md)
