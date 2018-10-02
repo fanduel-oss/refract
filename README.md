@@ -31,19 +31,26 @@
 </p>
 <br/>
 
-Refract lets you isolate your app's side effects - API calls, analytics, logging, etc - so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
+Refract lets you handle your component effects and side-effects, so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
-Refract is an extensible library built for React, with bindings available for Inferno and Preact. In addition we provide a Redux integration, which can also serve as a template for integrations with other libraries.
+Refract makes reactive programming possible in React, React Native, Preact and Inferno, with only a single higher-order component! You can choose to start using a tiny bit of reactive programming, or go full reactive. Refract allows you to:
+
+*   [Manage side effects](LINK TO USAGE) like API calls, analytics, logging, etc.
+*   [Manipulate, replace and inject props](LINK TO USAGE), you can even [fully replace Redux `connect` HoC](LINK TO RECIPE)
+*   [Handle state](LINK TO USAGE)
+*   [Render components](LINK TO USAGE)
+
+We also provide a Redux integration, which can also serve as a template for integrations with other libraries. With a single HoC, you can fully replace libraries like [recompose](https://github.com/acdlite/recompose), [redux-observable](https://redux-observable.js.org/), and [react-redux](https://github.com/reduxjs/react-redux) to name a few!
 
 # Why?
 
 Component-based architecture and functional programming have become an increasingly popular approach for building UIs. They help make apps more predictable, more testable, and more maintainable.
 
-However, our apps don't exist in a vacuum! They need to make network requests, handle data persistence, log analytics, deal with changing time, and so on. Any non-trivial app has to handle any number of these external effects.
+However, our apps don't exist in a vacuum! They need to handle state, make network requests, handle data persistence, log analytics, deal with changing time, and so on. Any non-trivial app has to handle any number of these effects.
 
-These side-effects hold us back from writing fully declarative code. Wouldn't it be nice to cleanly separate them from our apps?
+These effects are data entering and leaving your component sideways, and side-effects leave your components side: with vanilla React, they can't be dealt with in a pure and declarative manner. Wouldn't it be nice to cleanly separate them from our apps?
 
-Refract solves this problem for you. [For an in-depth introduction, head to `Why Refract`.](./docs/introduction/why-refract.md)
+Refract solves this problem for you, by harnessing the power of reactive programming. [For an in-depth introduction, head to `Why Refract`.](./docs/introduction/why-refract.md)
 
 # Installation
 
