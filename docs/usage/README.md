@@ -8,5 +8,7 @@
 *   [Observing Redux](./observing-redux.md)
 *   [Observing Anything](./observing-anything.md)
 *   [Handling Effects](./handling-effects.md)
+*   [Pushing to props](./pushing-to-props.md)
+*   [Rendering components](./rendering-components.md)
 *   [Handling Errors](./handling-errors.md)
 *   [Testing](./testing.md)
