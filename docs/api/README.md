@@ -4,6 +4,7 @@
 
 *   [compose](compose.md)
 *   [withEffects](withEffects.md)
+*   [toProps, asProps](props.md)
 
 ### Redux Packages
 
