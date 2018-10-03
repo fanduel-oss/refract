@@ -22,6 +22,7 @@
 *   [Recipes](./recipes/README.md)
     *   [Dependency Injection](./recipes/dependency-injection.md)
     *   [Creating An API Dependency](./recipes/creating-an-api-dependency.md)
+    *   [Handling state](./recipes/handling-state.md)
 *   [Examples](../examples/README.md)
     *   [Debounced fetch](../examples/debounced-fetch/README.md)
     *   [Counter](../examples/counter/README.md)
