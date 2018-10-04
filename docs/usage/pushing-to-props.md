@@ -11,7 +11,7 @@ Refract has three built-in effect handlers, to:
 *   Replace props
 *   Render components
 
-This section focuses on adding and replacing props, and its applications. All React, Preact and Inferno packages export two effect creators `toProps` and `asProps` one. They both take an object of props.
+This section focuses on adding and replacing props, and its applications. All React, Preact and Inferno packages export two effect creators: `toProps` and `asProps`. They both take an object of props.
 
 ## Adding props
 
