@@ -11,7 +11,7 @@ Refract has three built-in effect handlers, to:
 *   Replace props
 *   Render components
 
-This section focuses on adding and replacing props, and its applications. All React, Preact and Inferno packages export a `toProps` function and a `asProps` one. Both these functions take an object of props.
+This section focuses on adding and replacing props, and its applications. All React, Preact and Inferno packages export two effect creators `toProps` and `asProps` one. They both take an object of props.
 
 ## Adding props
 
@@ -41,24 +41,22 @@ export default withEffects(handler)(aperture)(DoubleValue)
 
 `asProps` is used exactly like `toProps`, except that the provided props will be the only ones passed to the child component.
 
-It allows to fully control what props are passed through, and can result in performance benefits by controlling exactly when a component re-renders.
+It allows you to fully control what props are passed through, and can result in performance benefits by controlling exactly when a component re-renders.
 
-Essentially, `toProps` and `asProps` allow to inject data into components, by using existing props or external data sources (sideways data loading).
+Essentially, `toProps` and `asProps` allow you to inject data into components, by using existing props or external data sources (sideways data loading).
 
 ## Stateful apertures
 
-The ability to set component props combined with the ability to listen to events (with `pushEvent` and `component.event(name)`), comes the ability of handling state: events are the source of truth, and state is a projection of these events.
+With the ability to set component props and to listen to events (with `pushEvent` and `component.event(name)`), comes the ability to handle state: events are the source of truth, and state is a projection of these events.
 
-The example below is a simple counter example: each time a button is clicked, the count is incremented. We use a reducer to persist state between events, and pass it as props. It will sound familiar if you've used Redux: we go from events to state to props, the same way Redux (with `connect`) goes from actions to state to props (see [Replacing react-redux connect HoC](../recipes/replacing-connect.md]) recipe).
+The example below is a simple counter example: each time a button is clicked, the count is incremented. We use a reducer to persist state between events, and pass it as props. It will sound familiar if you've used Redux: we go from events to state to props, the same way Redux (with `connect`) goes from actions to state to props (see [Replacing react-redux connect HoC](../recipes/replacing-connect.md]) recipe). Refract can be used to bind together state from multiple sources.
 
 ```js
 import React from 'react'
 import { withEffects, toProps } from 'refract-rxjs'
 import { reduce, map } from 'rxjs/operators'
 
-const Counter = ({ count, addOne }) => (
-    <button onClick={plusOne}>{count}</button>
-)
+const Counter = ({ count, addOne }) => <button onClick={addOne}>{count}</button>
 
 const aperture = ({ initialCount }) => component => {
     const addOne = component.pushEvent('addOne')
