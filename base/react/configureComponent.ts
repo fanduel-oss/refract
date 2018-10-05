@@ -247,7 +247,7 @@ const configureComponent = <P, E>(
     instance.havePropsChanged = (newProps, newState) => {
         const { state } = instance
 
-        if (state.children) {
+        if (state.children || newState.children) {
             return state.children !== newState.children
         }
 
