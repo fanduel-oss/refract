@@ -126,11 +126,11 @@ function MyComponent({ pushEvent }) {
 
 ### Observing events
 
-In your aperture, you can observe events by simply invoking `component.event(eventName)`.
+In your aperture, you can observe events by simply invoking `component.fromEvent(eventName)`.
 
 ```js
 const aperture = initialProps => component => {
-    const buttonClick$ = component.event('buttonClick')
+    const buttonClick$ = component.fromEvent('buttonClick')
 
     return buttonClick$.pipe(mapTo('Button clicked!'))
 }
