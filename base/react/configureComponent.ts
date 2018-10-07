@@ -1,5 +1,5 @@
 import { Listeners, Handler, ErrorHandler, PushEvent } from './baseTypes'
-import { PROPS_EFFECT, MOUNT_EFFECT, UNMOUNT_EFFECT } from './effects'
+import { PROPS_EFFECT } from './effects'
 import {
     Subscription,
     createObservable,
@@ -7,6 +7,9 @@ import {
     subscribeToSink,
     Aperture
 } from './observable'
+
+const MOUNT_EVENT: string = '@@refract/event/mount'
+const UNMOUNT_EVENT: string = '@@refract/event/unmount'
 
 const shallowEquals = (left, right) =>
     left === right ||
@@ -152,8 +155,8 @@ const configureComponent = <P, E>(
     }
 
     const component: ObservableComponent = {
-        mount: createEventObservable(MOUNT_EFFECT),
-        unmount: createEventObservable(UNMOUNT_EFFECT),
+        mount: createEventObservable(MOUNT_EVENT),
+        unmount: createEventObservable(UNMOUNT_EVENT),
         observe: createPropObservable,
         event: createEventObservable,
         pushEvent
@@ -195,11 +198,11 @@ const configureComponent = <P, E>(
     }
 
     instance.triggerMount = () => {
-        pushEvent(MOUNT_EFFECT)(undefined)
+        pushEvent(MOUNT_EVENT)(undefined)
     }
 
     instance.triggerUnmount = () => {
-        pushEvent(UNMOUNT_EFFECT)(undefined)
+        pushEvent(UNMOUNT_EVENT)(undefined)
         sinkSubscription.unsubscribe()
     }
 
