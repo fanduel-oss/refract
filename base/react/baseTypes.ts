@@ -5,8 +5,6 @@ export interface KeyedListeners {
 }
 
 export interface Listeners {
-    mount: Array<Partial<Listener<any>>>
-    unmount: Array<Partial<Listener<any>>>
     allProps: Array<Partial<Listener<any>>>
     props: KeyedListeners
     fnProps: KeyedListeners
