@@ -155,8 +155,8 @@ const configureComponent = <P, E>(
     }
 
     const component: ObservableComponent = {
-        mount: createEventObservable(MOUNT_EVENT),
-        unmount: createEventObservable(UNMOUNT_EVENT),
+        mount$: createEventObservable(MOUNT_EVENT),
+        unmount$: createEventObservable(UNMOUNT_EVENT),
         observe: createPropObservable,
         event: createEventObservable,
         pushEvent
