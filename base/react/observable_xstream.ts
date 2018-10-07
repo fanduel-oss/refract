@@ -6,8 +6,6 @@ export { Listener, Subscription }
 export interface ObservableComponent {
     observe: <T>(propName?: string) => Stream<T>
     event: <T>(eventName: string) => Stream<T>
-    mount: Stream<any>
-    unmount: Stream<any>
     pushEvent: PushEvent
 }
 

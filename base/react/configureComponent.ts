@@ -77,8 +77,6 @@ const configureComponent = <P, E>(
     }
 
     const listeners: Listeners = {
-        mount: [],
-        unmount: [],
         allProps: [],
         props: {},
         fnProps: {},
@@ -107,18 +105,6 @@ const configureComponent = <P, E>(
         if (typeof instance.props[propName] === 'function') {
             decorateProp(decoratedProps, instance.props[propName], propName)
         }
-    })
-
-    const mountObservable = createObservable<any>(listener => {
-        listeners.mount = listeners.mount.concat(listener)
-
-        return () => listeners.mount.filter(l => l !== listener)
-    })
-
-    const unmountObservable = createObservable<any>(listener => {
-        listeners.unmount = listeners.unmount.concat(listener)
-
-        return () => listeners.unmount.filter(l => l !== listener)
     })
 
     const createPropObservable = <T>(propName?: string) => {
@@ -166,8 +152,6 @@ const configureComponent = <P, E>(
     }
 
     const component: ObservableComponent = {
-        mount: mountObservable,
-        unmount: unmountObservable,
         observe: createPropObservable,
         event: createEventObservable,
         pushEvent
@@ -209,11 +193,11 @@ const configureComponent = <P, E>(
     }
 
     instance.triggerMount = () => {
-        listeners.mount.forEach(l => l.next(undefined))
+        pushEvent('mount')(undefined)
     }
 
     instance.triggerUnmount = () => {
-        listeners.unmount.forEach(l => l.next(undefined))
+        pushEvent('unmount')(undefined)
         sinkSubscription.unsubscribe()
     }
 

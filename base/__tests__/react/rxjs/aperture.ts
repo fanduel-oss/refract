@@ -22,8 +22,8 @@ export interface Props {
 export const aperture: Aperture<Props, Effect> = props => component => {
     const value$ = component.observe<number>('value')
     const valueSet$ = component.observe<number>('setValue')
-    const mount$ = component.mount
-    const unmount$ = component.unmount
+    const mount$ = component.event('mount')
+    const unmount$ = component.event('unmount')
     const linkClick$ = component.event<any>('linkClick')
 
     return merge<Effect>(
