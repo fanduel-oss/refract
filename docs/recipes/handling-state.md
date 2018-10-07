@@ -2,19 +2,19 @@
 
 State in React is a never-ending story: you can use Redux, vanilla local state, higher-order components built on top of local state, use the new context API...
 
-We believe state strongly coupled to components is best colocated: it is easier to reason about, easier to maintain and enables to cleanly isolate sections of an application. Refract makes it possible to handle local state, and it might even challenge your challenge your asumptions.
+We believe state strongly coupled to components is best colocated: it is easier to reason about, easier to maintain and enables you to cleanly isolate sections of an application. Refract makes it possible to handle local state reactively, and it might even challenge some of your asumptions.
 
 ## Source of truth
 
 Redux popularised state as a source of truth: in a Redux app, state is indeed the source of truth of your view, because a hard separation is enforced. However, actions (which are like events) are the source of truth of your reducers and therefore state.
 
-In any application, events are the source of truth! Any application projects them (reduces them if you prefer!) to state. And state can take different representations: an object, or a React element.
+In any application, events are the source of truth! Any application projects them (reduces them if you prefer!) to state. And state can be represented in different ways: an object, or a React element.
 
 A counter for instance will have `'click'` events resulting in a value being incremented (`{count: 1}`) and rendered `<span>{count}</span>`: from event, to representation.
 
 ## Stateful apertures
 
-Refract can observe "events" (see [Observing React](../usage/observing-react.md)) and has built-in effects: to [map and replace props](../usage/pushing-to-props.md) and to [render components](../usage/rendering-components.md): it allows you to handle the different transformation steps, from events to presentation, in one place.
+Refract can observe "events" (see [Observing React](../usage/observing-react.md)) and has built-in effects: to [map and replace props](../usage/pushing-to-props.md) and to [render components](../usage/rendering-components.md); it allows you to handle the different transformation steps, from events to presentation, in one place.
 
 The example below is a very basic example of a toggle. We have a `Toggle` component which can reveal content (`children`).
 
@@ -68,9 +68,9 @@ export default ToggleWithState
 
 ## Using context
 
-When handling local state, it can be cumbersome to have to pass props through several layers of components (this is known as "prop drilling"). React new context API can help with it, and you can leverage is with Refract by using rendering effects.
+When handling local state, it can be cumbersome to have to pass props through several layers of components (this is known as "prop drilling"). React's new context API can help with it, and you can leverage is with Refract by using rendering effects.
 
-The example below puts a counter state in context. In the aperture, we create a context objects from `'count'` events and combine them with the values of `children` received to set the value of a context provider.
+The example below puts a counter state in context. In the aperture, we create a context object from `'count'` events and combine them with the values of `children` received to set the value of a context provider.
 
 ```js
 import React from 'react'
