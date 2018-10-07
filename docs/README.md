@@ -23,6 +23,7 @@
     *   [Dependency Injection](./recipes/dependency-injection.md)
     *   [Creating An API Dependency](./recipes/creating-an-api-dependency.md)
     *   [Handling state](./recipes/handling-state.md)
+    *   [Replacing Redux Connect](./recipes/replacing-connect.md)
 *   [Examples](../examples/README.md)
     *   [Debounced fetch](../examples/debounced-fetch/README.md)
     *   [Counter](../examples/counter/README.md)
