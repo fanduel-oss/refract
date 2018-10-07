@@ -1,4 +1,4 @@
-# Observing React
+# Observing React, Preact and Inferno
 
 > This document focuses on React, but the same applies to Inferno and Preact
 

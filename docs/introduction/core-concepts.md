@@ -17,7 +17,7 @@ However, the loop above doesn't exist in a vacuum! Various external effects comp
 
 ## Separation of concerns
 
-Refract allows you to cleanly separate concerns in your app: you can extract effects and side-effects into their own functions. We tend to distinguish side-effects (things happening outside your application: analytics, data persistance, ...) from effects (things happening inside your application: network requests, setting state, ...).
+Refract allows you to cleanly separate concerns in your app: you can extract effects and side-effects into their own functions. We tend to distinguish side-effects (things happening outside your application: analytics, data persistance, ...) from effects (things happening inside your application: network requests, dispatching to a store, mapping or replacing props, ...).
 
 ### Side-effects
 
