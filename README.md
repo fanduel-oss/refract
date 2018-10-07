@@ -164,3 +164,4 @@ Before getting started, please read through our [contributing guidelines](CONTRI
 ### Articles
 
 *   [The introduction to Reactive Programming you've been missing](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754) by [@andrestaltz](https://twitter.com/andrestaltz)
+*   [SurviveJS Interview with Thomas Roch - Refract: Manage Component Side Effects the Reactive Way](https://survivejs.com/blog/refract-interview/)
