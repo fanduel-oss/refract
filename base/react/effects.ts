@@ -1,4 +1,6 @@
 export const PROPS_EFFECT: string = '@@refract/effect/props'
+export const MOUNT_EFFECT: string = '@@refract/effect/mount'
+export const UNMOUNT_EFFECT: string = '@@refract/effect/unmount'
 
 export interface PropEffect<P = object> {
     type: string
