@@ -5,12 +5,10 @@ export interface KeyedListeners {
 }
 
 export interface Listeners {
-    mount: Array<Partial<Listener<any>>>
-    unmount: Array<Partial<Listener<any>>>
     allProps: Array<Partial<Listener<any>>>
     props: KeyedListeners
     fnProps: KeyedListeners
-    event: KeyedListeners
+    fromEvent: KeyedListeners
 }
 
 export type Handler<P, E> = (intialProps: P) => (val: E) => void

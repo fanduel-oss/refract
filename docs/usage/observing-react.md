@@ -10,7 +10,7 @@ const aperture = initialProps => component => {
 }
 ```
 
-This `component` object contains three properties: `observe`, `mount`, and `unmount`. The `observe` property is a function which let you observe your React props. The `mount` and `unmount` properties are streams which let you observe your React component's lifecycle.
+This `component` object contains three properties: `observe`, `mount$`, and `unmount$`. The `observe` property is a function which let you observe your React props. The `mount$` and `unmount$` properties are streams which let you observe your React component's lifecycle.
 
 ## Example
 
@@ -126,11 +126,11 @@ function MyComponent({ pushEvent }) {
 
 ### Observing events
 
-In your aperture, you can observe events by simply invoking `component.event(eventName)`.
+In your aperture, you can observe events by simply invoking `component.fromEvent(eventName)`.
 
 ```js
 const aperture = initialProps => component => {
-    const buttonClick$ = component.event('buttonClick')
+    const buttonClick$ = component.fromEvent('buttonClick')
 
     return buttonClick$.pipe(mapTo('Button clicked!'))
 }
@@ -138,19 +138,19 @@ const aperture = initialProps => component => {
 
 ## Observing Lifecycle Events
 
-The remaining two properties on the `component` object are `component.mount` and `component.unmount`.
+The remaining two properties on the `component` object are `component.mount$` and `component.unmount$`.
 
 These are streams which emit an event, like a signal, either when the component mounts or when the component unmounts.
 
 ### Observing Component Mount
 
-`component.mount` is a stream which will emit a single value when a component mounts.
+`component.mount$` is a stream which will emit a single value when a component mounts.
 
 It can be useful to defer any logic until a component has been mounted.
 
 ```js
 const aperture = initialProps => component => {
-    const mount$ = component.mount
+    const mount$ = component.mount$
 
     return mount$.pipe(mapTo('Component mounted!'))
 }
@@ -158,13 +158,13 @@ const aperture = initialProps => component => {
 
 ### Observing Component Unmount
 
-`component.unmount` is a stream which will emit a single value when a component unmounts.
+`component.unmount$` is a stream which will emit a single value when a component unmounts.
 
 It can be useful to trigger side-effects when a component is about to be unmounted.
 
 ```js
 const aperture = initialProps => component => {
-    const unmount$ = component.unmount
+    const unmount$ = component.unmount$
 
     return unmount$.pipe(mapTo('Component unmounted!'))
 }

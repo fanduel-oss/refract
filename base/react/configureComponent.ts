@@ -8,6 +8,9 @@ import {
     Aperture
 } from './observable'
 
+const MOUNT_EVENT: string = '@@refract/event/mount'
+const UNMOUNT_EVENT: string = '@@refract/event/unmount'
+
 const shallowEquals = (left, right) =>
     left === right ||
     (Object.keys(left).length === Object.keys(right).length &&
@@ -77,16 +80,14 @@ const configureComponent = <P, E>(
     }
 
     const listeners: Listeners = {
-        mount: [],
-        unmount: [],
         allProps: [],
         props: {},
         fnProps: {},
-        event: {}
+        fromEvent: {}
     }
     const decoratedProps: Partial<P> = {}
     const pushEvent: PushEvent = (eventName: string) => <T>(val: T) => {
-        ;(listeners.event[eventName] || []).forEach(listener =>
+        ;(listeners.fromEvent[eventName] || []).forEach(listener =>
             listener.next(val)
         )
     }
@@ -107,18 +108,6 @@ const configureComponent = <P, E>(
         if (typeof instance.props[propName] === 'function') {
             decorateProp(decoratedProps, instance.props[propName], propName)
         }
-    })
-
-    const mountObservable = createObservable<any>(listener => {
-        listeners.mount = listeners.mount.concat(listener)
-
-        return () => listeners.mount.filter(l => l !== listener)
-    })
-
-    const unmountObservable = createObservable<any>(listener => {
-        listeners.unmount = listeners.unmount.concat(listener)
-
-        return () => listeners.unmount.filter(l => l !== listener)
     })
 
     const createPropObservable = <T>(propName?: string) => {
@@ -155,21 +144,21 @@ const configureComponent = <P, E>(
 
     const createEventObservable = <T>(eventName: string) => {
         return createObservable<T>(listener => {
-            listeners.event[eventName] = (
-                listeners.event[eventName] || []
+            listeners.fromEvent[eventName] = (
+                listeners.fromEvent[eventName] || []
             ).concat(listener)
 
             return () => {
-                listeners.event[eventName].filter(l => l !== listener)
+                listeners.fromEvent[eventName].filter(l => l !== listener)
             }
         })
     }
 
     const component: ObservableComponent = {
-        mount: mountObservable,
-        unmount: unmountObservable,
+        mount$: createEventObservable(MOUNT_EVENT),
+        unmount$: createEventObservable(UNMOUNT_EVENT),
         observe: createPropObservable,
-        event: createEventObservable,
+        fromEvent: createEventObservable,
         pushEvent
     }
 
@@ -209,11 +198,11 @@ const configureComponent = <P, E>(
     }
 
     instance.triggerMount = () => {
-        listeners.mount.forEach(l => l.next(undefined))
+        pushEvent(MOUNT_EVENT)(undefined)
     }
 
     instance.triggerUnmount = () => {
-        listeners.unmount.forEach(l => l.next(undefined))
+        pushEvent(UNMOUNT_EVENT)(undefined)
         sinkSubscription.unsubscribe()
     }
 
