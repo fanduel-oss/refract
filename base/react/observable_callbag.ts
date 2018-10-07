@@ -17,8 +17,8 @@ export interface Subscription {
 export interface ObservableComponent {
     observe: <T = any>(propName?: string) => Source<T>
     event: <T>(eventName: string) => Source<T>
-    mount: Source<any>
-    unmount: Source<any>
+    mount$: Source<any>
+    unmount$: Source<any>
     pushEvent: PushEvent
 }
 
