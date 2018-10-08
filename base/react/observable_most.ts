@@ -5,8 +5,14 @@ import { PushEvent } from './baseTypes'
 export { Listener }
 
 export interface ObservableComponent {
-    observe: <T>(propName?: string) => Stream<T>
-    event: <T>(eventName: string) => Stream<T>
+    observe: <T>(
+        propName?: string,
+        valueTransformer?: (val: any) => T
+    ) => Stream<T>
+    event: <T>(
+        eventName: string,
+        valueTransformer?: (val: any) => T
+    ) => Stream<T>
     mount: Stream<any>
     unmount: Stream<any>
     pushEvent: PushEvent
