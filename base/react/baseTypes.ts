@@ -1,14 +1,16 @@
 import { Listener } from './observable'
 
-export interface KeyedListeners {
-    [key: string]: Array<Partial<Listener<any>>>
+type ListenerAndTransformer<T> = [Partial<Listener<T>>, (value: any) => T]
+
+export interface KeyedListenersAndTransformers {
+    [key: string]: Array<ListenerAndTransformer<any>>
 }
 
 export interface Listeners {
     allProps: Array<Partial<Listener<any>>>
-    props: KeyedListeners
-    fnProps: KeyedListeners
-    event: KeyedListeners
+    props: KeyedListenersAndTransformers
+    fnProps: KeyedListenersAndTransformers
+    event: KeyedListenersAndTransformers
 }
 
 export type Handler<P, E> = (intialProps: P) => (val: E) => void

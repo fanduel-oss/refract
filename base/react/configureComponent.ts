@@ -11,6 +11,9 @@ import {
 const MOUNT_EVENT: string = '@@refract/event/mount'
 const UNMOUNT_EVENT: string = '@@refract/event/unmount'
 
+const identity = _ => _
+const selectFirstArg = args => args[0]
+
 const shallowEquals = (left, right) =>
     left === right ||
     (Object.keys(left).length === Object.keys(right).length &&
@@ -87,8 +90,9 @@ const configureComponent = <P, E>(
     }
     const decoratedProps: Partial<P> = {}
     const pushEvent: PushEvent = (eventName: string) => <T>(val: T) => {
-        ;(listeners.event[eventName] || []).forEach(listener =>
-            listener.next(val)
+        ;(listeners.event[eventName] || []).forEach(
+            ([listener, transformer = identity]) =>
+                listener.next(transformer(val))
         )
     }
 
@@ -98,7 +102,10 @@ const configureComponent = <P, E>(
         }
 
         container[propName] = (...args) => {
-            ;(listeners.fnProps[propName] || []).forEach(l => l.next(args[0]))
+            ;(listeners.fnProps[propName] || []).forEach(
+                ([listener, transformer = selectFirstArg]) =>
+                    listener.next(transformer(args))
+            )
 
             return prop(...args)
         }
@@ -110,7 +117,10 @@ const configureComponent = <P, E>(
         }
     })
 
-    const createPropObservable = <T>(propName?: string) => {
+    const createPropObservable = <T>(
+        propName?: string,
+        valueTransformer?: (val: any) => T
+    ) => {
         const listenerType = propName
             ? typeof instance.props[propName] === 'function'
                 ? 'fnProps'
@@ -129,27 +139,35 @@ const configureComponent = <P, E>(
             }
 
             if (listenerType === 'props') {
-                listener.next(instance.props[propName])
+                const value = instance.props[propName]
+                listener.next(
+                    valueTransformer ? valueTransformer(value) : value
+                )
             }
 
             listeners[listenerType][propName] = (
                 listeners[listenerType][propName] || []
-            ).concat(listener)
+            ).concat([[listener, valueTransformer]])
 
             return () => {
-                listeners[listenerType][propName].filter(l => l !== listener)
+                listeners[listenerType][propName].filter(
+                    ([l]) => l !== listener
+                )
             }
         })
     }
 
-    const createEventObservable = <T>(eventName: string) => {
+    const createEventObservable = <T>(
+        eventName: string,
+        valueTransformer?: (val: any) => T
+    ) => {
         return createObservable<T>(listener => {
             listeners.event[eventName] = (
                 listeners.event[eventName] || []
-            ).concat(listener)
+            ).concat([[listener, valueTransformer]])
 
             return () => {
-                listeners.event[eventName].filter(l => l !== listener)
+                listeners.event[eventName].filter(([l]) => l !== listener)
             }
         })
     }
@@ -174,9 +192,16 @@ const configureComponent = <P, E>(
         Object.keys(listeners.props).forEach(propName => {
             const prop = instance.props[propName]
 
-            if (!prevProps || prevProps[propName] !== prop) {
-                listeners.props[propName].forEach(l => l.next(prop))
-            }
+            listeners.props[propName].forEach(
+                ([listener, transformer = identity]) => {
+                    if (
+                        !prevProps ||
+                        transformer(prevProps[propName]) !== transformer(prop)
+                    ) {
+                        listener.next(transformer(prop))
+                    }
+                }
+            )
         })
 
         listeners.allProps.forEach(l => l.next(instance.props))
