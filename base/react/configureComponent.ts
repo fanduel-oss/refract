@@ -26,6 +26,7 @@ const configureComponent = <P, E>(
     isComponentClass: (val: any) => boolean = () => false
 ) => {
     instance.state = {
+        renderEffect: false,
         children: null,
         props: {},
         decoratedProps: {}
@@ -48,6 +49,7 @@ const configureComponent = <P, E>(
         return effect => {
             if (isValidElement(effect)) {
                 setState({
+                    renderEffect: true,
                     children: effect
                 })
             } else if (effect && effect.type === PROPS_EFFECT) {
@@ -236,7 +238,7 @@ const configureComponent = <P, E>(
     instance.havePropsChanged = (newProps, newState) => {
         const { state } = instance
 
-        if (state.children || newState.children) {
+        if (state.renderEffect) {
             return state.children !== newState.children
         }
 
