@@ -27,6 +27,15 @@ const peerDependencies = {
     }
 }
 const baseDependencies = {
+    react: {
+        'symbol-observable': '~1.2.0'
+    },
+    inferno: {
+        'symbol-observable': '~1.2.0'
+    },
+    preact: {
+        'symbol-observable': '~1.2.0'
+    },
     callbag: {
         callbag: '~1.1.0',
         'callbag-from-obs': '~1.2.0',
@@ -37,16 +46,19 @@ const baseDependencies = {
     }
 }
 
+const callbagUIPackages = {
+    'callbag-from-obs': '~1.2.0',
+    'callbag-to-obs': '~1.0.0',
+    'callbag-map': '~1.0.1',
+    'callbag-pipe': '~1.1.1',
+    'callbag-filter': '~1.0.1',
+    'callbag-drop-repeats': '~1.0.0'
+}
+
 const extraDependencies = {
-    'refract-callbag': {
-        'callbag-to-obs': '~1.0.0'
-    },
-    'refract-inferno-callbag': {
-        'callbag-to-obs': '~1.0.0'
-    },
-    'refract-preact-callbag': {
-        'callbag-to-obs': '~1.0.0'
-    },
+    'refract-callbag': callbagUIPackages,
+    'refract-inferno-callbag': callbagUIPackages,
+    'refract-preact-callbag': callbagUIPackages,
     'refract-redux-callbag': {
         'callbag-drop-repeats': '~1.0.0',
         'callbag-map': '~1.0.1',

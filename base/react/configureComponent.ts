@@ -1,15 +1,21 @@
+import $$observable from 'symbol-observable'
 import { Listeners, Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { PROPS_EFFECT } from './effects'
 import {
+    Listener,
     Subscription,
-    createObservable,
+    createComponent,
     ObservableComponent,
     subscribeToSink,
     Aperture
 } from './observable'
-
-const MOUNT_EVENT: string = '@@refract/event/mount'
-const UNMOUNT_EVENT: string = '@@refract/event/unmount'
+import {
+    createEventData,
+    createPropsData,
+    createCallbackData,
+    MOUNT_EVENT,
+    UNMOUNT_EVENT
+} from './data'
 
 const identity = _ => _
 const selectFirstArg = args => args[0]
@@ -82,18 +88,21 @@ const configureComponent = <P, E>(
         }
     }
 
-    const listeners: Listeners = {
-        allProps: [],
-        props: {},
-        fnProps: {},
-        event: {}
-    }
     const decoratedProps: Partial<P> = {}
+
+    let listeners: Array<Listener<any>> = []
+
+    const addListener = listener => {
+        listeners = listeners.concat(listener)
+    }
+    const removeListener = listener => {
+        listeners = listeners.filter(l => l !== listener)
+    }
+
     const pushEvent: PushEvent = (eventName: string) => <T>(val: T) => {
-        ;(listeners.event[eventName] || []).forEach(
-            ([listener, transformer = identity]) =>
-                listener.next(transformer(val))
-        )
+        listeners.forEach(listener => {
+            listener.next(createEventData(eventName, val))
+        })
     }
 
     const decorateProp = (container, prop, propName) => {
@@ -102,10 +111,9 @@ const configureComponent = <P, E>(
         }
 
         container[propName] = (...args) => {
-            ;(listeners.fnProps[propName] || []).forEach(
-                ([listener, transformer = selectFirstArg]) =>
-                    listener.next(transformer(args))
-            )
+            listeners.forEach(listener => {
+                listener.next(createCallbackData(propName, args))
+            })
 
             return prop(...args)
         }
@@ -117,68 +125,24 @@ const configureComponent = <P, E>(
         }
     })
 
-    const createPropObservable = <T>(
-        propName?: string,
-        valueTransformer?: (val: any) => T
-    ) => {
-        const listenerType = propName
-            ? typeof instance.props[propName] === 'function'
-                ? 'fnProps'
-                : 'props'
-            : 'allProps'
+    const dataObservable = {
+        subscribe(listener: Listener<any>) {
+            addListener(listener)
 
-        return createObservable<T>(listener => {
-            if (listenerType === 'allProps') {
-                listener.next(instance.props)
+            listener.next(createPropsData(instance.props))
 
-                listeners.allProps = listeners.allProps.concat(listener)
-
-                return () => {
-                    listeners.allProps.filter(l => l !== listener)
-                }
-            }
-
-            if (listenerType === 'props') {
-                const value = instance.props[propName]
-                listener.next(
-                    valueTransformer ? valueTransformer(value) : value
-                )
-            }
-
-            listeners[listenerType][propName] = (
-                listeners[listenerType][propName] || []
-            ).concat([[listener, valueTransformer]])
-
-            return () => {
-                listeners[listenerType][propName].filter(
-                    ([l]) => l !== listener
-                )
-            }
-        })
+            return { unsubscribe: () => removeListener(listener) }
+        },
+        [$$observable]() {
+            return this
+        }
     }
 
-    const createEventObservable = <T>(
-        eventName: string,
-        valueTransformer?: (val: any) => T
-    ) => {
-        return createObservable<T>(listener => {
-            listeners.event[eventName] = (
-                listeners.event[eventName] || []
-            ).concat([[listener, valueTransformer]])
-
-            return () => {
-                listeners.event[eventName].filter(([l]) => l !== listener)
-            }
-        })
-    }
-
-    const component: ObservableComponent = {
-        mount: createEventObservable(MOUNT_EVENT),
-        unmount: createEventObservable(UNMOUNT_EVENT),
-        observe: createPropObservable,
-        event: createEventObservable,
+    const component: ObservableComponent = createComponent(
+        instance,
+        dataObservable,
         pushEvent
-    }
+    )
 
     const sinkObservable = aperture(instance.props)(component)
 
@@ -187,25 +151,6 @@ const configureComponent = <P, E>(
         finalHandler(instance.props),
         errorHandler ? errorHandler(instance.props) : undefined
     )
-
-    const sendNext = (prevProps?: P) => {
-        Object.keys(listeners.props).forEach(propName => {
-            const prop = instance.props[propName]
-
-            listeners.props[propName].forEach(
-                ([listener, transformer = identity]) => {
-                    if (
-                        !prevProps ||
-                        transformer(prevProps[propName]) !== transformer(prop)
-                    ) {
-                        listener.next(transformer(prop))
-                    }
-                }
-            )
-        })
-
-        listeners.allProps.forEach(l => l.next(instance.props))
-    }
 
     instance.reDecorateProps = nextProps => {
         Object.keys(nextProps).forEach(propName => {
@@ -218,8 +163,10 @@ const configureComponent = <P, E>(
         })
     }
 
-    instance.pushProps = prevProps => {
-        sendNext(prevProps)
+    instance.pushProps = (props: P) => {
+        listeners.forEach(listener => {
+            listener.next(createPropsData(props))
+        })
     }
 
     instance.triggerMount = () => {

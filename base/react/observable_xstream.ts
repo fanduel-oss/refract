@@ -1,5 +1,14 @@
 import xs, { Stream, Listener, Subscription } from 'xstream'
+import dropRepeats from 'xstream/extra/dropRepeats'
 import { PushEvent } from './baseTypes'
+import {
+    isEvent,
+    MOUNT_EVENT,
+    UNMOUNT_EVENT,
+    isProps,
+    isCallback,
+    Data
+} from './data'
 
 export { Listener, Subscription }
 
@@ -32,16 +41,46 @@ export const subscribeToSink = <T>(
         complete: () => void 0
     })
 
-export const createObservable = <T>(subscribe): Stream<T> => {
-    let unsubscribe
+export const createComponent = (
+    instance,
+    dataObservable,
+    pushEvent
+): ObservableComponent => {
+    const data$ = xs.from<Data>(dataObservable)
 
-    return xs.create({
-        start(listener: Partial<Listener<T>>) {
-            unsubscribe = subscribe(listener)
+    return {
+        mount: data$.filter(isEvent(MOUNT_EVENT)).mapTo(undefined),
+        unmount: data$.filter(isEvent(UNMOUNT_EVENT)).mapTo(undefined),
+        observe: <T>(propName?, valueTransformer?) => {
+            if (propName && typeof instance.props[propName] === 'function') {
+                return data$.filter(isCallback(propName)).map(data => {
+                    const { args } = data.payload
+                    return valueTransformer ? valueTransformer(args) : args[0]
+                })
+            }
+
+            if (propName) {
+                return data$
+                    .filter(isProps)
+                    .map(data => {
+                        const prop = data.payload[propName]
+
+                        return valueTransformer ? valueTransformer(prop) : prop
+                    })
+                    .compose(dropRepeats())
+            }
+
+            return data$
+                .filter(isProps)
+                .map(data => data.payload)
+                .compose(dropRepeats())
         },
+        event: <T>(eventName, valueTransformer?) =>
+            data$.filter(isEvent(eventName)).map(data => {
+                const { value } = data.payload
 
-        stop() {
-            unsubscribe()
-        }
-    })
+                return valueTransformer ? valueTransformer(value) : value
+            }),
+        pushEvent
+    }
 }

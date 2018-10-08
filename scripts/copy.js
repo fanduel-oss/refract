@@ -11,6 +11,7 @@ const getPackages = require('../packages')
 const filesPerBaseDir = {
     react: [
         'baseTypes.ts',
+        'data.ts',
         'effects.ts',
         'index.ts',
         ({ mainLib }) => ({

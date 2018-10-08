@@ -56,14 +56,11 @@ export const withEffects = <P, E, CP = P>(
 
         public componentWillReceiveProps(nextProps: P) {
             this.reDecorateProps(nextProps)
+            this.pushProps(nextProps)
         }
 
         public shouldComponentUpdate(nextProps, nextState) {
             return this.havePropsChanged(nextProps, nextState)
-        }
-
-        public componentDidUpdate(prevProps: P) {
-            this.pushProps(prevProps)
         }
 
         public componentWillUnmount() {
