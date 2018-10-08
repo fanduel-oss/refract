@@ -83,11 +83,11 @@ const configureComponent = <P, E>(
         allProps: [],
         props: {},
         fnProps: {},
-        event: {}
+        fromEvent: {}
     }
     const decoratedProps: Partial<P> = {}
     const pushEvent: PushEvent = (eventName: string) => <T>(val: T) => {
-        ;(listeners.event[eventName] || []).forEach(listener =>
+        ;(listeners.fromEvent[eventName] || []).forEach(listener =>
             listener.next(val)
         )
     }
@@ -144,12 +144,12 @@ const configureComponent = <P, E>(
 
     const createEventObservable = <T>(eventName: string) => {
         return createObservable<T>(listener => {
-            listeners.event[eventName] = (
-                listeners.event[eventName] || []
+            listeners.fromEvent[eventName] = (
+                listeners.fromEvent[eventName] || []
             ).concat(listener)
 
             return () => {
-                listeners.event[eventName].filter(l => l !== listener)
+                listeners.fromEvent[eventName].filter(l => l !== listener)
             }
         })
     }
@@ -158,7 +158,7 @@ const configureComponent = <P, E>(
         mount: createEventObservable(MOUNT_EVENT),
         unmount: createEventObservable(UNMOUNT_EVENT),
         observe: createPropObservable,
-        event: createEventObservable,
+        fromEvent: createEventObservable,
         pushEvent
     }
 

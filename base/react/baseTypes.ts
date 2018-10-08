@@ -8,7 +8,7 @@ export interface Listeners {
     allProps: Array<Partial<Listener<any>>>
     props: KeyedListeners
     fnProps: KeyedListeners
-    event: KeyedListeners
+    fromEvent: KeyedListeners
 }
 
 export type Handler<P, E> = (intialProps: P) => (val: E) => void
