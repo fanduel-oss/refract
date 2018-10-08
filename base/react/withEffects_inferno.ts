@@ -64,14 +64,11 @@ export const withEffects = <P, E, CP = P>(
 
         public componentWillUpdate(nextProps: P) {
             this.reDecorateProps(nextProps)
+            this.pushProps(nextProps)
         }
 
         public shouldComponentUpdate(nextProps, nextState) {
             return this.havePropsChanged(nextProps, nextState)
-        }
-
-        public componentDidUpdate(lastProps: P) {
-            this.pushProps(lastProps)
         }
 
         public componentWillUnmount() {

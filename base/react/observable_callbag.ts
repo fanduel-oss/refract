@@ -2,7 +2,20 @@ import $$observable from 'symbol-observable'
 import { Callbag, Source, Sink } from 'callbag'
 const fromObs = require('callbag-from-obs')
 const toObs = require('callbag-to-obs')
+const dropRepeats = require('callbag-drop-repeats')
+const map = require('callbag-map')
+const pipe = require('callbag-pipe')
+const filter = require('callbag-filter')
+
 import { PushEvent } from './baseTypes'
+import {
+    isEvent,
+    MOUNT_EVENT,
+    UNMOUNT_EVENT,
+    isProps,
+    isCallback,
+    Data
+} from './data'
 
 export interface Listener<T> {
     next: (val: T) => void
@@ -42,17 +55,64 @@ export const subscribeToSink = <T>(
         error
     })
 
-export const createObservable = <T>(subscribe): Source<T> => {
-    const observable = {
-        subscribe(listener: Listener<T>) {
-            const unsubscribe = subscribe(listener)
+export const createComponent = (
+    instance,
+    dataObservable,
+    pushEvent
+): ObservableComponent => {
+    const data = fromObs(dataObservable) as Source<Data>
 
-            return { unsubscribe }
+    return {
+        mount: pipe(data, filter(isEvent(MOUNT_EVENT)), map(() => undefined)),
+        unmount: pipe(
+            data,
+            filter(isEvent(UNMOUNT_EVENT)),
+            map(() => undefined)
+        ),
+        observe: <T>(propName?, valueTransformer?) => {
+            if (propName && typeof instance.props[propName] === 'function') {
+                return pipe(
+                    data,
+                    filter(isCallback(propName)),
+                    map(data => {
+                        const { args } = data.payload
+                        return valueTransformer
+                            ? valueTransformer(args)
+                            : args[0]
+                    })
+                )
+            }
+
+            if (propName) {
+                return pipe(
+                    data,
+                    filter(isProps),
+                    map(data => {
+                        const prop = data.payload[propName]
+
+                        return valueTransformer ? valueTransformer(prop) : prop
+                    }),
+                    dropRepeats()
+                )
+            }
+
+            return pipe(
+                data,
+                filter(isProps),
+                map(data => data.payload),
+                dropRepeats()
+            )
         },
-        [$$observable]() {
-            return this
-        }
-    }
+        event: <T>(eventName, valueTransformer?) =>
+            pipe(
+                data,
+                filter(isEvent(eventName)),
+                map(data => {
+                    const { value } = data.payload
 
-    return fromObs(observable)
+                    return valueTransformer ? valueTransformer(value) : value
+                })
+            ),
+        pushEvent
+    }
 }

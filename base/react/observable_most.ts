@@ -1,6 +1,13 @@
 import { from, Stream, Subscriber as Listener } from 'most'
-import $$observable from 'symbol-observable'
 import { PushEvent } from './baseTypes'
+import {
+    isEvent,
+    MOUNT_EVENT,
+    UNMOUNT_EVENT,
+    isProps,
+    isCallback,
+    Data
+} from './data'
 
 export { Listener }
 
@@ -37,17 +44,46 @@ export const subscribeToSink = <T>(
         complete: () => void 0
     })
 
-export const createObservable = <T>(subscribe): Stream<T> => {
-    const observable = {
-        subscribe(listener: Listener<T>) {
-            const unsubscribe = subscribe(listener)
+export const createComponent = (
+    instance,
+    dataObservable,
+    pushEvent
+): ObservableComponent => {
+    const data$ = from<Data>(dataObservable)
 
-            return { unsubscribe }
+    return {
+        mount: data$.filter(isEvent(MOUNT_EVENT)).map(() => undefined),
+        unmount: data$.filter(isEvent(UNMOUNT_EVENT)).map(() => undefined),
+        observe: <T>(propName?, valueTransformer?) => {
+            if (propName && typeof instance.props[propName] === 'function') {
+                return data$.filter(isCallback(propName)).map(data => {
+                    const { args } = data.payload
+                    return valueTransformer ? valueTransformer(args) : args[0]
+                })
+            }
+
+            if (propName) {
+                return data$
+                    .filter(isProps)
+                    .map(data => {
+                        const prop = data.payload[propName]
+
+                        return valueTransformer ? valueTransformer(prop) : prop
+                    })
+                    .skipRepeats()
+            }
+
+            return data$
+                .filter(isProps)
+                .map(data => data.payload)
+                .skipRepeats()
         },
-        [$$observable]() {
-            return this
-        }
-    }
+        event: <T>(eventName, valueTransformer?) =>
+            data$.filter(isEvent(eventName)).map(data => {
+                const { value } = data.payload
 
-    return from(observable)
+                return valueTransformer ? valueTransformer(value) : value
+            }),
+        pushEvent
+    }
 }

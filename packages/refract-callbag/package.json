@@ -13,7 +13,11 @@
     },
     "dependencies": {
         "callbag": "~1.1.0",
+        "callbag-drop-repeats": "~1.0.0",
+        "callbag-filter": "~1.0.1",
         "callbag-from-obs": "~1.2.0",
+        "callbag-map": "~1.0.1",
+        "callbag-pipe": "~1.1.1",
         "callbag-to-obs": "~1.0.0",
         "symbol-observable": "~1.2.0"
     },

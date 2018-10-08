@@ -15,7 +15,7 @@ import {
 } from './aperture'
 import { mount } from 'enzyme'
 
-describe('refract-xstream', () => {
+describe.only('refract-xstream', () => {
     const noop = (...args) => void 0
 
     const handler: Handler<Props, Effect> = props => (value: Effect) => {

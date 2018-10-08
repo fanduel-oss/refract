@@ -1,5 +1,19 @@
-import { Observable, PartialObserver as Listener, Subscription } from 'rxjs'
+import {
+    Observable,
+    PartialObserver as Listener,
+    Subscription,
+    from
+} from 'rxjs'
+import { filter, map, mapTo, distinctUntilChanged } from 'rxjs/operators'
 import { PushEvent } from './baseTypes'
+import {
+    isEvent,
+    MOUNT_EVENT,
+    UNMOUNT_EVENT,
+    isProps,
+    isCallback,
+    Data
+} from './data'
 
 export { Listener, Subscription }
 
@@ -31,9 +45,56 @@ export const subscribeToSink = <T>(
         error
     })
 
-export const createObservable = <T>(subscribe): Observable<T> =>
-    Observable.create((Listener: Partial<Listener<T>>) => {
-        const unsubscribe = subscribe(Listener)
+export const createComponent = (
+    instance,
+    dataObservable,
+    pushEvent
+): ObservableComponent => {
+    const data$ = from<Data>(dataObservable)
 
-        return unsubscribe
-    })
+    return {
+        mount: data$.pipe(filter(isEvent(MOUNT_EVENT)), mapTo(undefined)),
+        unmount: data$.pipe(filter(isEvent(UNMOUNT_EVENT)), mapTo(undefined)),
+        observe: <T>(propName?, valueTransformer?) => {
+            if (propName && typeof instance.props[propName] === 'function') {
+                return data$.pipe(
+                    filter(isCallback(propName)),
+                    map(data => {
+                        const { args } = data.payload
+                        return valueTransformer
+                            ? valueTransformer(args)
+                            : args[0]
+                    })
+                )
+            }
+
+            if (propName) {
+                return data$.pipe(
+                    filter(isProps),
+                    map(data => {
+                        const prop = data.payload[propName]
+
+                        return valueTransformer ? valueTransformer(prop) : prop
+                    }),
+                    distinctUntilChanged()
+                )
+            }
+
+            return data$.pipe(
+                filter(isProps),
+                map(data => data.payload),
+                distinctUntilChanged()
+            )
+        },
+        event: <T>(eventName, valueTransformer?) =>
+            data$.pipe(
+                filter(isEvent(eventName)),
+                map(data => {
+                    const { value } = data.payload
+
+                    return valueTransformer ? valueTransformer(value) : value
+                })
+            ),
+        pushEvent
+    }
+}

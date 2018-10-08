@@ -28,5 +28,8 @@
     "bugs": {
         "url": "https://github.com/fanduel-oss/refract/issues"
     },
-    "homepage": "https://refract.js.org"
+    "homepage": "https://refract.js.org",
+    "dependencies": {
+        "symbol-observable": "~1.2.0"
+    }
 }
