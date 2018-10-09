@@ -99,8 +99,8 @@ const aperture = initialProps => component =>
         }).pipe(map(toProps)),
 
         merge(
-            component.event('addPost').pipe(map(addPost)),
-            component.event('removePost').pipe(map(removePost))
+            component.fromEvent('addPost').pipe(map(addPost)),
+            component.fromEvent('removePost').pipe(map(removePost))
         ).pipe(map(toDispatch))
     )
 
