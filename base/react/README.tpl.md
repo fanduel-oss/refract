@@ -27,19 +27,31 @@
 </p>
 <br/>
 
-Refract lets you isolate your app's side effects - API calls, analytics, logging, etc - so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
+*   :bowling: **Decentralised**: attach effects and side-effects to your components, for better code splitting logic
+*   :sunrise: **Gradual**: use on an existing component today, throughout your app tomorrow
+*   :rocket: **Reactive**: leverage the power and benefits of reactive programming
+*   :floppy_disk: **Tiny**: less than 2Kb minified and gzipped
+*   :pencil: **Typed**: written in TypeScript, fully typed integrations
+*   :zap: **Universal**: supports React, React Native, Inferno and Preact
 
-Refract is an extensible library built for React, with bindings available for Inferno and Preact. In addition we provide a Redux integration, which can also serve as a template for integrations with other libraries.
+Refract lets you handle your component effects and side-effects, so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
+
+Refract makes reactive programming possible in React, React Native, Preact and Inferno, with only a single higher-order component! You can choose to start using a tiny bit of reactive programming, or go full reactive. Refract allows you to:
+
+*   [Manage side effects](https://refract.js.org/) like API calls, analytics, logging, etc.
+*   [Manipulate, replace and inject props](https://refract.js.org/usage/pushing-props), you can even [fully replace Redux `connect` HoC](https://refract.js.org/recipes/replace-connect)
+*   [Handle state](https://refract.js.org/recipes/handling-state)
+*   [Render components](https://refract.js.org/usage/rendering-components)
+
+We also provide a Redux integration, which can also serve as a template for integrations with other libraries. With a single HoC, you can fully replace libraries like [recompose](https://github.com/acdlite/recompose), [redux-observable](https://redux-observable.js.org/), and [react-redux](https://github.com/reduxjs/react-redux) to name a few!
 
 # Why?
 
 Component-based architecture and functional programming have become an increasingly popular approach for building UIs. They help make apps more predictable, more testable, and more maintainable.
 
-However, our apps don't exist in a vacuum! They need to make network requests, handle data persistence, log analytics, deal with changing time, and so on. Any non-trivial app has to handle any number of these external effects.
+However, our apps don't exist in a vacuum! They need to handle state, make network requests, handle data persistence, log analytics, deal with changing time, and so on. Any non-trivial app has to handle any number of these effects. Wouldn't it be nice to cleanly separate them from our apps?
 
-These side-effects hold us back from writing fully declarative code. Wouldn't it be nice to cleanly separate them from our apps?
-
-Refract solves this problem for you. [For an in-depth introduction, head to `Why Refract`.](../../docs/introduction/why-refract.md)
+Refract solves this problem for you, by harnessing the power of reactive programming. [For an in-depth introduction, head to `Why Refract`.](./docs/introduction/why-refract.md)
 
 # Installation
 
