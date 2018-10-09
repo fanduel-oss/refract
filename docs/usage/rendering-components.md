@@ -25,7 +25,7 @@ const Counter = ({ count, addOne }) => <button onClick={addOne}>{count}</button>
 const aperture = ({ initialCount }) => component => {
     const addOne = component.pushEvent('addOne')
 
-    return component.event('addOne').pipe(
+    return component.fromEvent('addOne').pipe(
         reduce(
             ({ count, ...props }) => ({
                 ...props,

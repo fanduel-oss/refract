@@ -21,7 +21,7 @@ export interface ObservableComponent {
         propName?: string,
         valueTransformer?: (val: any) => T
     ) => Stream<T>
-    event: <T>(
+    fromEvent: <T>(
         eventName: string,
         valueTransformer?: (val: any) => T
     ) => Stream<T>
@@ -83,7 +83,7 @@ export const createComponent = <P>(
                 .map((data: PropsData<P>) => data.payload)
                 .compose(dropRepeats(shallowEquals))
         },
-        event: <T>(eventName, valueTransformer?) =>
+        fromEvent: <T>(eventName, valueTransformer?) =>
             data$.filter(isEvent(eventName)).map((data: EventData) => {
                 const { value } = data.payload
 

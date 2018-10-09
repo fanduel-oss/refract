@@ -47,7 +47,7 @@ Essentially, `toProps` and `asProps` allow you to inject data into components, b
 
 ## Stateful apertures
 
-With the ability to set component props and to listen to events (with `pushEvent` and `component.event(name)`), comes the ability to handle state: events are the source of truth, and state is a projection of these events.
+With the ability to set component props and to listen to events (with `pushEvent` and `component.fromEvent(name)`), comes the ability to handle state: events are the source of truth, and state is a projection of these events.
 
 The example below is a simple counter example: each time a button is clicked, the count is incremented. We use a reducer to persist state between events, and pass it as props. It will sound familiar if you've used Redux: we go from events to state to props, the same way Redux (with `connect`) goes from actions to state to props (see [Replacing react-redux connect HoC](../recipes/replacing-connect.md]) recipe). Refract can be used to bind together state from multiple sources.
 
@@ -61,7 +61,7 @@ const Counter = ({ count, addOne }) => <button onClick={addOne}>{count}</button>
 const aperture = ({ initialCount }) => component => {
     const addOne = component.pushEvent('addOne')
 
-    return component.event('addOne').pipe(
+    return component.fromEvent('addOne').pipe(
         reduce(
             ({ count, ...props }) => ({
                 ...props,
