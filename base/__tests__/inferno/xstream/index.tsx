@@ -103,15 +103,24 @@ describe('refract-inferno-xstream', () => {
             asPropsAperture
         )(BaseComponent)
 
-        mount(
+        const node = mount(
             // @ts-ignore
             <WithEffects prop="hello" />
         )
 
-        const props = BaseComponent.mock.calls[0][0]
+        let props = BaseComponent.mock.calls[0][0]
 
         expect(props.prop).toBeUndefined()
         expect(props.newProp).toBe('hello world')
+
+        node.setProps({
+            prop: 'this'
+        })
+
+        props = BaseComponent.mock.calls[1][0]
+
+        expect(props.prop).toBeUndefined()
+        expect(props.newProp).toBe('this world')
     })
 
     it('should add props to wrapped component', () => {
@@ -128,15 +137,24 @@ describe('refract-inferno-xstream', () => {
             toPropsAperture
         )(BaseComponent)
 
-        mount(
+        const node = mount(
             // @ts-ignore
             <WithEffects prop="hello" />
         )
 
-        const props = BaseComponent.mock.calls[0][0]
+        let props = BaseComponent.mock.calls[0][0]
 
         expect(props.prop).toBe('hello')
         expect(props.newProp).toBe('hello world')
+
+        node.setProps({
+            prop: 'this'
+        })
+
+        props = BaseComponent.mock.calls[1][0]
+
+        expect(props.prop).toBe('this')
+        expect(props.newProp).toBe('this world')
     })
 
     it('should render virtual elements', () => {

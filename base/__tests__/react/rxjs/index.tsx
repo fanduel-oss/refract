@@ -99,12 +99,21 @@ describe('refract-rxjs', () => {
             asPropsAperture
         )(BaseComponent)
 
-        mount(<WithEffects prop="hello" />)
+        const node = mount(<WithEffects prop="hello" />)
 
-        const props = BaseComponent.mock.calls[0][0]
+        let props = BaseComponent.mock.calls[0][0]
 
         expect(props.prop).toBeUndefined()
         expect(props.newProp).toBe('hello world')
+
+        node.setProps({
+            prop: 'this'
+        })
+
+        props = BaseComponent.mock.calls[1][0]
+
+        expect(props.prop).toBeUndefined()
+        expect(props.newProp).toBe('this world')
     })
 
     it('should add props to wrapped component', () => {
@@ -121,12 +130,21 @@ describe('refract-rxjs', () => {
             toPropsAperture
         )(BaseComponent)
 
-        mount(<WithEffects prop="hello" />)
+        const node = mount(<WithEffects prop="hello" />)
 
-        const props = BaseComponent.mock.calls[0][0]
+        let props = BaseComponent.mock.calls[0][0]
 
         expect(props.prop).toBe('hello')
         expect(props.newProp).toBe('hello world')
+
+        node.setProps({
+            prop: 'this'
+        })
+
+        props = BaseComponent.mock.calls[1][0]
+
+        expect(props.prop).toBe('this')
+        expect(props.newProp).toBe('this world')
     })
 
     it('should render virtual elements', () => {
