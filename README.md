@@ -3,8 +3,8 @@
 </p><br/>
 
 <p align="center">
-    Master your component's effects through the<br/>
-    power of reactive programming.
+    Harness the power of reactive programming<br/>
+    to supercharge your components
 </p>
 <br/>
 
