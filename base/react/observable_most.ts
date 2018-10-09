@@ -6,7 +6,11 @@ import {
     UNMOUNT_EVENT,
     isProps,
     isCallback,
-    Data
+    Data,
+    PropsData,
+    EventData,
+    CallbackData,
+    shallowEquals
 } from './data'
 
 export { Listener }
@@ -44,28 +48,32 @@ export const subscribeToSink = <T>(
         complete: () => void 0
     })
 
-export const createComponent = (
+export const createComponent = <P>(
     instance,
     dataObservable,
     pushEvent
 ): ObservableComponent => {
-    const data$ = from<Data>(dataObservable)
+    const data$ = from<Data<P>>(dataObservable)
 
     return {
         mount: data$.filter(isEvent(MOUNT_EVENT)).map(() => undefined),
         unmount: data$.filter(isEvent(UNMOUNT_EVENT)).map(() => undefined),
         observe: <T>(propName?, valueTransformer?) => {
             if (propName && typeof instance.props[propName] === 'function') {
-                return data$.filter(isCallback(propName)).map(data => {
-                    const { args } = data.payload
-                    return valueTransformer ? valueTransformer(args) : args[0]
-                })
+                return data$
+                    .filter(isCallback(propName))
+                    .map((data: CallbackData) => {
+                        const { args } = data.payload
+                        return valueTransformer
+                            ? valueTransformer(args)
+                            : args[0]
+                    })
             }
 
             if (propName) {
                 return data$
                     .filter(isProps)
-                    .map(data => {
+                    .map((data: PropsData<P>) => {
                         const prop = data.payload[propName]
 
                         return valueTransformer ? valueTransformer(prop) : prop
@@ -75,11 +83,11 @@ export const createComponent = (
 
             return data$
                 .filter(isProps)
-                .map(data => data.payload)
-                .skipRepeats()
+                .map((data: PropsData<P>) => data.payload)
+                .skipRepeatsWith(shallowEquals)
         },
         event: <T>(eventName, valueTransformer?) =>
-            data$.filter(isEvent(eventName)).map(data => {
+            data$.filter(isEvent(eventName)).map((data: EventData) => {
                 const { value } = data.payload
 
                 return valueTransformer ? valueTransformer(value) : value
