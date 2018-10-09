@@ -33,8 +33,7 @@ const configureComponent = <P, E>(
     instance.state = {
         renderEffect: false,
         children: null,
-        props: {},
-        decoratedProps: {}
+        props: {}
     }
 
     const setState = state => {
@@ -62,23 +61,7 @@ const configureComponent = <P, E>(
 
                 setState({
                     replace: payload.replace,
-                    props: payload.props,
-                    decoratedProps: Object.keys(payload.props || {}).reduce(
-                        (props, propName) => {
-                            const prop = payload.props[propName]
-                            const previousProp = instance.state.props[propName]
-
-                            if (
-                                typeof prop === 'function' &&
-                                prop !== previousProp
-                            ) {
-                                decorateProp(props, prop, propName)
-                            }
-
-                            return props
-                        },
-                        {}
-                    )
+                    props: payload.props
                 })
             } else {
                 effectHandler(effect)
@@ -178,29 +161,29 @@ const configureComponent = <P, E>(
 
     instance.getChildProps = () => {
         const { state } = instance
-        const stateProps = {
-            ...state.props,
-            ...state.decoratedProps
-        }
+        const stateProps = state.props
 
         if (state.replace === true) {
             return { ...stateProps, pushEvent }
         }
 
-        const componentProps = {
-            ...instance.props,
+        const additionalProps = {
             ...(decoratedProps as object),
             pushEvent
         }
 
         if (state.replace === false) {
             return {
-                ...componentProps,
-                ...stateProps
+                ...instance.props,
+                ...stateProps,
+                ...additionalProps
             }
         }
 
-        return componentProps
+        return {
+            ...instance.props,
+            ...additionalProps
+        }
     }
 
     instance.havePropsChanged = (newProps, newState) => {
