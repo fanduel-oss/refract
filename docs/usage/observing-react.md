@@ -46,9 +46,10 @@ class Container extends Component {
 
 Refract's `component.observe` function lets you observe your React props. It handles three different use cases: observing values, observing functions, and observing all props.
 
-`component.observe` takes one optional argument:
+`component.observe` takes two optional arguments:
 
 *   `propName` _(string)_: an optional string, the name of the prop which you wish to observe.
+*   `propTransformer` _(function)_: an optional function to transform each received value of `propName`
 
 ```js
 const aperture = initialProps => component => {
@@ -78,6 +79,12 @@ const aperture = initialProps => component => {
 }
 ```
 
+Prop values can be transformed using the second argument of `observe`, and only distinct values returned by the transformer will be emitted by the returned observable. It is handy for observing nested values:
+
+```js
+const userName$ = component.observe('user', user => user.name)
+```
+
 ### Observing Functions
 
 Functions are the callbacks you pass into your components: any function which is passed as props, such as an onClick handler or a setState function.
@@ -95,6 +102,13 @@ const aperture = initialProps => component => {
 ```
 
 This example does not significantly differ from the `value` example above (the stream won't be initialised with a value), but in more complex situations it can be extremely useful to observe arguments passed to callbacks in addition to values passed via props.
+
+If you want to observe a function taking multiple args, you can provide a second argument to `observe`:
+
+```js
+const args$ = component.observe('myFunc', args => args)
+// By default the first argument is pushed: args => args[0]
+```
 
 ### Observing All Props
 
@@ -126,7 +140,10 @@ function MyComponent({ pushEvent }) {
 
 ### Observing events
 
-In your aperture, you can observe events by simply invoking `component.event(eventName)`.
+In your aperture, you can observe events by simply invoking `component.event`. It takes two arguments (second one is optional):
+
+*   `eventName` _(string)_: an optional string, the name of the event which you wish to observe
+*   `eventTransformer` _(function)_: an optional function to transform the value of each `eventName` event
 
 ```js
 const aperture = initialProps => component => {
