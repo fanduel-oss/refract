@@ -52,7 +52,7 @@ async function generatePackages() {
                         : {}),
                     description: `Refract bindings for ${libs[mainLib]} with ${
                         libs[obsLib]
-                    }: master your app effects reactively!`,
+                    }: harness the power of reactive programming to supercharge your components!`,
                     keywords: packageBase.keywords.concat([mainLib, obsLib])
                 }
 
