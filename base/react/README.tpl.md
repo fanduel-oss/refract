@@ -27,7 +27,7 @@
 </p>
 <br/>
 
-*   :bowling: **Decentralised**: attach effects and side-effects to your components, for better code splitting logic
+*   :bowling: **Decentralised**: attach effects and side-effects to your components, for better code splitting results
 *   :sunrise: **Gradual**: use on an existing component today, throughout your app tomorrow
 *   :rocket: **Reactive**: leverage the power and benefits of reactive programming
 *   :floppy_disk: **Tiny**: less than 2Kb minified and gzipped
