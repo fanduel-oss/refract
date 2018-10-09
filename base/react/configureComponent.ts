@@ -1,5 +1,5 @@
 import $$observable from 'symbol-observable'
-import { Listeners, Handler, ErrorHandler, PushEvent } from './baseTypes'
+import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { PROPS_EFFECT } from './effects'
 import {
     Listener,
