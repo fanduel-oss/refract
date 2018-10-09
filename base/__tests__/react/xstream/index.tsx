@@ -165,5 +165,11 @@ describe('refract-xstream', () => {
 
         expect(node.text()).toBe('hello')
         expect(node.find('div').exists()).toBe(true)
+
+        node.setProps({
+            prop: 'hi'
+        })
+
+        expect(node.text()).toBe('hi')
     })
 })
