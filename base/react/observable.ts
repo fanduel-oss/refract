@@ -12,7 +12,11 @@ import {
     UNMOUNT_EVENT,
     isProps,
     isCallback,
-    Data
+    Data,
+    PropsData,
+    EventData,
+    CallbackData,
+    shallowEquals
 } from './data'
 
 export { Listener, Subscription }
@@ -45,12 +49,12 @@ export const subscribeToSink = <T>(
         error
     })
 
-export const createComponent = (
+export const createComponent = <P>(
     instance,
     dataObservable,
     pushEvent
 ): ObservableComponent => {
-    const data$ = from<Data>(dataObservable)
+    const data$ = from<Data<P>>(dataObservable)
 
     return {
         mount: data$.pipe(filter(isEvent(MOUNT_EVENT)), mapTo(undefined)),
@@ -59,7 +63,7 @@ export const createComponent = (
             if (propName && typeof instance.props[propName] === 'function') {
                 return data$.pipe(
                     filter(isCallback(propName)),
-                    map(data => {
+                    map((data: CallbackData) => {
                         const { args } = data.payload
                         return valueTransformer
                             ? valueTransformer(args)
@@ -71,7 +75,7 @@ export const createComponent = (
             if (propName) {
                 return data$.pipe(
                     filter(isProps),
-                    map(data => {
+                    map((data: PropsData<P>) => {
                         const prop = data.payload[propName]
 
                         return valueTransformer ? valueTransformer(prop) : prop
@@ -82,14 +86,14 @@ export const createComponent = (
 
             return data$.pipe(
                 filter(isProps),
-                map(data => data.payload),
-                distinctUntilChanged()
+                map((data: PropsData<P>) => data.payload),
+                distinctUntilChanged(shallowEquals)
             )
         },
         event: <T>(eventName, valueTransformer?) =>
             data$.pipe(
                 filter(isEvent(eventName)),
-                map(data => {
+                map((data: EventData) => {
                     const { value } = data.payload
 
                     return valueTransformer ? valueTransformer(value) : value

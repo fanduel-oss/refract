@@ -10,6 +10,7 @@ import {
     Aperture
 } from './observable'
 import {
+    shallowEquals,
     createEventData,
     createPropsData,
     createCallbackData,
@@ -19,11 +20,6 @@ import {
 
 const identity = _ => _
 const selectFirstArg = args => args[0]
-
-const shallowEquals = (left, right) =>
-    left === right ||
-    (Object.keys(left).length === Object.keys(right).length &&
-        Object.keys(left).every(leftKey => left[leftKey] === right[leftKey]))
 
 const configureComponent = <P, E>(
     handler: Handler<P, E>,
