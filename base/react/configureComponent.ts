@@ -18,9 +18,6 @@ import {
     UNMOUNT_EVENT
 } from './data'
 
-const identity = _ => _
-const selectFirstArg = args => args[0]
-
 const configureComponent = <P, E>(
     handler: Handler<P, E>,
     errorHandler?: ErrorHandler<P>
@@ -41,10 +38,14 @@ const configureComponent = <P, E>(
         if (instance.unmounted) {
             return
         }
+
         if (instance.mounted) {
             instance.setState(state)
         } else {
-            instance.state = state
+            instance.state = {
+                ...instance.state,
+                ...state
+            }
         }
     }
 
