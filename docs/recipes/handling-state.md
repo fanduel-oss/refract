@@ -44,7 +44,7 @@ const hander = () => () => {}
 
 const aperture = initialProps => component => {
     const toggle = component.pushEvent('toggle')
-    const toggleEvents$ = component.event('toggle')
+    const toggleEvents$ = component.fromEvent('toggle')
 
     return toggleEvents$.pipe(
         reduce(
@@ -84,7 +84,7 @@ const handler = () => () => {}
 const aperture = initialProps => component => {
     const children$ = component.observe('children')
 
-    const countEvents$ = component.event('count')
+    const countEvents$ = component.fromEvent('count')
     const countUp = component.pushEvent('count')
     const context$ = countEvents$.pipe(
         reduce(

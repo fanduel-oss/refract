@@ -26,7 +26,7 @@ export interface ObservableComponent {
         propName?: string,
         valueTransformer?: (val: any) => T
     ) => Observable<T>
-    event: <T>(
+    fromEvent: <T>(
         eventName: string,
         valueTransformer?: (val: any) => T
     ) => Observable<T>
@@ -90,7 +90,7 @@ export const createComponent = <P>(
                 distinctUntilChanged(shallowEquals)
             )
         },
-        event: <T>(eventName, valueTransformer?) =>
+        fromEvent: <T>(eventName, valueTransformer?) =>
             data$.pipe(
                 filter(isEvent(eventName)),
                 map((data: EventData) => {

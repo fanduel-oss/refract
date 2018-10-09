@@ -147,7 +147,7 @@ In your aperture, you can observe events by simply invoking `component.event`. I
 
 ```js
 const aperture = initialProps => component => {
-    const buttonClick$ = component.event('buttonClick')
+    const buttonClick$ = component.fromEvent('buttonClick')
 
     return buttonClick$.pipe(mapTo('Button clicked!'))
 }

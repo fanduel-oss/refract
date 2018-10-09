@@ -36,7 +36,7 @@ export interface ObservableComponent {
         propName?: string,
         valueTransformer?: (value: any) => T
     ) => Source<T>
-    event: <T>(
+    fromEvent: <T>(
         eventName: string,
         valueTransformer?: (val: any) => T
     ) => Source<T>
@@ -108,7 +108,7 @@ export const createComponent = <P>(
                 dropRepeats(shallowEquals)
             )
         },
-        event: <T>(eventName, valueTransformer?) =>
+        fromEvent: <T>(eventName, valueTransformer?) =>
             pipe(
                 data,
                 filter(isEvent(eventName)),
