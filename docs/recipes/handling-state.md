@@ -2,7 +2,7 @@
 
 State in React is a never-ending story: you can use Redux, vanilla local state, higher-order components built on top of local state, use the new context API...
 
-We believe state strongly coupled to components is best colocated: it is easier to reason about, easier to maintain and enables you to cleanly isolate sections of an application. Refract makes it possible to handle local state reactively, and it might even challenge some of your asumptions.
+We believe state strongly coupled to components is best colocated: it is easier to reason about, easier to maintain and enables you to cleanly isolate sections of an application. Refract makes it possible to handle local state reactively, and it might even challenge some of your assumptions.
 
 ## Source of truth
 
@@ -68,7 +68,7 @@ export default ToggleWithState
 
 ## Using context
 
-When handling local state, it can be cumbersome to have to pass props through several layers of components (this is known as "prop drilling"). React's new context API can help with it, and you can leverage is with Refract by using rendering effects.
+When handling local state, it can be cumbersome to have to pass props through several layers of components (this is known as "prop drilling"). React's new context API can help with it, and you can leverage it with Refract by using rendering effects.
 
 The example below puts a counter state in context. In the aperture, we create a context object from `'count'` events and combine them with the values of `children` received to set the value of a context provider.
 
