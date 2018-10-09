@@ -9,7 +9,6 @@ import { ReactElement } from 'react'
 export interface State {
     replace?: boolean
     props: object
-    decoratedProps: object
     renderEffect: boolean
     children: React.ReactNode | null
 }

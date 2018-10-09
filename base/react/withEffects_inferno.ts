@@ -9,7 +9,6 @@ import { Aperture } from './observable'
 export interface State {
     replace?: boolean
     props: object
-    decoratedProps: object
     renderEffect: boolean
     children: VNode | null
 }
