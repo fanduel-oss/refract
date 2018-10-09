@@ -63,7 +63,7 @@ export const withEffects = <P, E, CP = P>(
             this.triggerMount()
         }
 
-        public componentWillUpdate(nextProps: P) {
+        public componentWillReceiveProps(nextProps: P) {
             this.reDecorateProps(nextProps)
             this.pushProps(nextProps)
         }
