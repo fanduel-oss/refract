@@ -4,7 +4,7 @@ It is possible to [handle local state](./handling-state.md) in Refract, and Refr
 
 This recipe will show you how you can replace `connect` from the `react-redux` package using Refract. The syntax is not as compact as `connect`, but it has several benefits:
 
-*   You have full control over when children are rendered: the required selectors don't have to be re-computed every single time, you can lazy load selectors, ...
+*   You have full control over when children are rendered: the required selectors don't have to be re-computed every single time or loaded upfront (you can lazy load selectors)
 *   You can leverage Refract to handle other effects (network requests, analytics, etc.)
 *   You can mix it with other data sources (props, other external sources)
 
@@ -44,12 +44,12 @@ const ContainerComponent = withEffects(handler)(aperture)(BaseComponent)
 
 Let's look at the example above step by step:
 
-*   We create two streams (`user$`, `posts$`) from two selectors (`getUser`)
-*   We combine these two streams in another stream where:
-    *   We create an object containing users and posts (`{user, posts}`)
-    *   We pass each object our component props (with `toProps`)
+*   We create two streams (`user$`, `posts$`) from two selectors (`getUser`, `getPosts`)
+*   We combine these two streams into another stream where:
+    *   We create an object containing users and posts (`{ user, posts }`)
+    *   We pass each object to our component's props (with `toProps`)
 
-The result is the same than `connect`: `users` and `posts` will be added to our component props. The Refract way is more verbose in some cases, but there are a few things which can be leveraged from reactive programming:
+The result is the same as `connect`: `users` and `posts` will be added to our component's props. The Refract way is more verbose in some cases, but there are a few things which can be leveraged from reactive programming:
 
 *   Selective updates: you can choose when to listen to selectors
     *   We might only be interested in getting the first `user` value: `const user$ = store.observe(getUser).pipe(take(1))`
@@ -70,7 +70,7 @@ The result is the same than `connect`: `users` and `posts` will be added to our 
 
 Replacing `mapDispatchToProps` can be done different ways. A first way would be to do it exactly like `connect` by binding `dispatch` to each action creator and pushing them to props using `toProps`.
 
-Instead, we are going to look at a different way: dispatching is imperative and can be seen a side-effect, so we are going to treat it as such and move its use to an effect handler. We push to our component event callbacks (using `pushEvent`), observe them, pass their values to their respective action creators and send the whole lot to be dispatched.
+Instead, we are going to look at a different way: dispatching is imperative and can be seen as a side-effect, so we are going to treat it as such and move its use to an effect handler. We push to our component event callbacks (using `pushEvent`), observe them, pass their values to their respective action creators and send the whole lot to be dispatched.
 
 ```js
 import { withEffects, toProps } from 'refract-rxjs'
@@ -107,8 +107,8 @@ const aperture = initialProps => component =>
 const ContainerComponent = withEffects(handler)(aperture)(BaseComponent)
 ```
 
-Again, it is a more verbose approach than `mapDispatchToProps`. But by separating action creation from dispatching logic, it enables to hook other side-effects that you could otherwise find in a Redux middleware (like analytics events).
+Again, it is a more verbose approach than `mapDispatchToProps`. But by separating action creation from dispatching logic, it enables you to hook other side-effects that you could otherwise find in a Redux middleware (like analytics events).
 
 # Merging props
 
-The thirs less-known argument of `connect` is `mergeProps`: it takes the component props, the outputs of `mapStateToProps` and `mapDispatchToProps`, and merge them together (by default). It would typically be used for preventing some component props to be passed down, or to perform extra computations. This is no longer needed, since you can map or replace props in Refract: see [Pusing to props](../usage/pushing-to-props,md).
+The third less-known argument of `connect` is `mergeProps`: it takes the component's props, the outputs of `mapStateToProps` and `mapDispatchToProps`, and merges them together (by default). It would typically be used for preventing some component's props to be passed down, or to perform extra computations. This is no longer needed, since you can map or replace props in Refract: see [Pusing to props](../usage/pushing-to-props.md).
