@@ -50,14 +50,18 @@ export const createComponent = <P>(
     dataObservable,
     pushEvent
 ): ObservableComponent => {
-    const data$ = xs.from<Data<P>>(dataObservable)
+    const data = () => xs.from<Data<P>>(dataObservable)
 
     return {
-        mount: data$.filter(isEvent(MOUNT_EVENT)).mapTo(undefined),
-        unmount: data$.filter(isEvent(UNMOUNT_EVENT)).mapTo(undefined),
+        mount: data()
+            .filter(isEvent(MOUNT_EVENT))
+            .mapTo(undefined),
+        unmount: data()
+            .filter(isEvent(UNMOUNT_EVENT))
+            .mapTo(undefined),
         observe: <T>(propName?, valueTransformer?) => {
             if (propName && typeof instance.props[propName] === 'function') {
-                return data$
+                return data()
                     .filter(isCallback(propName))
                     .map((data: CallbackData) => {
                         const { args } = data.payload
@@ -68,7 +72,7 @@ export const createComponent = <P>(
             }
 
             if (propName) {
-                return data$
+                return data()
                     .filter(isProps)
                     .map((data: PropsData<P>) => {
                         const prop = data.payload[propName]
@@ -78,17 +82,19 @@ export const createComponent = <P>(
                     .compose(dropRepeats())
             }
 
-            return data$
+            return data()
                 .filter(isProps)
                 .map((data: PropsData<P>) => data.payload)
                 .compose(dropRepeats(shallowEquals))
         },
         fromEvent: <T>(eventName, valueTransformer?) =>
-            data$.filter(isEvent(eventName)).map((data: EventData) => {
-                const { value } = data.payload
+            data()
+                .filter(isEvent(eventName))
+                .map((data: EventData) => {
+                    const { value } = data.payload
 
-                return valueTransformer ? valueTransformer(value) : value
-            }),
+                    return valueTransformer ? valueTransformer(value) : value
+                }),
         pushEvent
     }
 }
