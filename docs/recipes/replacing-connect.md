@@ -68,9 +68,9 @@ The result is the same as `connect`: `users` and `posts` will be added to our co
 
 ## Mapping action creators to props
 
-Replacing `mapDispatchToProps` can be done different ways. A first way would be to do it exactly like `connect` by binding `dispatch` to each action creator and pushing them to props using `toProps`.
+Replacing `mapDispatchToProps` can be done in different ways. A first way would be to do it exactly like `connect` by binding `dispatch` to each action creator and pushing them to props using `toProps`.
 
-Instead, we are going to look at a different way: dispatching is imperative and can be seen as a side-effect, so we are going to treat it as such and move its use to an effect handler. We push to our component event callbacks (using `pushEvent`), observe them, pass their values to their respective action creators and send the whole lot to be dispatched.
+Instead, we are going to look at a different way: dispatching is imperative and can be seen as a side-effect, so we are going to treat it as such and move its use to an effect handler. We push event callbacks to our component (using `pushEvent`), observe them, pass their values to their respective action creators and send the whole lot to be dispatched.
 
 ```js
 import { withEffects, toProps } from 'refract-rxjs'
@@ -109,6 +109,6 @@ const ContainerComponent = withEffects(handler)(aperture)(BaseComponent)
 
 Again, it is a more verbose approach than `mapDispatchToProps`. But by separating action creation from dispatching logic, it enables you to hook other side-effects that you could otherwise find in a Redux middleware (like analytics events).
 
-# Merging props
+## Merging props
 
 The third less-known argument of `connect` is `mergeProps`: it takes the component's props, the outputs of `mapStateToProps` and `mapDispatchToProps`, and merges them together (by default). It would typically be used for preventing some component's props to be passed down, or to perform extra computations. This is no longer needed, since you can map or replace props in Refract: see [Pusing to props](../usage/pushing-to-props.md).
