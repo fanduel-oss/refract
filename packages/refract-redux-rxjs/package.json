@@ -1,6 +1,6 @@
 {
     "name": "refract-redux-rxjs",
-    "description": "Refract bindings for Redux with RxJS: master your app effects reactively!",
+    "description": "Refract bindings for Redux with RxJS: harness the power of reactive programming to supercharge your components!",
     "version": "1.1.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -9,7 +9,7 @@
     "sideEffects": false,
     "license": "MIT",
     "peerDependencies": {
-        "redux": ">= 3.0.0 < 5.0.0",
+        "redux": ">= 3.5.0 < 5.0.0",
         "rxjs": "^6.0.0"
     },
     "keywords": [

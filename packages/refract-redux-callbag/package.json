@@ -1,6 +1,6 @@
 {
     "name": "refract-redux-callbag",
-    "description": "Refract bindings for Redux with Callbag: master your app effects reactively!",
+    "description": "Refract bindings for Redux with Callbag: harness the power of reactive programming to supercharge your components!",
     "version": "1.1.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -9,7 +9,7 @@
     "sideEffects": false,
     "license": "MIT",
     "peerDependencies": {
-        "redux": ">= 3.0.0 < 5.0.0"
+        "redux": ">= 3.5.0 < 5.0.0"
     },
     "dependencies": {
         "callbag": "~1.1.0",
@@ -17,7 +17,6 @@
         "callbag-from-obs": "~1.2.0",
         "callbag-map": "~1.0.1",
         "callbag-pipe": "~1.1.1",
-        "callbag-start-with": "~3.1.0",
         "symbol-observable": "~1.2.0"
     },
     "keywords": [
