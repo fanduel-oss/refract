@@ -54,14 +54,14 @@ export const createComponent = <P>(
     dataObservable,
     pushEvent
 ): ObservableComponent => {
-    const data$ = from<Data<P>>(dataObservable)
+    const data = () => from<Data<P>>(dataObservable)
 
     return {
-        mount: data$.pipe(filter(isEvent(MOUNT_EVENT)), mapTo(undefined)),
-        unmount: data$.pipe(filter(isEvent(UNMOUNT_EVENT)), mapTo(undefined)),
+        mount: data().pipe(filter(isEvent(MOUNT_EVENT)), mapTo(undefined)),
+        unmount: data().pipe(filter(isEvent(UNMOUNT_EVENT)), mapTo(undefined)),
         observe: <T>(propName?, valueTransformer?) => {
             if (propName && typeof instance.props[propName] === 'function') {
-                return data$.pipe(
+                return data().pipe(
                     filter(isCallback(propName)),
                     map((data: CallbackData) => {
                         const { args } = data.payload
@@ -73,7 +73,7 @@ export const createComponent = <P>(
             }
 
             if (propName) {
-                return data$.pipe(
+                return data().pipe(
                     filter(isProps),
                     map((data: PropsData<P>) => {
                         const prop = data.payload[propName]
@@ -84,14 +84,14 @@ export const createComponent = <P>(
                 )
             }
 
-            return data$.pipe(
+            return data().pipe(
                 filter(isProps),
                 map((data: PropsData<P>) => data.payload),
                 distinctUntilChanged(shallowEquals)
             )
         },
         fromEvent: <T>(eventName, valueTransformer?) =>
-            data$.pipe(
+            data().pipe(
                 filter(isEvent(eventName)),
                 map((data: EventData) => {
                     const { value } = data.payload
