@@ -43,7 +43,7 @@ Refract makes reactive programming possible in React, React Native, Preact and I
 *   [Handle state](https://refract.js.org/recipes/handling-state)
 *   [Render components](https://refract.js.org/usage/rendering-components)
 
-We also provide a Redux integration, which can also serve as a template for integrations with other libraries. With a single HoC, you can fully replace libraries like [recompose](https://github.com/acdlite/recompose), [redux-observable](https://redux-observable.js.org/), and [react-redux](https://github.com/reduxjs/react-redux) to name a few!
+We also provide a Redux integration, which can serve as a template for integrations with other libraries. With a single HoC, you can fully replace libraries like [recompose](https://github.com/acdlite/recompose), [redux-observable](https://redux-observable.js.org/), and [react-redux](https://github.com/reduxjs/react-redux) to name a few!
 
 # Why?
 
