@@ -1,11 +1,11 @@
-# Rendering components
+# Rendering Components
 
 Refract has built-in effect handlers:
 
 *   To pass additional props, or replace props (see [Pushing to props](./pushing-to-props))
 *   To render components
 
-## Pushing elements
+## Pushing Elements
 
 Rendering components can be seen as the natural continuation of pushing props: instead of pushing props to a child component, we push elements! This effectively enables you to handle React in a fully reactive manner, from source to component.
 
