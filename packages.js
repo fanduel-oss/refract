@@ -7,7 +7,7 @@ const peerDependencies = {
         react: '>= 15.0.0 < 17.0.0'
     },
     redux: {
-        redux: '>= 3.0.0 < 5.0.0'
+        redux: '>= 3.5.0 < 5.0.0'
     },
     preact: {
         preact: '^8.0.0'

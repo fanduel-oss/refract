@@ -1,6 +1,6 @@
 {
     "name": "refract-redux-most",
-    "description": "Refract bindings for Redux with Most: master your app effects reactively!",
+    "description": "Refract bindings for Redux with Most: harness the power of reactive programming to supercharge your components!",
     "version": "1.1.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -10,7 +10,7 @@
     "license": "MIT",
     "peerDependencies": {
         "most": "^1.0.0",
-        "redux": ">= 3.0.0 < 5.0.0"
+        "redux": ">= 3.5.0 < 5.0.0"
     },
     "dependencies": {
         "symbol-observable": "~1.2.0"
