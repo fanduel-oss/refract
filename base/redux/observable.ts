@@ -1,5 +1,5 @@
 import { from, Observable, PartialObserver as Listener } from 'rxjs'
-import { map, distinctUntilChanged, startWith } from 'rxjs/operators'
+import { map, distinctUntilChanged } from 'rxjs/operators'
 import { Selector } from './baseTypes'
 import { Store } from 'redux'
 
@@ -8,8 +8,6 @@ export interface ObserveFn {
 }
 
 export const observeFactory = (store): ObserveFn => {
-    const storeObservable = from(store)
-
     return <T>(actionOrSelector) => {
         if (typeof actionOrSelector === 'string') {
             return Observable.create((listener: Partial<Listener<T>>) => {
@@ -23,11 +21,8 @@ export const observeFactory = (store): ObserveFn => {
         }
 
         if (typeof actionOrSelector === 'function') {
-            const initialValue: T = actionOrSelector(store.getState())
-
-            return storeObservable.pipe<T>(
+            return from(store).pipe<T>(
                 map(actionOrSelector),
-                startWith(initialValue),
                 distinctUntilChanged<T>()
             )
         }

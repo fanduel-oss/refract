@@ -7,8 +7,6 @@ export interface ObserveFn {
 }
 
 export const observeFactory = (store): ObserveFn => {
-    const storeObservable = from(store)
-
     return <T>(actionOrSelector: string | Selector<T>): Stream<T> => {
         if (typeof actionOrSelector === 'string') {
             return from({
@@ -27,11 +25,8 @@ export const observeFactory = (store): ObserveFn => {
         }
 
         if (typeof actionOrSelector === 'function') {
-            const initialValue: T = actionOrSelector(store.getState())
-
-            return storeObservable
+            return from(store)
                 .map(actionOrSelector)
-                .merge(of(initialValue))
                 .skipRepeats()
         }
     }
