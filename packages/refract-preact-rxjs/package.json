@@ -1,6 +1,6 @@
 {
     "name": "refract-preact-rxjs",
-    "description": "Refract bindings for Preact with RxJS: master your app effects reactively!",
+    "description": "Refract bindings for Preact with RxJS: harness the power of reactive programming to supercharge your components!",
     "version": "2.0.0-rc.3",
     "main": "index.js",
     "jsnext:main": "index.es.js",
@@ -11,6 +11,9 @@
     "peerDependencies": {
         "preact": "^8.0.0",
         "rxjs": "^6.0.0"
+    },
+    "dependencies": {
+        "symbol-observable": "~1.2.0"
     },
     "keywords": [
         "functional",
@@ -27,8 +30,5 @@
     "bugs": {
         "url": "https://github.com/fanduel-oss/refract/issues"
     },
-    "homepage": "https://refract.js.org",
-    "dependencies": {
-        "symbol-observable": "~1.2.0"
-    }
+    "homepage": "https://refract.js.org"
 }
