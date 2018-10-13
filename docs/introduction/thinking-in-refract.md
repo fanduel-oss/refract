@@ -22,7 +22,7 @@ Being able to systematically think through effects also requires a change in how
 
 Instead of thinking _"While x is going on, y should be in that state"_, you need to think _"When x happens, y should transition to that state"_. Let's put this into perspective with a simple example: a registration form. Your form needs to contain the following elements:
 
-*   An username field which needs to make sure the chosen value isn't already taken.
+*   A username field which needs to make sure the chosen value isn't already taken.
 *   A submit button which sends a request to an API. While the request is being processed, the form should not be editable.
 
 When not thinking through effects, we would make the following statements:
