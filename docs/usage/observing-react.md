@@ -140,9 +140,9 @@ function MyComponent({ pushEvent }) {
 
 ### Observing events
 
-In your aperture, you can observe events by simply invoking `component.event`. It takes two arguments (second one is optional):
+In your aperture, you can observe events by simply invoking `component.FromEvent`. It takes two arguments (second one is optional):
 
-*   `eventName` _(string)_: an optional string, the name of the event which you wish to observe
+*   `eventName` _(string)_: the name of the event which you wish to observe
 *   `eventTransformer` _(function)_: an optional function to transform the value of each `eventName` event
 
 ```js
