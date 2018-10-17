@@ -1,4 +1,6 @@
 root: ./
+title: 'Refract'
+description: 'Harness the power of reactive programming to supercharge your components. Refract makes reactive programming possible in React, React Native, Preact and Inferno: you can choose to start using a tiny bit of reactive programming, or go full reactive!'
 structure:
     readme: ./README.md
     summary: ./docs/README.md
