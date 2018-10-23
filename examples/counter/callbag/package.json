@@ -2,12 +2,11 @@
     "name": "refract-example-callbag-counter",
     "dependencies": {
         "callbag-basics": "~3.0.0",
-        "callbag-combine": "~1.1.0",
-        "callbag-interval": "~1.0.0",
-        "react": "~16.4.2",
-        "react-dom": "~16.4.2",
+        "callbag-start-with": "~3.1.0",
+        "react": "~16.5.2",
+        "react-dom": "~16.5.2",
         "react-scripts": "~1.1.5",
-        "refract-callbag": "~1.0.0"
+        "refract-callbag": "~2.0.0"
     },
     "version": "0.0.0",
     "scripts": {

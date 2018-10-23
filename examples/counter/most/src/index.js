@@ -1,36 +1,41 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { withEffects } from 'refract-most'
+import { withEffects, toProps } from 'refract-most'
 import { combine, periodic } from 'most'
 
-import StateContainer from './StateContainer'
 import Layout from './Layout'
 
-const aperture = props => component => {
-    const direction$ = component.observe('direction')
+const directions = {
+    INCREASE: 1,
+    DECREASE: -1,
+    NONE: 0
+}
+
+const aperture = initialProps => component => {
+    const setDirection = component.pushEvent('direction')
+    const direction$ = component.fromEvent('direction').startWith('NONE')
     const tick$ = periodic(1000)
+    const count$ = combine(direction => direction, direction$, tick$)
+        .scan((count, direction) => count + directions[direction], 0)
+        .startWith(0)
 
-    return combine(type => ({ type }), direction$, tick$)
+    return combine(
+        (count, direction) =>
+            toProps({
+                count,
+                direction,
+                setDirection
+            }),
+        count$,
+        direction$
+    )
 }
 
-const handler = props => effect => {
-    switch (effect.type) {
-        case 'DECREASE':
-            return props.setState(({ count }) => ({ count: count - 1 }))
-
-        case 'INCREASE':
-            return props.setState(({ count }) => ({ count: count + 1 }))
-
-        default:
-            return
-    }
-}
+const handler = props => effect => {}
 
 const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
 
-const App = () => (
-    <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>
-)
+const App = () => <LayoutWithEffects />
 
 render(<App />, document.getElementById('root'))
