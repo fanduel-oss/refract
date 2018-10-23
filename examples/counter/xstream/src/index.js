@@ -1,36 +1,41 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { withEffects } from 'refract-xstream'
+import { withEffects, toProps } from 'refract-xstream'
 import xs from 'xstream'
+import sampleCombine from 'xstream/extra/sampleCombine'
 
-import StateContainer from './StateContainer'
 import Layout from './Layout'
 
-const aperture = props => component => {
-    const direction$ = component.observe('direction')
+const directions = {
+    INCREASE: 1,
+    DECREASE: -1,
+    NONE: 0
+}
+
+const aperture = initialProps => component => {
+    const setDirection = component.pushEvent('direction')
+    const direction$ = component.fromEvent('direction').startWith('NONE')
     const tick$ = xs.periodic(1000)
+    const count$ = tick$
+        .compose(sampleCombine(direction$))
+        .map(([, direction]) => direction)
+        .fold((count, direction) => count + directions[direction], 0)
+        .startWith(0)
 
-    return xs.combine(direction$, tick$).map(([type]) => ({ type }))
+    return xs.combine(count$, direction$).map(([count, direction]) =>
+        toProps({
+            count,
+            direction,
+            setDirection
+        })
+    )
 }
 
-const handler = props => effect => {
-    switch (effect.type) {
-        case 'DECREASE':
-            return props.setState(({ count }) => ({ count: count - 1 }))
-
-        case 'INCREASE':
-            return props.setState(({ count }) => ({ count: count + 1 }))
-
-        default:
-            return
-    }
-}
+const handler = props => effect => {}
 
 const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
 
-const App = () => (
-    <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>
-)
+const App = () => <LayoutWithEffects />
 
 render(<App />, document.getElementById('root'))

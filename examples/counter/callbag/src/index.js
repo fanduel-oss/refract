@@ -1,40 +1,52 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { withEffects } from 'refract-callbag'
-import interval from 'callbag-interval'
-import combine from 'callbag-combine'
-import { map, pipe } from 'callbag-basics'
+import { withEffects, toProps } from 'refract-callbag'
+import { map, pipe, scan, interval, combine } from 'callbag-basics'
+import startWith from 'callbag-start-with'
 
-import StateContainer from './StateContainer'
 import Layout from './Layout'
 
-const aperture = props => component => {
-    const direction$ = component.observe('direction')
+const directions = {
+    INCREASE: 1,
+    DECREASE: -1,
+    NONE: 0
+}
+
+const aperture = initialProps => component => {
+    const setDirection = component.pushEvent('direction')
+    const direction$ = pipe(component.fromEvent('direction'), startWith('NONE'))
     const tick$ = interval(1000)
+    const count$ = pipe(
+        combine(tick$, direction$),
+        map(args => args[1]),
+        scan((count, direction) => count + directions[direction], 0),
+        startWith(0)
+    )
 
-    const combined$ = combine(direction$, tick$)
-
-    return pipe(combined$, map(([type]) => ({ type })))
+    return pipe(
+        combine(count$, direction$),
+        map(([count, direction]) =>
+            toProps({
+                count,
+                direction,
+                setDirection
+            })
+        ),
+        startWith(
+            toProps({
+                count: 0,
+                direction: 'NONE',
+                setDirection
+            })
+        )
+    )
 }
 
-const handler = props => effect => {
-    switch (effect.type) {
-        case 'DECREASE':
-            return props.setState(({ count }) => ({ count: count - 1 }))
-
-        case 'INCREASE':
-            return props.setState(({ count }) => ({ count: count + 1 }))
-
-        default:
-            return
-    }
-}
+const handler = props => effect => {}
 
 const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
 
-const App = () => (
-    <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>
-)
+const App = () => <LayoutWithEffects />
 
 render(<App />, document.getElementById('root'))
