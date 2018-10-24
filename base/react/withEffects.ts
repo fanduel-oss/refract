@@ -30,6 +30,8 @@ export const withEffects = <P, E, CP = P, C = any>(
     BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }> = Empty
 ): React.ComponentClass<P> =>
     class WithEffects extends React.Component<P, State> {
+        public static contextType = Context
+
         private triggerMount: () => void
         private triggerUnmount: () => void
         private havePropsChanged: (nextProps: P, nextState: State) => boolean
