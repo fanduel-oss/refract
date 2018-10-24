@@ -35,8 +35,9 @@ export interface ObservableComponent {
     pushEvent: PushEvent
 }
 
-export type Aperture<P, E> = (
-    initialProps: P
+export type Aperture<P, E, C = any> = (
+    initialProps: P,
+    initialContext: C
 ) => (component: ObservableComponent) => Observable<E>
 
 export const subscribeToSink = <T>(
