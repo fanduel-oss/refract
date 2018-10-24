@@ -1,5 +1,5 @@
 import { map, mapTo } from 'rxjs/operators'
-import { merge } from 'rxjs'
+import { merge, empty } from 'rxjs'
 
 import {
     Aperture,
@@ -98,3 +98,5 @@ export const createRenderingAperture = <VNode>(
 
     return aperture
 }
+
+export const emptyStream = empty

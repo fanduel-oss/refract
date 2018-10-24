@@ -11,7 +11,8 @@ import {
     asPropsAperture,
     Effect,
     Props,
-    createRenderingAperture
+    createRenderingAperture,
+    emptyStream
 } from './aperture'
 import { mount } from 'enzyme'
 
@@ -170,4 +171,42 @@ describe('refract-rxjs', () => {
 
         expect(node.text()).toBe('hi')
     })
+
+    // Needs Enzyme update for React 16.6
+    // it('should inject Context', () => {
+    //     interface Props {
+    //         prop: string
+    //     }
+    //     interface Ctx {
+    //         dependency: string
+    //     }
+    //     const Context = React.createContext({
+    //         dependency: 'hello'
+    //     })
+
+    //     const BaseComponent = () => <div />
+    //     const hander = jest.fn().mockReturnValue(() => void 0)
+    //     const errorHander = jest.fn().mockReturnValue(() => void 0)
+    //     const aperture = jest.fn().mockReturnValue(() => emptyStream())
+
+    //     const WithEffects = withEffects<Props, PropEffect, Props, Ctx>(
+    //         hander,
+    //         errorHander,
+    //         Context
+    //     )(aperture)(BaseComponent)
+
+    //     mount(<WithEffects prop="hello" />)
+    //     expect(handler).toHaveBeenCalledWith(
+    //         { prop: 'hello' },
+    //         { dependency: 'hello' }
+    //     )
+    //     expect(errorHandler).toHaveBeenCalledWith(
+    //         { prop: 'hello' },
+    //         { dependency: 'hello' }
+    //     )
+    //     expect(aperture).toHaveBeenCalledWith(
+    //         { prop: 'hello' },
+    //         { dependency: 'hello' }
+    //     )
+    // })
 })
