@@ -72,3 +72,7 @@ Improvements to the documentation are always welcome. Docs go through the same r
 Refract comes with official examples to demonstrate various concepts and best practices. When adding a new example, please adhere to the style and format of the existing examples, and try to reuse as much code as possible.
 
 Thank you for contributing!
+Name: "Vineetha VG"  
+   Place: "Kerala,India"  
+   Github: [vineethaaa](https://github.com/vineethaaa)  
+    
