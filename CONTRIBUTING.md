@@ -72,3 +72,10 @@ Improvements to the documentation are always welcome. Docs go through the same r
 Refract comes with official examples to demonstrate various concepts and best practices. When adding a new example, please adhere to the style and format of the existing examples, and try to reuse as much code as possible.
 
 Thank you for contributing!
+
+
+### Name:  Sreelakshmi T D  
+Place:  Kerala,India  
+GitHub: [Sreelakshmi T D ](https://github.com/SreelakshmiTD) 
+LinkedIn:  Sreelakshmi T D(https://www.linkedin.com/in/sreelakshmi-td-87100b13b/)
+LinkedIn:  [Sreelakshmi T D](https://www.linkedin.com/in/sreelakshmi-td-87100b13b/)
