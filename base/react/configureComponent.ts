@@ -18,11 +18,11 @@ import {
     UNMOUNT_EVENT
 } from './data'
 
-const configureComponent = <P, E>(
-    handler: Handler<P, E>,
+const configureComponent = <P, E, Ctx>(
+    handler: Handler<P, E, Ctx>,
     errorHandler?: ErrorHandler<P>
 ) => (
-    aperture: Aperture<P, E>,
+    aperture: Aperture<P, E, Ctx>,
     instance: any,
     isValidElement: (val: any) => boolean = () => false,
     isComponentClass: (val: any) => boolean = () => false
@@ -48,8 +48,8 @@ const configureComponent = <P, E>(
         }
     }
 
-    const finalHandler = initialProps => {
-        const effectHandler = handler(initialProps)
+    const finalHandler = (initialProps, initialContext) => {
+        const effectHandler = handler(initialProps, initialContext)
 
         return effect => {
             if (isValidElement(effect)) {
@@ -126,12 +126,14 @@ const configureComponent = <P, E>(
         pushEvent
     )
 
-    const sinkObservable = aperture(instance.props)(component)
+    const sinkObservable = aperture(instance.props, instance.context)(component)
 
     const sinkSubscription: Subscription = subscribeToSink<E>(
         sinkObservable,
-        finalHandler(instance.props),
-        errorHandler ? errorHandler(instance.props) : undefined
+        finalHandler(instance.props, instance.context),
+        errorHandler
+            ? errorHandler(instance.props, instance.context)
+            : undefined
     )
 
     instance.reDecorateProps = nextProps => {

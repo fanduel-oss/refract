@@ -22,10 +22,11 @@ const isComponentClass = (ComponentClass: any): boolean =>
 
 const Empty = () => null
 
-export const withEffects = <P, E, CP = P>(
-    handler: Handler<P, E>,
-    errorHandler?: ErrorHandler<P>
-) => (aperture: Aperture<P, E>) => (
+export const withEffects = <P, E, CP = P, C = any>(
+    handler: Handler<P, E, C>,
+    errorHandler?: ErrorHandler<P, C>,
+    Context?: React.Context<C>
+) => (aperture: Aperture<P, E, C>) => (
     BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }> = Empty
 ): React.ComponentClass<P> =>
     class WithEffects extends React.Component<P, State> {
