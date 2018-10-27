@@ -153,6 +153,20 @@ const aperture = initialProps => component => {
 }
 ```
 
+### Using events
+
+A convenient helper function `useEvent` is available on `component`, to make it easier to use events: it returns a tuple containing the result of `fromEvent(eventName)` and `pushEvent(eventName)`.
+
+```js
+const aperture = initialProps => component => {
+    const [ value$, setValue ] = component.useEvent('eventName')
+
+    return value$.pipe(map(value => toProps({
+        value,
+        setValue
+    })))
+```
+
 ## Observing Lifecycle Events
 
 The remaining two properties on the `component` object are `component.mount` and `component.unmount`.

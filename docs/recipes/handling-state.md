@@ -37,17 +37,16 @@ We wrap this component with Refract, so we can provide the `toggle` callback, an
 ```js
 import React from 'react'
 import { withEffects, toProps } from 'refract-rxjs'
-import { reduce, map } from 'rxjs/operators'
+import { scan, map } from 'rxjs/operators'
 import Toggle from './Toggle'
 
 const hander = () => () => {}
 
 const aperture = initialProps => component => {
-    const toggle = component.pushEvent('toggle')
-    const toggleEvents$ = component.fromEvent('toggle')
+    const [toggleEvents$, toggle] = component.useEvent('toggle')
 
     return toggleEvents$.pipe(
-        reduce(
+        scan(
             props => ({
                 ...props,
                 isExpanded: !props.isExpanded
@@ -76,7 +75,7 @@ The example below puts a counter state in context. In the aperture, we create a 
 import React from 'react'
 import { withEffects } from 'refract-rxjs'
 import { combineLatest } from 'rxjs'
-import { reduce, map } from 'rxjs/operators'
+import { scan, map } from 'rxjs/operators'
 
 const { Provider, Consumer: CounterStateConsumer } = React.createContext({})
 
@@ -84,10 +83,9 @@ const handler = () => () => {}
 const aperture = initialProps => component => {
     const children$ = component.observe('children')
 
-    const countEvents$ = component.fromEvent('count')
-    const countUp = component.pushEvent('count')
+    const [countEvents$, countUp] = component.useEvent('count')
     const context$ = countEvents$.pipe(
-        reduce(
+        scan(
             context => ({
                 ...context,
                 count: context.count + 1

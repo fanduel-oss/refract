@@ -1,5 +1,5 @@
 import { map, mapTo } from 'rxjs/operators'
-import { merge, empty } from 'rxjs'
+import { merge, of, empty } from 'rxjs'
 
 import {
     Aperture,
@@ -19,12 +19,16 @@ export interface Props {
     setValue: (value: number) => void
 }
 
+export interface ExtraProps {
+    clickLink: () => void
+}
+
 export const aperture: Aperture<Props, Effect> = props => component => {
     const value$ = component.observe<number>('value')
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
     const unmount$ = component.unmount
-    const linkClick$ = component.fromEvent<any>('linkClick')
+    const [linkClick$, clickLink] = component.useEvent<any>('linkClick')
 
     return merge<Effect>(
         value$.pipe(
@@ -56,6 +60,12 @@ export const aperture: Aperture<Props, Effect> = props => component => {
         linkClick$.pipe(
             mapTo({
                 type: 'LinkClick'
+            })
+        ),
+
+        of(
+            toProps({
+                clickLink
             })
         )
     )

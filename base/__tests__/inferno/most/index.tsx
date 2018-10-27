@@ -12,6 +12,7 @@ import {
     asPropsAperture,
     Effect,
     Props,
+    ExtraProps,
     createRenderingAperture
 } from '../../react/most/aperture'
 import { mount } from 'enzyme'
@@ -32,7 +33,7 @@ describe('refract-inferno-most', () => {
     it('should observe component changes', () => {
         const effectValueHandler = jest.fn()
         const setValue = () => void 0
-        const WithEffects = withEffects<Props, Effect>(
+        const WithEffects = withEffects<Props, Effect, Props & ExtraProps>(
             () => effectValueHandler
         )(aperture)(({ setValue, pushEvent }) => (
             <div>
