@@ -27,6 +27,7 @@ export interface ObservableComponent {
     mount: Stream<any>
     unmount: Stream<any>
     pushEvent: PushEvent
+    useEvent: <T>(eventName: string) => [Stream<T>, (val: T) => any]
 }
 
 export interface Subscription {
@@ -54,6 +55,14 @@ export const createComponent = <P>(
     pushEvent
 ): ObservableComponent => {
     const data = () => from<Data<P>>(dataObservable)
+    const fromEvent = <T>(eventName, valueTransformer?) =>
+        data()
+            .filter(isEvent(eventName))
+            .map((data: EventData) => {
+                const { value } = data.payload
+
+                return valueTransformer ? valueTransformer(value) : value
+            })
 
     return {
         mount: data()
@@ -90,14 +99,8 @@ export const createComponent = <P>(
                 .map((data: PropsData<P>) => data.payload)
                 .skipRepeatsWith(shallowEquals)
         },
-        fromEvent: <T>(eventName, valueTransformer?) =>
-            data()
-                .filter(isEvent(eventName))
-                .map((data: EventData) => {
-                    const { value } = data.payload
-
-                    return valueTransformer ? valueTransformer(value) : value
-                }),
-        pushEvent
+        fromEvent,
+        pushEvent,
+        useEvent: eventName => [fromEvent(eventName), pushEvent(eventName)]
     }
 }

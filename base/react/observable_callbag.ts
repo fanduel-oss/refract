@@ -43,6 +43,7 @@ export interface ObservableComponent {
     mount: Source<any>
     unmount: Source<any>
     pushEvent: PushEvent
+    useEvent: <T>(eventName: string) => [Source<T>, (val: T) => any]
 }
 
 export type Aperture<P, E> = (
@@ -65,6 +66,16 @@ export const createComponent = <P>(
     pushEvent
 ): ObservableComponent => {
     const data = () => fromObs(dataObservable) as Source<Data<P>>
+    const fromEvent = <T>(eventName, valueTransformer?) =>
+        pipe(
+            data(),
+            filter(isEvent(eventName)),
+            map((data: EventData) => {
+                const { value } = data.payload
+
+                return valueTransformer ? valueTransformer(value) : value
+            })
+        )
 
     return {
         mount: pipe(data(), filter(isEvent(MOUNT_EVENT)), map(() => undefined)),
@@ -108,16 +119,8 @@ export const createComponent = <P>(
                 dropRepeats(shallowEquals)
             )
         },
-        fromEvent: <T>(eventName, valueTransformer?) =>
-            pipe(
-                data(),
-                filter(isEvent(eventName)),
-                map((data: EventData) => {
-                    const { value } = data.payload
-
-                    return valueTransformer ? valueTransformer(value) : value
-                })
-            ),
-        pushEvent
+        fromEvent,
+        pushEvent,
+        useEvent: eventName => [fromEvent(eventName), pushEvent(eventName)]
     }
 }

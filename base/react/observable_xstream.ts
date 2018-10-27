@@ -28,6 +28,7 @@ export interface ObservableComponent {
     mount: Stream<any>
     unmount: Stream<any>
     pushEvent: PushEvent
+    useEvent: <T>(eventName: string) => [Stream<T>, (val: T) => any]
 }
 
 export type Aperture<P, E> = (
@@ -51,6 +52,14 @@ export const createComponent = <P>(
     pushEvent
 ): ObservableComponent => {
     const data = () => xs.from<Data<P>>(dataObservable)
+    const fromEvent = <T>(eventName, valueTransformer?) =>
+        data()
+            .filter(isEvent(eventName))
+            .map((data: EventData) => {
+                const { value } = data.payload
+
+                return valueTransformer ? valueTransformer(value) : value
+            })
 
     return {
         mount: data()
@@ -87,14 +96,8 @@ export const createComponent = <P>(
                 .map((data: PropsData<P>) => data.payload)
                 .compose(dropRepeats(shallowEquals))
         },
-        fromEvent: <T>(eventName, valueTransformer?) =>
-            data()
-                .filter(isEvent(eventName))
-                .map((data: EventData) => {
-                    const { value } = data.payload
-
-                    return valueTransformer ? valueTransformer(value) : value
-                }),
-        pushEvent
+        fromEvent,
+        pushEvent,
+        useEvent: <T>(eventName) => [fromEvent(eventName), pushEvent(eventName)]
     }
 }
