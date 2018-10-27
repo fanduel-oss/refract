@@ -1,5 +1,5 @@
 import { merge, map, pipe } from 'callbag-basics'
-
+import startWith from 'callbag-start-with'
 import {
     Aperture,
     toProps,
@@ -17,35 +17,42 @@ export interface Props {
     setValue: (value: number) => void
 }
 
+export interface ExtraProps {
+    clickLink: () => void
+}
+
 export const aperture: Aperture<Props, Effect> = props => component => {
     const value$ = component.observe<number>('value')
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
     const unmount$ = component.unmount
-    const linkClick$ = component.fromEvent<any>('linkClick')
+    const [linkClick$, clickLink] = component.useEvent<any>('linkClick')
 
-    return merge(
-        map(value => ({
-            type: 'ValueChange',
-            value
-        }))(value$),
+    return pipe(
+        merge(
+            map(value => ({
+                type: 'ValueChange',
+                value
+            }))(value$),
 
-        map(value => ({
-            type: 'ValueSet',
-            value
-        }))(valueSet$),
+            map(value => ({
+                type: 'ValueSet',
+                value
+            }))(valueSet$),
 
-        map(() => ({
-            type: 'Start'
-        }))(mount$),
+            map(() => ({
+                type: 'Start'
+            }))(mount$),
 
-        map(() => ({
-            type: 'Stop'
-        }))(unmount$),
+            map(() => ({
+                type: 'Stop'
+            }))(unmount$),
 
-        map(() => ({
-            type: 'LinkClick'
-        }))(linkClick$)
+            map(() => ({
+                type: 'LinkClick'
+            }))(linkClick$)
+        ),
+        startWith(toProps({ clickLink }))
     )
 }
 
