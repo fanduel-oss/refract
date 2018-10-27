@@ -12,6 +12,7 @@ import {
     asPropsAperture,
     Effect,
     Props,
+    ExtraProps,
     createRenderingAperture
 } from '../../react/xstream/aperture'
 import { mount } from 'enzyme'
@@ -32,12 +33,12 @@ describe('refract-inferno-xstream', () => {
     it('should observe component changes', () => {
         const effectValueHandler = jest.fn()
         const setValue = () => void 0
-        const WithEffects = withEffects<Props, Effect>(
+        const WithEffects = withEffects<Props, Effect, Props & ExtraProps>(
             () => effectValueHandler
-        )(aperture)(({ setValue, pushEvent }) => (
+        )(aperture)(({ setValue, clickLink }) => (
             <div>
                 <button onClick={() => setValue(10)} />
-                <a onClick={pushEvent('linkClick')} />
+                <a onClick={() => clickLink()} />
             </div>
         ))
 
