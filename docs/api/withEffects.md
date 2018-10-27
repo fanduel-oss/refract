@@ -25,7 +25,7 @@ withEffects = (
     Signature: `(initialProps, initialContext) => (effect) => { /* handle effect here */ }`
 
     *   The `initialProps` are all props passed into the `WrappedComponent`.
-    *   The `initialContext` is the initial context context value of the provided `Context` (see below, React >= 16.6.0 only)
+    *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
     *   The `effect` is each value emitted by your `aperture`.
     *   Within the body of the function, you cause any side-effect you wish.
 
@@ -34,7 +34,7 @@ withEffects = (
     Signature: `(initialProps, initialContext) => (error) => { /* handle error here */ }`
 
     *   The `initialProps` are all props passed into the `WrappedComponent`.
-    *   The `initialContext` is the initial context context value of the provided `Context` (see below, React >= 16.6.0 only)
+    *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
     *   The `error` is each value emitted by your `aperture`.
     *   Within the body of the function, you cause any side-effect you wish.
 
@@ -45,7 +45,7 @@ withEffects = (
     Signature: `(initialProps, initialContext) => (component) => { return effectStream }`.
 
     *   The `initialProps` are all props passed into the `WrappedComponent`.
-    *   The `initialContext` is the initial context context value of the provided `Context` (see above, React >= 16.6.0 only)
+    *   The `initialContext` is the initial context value of the provided `Context` (see above, React >= 16.6.0 only)
     *   The `component` is an object which lets you observe your React, Inferno or Preact component: see [Observing React](../usage/observing-react.md)
     *   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
 

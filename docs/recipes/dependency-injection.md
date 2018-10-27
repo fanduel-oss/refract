@@ -50,8 +50,8 @@ export default withEffects(handler, errorHandler, Context)(aperture)(
 
 `handler`, `errorHandler` and `aperture` will then be called with two arguments:
 
-*   `initialProps`: the component props when your component is instanciated
-*   `initialContext`: the value of `Context` when your component is instanciated
+*   `initialProps`: the component props when your component is instantiated
+*   `initialContext`: the value of `Context` when your component is instantiated
 
 ## Passing context to props
 
