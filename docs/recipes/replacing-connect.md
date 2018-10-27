@@ -76,7 +76,7 @@ Instead, we are going to look at a different way: dispatching is imperative and 
 import { withEffects, toProps } from 'refract-rxjs'
 import { of, merge } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { addPost, removePost } from './actions'
+import { createAddPostAction, createRemovePostAction } from './actions'
 
 const handler = initialProps => effect => {
     const { store } = initialProps
@@ -91,18 +91,22 @@ const toDispatch = action => ({
     payload: action
 })
 
-const aperture = initialProps => component =>
-    merge(
+const aperture = initialProps => component => {
+    const [ addPostEvents$, addPost] = component.pushEvent('addPost')
+    const [ removePostEvents$, removePost] = component.pushEvent('removePost')
+
+    return merge(
         of({
-            addPost: component.pushEvent('addPost'),
-            removePost: component.pushEvent('addPost')
+            addPost,
+            removePost
         }).pipe(map(toProps)),
 
         merge(
-            component.fromEvent('addPost').pipe(map(addPost)),
-            component.fromEvent('removePost').pipe(map(removePost))
+            addPostEvents$.pipe(map(createAddPostAction)),
+            removePostEvents$.pipe(map(createRemovePostAction))
         ).pipe(map(toDispatch))
-    )
+    })
+}
 
 const ContainerComponent = withEffects(handler)(aperture)(BaseComponent)
 ```
