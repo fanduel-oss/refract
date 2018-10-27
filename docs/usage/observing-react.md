@@ -161,7 +161,10 @@ A convenient helper function `useEvent` is available on `component`, to make it 
 const aperture = initialProps => component => {
     const [ value$, setValue ] = component.useEvent('eventName')
 
-    return value$.pipe(map(toProps))
+    return value$.pipe(map(value => toProps({
+        value,
+        setValue
+    })))
 ```
 
 ## Observing Lifecycle Events
