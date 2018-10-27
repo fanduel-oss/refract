@@ -1,6 +1,12 @@
 <!-- prettier-ignore-start -->
 # Changelog
 
+## 28 October 2018
+
+| Packages | Version | Changes |
+| --- | --- | --- |
+| React / Inferno / Preact | 2.1.0 | :rocket: Add a convenient util `component.useEvent(eventName)` to return a tuple containing the result of `fromEvent` and `pushEvent` [(#112)](https://github.com/fanduel-oss/refract/pull/112)<br>:rocket: Support React new `contextType` (React >= 16.6.0): a React context can be passed to `withEffects` and its context value will be passed alongside `initialProps` [(#109)](https://github.com/fanduel-oss/refract/pull/109) |
+
 ## 10 October 2018
 
 | Packages | Version | Changes |
