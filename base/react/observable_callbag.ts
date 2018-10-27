@@ -46,8 +46,9 @@ export interface ObservableComponent {
     useEvent: <T>(eventName: string) => [Source<T>, (val: T) => any]
 }
 
-export type Aperture<P, E> = (
-    props: P
+export type Aperture<P, E, C = any> = (
+    initialProps: P,
+    initialContext: C
 ) => (component: ObservableComponent) => Sink<E>
 
 export const subscribeToSink = <T>(

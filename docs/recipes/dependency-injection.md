@@ -4,7 +4,7 @@ We recommend using React's new context API for dependency injection, because it 
 
 However, it needs a little work for it to play nicely with higher-order components.
 
-## Using Vanilla React Context
+## Setting up React Context
 
 Consider the following example, using vanilla React context:
 
@@ -34,12 +34,33 @@ ReactDOM.render(
 )
 ```
 
+## Passing context to `withEffects`
+
+With React version 16.6.0 and above, you can pass your React context to `withEffects`. For more information about it, you can look at [`withEffects` API](../api/withEffects.md) and [React `class.contextType`](https://reactjs.org/docs/context.html#classcontexttype).
+
 ```js
 import { withEffects } from 'refract-rxjs'
 
-const MyComponent = props => (
-    <Foo {...props} />
+const MyComponent = props => <Foo {...props} />
+
+export default withEffects(handler, errorHandler, Context)(aperture)(
+    MyComponent
 )
+```
+
+`handler`, `errorHandler` and `aperture` will then be called with two arguments:
+
+*   `initialProps`: the component props when your component is instantiated
+*   `initialContext`: the value of `Context` when your component is instantiated
+
+## Passing context to props
+
+If you are not using React 16.6.0 and above, you can fallback to passing your context as props and it will be available via `initialProps`:
+
+```js
+import { withEffects } from 'refract-rxjs'
+
+const MyComponent = props => <Foo {...props} />
 
 export default withEffects(handler)(aperture)(MyComponent)
 ```
@@ -71,9 +92,7 @@ import { contextToProps } from 'react-zap'
 
 import RefractContext from './refractContext'
 
-const MyComponent = props => (
-    <Foo {...props} />
-)
+const MyComponent = props => <Foo {...props} />
 
 export default contextToProps(RefractContext.Consumer)(
     withEffects(handler)(aperture)(MyComponent)
@@ -83,9 +102,7 @@ export default contextToProps(RefractContext.Consumer)(
 ```js
 import MyComponent from './MyComponent' // includes effects AND context
 
-const MyView = props => (
-    <MyComponent {...props} />
-)
+const MyView = props => <MyComponent {...props} />
 ```
 
 Which is definitely a lot nicer!
@@ -94,15 +111,16 @@ But we can do better - instead of importing and connecting our Refract context e
 
 ```js
 import { createContext } from 'react'
-import { withEffects } from 'refract-rxjs'
+import { withEffects, compose } from 'refract-rxjs'
 import { contextToProps } from 'react-zap'
 
 const RefractContext = createContext()
 
 const enhancedWithEffects = (handler, errorHandler) => aperture => BaseComponent =>
-    contextToProps(RefractContext.Consumer)(
-        withEffects(handler, errorHandler)(aperture)(BaseComponent)
-    )
+    compose(
+        contextToProps(RefractContext.Consumer),
+        withEffects(handler, errorHandler)(aperture)
+    )(BaseComponent)
 
 export {
     RefractProvider: RefractContext.Provider
@@ -115,9 +133,7 @@ We would now import this enhanced version instead of the plain one whenever crea
 ```js
 import { withEffects } from './sideEffects'
 
-const MyComponent = props => (
-    <Foo {...props} />
-)
+const MyComponent = props => <Foo {...props} />
 
 export default withEffects(handler)(aperture)(MyComponent) // now includes dependencies!
 ```
