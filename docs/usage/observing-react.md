@@ -155,11 +155,14 @@ const aperture = initialProps => component => {
 
 ### Using events
 
-A convenient helper function `useEvent` is available on `component`, to make it easier to use events: it returns a tuple containing the result of `fromEvent(eventName)` and `pushEvent(eventName)`.
+A convenient helper function `useEvent` is available on `component`, to make it easier to use events: it returns a tuple containing the result of `fromEvent(eventName)` and `pushEvent(eventName)`. `useEvent` takes two arguments:
+
+*   `eventName` _(string)_: the name of the event
+*   `seedValue` _(any)_: an optional seed value to initialise the streem of event values with
 
 ```js
 const aperture = initialProps => component => {
-    const [ value$, setValue ] = component.useEvent('eventName')
+    const [ value$, setValue ] = component.useEvent('eventName', '')
 
     return value$.pipe(map(value => toProps({
         value,
