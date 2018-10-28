@@ -13,8 +13,7 @@ const directions = {
 }
 
 const aperture = initialProps => component => {
-    const setDirection = component.pushEvent('direction')
-    const direction$ = component.fromEvent('direction').startWith('NONE')
+    const [direction$, setDirection] = component.useEvent('direction', 'NONE')
     const tick$ = periodic(1000)
     const count$ = combine(direction => direction, direction$, tick$)
         .scan((count, direction) => count + directions[direction], 0)
