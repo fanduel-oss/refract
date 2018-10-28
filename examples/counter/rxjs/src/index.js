@@ -15,8 +15,7 @@ const directions = {
 }
 
 const aperture = initialProps => component => {
-    const setDirection = component.pushEvent('direction')
-    const direction$ = component.fromEvent('direction').pipe(startWith('NONE'))
+    const [direction$, setDirection] = component.useEvent('direction', 'NONE')
     const tick$ = interval(1000)
     const count$ = tick$.pipe(
         withLatestFrom(direction$),

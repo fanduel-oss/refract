@@ -14,8 +14,7 @@ const directions = {
 }
 
 const aperture = initialProps => component => {
-    const setDirection = component.pushEvent('direction')
-    const direction$ = component.fromEvent('direction').startWith('NONE')
+    const [direction$, setDirection] = component.useEvent('direction', 'NONE')
     const tick$ = xs.periodic(1000)
     const count$ = tick$
         .compose(sampleCombine(direction$))
