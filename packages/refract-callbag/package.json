@@ -1,7 +1,7 @@
 {
     "name": "refract-callbag",
     "description": "Refract bindings for React with Callbag: harness the power of reactive programming to supercharge your components!",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
