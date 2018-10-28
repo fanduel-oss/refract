@@ -28,7 +28,10 @@ export interface ObservableComponent {
     mount: Stream<any>
     unmount: Stream<any>
     pushEvent: PushEvent
-    useEvent: <T>(eventName: string) => [Stream<T>, (val: T) => any]
+    useEvent: <T>(
+        eventName: string,
+        seedValue?: T
+    ) => [Stream<T>, (val: T) => any]
 }
 
 export type Aperture<P, E, C = any> = (
@@ -50,7 +53,7 @@ export const subscribeToSink = <T>(
 export const createComponent = <P>(
     instance,
     dataObservable,
-    pushEvent
+    pushEvent: PushEvent
 ): ObservableComponent => {
     const data = () => xs.from<Data<P>>(dataObservable)
     const fromEvent = <T>(eventName, valueTransformer?) =>
@@ -99,6 +102,16 @@ export const createComponent = <P>(
         },
         fromEvent,
         pushEvent,
-        useEvent: <T>(eventName) => [fromEvent(eventName), pushEvent(eventName)]
+        useEvent: <T>(eventName: string, seedValue?: T) => {
+            const events$ = fromEvent(eventName)
+            const pushEventValue = pushEvent(eventName)
+
+            return [
+                seedValue === undefined
+                    ? events$
+                    : events$.startWith(seedValue),
+                pushEventValue
+            ]
+        }
     }
 }

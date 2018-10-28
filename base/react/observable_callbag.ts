@@ -6,6 +6,7 @@ const dropRepeats = require('callbag-drop-repeats')
 const map = require('callbag-map')
 const pipe = require('callbag-pipe')
 const filter = require('callbag-filter')
+const startWith = require('callbag-start-with')
 
 import { PushEvent } from './baseTypes'
 import {
@@ -64,7 +65,7 @@ export const subscribeToSink = <T>(
 export const createComponent = <P>(
     instance,
     dataObservable,
-    pushEvent
+    pushEvent: PushEvent
 ): ObservableComponent => {
     const data = () => fromObs(dataObservable) as Source<Data<P>>
     const fromEvent = <T>(eventName, valueTransformer?) =>
@@ -122,6 +123,16 @@ export const createComponent = <P>(
         },
         fromEvent,
         pushEvent,
-        useEvent: eventName => [fromEvent(eventName), pushEvent(eventName)]
+        useEvent: <T>(eventName: string, seedValue?: T) => {
+            const events$ = fromEvent(eventName)
+            const pushEventValue = pushEvent(eventName) as (value: T) => void
+
+            return [
+                seedValue === undefined
+                    ? events$
+                    : events$.pipe(startWith(seedValue)),
+                pushEventValue
+            ]
+        }
     }
 }

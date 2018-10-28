@@ -51,7 +51,8 @@ const callbagUIPackages = {
     'callbag-map': '~1.0.1',
     'callbag-pipe': '~1.1.1',
     'callbag-filter': '~1.0.1',
-    'callbag-drop-repeats': '~1.0.0'
+    'callbag-drop-repeats': '~1.0.0',
+    'callbag-start-with': '~3.1.0'
 }
 
 const extraDependencies = {
