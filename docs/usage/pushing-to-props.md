@@ -80,5 +80,5 @@ const aperture = ({ initialCount }) => component => {
 
 const handler = () => () => {}
 
-export default withEffects(handler)(aperture)()
+export default withEffects(handler)(aperture)(Counter)
 ```
