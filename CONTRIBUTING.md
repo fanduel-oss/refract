@@ -71,4 +71,5 @@ Improvements to the documentation are always welcome. Docs go through the same r
 
 Refract comes with official examples to demonstrate various concepts and best practices. When adding a new example, please adhere to the style and format of the existing examples, and try to reuse as much code as possible.
 
-Thank you for contributing!
+Thank you for contributing
+jugbhnn
