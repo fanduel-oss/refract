@@ -5,7 +5,7 @@
 
 | Packages | Version | Changes |
 | --- | --- | --- |
-| Callbag | 2.2.1 | :bug: fix `useEvent` when providing a seed value [(#120)](https://github.com/fanduel-oss/refract/pull/120) |
+| Callbag | 2.2.2 | :bug: fix `useEvent` when providing a seed value and its type definition [(#120)](https://github.com/fanduel-oss/refract/pull/120) and [(#121)](https://github.com/fanduel-oss/refract/pull/121) |
 
 ## 28 October 2018
 
