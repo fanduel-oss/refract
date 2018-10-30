@@ -16,23 +16,28 @@ import {
 
 export { Listener, Subscription }
 
-export interface ObservableComponent {
-    observe: <T>(
-        propName?: string,
-        valueTransformer?: (val: any) => T
-    ) => Stream<T>
+export interface EventBus {
     fromEvent: <T>(
         eventName: string,
         valueTransformer?: (val: any) => T
     ) => Stream<T>
-    mount: Stream<any>
-    unmount: Stream<any>
     pushEvent: PushEvent
     useEvent: <T>(
         eventName: string,
         seedValue?: T
     ) => [Stream<T>, (val: T) => any]
 }
+
+export interface ObservableComponentBase {
+    observe: <T>(
+        propName?: string,
+        valueTransformer?: (val: any) => T
+    ) => Stream<T>
+    mount: Stream<any>
+    unmount: Stream<any>
+}
+
+export type ObservableComponent = ObservableComponentBase & EventBus
 
 export type Aperture<P, E, C = any> = (
     component: ObservableComponent,
@@ -51,20 +56,37 @@ export const subscribeToSink = <T>(
         complete: () => void 0
     })
 
+const getEventBus = (data: Stream<any>, pushEvent: PushEvent): EventBus => {
+    const fromEvent = <T>(eventName, valueTransformer?) =>
+        data.filter(isEvent(eventName)).map((data: EventData) => {
+            const { value } = data.payload
+
+            return valueTransformer ? valueTransformer(value) : value
+        })
+
+    return {
+        fromEvent,
+        pushEvent,
+        useEvent: <T>(eventName: string, seedValue?: T) => {
+            const events$ = fromEvent(eventName)
+            const pushEventValue = pushEvent(eventName)
+
+            return [
+                seedValue === undefined
+                    ? events$
+                    : events$.startWith(seedValue),
+                pushEventValue
+            ]
+        }
+    }
+}
+
 export const createComponent = <P>(
     instance,
     dataObservable,
     pushEvent: PushEvent
 ): ObservableComponent => {
     const data = () => xs.from<Data<P>>(dataObservable)
-    const fromEvent = <T>(eventName, valueTransformer?) =>
-        data()
-            .filter(isEvent(eventName))
-            .map((data: EventData) => {
-                const { value } = data.payload
-
-                return valueTransformer ? valueTransformer(value) : value
-            })
 
     return {
         mount: data()
@@ -101,18 +123,13 @@ export const createComponent = <P>(
                 .map((data: PropsData<P>) => data.payload)
                 .compose(dropRepeats(shallowEquals))
         },
-        fromEvent,
-        pushEvent,
-        useEvent: <T>(eventName: string, seedValue?: T) => {
-            const events$ = fromEvent(eventName)
-            const pushEventValue = pushEvent(eventName)
-
-            return [
-                seedValue === undefined
-                    ? events$
-                    : events$.startWith(seedValue),
-                pushEventValue
-            ]
-        }
+        ...getEventBus(data(), pushEvent)
     }
+}
+
+export const createEventBus = (
+    dataObservable,
+    pushEvent: PushEvent
+): EventBus => {
+    return getEventBus(dataObservable, pushEvent)
 }
