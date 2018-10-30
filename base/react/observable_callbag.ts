@@ -44,7 +44,10 @@ export interface ObservableComponent {
     mount: Source<any>
     unmount: Source<any>
     pushEvent: PushEvent
-    useEvent: <T>(eventName: string) => [Source<T>, (val: T) => any]
+    useEvent: <T>(
+        eventName: string,
+        seedValue?: T
+    ) => [Source<T>, (val: T) => any]
 }
 
 export type Aperture<P, E, C = any> = (
