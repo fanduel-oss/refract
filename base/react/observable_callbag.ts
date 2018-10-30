@@ -6,7 +6,7 @@ const dropRepeats = require('callbag-drop-repeats')
 const map = require('callbag-map')
 const pipe = require('callbag-pipe')
 const filter = require('callbag-filter')
-const startWith = require('callbag-start-with')
+import startWith from 'callbag-start-with'
 
 import { PushEvent } from './baseTypes'
 import {
