@@ -131,5 +131,5 @@ export const createEventBus = (
     dataObservable,
     pushEvent: PushEvent
 ): EventBus => {
-    return getEventBus(dataObservable, pushEvent)
+    return getEventBus(xs.from(dataObservable), pushEvent)
 }

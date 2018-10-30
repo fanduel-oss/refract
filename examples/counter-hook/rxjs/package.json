@@ -1,0 +1,19 @@
+{
+    "name": "refract-example-rxjs-counter",
+    "dependencies": {
+        "react": "~16.7.0-alpha.0",
+        "react-dom": "~16.7.0-alpha.0",
+        "react-scripts": "~1.1.5",
+        "rxjs": "~6.3.3"
+    },
+    "version": "0.0.0",
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    },
+    "devDependencies": {
+        "webpack-dev-server": "~3.1.10"
+    }
+}

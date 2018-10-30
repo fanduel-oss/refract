@@ -63,7 +63,7 @@ export const configureHook = <E, Ctx>(
     const sinkSubscription: Subscription = subscribeToSink<E>(
         sinkObservable,
         finalHandler(props, context),
-        errorHandler(props, context)
+        errorHandler ? errorHandler(props, context) : undefined
     )
 
     return () => sinkSubscription.unsubscribe()
