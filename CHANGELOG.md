@@ -1,6 +1,12 @@
 <!-- prettier-ignore-start -->
 # Changelog
 
+## 30 October 2018
+
+| Packages | Version | Changes |
+| --- | --- | --- |
+| Callbag | 2.2.1 | :bug: fix `useEvent` when providing a seed value [(#120)](https://github.com/fanduel-oss/refract/pull/120) |
+
 ## 28 October 2018
 
 | Packages | Version | Changes |
