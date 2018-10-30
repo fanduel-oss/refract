@@ -130,7 +130,7 @@ export const createComponent = <P>(
             return [
                 seedValue === undefined
                     ? events$
-                    : events$.pipe(startWith(seedValue)),
+                    : pipe(events$, startWith(seedValue)),
                 pushEventValue
             ]
         }
