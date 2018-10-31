@@ -10,7 +10,7 @@ import $$observable from 'symbol-observable'
 import React__default, {
     useState,
     useContext,
-    useEffect,
+    useLayoutEffect,
     isValidElement,
     createElement,
     Component
@@ -150,7 +150,7 @@ var subscribeToSink = function(sink, next, error) {
         error: error
     })
 }
-var getEventBus = function(data, pushEvent) {
+var getComponentBase = function(data, pushEvent) {
     var fromEvent = function(eventName, valueTransformer) {
         return data.pipe(
             filter(isEvent(eventName)),
@@ -161,6 +161,8 @@ var getEventBus = function(data, pushEvent) {
         )
     }
     return {
+        mount: data.pipe(filter(isEvent(MOUNT_EVENT)), mapTo(undefined)),
+        unmount: data.pipe(filter(isEvent(UNMOUNT_EVENT)), mapTo(undefined)),
         fromEvent: fromEvent,
         pushEvent: pushEvent,
         useEvent: function(eventName, seedValue) {
@@ -175,58 +177,47 @@ var getEventBus = function(data, pushEvent) {
         }
     }
 }
+var getObserve = function(instance, data) {
+    return function observe(propName, valueTransformer) {
+        if (propName && typeof instance.props[propName] === 'function') {
+            return data().pipe(
+                filter(isCallback(propName)),
+                map(function(data) {
+                    var args = data.payload.args
+                    return valueTransformer ? valueTransformer(args) : args[0]
+                })
+            )
+        }
+        if (propName) {
+            return data().pipe(
+                filter(isProps),
+                map(function(data) {
+                    var prop = data.payload[propName]
+                    return valueTransformer ? valueTransformer(prop) : prop
+                }),
+                distinctUntilChanged()
+            )
+        }
+        return data().pipe(
+            filter(isProps),
+            map(function(data) {
+                return data.payload
+            }),
+            distinctUntilChanged(shallowEquals)
+        )
+    }
+}
 var createComponent = function(instance, dataObservable, pushEvent) {
     var data = function() {
         return from(dataObservable)
     }
     return __assign(
-        {
-            mount: data().pipe(filter(isEvent(MOUNT_EVENT)), mapTo(undefined)),
-            unmount: data().pipe(
-                filter(isEvent(UNMOUNT_EVENT)),
-                mapTo(undefined)
-            ),
-            observe: function(propName, valueTransformer) {
-                if (
-                    propName &&
-                    typeof instance.props[propName] === 'function'
-                ) {
-                    return data().pipe(
-                        filter(isCallback(propName)),
-                        map(function(data) {
-                            var args = data.payload.args
-                            return valueTransformer
-                                ? valueTransformer(args)
-                                : args[0]
-                        })
-                    )
-                }
-                if (propName) {
-                    return data().pipe(
-                        filter(isProps),
-                        map(function(data) {
-                            var prop = data.payload[propName]
-                            return valueTransformer
-                                ? valueTransformer(prop)
-                                : prop
-                        }),
-                        distinctUntilChanged()
-                    )
-                }
-                return data().pipe(
-                    filter(isProps),
-                    map(function(data) {
-                        return data.payload
-                    }),
-                    distinctUntilChanged(shallowEquals)
-                )
-            }
-        },
-        createEventBus(data(), pushEvent)
+        { observe: getObserve(instance, data) },
+        getComponentBase(data(), pushEvent)
     )
 }
-var createEventBus = function(dataObservable, pushEvent) {
-    return getEventBus(from(dataObservable), pushEvent)
+var createBaseComponent = function(dataObservable, pushEvent) {
+    return getComponentBase(from(dataObservable), pushEvent)
 }
 
 var configureComponent = function(handler, errorHandler) {
@@ -487,19 +478,18 @@ var compose = function() {
     }
 }
 
-var configureHook = function(
-    handler,
-    errorHandler,
-    aperture,
-    setComponentData,
-    props,
-    context
-) {
+var configureHook = function(handler, errorHandler, aperture, props, context) {
+    var data = {}
+    var setComponentData
     var finalHandler = function(initialProps, initialContext) {
         var effectHandler = handler(initialProps, initialContext)
         return function(effect) {
             if (effect && effect.type === COMPONENT_EFFECT) {
-                setComponentData(effect.payload)
+                if (setComponentData) {
+                    setComponentData(effect.payload)
+                } else {
+                    data = effect.payload
+                }
             } else {
                 effectHandler(effect)
             }
@@ -535,15 +525,31 @@ var configureHook = function(
         return this
     }),
     _a)
-    var eventBus = createEventBus(dataObservable, pushEvent)
-    var sinkObservable = aperture(props, context)(eventBus)
+    var component = createBaseComponent(dataObservable, pushEvent)
+    var sinkObservable = aperture(props, context)(component)
     var sinkSubscription = subscribeToSink(
         sinkObservable,
         finalHandler(props, context),
         errorHandler ? errorHandler(props, context) : undefined
     )
-    return function() {
-        return sinkSubscription.unsubscribe()
+    var pushMountEvent = function() {
+        pushEvent(MOUNT_EVENT)(undefined)
+    }
+    var pushUnmountEvent = function() {
+        pushEvent(UNMOUNT_EVENT)(undefined)
+    }
+    return {
+        data: data,
+        unsubscribe: function() {
+            pushUnmountEvent()
+            sinkSubscription.unsubscribe()
+        },
+        pushMountEvent: pushMountEvent,
+        registerSetData: function(setData) {
+            setComponentData = function(data) {
+                return setData({ data: data })
+            }
+        }
     }
     var _a
 }
@@ -555,22 +561,26 @@ var createRefractHook = function(handler, errorHandler, DependencyContext) {
         DependencyContext = EmptyContext
     }
     var useRefract = function(aperture, initialProps) {
-        var _a = useState({}),
-            data = _a[0],
-            setData = _a[1]
         var dependencies = useContext(DependencyContext)
-        useEffect(function() {
-            var unsubscribe = configureHook(
-                handler,
-                errorHandler,
-                aperture,
-                setData,
-                initialProps,
-                dependencies
-            )
-            return unsubscribe
+        var _a = useState(
+                configureHook(
+                    handler,
+                    errorHandler,
+                    aperture,
+                    initialProps,
+                    dependencies
+                )
+            ),
+            hook = _a[0],
+            setData = _a[1]
+        useLayoutEffect(function() {
+            hook.registerSetData(setData)
+            hook.pushMountEvent()
+            return function() {
+                return hook.unsubscribe()
+            }
         }, [])
-        return data
+        return hook.data
     }
     return useRefract
 }

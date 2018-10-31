@@ -22,8 +22,8 @@ function App() {
 function Layout() {
     // const [direction, setDirection ] = useState('NONE')
     // const count = 0
-    const { count, direction, setDirection } = useRefract(() => eventBus => {
-        const [direction$, setDirection] = eventBus.useEvent(
+    const { count, direction, setDirection } = useRefract(() => component => {
+        const [direction$, setDirection] = component.useEvent(
             'direction',
             'NONE'
         )
@@ -52,19 +52,19 @@ function Layout() {
             <p>Current direction: {direction}</p>
             <p>
                 <button
-                    className={direction === 'INCREASE' && 'active'}
+                    className={direction === 'INCREASE' ? 'active' : undefined}
                     onClick={() => setDirection('INCREASE')}
                 >
                     Increase
                 </button>
                 <button
-                    className={direction === 'NONE' && 'active'}
+                    className={direction === 'NONE' ? 'active' : undefined}
                     onClick={() => setDirection('NONE')}
                 >
                     Pause
                 </button>
                 <button
-                    className={direction === 'DECREASE' && 'active'}
+                    className={direction === 'DECREASE' ? 'active' : undefined}
                     onClick={() => setDirection('DECREASE')}
                 >
                     Decrease

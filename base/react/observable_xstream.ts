@@ -16,7 +16,9 @@ import {
 
 export { Listener, Subscription }
 
-export interface EventBus {
+export interface ObservableComponentBase {
+    mount: Stream<any>
+    unmount: Stream<any>
     fromEvent: <T>(
         eventName: string,
         valueTransformer?: (val: any) => T
@@ -28,16 +30,14 @@ export interface EventBus {
     ) => [Stream<T>, (val: T) => any]
 }
 
-export interface ObservableComponentBase {
+export interface Observe {
     observe: <T>(
         propName?: string,
         valueTransformer?: (val: any) => T
     ) => Stream<T>
-    mount: Stream<any>
-    unmount: Stream<any>
 }
 
-export type ObservableComponent = ObservableComponentBase & EventBus
+export type ObservableComponent = Observe & ObservableComponentBase
 
 export type Aperture<P, E, C = any> = (
     component: ObservableComponent,
@@ -56,7 +56,10 @@ export const subscribeToSink = <T>(
         complete: () => void 0
     })
 
-const getEventBus = (data: Stream<any>, pushEvent: PushEvent): EventBus => {
+const getComponentBase = (
+    data: Stream<any>,
+    pushEvent: PushEvent
+): ObservableComponentBase => {
     const fromEvent = <T>(eventName, valueTransformer?) =>
         data.filter(isEvent(eventName)).map((data: EventData) => {
             const { value } = data.payload
@@ -65,6 +68,8 @@ const getEventBus = (data: Stream<any>, pushEvent: PushEvent): EventBus => {
         })
 
     return {
+        mount: data.filter(isEvent(MOUNT_EVENT)).mapTo(undefined),
+        unmount: data.filter(isEvent(UNMOUNT_EVENT)).mapTo(undefined),
         fromEvent,
         pushEvent,
         useEvent: <T>(eventName: string, seedValue?: T) => {
@@ -81,6 +86,35 @@ const getEventBus = (data: Stream<any>, pushEvent: PushEvent): EventBus => {
     }
 }
 
+export const getObserve = <P>(instance, data) => {
+    return function observe<T>(propName?, valueTransformer?) {
+        if (propName && typeof instance.props[propName] === 'function') {
+            return data()
+                .filter(isCallback(propName))
+                .map((data: CallbackData) => {
+                    const { args } = data.payload
+                    return valueTransformer ? valueTransformer(args) : args[0]
+                })
+        }
+
+        if (propName) {
+            return data()
+                .filter(isProps)
+                .map((data: PropsData<P>) => {
+                    const prop = data.payload[propName]
+
+                    return valueTransformer ? valueTransformer(prop) : prop
+                })
+                .compose(dropRepeats())
+        }
+
+        return data()
+            .filter(isProps)
+            .map((data: PropsData<P>) => data.payload)
+            .compose(dropRepeats(shallowEquals))
+    }
+}
+
 export const createComponent = <P>(
     instance,
     dataObservable,
@@ -89,47 +123,14 @@ export const createComponent = <P>(
     const data = () => xs.from<Data<P>>(dataObservable)
 
     return {
-        mount: data()
-            .filter(isEvent(MOUNT_EVENT))
-            .mapTo(undefined),
-        unmount: data()
-            .filter(isEvent(UNMOUNT_EVENT))
-            .mapTo(undefined),
-        observe: <T>(propName?, valueTransformer?) => {
-            if (propName && typeof instance.props[propName] === 'function') {
-                return data()
-                    .filter(isCallback(propName))
-                    .map((data: CallbackData) => {
-                        const { args } = data.payload
-                        return valueTransformer
-                            ? valueTransformer(args)
-                            : args[0]
-                    })
-            }
-
-            if (propName) {
-                return data()
-                    .filter(isProps)
-                    .map((data: PropsData<P>) => {
-                        const prop = data.payload[propName]
-
-                        return valueTransformer ? valueTransformer(prop) : prop
-                    })
-                    .compose(dropRepeats())
-            }
-
-            return data()
-                .filter(isProps)
-                .map((data: PropsData<P>) => data.payload)
-                .compose(dropRepeats(shallowEquals))
-        },
-        ...getEventBus(data(), pushEvent)
+        observe: getObserve(instance, data),
+        ...getComponentBase(data(), pushEvent)
     }
 }
 
-export const createEventBus = (
+export const createBaseComponent = (
     dataObservable,
     pushEvent: PushEvent
-): EventBus => {
-    return getEventBus(xs.from(dataObservable), pushEvent)
+): ObservableComponentBase => {
+    return getComponentBase(xs.from(dataObservable), pushEvent)
 }

@@ -2,28 +2,34 @@ import $$observable from 'symbol-observable'
 import { COMPONENT_EFFECT } from './effects'
 import {
     Listener,
-    createEventBus,
+    createBaseComponent,
     Subscription,
     subscribeToSink,
-    EventBus
+    ObservableComponentBase
 } from './observable'
-import { createEventData } from './data'
+import { createEventData, MOUNT_EVENT, UNMOUNT_EVENT } from './data'
 import { PushEvent } from './baseTypes'
 
-export const configureHook = <E, Ctx>(
+export const configureHook = <E, C>(
     handler,
     errorHandler,
     aperture,
-    setComponentData,
     props,
-    context: Ctx
+    context: C
 ) => {
+    let data = {}
+    let setComponentData
+
     const finalHandler = (initialProps, initialContext) => {
         const effectHandler = handler(initialProps, initialContext)
 
         return effect => {
             if (effect && effect.type === COMPONENT_EFFECT) {
-                setComponentData(effect.payload)
+                if (setComponentData) {
+                    setComponentData(effect.payload)
+                } else {
+                    data = effect.payload
+                }
             } else {
                 effectHandler(effect)
             }
@@ -56,9 +62,12 @@ export const configureHook = <E, Ctx>(
         }
     }
 
-    const eventBus: EventBus = createEventBus(dataObservable, pushEvent)
+    const component: ObservableComponentBase = createBaseComponent(
+        dataObservable,
+        pushEvent
+    )
 
-    const sinkObservable = aperture(props, context)(eventBus)
+    const sinkObservable = aperture(props, context)(component)
 
     const sinkSubscription: Subscription = subscribeToSink<E>(
         sinkObservable,
@@ -66,5 +75,23 @@ export const configureHook = <E, Ctx>(
         errorHandler ? errorHandler(props, context) : undefined
     )
 
-    return () => sinkSubscription.unsubscribe()
+    const pushMountEvent = () => {
+        pushEvent(MOUNT_EVENT)(undefined)
+    }
+
+    const pushUnmountEvent = () => {
+        pushEvent(UNMOUNT_EVENT)(undefined)
+    }
+
+    return {
+        data,
+        unsubscribe: () => {
+            pushUnmountEvent()
+            sinkSubscription.unsubscribe()
+        },
+        pushMountEvent,
+        registerSetData: setData => {
+            setComponentData = data => setData({ data })
+        }
+    }
 }

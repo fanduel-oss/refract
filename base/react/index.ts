@@ -1,5 +1,9 @@
 import { withEffects } from './withEffects'
-import { ObservableComponent, Aperture, EventBus } from './observable'
+import {
+    ObservableComponent,
+    Aperture,
+    ObservableComponentBase
+} from './observable'
 import { ErrorHandler, Handler, PushEvent } from './baseTypes'
 import { compose, Compose } from './compose'
 import {
@@ -27,7 +31,7 @@ export {
     PropEffect,
     PROPS_EFFECT,
     createRefractHook,
-    EventBus,
+    ObservableComponentBase,
     toComponent,
     COMPONENT_EFFECT,
     ComponentEffect
