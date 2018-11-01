@@ -86,9 +86,9 @@ const getComponentBase = (
     }
 }
 
-export const getObserve = <P>(instance, data) => {
+export const getObserve = <P>(getProp, data) => {
     return function observe<T>(propName?, valueTransformer?) {
-        if (propName && typeof instance.props[propName] === 'function') {
+        if (propName && typeof getProp(propName) === 'function') {
             return data()
                 .filter(isCallback(propName))
                 .map((data: CallbackData) => {
@@ -116,21 +116,14 @@ export const getObserve = <P>(instance, data) => {
 }
 
 export const createComponent = <P>(
-    instance,
+    getProp,
     dataObservable,
     pushEvent: PushEvent
 ): ObservableComponent => {
     const data = () => xs.from<Data<P>>(dataObservable)
 
     return {
-        observe: getObserve(instance, data),
+        observe: getObserve(getProp, data),
         ...getComponentBase(data(), pushEvent)
     }
-}
-
-export const createBaseComponent = (
-    dataObservable,
-    pushEvent: PushEvent
-): ObservableComponentBase => {
-    return getComponentBase(xs.from(dataObservable), pushEvent)
 }

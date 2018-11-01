@@ -11,6 +11,7 @@ import React__default, {
     useState,
     useContext,
     useLayoutEffect,
+    useEffect,
     isValidElement,
     createElement,
     Component
@@ -177,9 +178,9 @@ var getComponentBase = function(data, pushEvent) {
         }
     }
 }
-var getObserve = function(instance, data) {
+var getObserve = function(getProp, data) {
     return function observe(propName, valueTransformer) {
-        if (propName && typeof instance.props[propName] === 'function') {
+        if (propName && typeof getProp(propName) === 'function') {
             return data().pipe(
                 filter(isCallback(propName)),
                 map(function(data) {
@@ -207,17 +208,14 @@ var getObserve = function(instance, data) {
         )
     }
 }
-var createComponent = function(instance, dataObservable, pushEvent) {
+var createComponent = function(getProp, dataObservable, pushEvent) {
     var data = function() {
         return from(dataObservable)
     }
     return __assign(
-        { observe: getObserve(instance, data) },
+        { observe: getObserve(getProp, data) },
         getComponentBase(data(), pushEvent)
     )
-}
-var createBaseComponent = function(dataObservable, pushEvent) {
-    return getComponentBase(from(dataObservable), pushEvent)
 }
 
 var configureComponent = function(handler, errorHandler) {
@@ -318,7 +316,13 @@ var configureComponent = function(handler, errorHandler) {
             return this
         }),
         _a)
-        var component = createComponent(instance, dataObservable, pushEvent)
+        var component = createComponent(
+            function(propName) {
+                return instance.props[propName]
+            },
+            dataObservable,
+            pushEvent
+        )
         var sinkObservable = aperture(instance.props, instance.context)(
             component
         )
@@ -478,17 +482,18 @@ var compose = function() {
     }
 }
 
-var configureHook = function(handler, errorHandler, aperture, props, context) {
-    var data = {}
+var configureHook = function(handler, errorHandler, aperture, data, context) {
+    var returnedData = {}
+    var lastData = data
     var setComponentData
-    var finalHandler = function(initialProps, initialContext) {
-        var effectHandler = handler(initialProps, initialContext)
+    var finalHandler = function(initialData, initialContext) {
+        var effectHandler = handler(initialData, initialContext)
         return function(effect) {
             if (effect && effect.type === COMPONENT_EFFECT) {
                 if (setComponentData) {
                     setComponentData(effect.payload)
                 } else {
-                    data = effect.payload
+                    returnedData = effect.payload
                 }
             } else {
                 effectHandler(effect)
@@ -514,6 +519,7 @@ var configureHook = function(handler, errorHandler, aperture, props, context) {
     var dataObservable = ((_a = {
         subscribe: function(listener) {
             addListener(listener)
+            listener.next(createPropsData(lastData))
             return {
                 unsubscribe: function() {
                     return removeListener(listener)
@@ -525,12 +531,18 @@ var configureHook = function(handler, errorHandler, aperture, props, context) {
         return this
     }),
     _a)
-    var component = createBaseComponent(dataObservable, pushEvent)
-    var sinkObservable = aperture(props, context)(component)
+    var component = createComponent(
+        function(propName) {
+            return data[propName]
+        },
+        dataObservable,
+        pushEvent
+    )
+    var sinkObservable = aperture(data, context)(component)
     var sinkSubscription = subscribeToSink(
         sinkObservable,
-        finalHandler(props, context),
-        errorHandler ? errorHandler(props, context) : undefined
+        finalHandler(data, context),
+        errorHandler ? errorHandler(data, context) : undefined
     )
     var pushMountEvent = function() {
         pushEvent(MOUNT_EVENT)(undefined)
@@ -539,15 +551,23 @@ var configureHook = function(handler, errorHandler, aperture, props, context) {
         pushEvent(UNMOUNT_EVENT)(undefined)
     }
     return {
-        data: data,
+        data: returnedData,
         unsubscribe: function() {
             pushUnmountEvent()
             sinkSubscription.unsubscribe()
         },
         pushMountEvent: pushMountEvent,
+        pushData: function(data) {
+            lastData = data
+            listeners.forEach(function(listener) {
+                listener.next(createPropsData(data))
+            })
+        },
         registerSetData: function(setData) {
             setComponentData = function(data) {
-                return setData({ data: data })
+                return setData(function(hook) {
+                    return __assign({}, hook, { data: data })
+                })
             }
         }
     }
@@ -560,14 +580,14 @@ var createRefractHook = function(handler, errorHandler, DependencyContext) {
     if (DependencyContext === void 0) {
         DependencyContext = EmptyContext
     }
-    var useRefract = function(aperture, initialProps) {
+    var useRefract = function(aperture, data) {
         var dependencies = useContext(DependencyContext)
         var _a = useState(
                 configureHook(
                     handler,
                     errorHandler,
                     aperture,
-                    initialProps,
+                    data,
                     dependencies
                 )
             ),
@@ -580,6 +600,9 @@ var createRefractHook = function(handler, errorHandler, DependencyContext) {
                 return hook.unsubscribe()
             }
         }, [])
+        useEffect(function() {
+            hook.pushData(data)
+        })
         return hook.data
     }
     return useRefract

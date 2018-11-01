@@ -2,33 +2,39 @@ import $$observable from 'symbol-observable'
 import { COMPONENT_EFFECT } from './effects'
 import {
     Listener,
-    createBaseComponent,
+    createComponent,
     Subscription,
     subscribeToSink,
-    ObservableComponentBase
+    ObservableComponent
 } from './observable'
-import { createEventData, MOUNT_EVENT, UNMOUNT_EVENT } from './data'
+import {
+    createEventData,
+    MOUNT_EVENT,
+    UNMOUNT_EVENT,
+    createPropsData
+} from './data'
 import { PushEvent } from './baseTypes'
 
-export const configureHook = <E, C>(
+export const configureHook = <D, E, C>(
     handler,
     errorHandler,
     aperture,
-    props,
+    data: D,
     context: C
 ) => {
-    let data = {}
+    let returnedData = {}
+    let lastData = data
     let setComponentData
 
-    const finalHandler = (initialProps, initialContext) => {
-        const effectHandler = handler(initialProps, initialContext)
+    const finalHandler = (initialData, initialContext) => {
+        const effectHandler = handler(initialData, initialContext)
 
         return effect => {
             if (effect && effect.type === COMPONENT_EFFECT) {
                 if (setComponentData) {
                     setComponentData(effect.payload)
                 } else {
-                    data = effect.payload
+                    returnedData = effect.payload
                 }
             } else {
                 effectHandler(effect)
@@ -55,6 +61,8 @@ export const configureHook = <E, C>(
         subscribe(listener: Listener<any>) {
             addListener(listener)
 
+            listener.next(createPropsData(lastData))
+
             return { unsubscribe: () => removeListener(listener) }
         },
         [$$observable]() {
@@ -62,17 +70,18 @@ export const configureHook = <E, C>(
         }
     }
 
-    const component: ObservableComponentBase = createBaseComponent(
+    const component: ObservableComponent = createComponent(
+        propName => data[propName],
         dataObservable,
         pushEvent
     )
 
-    const sinkObservable = aperture(props, context)(component)
+    const sinkObservable = aperture(data, context)(component)
 
     const sinkSubscription: Subscription = subscribeToSink<E>(
         sinkObservable,
-        finalHandler(props, context),
-        errorHandler ? errorHandler(props, context) : undefined
+        finalHandler(data, context),
+        errorHandler ? errorHandler(data, context) : undefined
     )
 
     const pushMountEvent = () => {
@@ -84,14 +93,21 @@ export const configureHook = <E, C>(
     }
 
     return {
-        data,
+        data: returnedData,
         unsubscribe: () => {
             pushUnmountEvent()
             sinkSubscription.unsubscribe()
         },
         pushMountEvent,
+        pushData: (data: D) => {
+            lastData = data
+
+            listeners.forEach(listener => {
+                listener.next(createPropsData(data))
+            })
+        },
         registerSetData: setData => {
-            setComponentData = data => setData({ data })
+            setComponentData = data => setData(hook => ({ ...hook, data }))
         }
     }
 }

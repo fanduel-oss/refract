@@ -1,22 +1,22 @@
 // @ts-ignore
-import React, { useState, useContext, useLayoutEffect } from 'react'
+import React, { useState, useContext, useLayoutEffect, useEffect } from 'react'
 import { configureHook } from './configureHook'
 
 const EmptyContext = React.createContext({})
 
-export const createRefractHook = <P, C = {}>(
+export const createRefractHook = <D, E, C = {}>(
     handler,
     errorHandler,
     DependencyContext = EmptyContext
 ) => {
-    const useRefract = (aperture, initialProps) => {
+    const useRefract = (aperture, data) => {
         const dependencies = useContext(DependencyContext) as C
         const [hook, setData] = useState(
-            configureHook<P, C>(
+            configureHook<D, E, C>(
                 handler,
                 errorHandler,
                 aperture,
-                initialProps,
+                data,
                 dependencies
             )
         )
@@ -27,6 +27,10 @@ export const createRefractHook = <P, C = {}>(
 
             return () => hook.unsubscribe()
         }, [])
+
+        useEffect(() => {
+            hook.pushData(data)
+        })
 
         return hook.data
     }
