@@ -31,12 +31,12 @@
 </p>
 <br/>
 
-*   :bowling: **Decentralised**: attach effects and side-effects to your components, for better code splitting results
-*   :sunrise: **Gradual**: use on an existing component today, throughout your app tomorrow
-*   :rocket: **Reactive**: leverage the power and benefits of reactive programming
-*   :floppy_disk: **Tiny**: less than 2Kb minified and gzipped
-*   :pencil: **Typed**: written in TypeScript, fully typed integrations
-*   :zap: **Universal**: supports React, React Native, Inferno and Preact
+*   🎳 **Decentralised**: attach effects and side-effects to your components, for better code splitting results
+*   🌅 **Gradual**: use on an existing component today, throughout your app tomorrow
+*   🚀 **Reactive**: leverage the power and benefits of reactive programming
+*   💾 **Tiny**: less than 2Kb minified and gzipped
+*   ✏ **Typed**: written in TypeScript, fully typed integrations
+*   ⚡ **Universal**: supports React, React Native, Inferno and Preact
 
 Refract lets you handle your component effects and side-effects, so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
