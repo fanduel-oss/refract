@@ -5,7 +5,8 @@ import {
     createComponent,
     Subscription,
     subscribeToSink,
-    ObservableComponent
+    ObservableComponent,
+    Aperture
 } from './observable'
 import {
     createEventData,
@@ -13,12 +14,12 @@ import {
     UNMOUNT_EVENT,
     createPropsData
 } from './data'
-import { PushEvent } from './baseTypes'
+import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 
 export const configureHook = <D, E, C>(
-    handler,
-    errorHandler,
-    aperture,
+    handler: Handler<D, E, C>,
+    errorHandler: ErrorHandler<D, C>,
+    aperture: Aperture<D, E, C>,
     data: D,
     context: C
 ) => {
