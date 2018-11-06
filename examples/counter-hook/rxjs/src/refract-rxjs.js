@@ -483,7 +483,7 @@ var compose = function() {
 }
 
 var configureHook = function(handler, errorHandler, aperture, data, context) {
-    var returnedData = {}
+    var returnedData
     var lastData = data
     var setComponentData
     var finalHandler = function(initialData, initialContext) {
@@ -575,10 +575,9 @@ var configureHook = function(handler, errorHandler, aperture, data, context) {
 }
 
 // @ts-ignore
-var EmptyContext = React__default.createContext({})
 var createRefractHook = function(handler, errorHandler, DependencyContext) {
     if (DependencyContext === void 0) {
-        DependencyContext = EmptyContext
+        DependencyContext = React__default.createContext({})
     }
     var useRefract = function(aperture, data) {
         var dependencies = useContext(DependencyContext)
