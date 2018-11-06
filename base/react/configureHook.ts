@@ -23,7 +23,7 @@ export const configureHook = <D, E, C>(
     data: D,
     context: C
 ) => {
-    let returnedData = {}
+    let returnedData
     let lastData = data
     let setComponentData
 

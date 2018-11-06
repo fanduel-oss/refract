@@ -4,7 +4,7 @@ import { configureHook } from './configureHook'
 import { Aperture } from './observable'
 import { Handler, ErrorHandler } from './baseTypes'
 
-export const createRefractHook = <D, CD, E, C = {}>(
+export const createRefractHook = <D, CD = any, E = any, C = any>(
     handler: Handler<D, E, C>,
     errorHandler: ErrorHandler<D, C>,
     DependencyContext: React.Context<C> = React.createContext({} as C)
@@ -32,7 +32,7 @@ export const createRefractHook = <D, CD, E, C = {}>(
             hook.pushData(data)
         })
 
-        return hook.data
+        return hook.data as CD
     }
 
     return useRefract
