@@ -55,10 +55,10 @@ After providing an effect handler, and optionally an error handler and a Context
 
 ## Returns
 
-`componentData` _(any)_: Refract hooks have a special built-in effect to push data to your component. Effects emitted by your aperture and wrapped with `toComponent` will be returned by your hook.
+`componentData` _(any)_: Refract hooks have a special built-in effect to push data to your component. Effects emitted by your aperture and wrapped with `toRender` will be returned by your hook.
 
 ```js
-import { toComponent } from 'refract-rxjs'
+import { toRender } from 'refract-rxjs'
 ```
 
 ## Example

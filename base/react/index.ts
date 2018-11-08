@@ -11,7 +11,7 @@ import {
     toProps,
     PROPS_EFFECT,
     PropEffect,
-    toComponent,
+    toRender,
     COMPONENT_EFFECT,
     ComponentEffect
 } from './effects'
@@ -32,7 +32,7 @@ export {
     PROPS_EFFECT,
     createRefractHook,
     ObservableComponentBase,
-    toComponent,
+    toRender,
     COMPONENT_EFFECT,
     ComponentEffect
 }

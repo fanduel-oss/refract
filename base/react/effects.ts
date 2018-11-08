@@ -30,7 +30,7 @@ export const asProps = <P>(props: P): PropEffect<P> => ({
     }
 })
 
-export const toComponent = <D>(data: D): ComponentEffect<D> => ({
+export const toRender = <D>(data: D): ComponentEffect<D> => ({
     type: COMPONENT_EFFECT,
     payload: data
 })
