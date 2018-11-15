@@ -99,4 +99,4 @@ const BaseComponent = () => {
 ## Tips
 
 *   Take a look at our recipe for [dependency injection](../recipes/dependency-injection.md) into your Refract components.
-*   `createRefractHook` enables to create a re-usable hook bound to a `handler` (and `errorHandler`).
+*   `createRefractHook` enables you to create a re-usable hook bound to a `handler` (and `errorHandler`).
