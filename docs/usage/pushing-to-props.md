@@ -51,12 +51,12 @@ With the ability to set component props and to listen to events (with `pushEvent
 
 The example below is a simple counter example: each time a button is clicked, the count is incremented. We use a reducer to persist state between events, and pass it as props. It will sound familiar if you've used Redux: we go from events to state to props, the same way Redux (with `connect`) goes from actions to state to props (see [Replacing react-redux connect HoC](../recipes/replacing-connect.md]) recipe). Refract can be used to bind together state from multiple sources.
 
-Note the use of `component.useEvent(eventName)` which returns a tuple containing the result of `fromEvent(eventName)` and `pushEvent(eventName)`.
+Note the use of `component.useEvent(eventName)` which returns a tuple containing the result of `fromEvent(eventName)` and `pushEvent(eventName)` (and the use of `startWith` to ensure the `addOne` prop is passed to the component on initial render).
 
 ```js
 import React from 'react'
 import { withEffects, toProps } from 'refract-rxjs'
-import { scan, map } from 'rxjs/operators'
+import { scan, startWith, map } from 'rxjs/operators'
 
 const Counter = ({ count, addOne }) => <button onClick={addOne}>{count}</button>
 
@@ -64,16 +64,14 @@ const aperture = ({ initialCount }) => component => {
     const [addOneEvents$, addOne] = component.useEvent('addOne')
 
     return addOneEvents$.pipe(
-        scan(
-            ({ count, ...props }) => ({
-                ...props,
-                count: count + 1
-            }),
-            {
-                count: initialCount,
-                addOne
-            }
-        ),
+        startWith({
+            count: initialCount,
+            addOne
+        }),
+        scan(({ count, ...props }) => ({
+            ...props,
+            count: count + 1
+        })),
         map(toProps)
     )
 }
