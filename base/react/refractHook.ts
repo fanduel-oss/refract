@@ -5,14 +5,14 @@ import { Aperture } from './observable'
 import { Handler, ErrorHandler } from './baseTypes'
 
 export interface Config<D, E> {
-    handler: Handler<D, E>
-    errorHandler: ErrorHandler<D>
+    handler?: Handler<D, E>
+    errorHandler?: ErrorHandler<D>
 }
 
 export const useRefract = <D, CD = any, E = any>(
     aperture: Aperture<D, E>,
     data: D,
-    config: Partial<Config<D, E>> = {}
+    config: Config<D, E> = {}
 ): CD => {
     const [hook, setData] = useState(
         configureHook<D, E>(aperture, data, config.handler, config.errorHandler)
