@@ -40,7 +40,7 @@ import { withEffects, toProps } from 'refract-rxjs'
 import { scan, map } from 'rxjs/operators'
 import Toggle from './Toggle'
 
-const hander = () => () => {}
+const handler = () => () => {}
 
 const aperture = initialProps => component => {
     const [toggleEvents$, toggle] = component.useEvent('toggle')

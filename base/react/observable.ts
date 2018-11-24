@@ -11,7 +11,7 @@ import {
     distinctUntilChanged,
     startWith
 } from 'rxjs/operators'
-import { PushEvent } from './baseTypes'
+import { PushEvent, Handler, ErrorHandler } from './baseTypes'
 import {
     isEvent,
     MOUNT_EVENT,
@@ -46,9 +46,10 @@ export interface ObservableComponent {
 }
 
 export type Aperture<P, E, C = any> = (
+    component: ObservableComponent,
     initialProps: P,
-    initialContext: C
-) => (component: ObservableComponent) => Observable<E>
+    initialContext?: C
+) => Observable<E>
 
 export const subscribeToSink = <T>(
     sink: Observable<T>,
