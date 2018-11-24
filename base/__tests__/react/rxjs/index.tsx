@@ -95,10 +95,8 @@ describe('refract-rxjs', () => {
             newProp: string
         }
         const BaseComponent = jest.fn().mockReturnValue(<div />)
-        const handler = () => () => void 0
         const WithEffects = withEffects<Props, PropEffect, ChildProps>(
-            asPropsAperture,
-            { handler }
+            asPropsAperture
         )(BaseComponent)
 
         const node = mount(<WithEffects prop="hello" />)
@@ -127,10 +125,8 @@ describe('refract-rxjs', () => {
             newProp: string
         }
         const BaseComponent = jest.fn().mockReturnValue(<div />)
-        const handler = () => () => void 0
         const WithEffects = withEffects<Props, PropEffect, ChildProps>(
-            toPropsAperture,
-            { handler }
+            toPropsAperture
         )(BaseComponent)
 
         const node = mount(<WithEffects prop="hello" />)
@@ -151,16 +147,13 @@ describe('refract-rxjs', () => {
     })
 
     it('should render virtual elements', () => {
-        const handler = () => () => void 0
         interface Props {
             prop: string
         }
         const aperture = createRenderingAperture<React.ReactNode>(prop => (
             <div>{prop}</div>
         ))
-        const WithEffects = withEffects<Props, React.ReactNode>(aperture, {
-            handler
-        })()
+        const WithEffects = withEffects<Props, React.ReactNode>(aperture)()
 
         const node = mount(<WithEffects prop="hello" />)
 
