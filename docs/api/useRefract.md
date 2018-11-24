@@ -11,45 +11,37 @@ Used to create a custom hook.
 ```js
 const useRefract = useRefract(aperture, data, {
     handler,
-    errorHandler,
-    Context
+    errorHandler
 })
 ```
 
-After providing an effect handler, and optionally an error handler and a Context, `useRefract` needs to be passed an `aperture` and optionally some custom `data`.
-
 ## Arguments
 
-1.  `handler` _(function)_: a function which causes side-effects in response to `effect` values.
+1.  `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
 
-    Signature: `(initialData, initialContext) => (effect) => { /* handle effect here */ }`
+    Signature: `(component, initialData) => { return effectStream }`.
 
     *   The `initialData` passed to the hook (second argument).
-    *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
+    *   The `component` is an object which lets you observe: see [Observing React](../usage/observing-react.md). The `observe` method allows you to observe `data` passed to your hook.
+    *   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
+
+1.  `data` _(object)_: an object of data (state, props, context) passed to your hook.
+
+1.  `handler` _(function)_: a _optional_ function which causes side-effects in response to `effect` values.
+
+    Signature: `(initialData) => (effect) => { /* handle effect here */ }`
+
+    *   The `initialData` passed to the hook (second argument).
     *   The `effect` is each value emitted by your `aperture`.
     *   Within the body of the function, you cause any side-effect you wish.
 
 1.  `errorHandler` _(function)_: an _optional_ function for catching any unexpected errors thrown within your `aperture`. Typically used for logging errors.
 
-    Signature: `(initialData, initialContext) => (error) => { /* handle error here */ }`
+    Signature: `(initialData) => (error) => { /* handle error here */ }`
 
     *   The `initialData` passed to the hook (second argument).
-    *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
     *   The `error` is each value emitted by your `aperture`.
     *   Within the body of the function, you cause any side-effect you wish.
-
-1.  `Context` _(ReactContext)_: a React Context object. Its initial value will be passed to `handler`, `errorHandler` and `aperture` (React 16.6.0 and above only).
-
-1.  `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
-
-    Signature: `(initialData, initialContext) => (component) => { return effectStream }`.
-
-    *   The `initialData` passed to the hook (second argument).
-    *   The `initialContext` is the initial context value of the provided `Context` (see above, React >= 16.6.0 only)
-    *   The `component` is an object which lets you observe: see [Observing React](../usage/observing-react.md). The `observe` method allows you to observe `data` passed to your hook.
-    *   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
-
-1.  `data` _(object)_: an object of data (state, props, context) passed to your hook.
 
 ## Returns
 

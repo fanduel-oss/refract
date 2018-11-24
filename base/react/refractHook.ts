@@ -1,30 +1,21 @@
 // @ts-ignore
-import React, { useState, useContext, useLayoutEffect, useEffect } from 'react'
+import { useState, useLayoutEffect, useEffect } from 'react'
 import { configureHook } from './configureHook'
 import { Aperture } from './observable'
 import { Handler, ErrorHandler } from './baseTypes'
 
-export interface Config<D, E, C = any> {
-    handler: Handler<D, E, C>
-    errorHandler: ErrorHandler<D, C>
-    Context: React.Context<C>
+export interface Config<D, E> {
+    handler: Handler<D, E>
+    errorHandler: ErrorHandler<D>
 }
 
-export const useRefract = <D, CD = any, E = any, C = any>(
-    aperture: Aperture<D, E, C>,
+export const useRefract = <D, CD = any, E = any>(
+    aperture: Aperture<D, E>,
     data: D,
-    config: Partial<Config<D, E, C>> = {}
+    config: Partial<Config<D, E>> = {}
 ): CD => {
-    const DependencyContext = config.Context || React.createContext({} as C)
-    const dependencies = useContext(DependencyContext) as C
     const [hook, setData] = useState(
-        configureHook<D, E, C>(
-            aperture,
-            data,
-            dependencies,
-            config.handler,
-            config.errorHandler
-        )
+        configureHook<D, E>(aperture, data, config.handler, config.errorHandler)
     )
 
     useLayoutEffect(() => {

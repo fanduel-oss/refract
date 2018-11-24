@@ -16,19 +16,18 @@ import {
 } from './data'
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 
-export const configureHook = <D, E, C>(
-    aperture: Aperture<D, E, C>,
+export const configureHook = <D, E>(
+    aperture: Aperture<D, E>,
     data: D,
-    context: C,
-    handler: Handler<D, E, C> = () => () => void 0,
-    errorHandler?: ErrorHandler<D, C>
+    handler: Handler<D, E> = () => () => void 0,
+    errorHandler?: ErrorHandler<D>
 ) => {
     let returnedData
     let lastData = data
     let setComponentData
 
-    const finalHandler = (initialData, initialContext) => {
-        const effectHandler = handler(initialData, initialContext)
+    const finalHandler = initialData => {
+        const effectHandler = handler(initialData)
 
         return effect => {
             if (effect && effect.type === COMPONENT_EFFECT) {
@@ -77,12 +76,12 @@ export const configureHook = <D, E, C>(
         pushEvent
     )
 
-    const sinkObservable = aperture(component, data, context)
+    const sinkObservable = aperture(component, data)
 
     const sinkSubscription: Subscription = subscribeToSink<E>(
         sinkObservable,
-        finalHandler(data, context),
-        errorHandler ? errorHandler(data, context) : undefined
+        finalHandler(data),
+        errorHandler ? errorHandler(data) : undefined
     )
 
     const pushMountEvent = () => {
