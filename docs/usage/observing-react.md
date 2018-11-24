@@ -2,7 +2,7 @@
 
 > This document focuses on React, but the same applies to Inferno and Preact
 
-> A Refract hook is available in version 2.3.0-alpha.0. API is similar except functions cannot be observed. For more detail, see [createRefractHook API](../api/createRefractHook.md)
+> A Refract hook is available in version 2.3.0-alpha.0. API is similar except functions cannot be observed. For more detail, see [useRefract API](../api/useRefract.md)
 
 Refract exposes an object called `component` as your `aperture`'s second argument, which allows you to cause side-effects in response to changes within your React app.
 

@@ -1,21 +1,19 @@
-# createRefractHook
+# useRefract
 
 Used to create a custom hook.
 
 ## Packages
 
-`createRefractHook` is provided by our React packages - `refract-*`. It is only available for versions of React supporting hooks (React 16.7.0-alhpa.0 and above).
+`useRefract` is provided by our React packages - `refract-*`. It is only available for versions of React supporting hooks (React 16.7.0-alhpa.0 and above).
 
 ## Signature
 
 ```js
-const useRefract = createRefractHook(
+const useRefract = useRefract(aperture, data, {
     handler,
-    errorHandler?,
-    Context?
-)
-
-const componentData = useRefract(aperture, data?)
+    errorHandler,
+    Context
+})
 ```
 
 After providing an effect handler, and optionally an error handler and a Context, `useRefract` needs to be passed an `aperture` and optionally some custom `data`.
@@ -64,7 +62,7 @@ import { toRender } from 'refract-rxjs'
 ## Example
 
 ```js
-import { createRefractHook } from 'refract-rxjs'
+import { useRefract } from 'refract-rxjs'
 
 const handler = initialData => effect => {
     switch (effect.type) {
@@ -74,9 +72,7 @@ const handler = initialData => effect => {
     }
 }
 
-const useRefract = createRefractHook(handler)
-
-const aperture = initialData => component => {
+const aperture = (component, initialData) => {
     return component.observe('username').pipe(
         debounce(2000),
         map(username => ({
@@ -90,7 +86,7 @@ const aperture = initialData => component => {
 const BaseComponent = () => {
     const [ username, setUsername ] = useState()
 
-    useRefract(aperture, { username })
+    useRefract(aperture, { username }, { handler })
 
     return <input value={username} onChange={evt => setUsername(evt.target.value)} />
 )
@@ -98,5 +94,4 @@ const BaseComponent = () => {
 
 ## Tips
 
-*   Take a look at our recipe for [dependency injection](../recipes/dependency-injection.md) into your Refract components.
-*   `createRefractHook` enables you to create a re-usable hook bound to a `handler` (and `errorHandler`).
+Take a look at our recipe for [dependency injection](../recipes/dependency-injection.md) into your Refract components.

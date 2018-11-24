@@ -17,11 +17,11 @@ import {
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 
 export const configureHook = <D, E, C>(
-    handler: Handler<D, E, C>,
-    errorHandler: ErrorHandler<D, C>,
     aperture: Aperture<D, E, C>,
     data: D,
-    context: C
+    context: C,
+    handler: Handler<D, E, C> = () => () => void 0,
+    errorHandler?: ErrorHandler<D, C>
 ) => {
     let returnedData
     let lastData = data
@@ -77,7 +77,7 @@ export const configureHook = <D, E, C>(
         pushEvent
     )
 
-    const sinkObservable = aperture(data, context)(component)
+    const sinkObservable = aperture(component, data, context)
 
     const sinkSubscription: Subscription = subscribeToSink<E>(
         sinkObservable,

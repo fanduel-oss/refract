@@ -15,7 +15,7 @@ import {
     COMPONENT_EFFECT,
     ComponentEffect
 } from './effects'
-import { createRefractHook } from './refractHook'
+import { useRefract } from './refractHook'
 
 export {
     withEffects,
@@ -30,7 +30,7 @@ export {
     toProps,
     PropEffect,
     PROPS_EFFECT,
-    createRefractHook,
+    useRefract,
     ObservableComponentBase,
     toRender,
     COMPONENT_EFFECT,
