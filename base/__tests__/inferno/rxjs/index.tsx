@@ -98,10 +98,8 @@ describe('refract-inferno-rxjs', () => {
             newProp: string
         }
         const BaseComponent = jest.fn().mockReturnValue(<div />)
-        const handler = () => () => void 0
         const WithEffects = withEffects<Props, PropEffect, ChildProps>(
-            asPropsAperture,
-            { handler }
+            asPropsAperture
         )(BaseComponent)
 
         const node = mount(
@@ -133,10 +131,8 @@ describe('refract-inferno-rxjs', () => {
             newProp: string
         }
         const BaseComponent = jest.fn().mockReturnValue(<div />)
-        const handler = () => () => void 0
         const WithEffects = withEffects<Props, PropEffect, ChildProps>(
-            toPropsAperture,
-            { handler }
+            toPropsAperture
         )(BaseComponent)
 
         const node = mount(
@@ -160,14 +156,13 @@ describe('refract-inferno-rxjs', () => {
     })
 
     it('should render virtual elements', () => {
-        const handler = () => () => void 0
         interface Props {
             prop: string
         }
         const aperture = createRenderingAperture<VNode>(prop => (
             <div>{prop}</div>
         ))
-        const WithEffects = withEffects<Props, VNode>(aperture, { handler })()
+        const WithEffects = withEffects<Props, VNode>(aperture)()
 
         const node = mount(
             // @ts-ignore
