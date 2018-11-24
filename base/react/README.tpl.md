@@ -127,10 +127,12 @@ The `withEffects` higher-order component implements your side-effect logic as a 
 
 Signature: `(aperture, { handler }) => (Component) => { return WrappedComponent }`
 
-*   The hoc takes in three curried arguments:
-    *   A `handler` function
+*   The hoc takes in two arguments, followed by a component:
     *   An `aperture` function
-    *   A React `Component`
+    *   An optional `config` object accepting
+        *   a `handler` function
+        *   a `errorHandler` function
+        *   a `Context` object (React only)
 *   The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
 
 # Learn Refract

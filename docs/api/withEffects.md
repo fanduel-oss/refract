@@ -11,7 +11,7 @@ Used to enhance a plain component, wrapping it in a WithEffects component which 
 ```js
 withEffects = (
     aperture,
-    { handler?, errorHandler?, Context? }
+    config: { handler?, errorHandler?, Context? }
 ) => BaseComponent => {
     return WrappedComponent
 }
@@ -21,16 +21,16 @@ withEffects = (
 
 1.  `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
 
-    Signature: `(initialProps, initialContext) => (component) => { return effectStream }`.
+    Signature: `(component, initialProps, initialContext?) => { return effectStream }`.
 
+    *   The `component` is an object which lets you observe your React, Inferno or Preact component: see [Observing React](../usage/observing-react.md)
     *   The `initialProps` are all props passed into the `WrappedComponent`.
     *   The `initialContext` is the initial context value of the provided `Context` (see above, React >= 16.6.0 only)
-    *   The `component` is an object which lets you observe your React, Inferno or Preact component: see [Observing React](../usage/observing-react.md)
     *   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
 
 1.  `handler` _(function)_: an _optional_ function which causes side-effects in response to `effect` values.
 
-    Signature: `(initialProps, initialContext) => (effect) => { /* handle effect here */ }`
+    Signature: `(initialProps, initialContext?) => (effect) => { /* handle effect here */ }`
 
     *   The `initialProps` are all props passed into the `WrappedComponent`.
     *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
@@ -39,7 +39,7 @@ withEffects = (
 
 1.  `errorHandler` _(function)_: an _optional_ function for catching any unexpected errors thrown within your `aperture`. Typically used for logging errors.
 
-    Signature: `(initialProps, initialContext) => (error) => { /* handle error here */ }`
+    Signature: `(initialProps, initialContext?) => (error) => { /* handle error here */ }`
 
     *   The `initialProps` are all props passed into the `WrappedComponent`.
     *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
