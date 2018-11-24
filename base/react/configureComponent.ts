@@ -19,7 +19,7 @@ import {
 } from './data'
 
 const configureComponent = <P, E, Ctx>(
-    handler: Handler<P, E, Ctx>,
+    handler?: Handler<P, E, Ctx>,
     errorHandler?: ErrorHandler<P>
 ) => (
     aperture: Aperture<P, E, Ctx>,
@@ -49,7 +49,9 @@ const configureComponent = <P, E, Ctx>(
     }
 
     const finalHandler = (initialProps, initialContext) => {
-        const effectHandler = handler(initialProps, initialContext)
+        const effectHandler = handler
+            ? handler(initialProps, initialContext)
+            : () => void 0
 
         return effect => {
             if (isValidElement(effect)) {
@@ -126,7 +128,7 @@ const configureComponent = <P, E, Ctx>(
         pushEvent
     )
 
-    const sinkObservable = aperture(instance.props, instance.context)(component)
+    const sinkObservable = aperture(component, instance.props, instance.context)
 
     const sinkSubscription: Subscription = subscribeToSink<E>(
         sinkObservable,

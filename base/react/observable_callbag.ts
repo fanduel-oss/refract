@@ -51,9 +51,10 @@ export interface ObservableComponent {
 }
 
 export type Aperture<P, E, C = any> = (
+    component: ObservableComponent,
     initialProps: P,
     initialContext: C
-) => (component: ObservableComponent) => Sink<E>
+) => Sink<E>
 
 export const subscribeToSink = <T>(
     sink: Sink<T>,

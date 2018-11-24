@@ -13,6 +13,11 @@ export interface State {
     children: VNode | null
 }
 
+export interface Config<P, E> {
+    handler: Handler<P, E>
+    errorHandler: ErrorHandler<P, E>
+}
+
 const Empty = () => null
 
 const isValidElement = (value: any): boolean =>
@@ -31,9 +36,9 @@ const isComponentClass = (ComponentClass: any): boolean =>
     )
 
 export const withEffects = <P, E, CP = P>(
-    handler: Handler<P, E>,
-    errorHandler?: ErrorHandler<P>
-) => (aperture: Aperture<P, E>) => (
+    aperture: Aperture<P, E>,
+    config: Partial<Config<P, E>> = {}
+) => (
     BaseComponent: ComponentType<CP & { pushEvent: PushEvent }> = Empty
 ): ComponentClass<P> =>
     class WithEffects extends Component<P, State> {
@@ -49,7 +54,7 @@ export const withEffects = <P, E, CP = P>(
         constructor(props: any, context: any) {
             super(props, context)
 
-            configureComponent(handler, errorHandler)(
+            configureComponent(config.handler, config.errorHandler)(
                 aperture,
                 this,
                 isValidElement,

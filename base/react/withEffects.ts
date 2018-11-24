@@ -13,6 +13,12 @@ export interface State {
     children: React.ReactNode | null
 }
 
+export interface Config<P, E, C = any> {
+    handler: Handler<P, E, C>
+    errorHandler: ErrorHandler<P, C>
+    Context: React.Context<C>
+}
+
 const isComponentClass = (ComponentClass: any): boolean =>
     Boolean(
         ComponentClass &&
@@ -23,14 +29,13 @@ const isComponentClass = (ComponentClass: any): boolean =>
 const Empty = () => null
 
 export const withEffects = <P, E, CP = P, C = any>(
-    handler: Handler<P, E, C>,
-    errorHandler?: ErrorHandler<P, C>,
-    Context?: React.Context<C>
-) => (aperture: Aperture<P, E, C>) => (
+    aperture: Aperture<P, E, C>,
+    config: Partial<Config<P, E, C>> = {}
+) => (
     BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }> = Empty
 ): React.ComponentClass<P> =>
     class WithEffects extends React.Component<P, State> {
-        public static contextType = Context
+        public static contextType = config.Context
 
         private triggerMount: () => void
         private triggerUnmount: () => void
@@ -44,7 +49,7 @@ export const withEffects = <P, E, CP = P, C = any>(
         constructor(props: any, context: any) {
             super(props, context)
 
-            configureComponent(handler, errorHandler)(
+            configureComponent(config.handler, config.errorHandler)(
                 aperture,
                 this,
                 React.isValidElement,
