@@ -23,7 +23,7 @@ export interface ExtraProps {
     clickLink: () => void
 }
 
-export const aperture: Aperture<Props, Effect> = props => component => {
+export const aperture: Aperture<Props, Effect> = component => {
     const value$ = component.observe<number>('value')
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
@@ -81,7 +81,7 @@ interface SinkProps {
 export const asPropsAperture: Aperture<
     SourceProps,
     PropEffect<SinkProps>
-> = () => component =>
+> = component =>
     component.observe().pipe(
         map(({ prop }) => ({
             newProp: `${prop} world`
@@ -92,7 +92,7 @@ export const asPropsAperture: Aperture<
 export const toPropsAperture: Aperture<
     SourceProps,
     PropEffect<SinkProps>
-> = () => component =>
+> = component =>
     component.observe().pipe(
         map(({ prop }) => ({
             newProp: `${prop} world`
@@ -103,7 +103,7 @@ export const toPropsAperture: Aperture<
 export const createRenderingAperture = <VNode>(
     render: (prop: string) => VNode
 ) => {
-    const aperture: Aperture<SourceProps, VNode> = () => component =>
+    const aperture: Aperture<SourceProps, VNode> = component =>
         component.observe('prop').pipe(map(render))
 
     return aperture

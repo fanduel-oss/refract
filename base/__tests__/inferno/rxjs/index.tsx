@@ -25,17 +25,16 @@ describe('refract-inferno-rxjs', () => {
     }
 
     it('should create a HoC', () => {
-        const WithEffects = withEffects<Props, Effect>(handler)(aperture)(
-            () => <div />
-        )
+        withEffects<Props, Effect>(aperture, { handler })(() => <div />)
     })
 
     it('should observe component changes', () => {
         const effectValueHandler = jest.fn()
         const setValue = () => void 0
         const WithEffects = withEffects<Props, Effect, Props & ExtraProps>(
-            () => effectValueHandler
-        )(aperture)(({ setValue, clickLink }) => (
+            aperture,
+            { handler: () => effectValueHandler }
+        )(({ setValue, clickLink }) => (
             <div>
                 <button onClick={() => setValue(10)} />
                 <a onClick={() => clickLink()} />
@@ -99,9 +98,10 @@ describe('refract-inferno-rxjs', () => {
             newProp: string
         }
         const BaseComponent = jest.fn().mockReturnValue(<div />)
-        const hander = () => () => void 0
-        const WithEffects = withEffects<Props, PropEffect, ChildProps>(hander)(
-            asPropsAperture
+        const handler = () => () => void 0
+        const WithEffects = withEffects<Props, PropEffect, ChildProps>(
+            asPropsAperture,
+            { handler }
         )(BaseComponent)
 
         const node = mount(
@@ -133,9 +133,10 @@ describe('refract-inferno-rxjs', () => {
             newProp: string
         }
         const BaseComponent = jest.fn().mockReturnValue(<div />)
-        const hander = () => () => void 0
-        const WithEffects = withEffects<Props, PropEffect, ChildProps>(hander)(
-            toPropsAperture
+        const handler = () => () => void 0
+        const WithEffects = withEffects<Props, PropEffect, ChildProps>(
+            toPropsAperture,
+            { handler }
         )(BaseComponent)
 
         const node = mount(
@@ -159,14 +160,14 @@ describe('refract-inferno-rxjs', () => {
     })
 
     it('should render virtual elements', () => {
-        const hander = () => () => void 0
+        const handler = () => () => void 0
         interface Props {
             prop: string
         }
         const aperture = createRenderingAperture<VNode>(prop => (
             <div>{prop}</div>
         ))
-        const WithEffects = withEffects<Props, VNode>(hander)(aperture)()
+        const WithEffects = withEffects<Props, VNode>(aperture, { handler })()
 
         const node = mount(
             // @ts-ignore

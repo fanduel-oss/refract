@@ -15,16 +15,14 @@ describe('refract-preact-callbag', () => {
     }
 
     it('should create a HoC', () => {
-        const WithEffects = withEffects<Props, Effect>(handler)(aperture)(
-            () => <div />
-        )
+        withEffects<Props, Effect>(aperture, { handler })(() => <div />)
     })
 
     // it('should observe component changes', () => {
     //     const effectValueHandler = jest.fn()
     //     const setValue = () => void 0
     //     const WithEffects = withEffects<Props, Effect>(
-    //         () => effectValueHandler
+    //         {handler: () => effectValueHandler }
     //     )(aperture)(({ setValue, pushEvent }) => (
     //         <div>
     //             <button onClick={() => setValue(10)} />
