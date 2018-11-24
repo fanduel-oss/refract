@@ -11,7 +11,7 @@ By using your streaming library's utilities aimed at creating observables, you c
 For example, you can observe the `window.popstate` event to respond to the user clicking back/forward in the browser:
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     const popstate$ = fromEvent(window, 'popstate').pipe(
         map(event => ({
             type: 'POPSTATE',
@@ -24,10 +24,8 @@ const aperture = initialProps => component => {
 Or as another example, you could listen to the `window.resize` event in order to dynamically alter your logic depending on the user's screen size:
 
 ```js
-const aperture = initialProps => component => {
-    const resize$ = fromEvent(window, 'resize').pipe(
-        debounce(500)        
-    )
+const aperture = component => {
+    const resize$ = fromEvent(window, 'resize').pipe(debounce(500))
 }
 ```
 
@@ -38,7 +36,7 @@ Your streaming library will also provide utilities for observing the passing of 
 For example, if you want to do something once every few seconds as a kind of background process, it's easy to create an interval stream:
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     const interval$ = interval(4000) // emits once every four seconds
 }
 ```

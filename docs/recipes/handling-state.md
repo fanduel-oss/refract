@@ -40,9 +40,7 @@ import { withEffects, toProps } from 'refract-rxjs'
 import { scan, startWith, map } from 'rxjs/operators'
 import Toggle from './Toggle'
 
-const handler = () => () => {}
-
-const aperture = initialProps => component => {
+const aperture = component => {
     const [toggleEvents$, toggle] = component.useEvent('toggle')
 
     return toggleEvents$.pipe(
@@ -58,7 +56,7 @@ const aperture = initialProps => component => {
     )
 }
 
-const ToggleWithState = withEffects(handler)(aperture)(Toggle)
+const ToggleWithState = withEffects(aperture)(Toggle)
 
 export default ToggleWithState
 ```
@@ -77,8 +75,7 @@ import { scan, startWith, map } from 'rxjs/operators'
 
 const { Provider, Consumer: CounterStateConsumer } = React.createContext({})
 
-const handler = () => () => {}
-const aperture = initialProps => component => {
+const aperture = (component, initialProps) => {
     const children$ = component.observe('children')
 
     const [countEvents$, countUp] = component.useEvent('count')
@@ -100,7 +97,7 @@ const aperture = initialProps => component => {
     )
 }
 
-const CounterStateProvider = withEffects(handler)(aperture)()
+const CounterStateProvider = withEffects(aperture)()
 
 export { CounterStateProvider, CounterStateConsumer }
 ```

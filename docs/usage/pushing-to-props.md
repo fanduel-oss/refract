@@ -26,15 +26,13 @@ const DoubleValue = ({ value, doubledValue }) => (
     <div>Two times {value} is {doubledValue}</button>
 )
 
-const aperture = ({ initialCount }) => component => {
+const aperture = (component, { initialCount }) => {
     component.observe('value').pipe(map(value => toProps({
         doubledValue: 2 * value
     })))
 }
 
-const handler = () => () => {}
-
-export default withEffects(handler)(aperture)(DoubleValue)
+export default withEffects(aperture)(DoubleValue)
 ```
 
 ## Replacing Props
@@ -60,7 +58,7 @@ import { scan, startWith, map } from 'rxjs/operators'
 
 const Counter = ({ count, addOne }) => <button onClick={addOne}>{count}</button>
 
-const aperture = ({ initialCount }) => component => {
+const aperture = (component, { initialCount }) => {
     const [addOneEvents$, addOne] = component.useEvent('addOne')
 
     return addOneEvents$.pipe(
@@ -76,7 +74,5 @@ const aperture = ({ initialCount }) => component => {
     )
 }
 
-const handler = () => () => {}
-
-export default withEffects(handler)(aperture)(Counter)
+export default withEffects(aperture)(Counter)
 ```

@@ -85,7 +85,7 @@ The example below uses `refract-rxjs` to send data to localstorage.
 Every time the `username` prop changes, its new value is sent into the stream. The stream debounces the input for two seconds, then maps it into an object (with a `type` of `localstorage`) under the key `value`. Each time an effect with the correct type is emitted from this pipeline, the handler calls `localstorage.setItem` with the effect's `name` and `value` properties.
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     return component.observe('username').pipe(
         debounce(2000),
         map(username => ({
@@ -104,7 +104,7 @@ const handler = initialProps => effect => {
     }
 }
 
-const WrappedComponent = withEffects(handler)(aperture)(BaseComponent)
+const WrappedComponent = withEffects(aperture, { handler })(BaseComponent)
 ```
 
 ### Aperture
