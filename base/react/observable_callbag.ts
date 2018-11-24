@@ -58,7 +58,7 @@ export type ObservableComponent = Observe & ObservableComponentBase
 export type Aperture<P, E, C = any> = (
     component: ObservableComponent,
     initialProps: P,
-    initialContext: C
+    initialContext?: C
 ) => Sink<E>
 
 export const subscribeToSink = <T>(
