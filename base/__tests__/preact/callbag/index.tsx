@@ -22,8 +22,8 @@ describe('refract-preact-callbag', () => {
     //     const effectValueHandler = jest.fn()
     //     const setValue = () => void 0
     //     const WithEffects = withEffects<Props, Effect>(
-    //         {handler: () => effectValueHandler }
-    //     )(aperture)(({ setValue, pushEvent }) => (
+    //         aperture, { handler: () => effectValueHandler }
+    //     )(({ setValue, pushEvent }) => (
     //         <div>
     //             <button onClick={() => setValue(10)} />
     //             <a onClick={pushEvent('linkClick')} />
