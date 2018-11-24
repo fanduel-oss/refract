@@ -23,7 +23,7 @@ fetch(`https://api.github.com/users/${username}`)
 When using fetch inside an aperture, there's actually a little extra boilerplate needed, and even worse it makes our aperture impure:
 
 ```js
-const aperture = () => component =>
+const aperture = component =>
     component.observe('username').pipe(
         mergeMap(username =>
             fromPromise(
@@ -40,7 +40,7 @@ The error catching logic is also problematic. If we take the approach shown abov
 Alternatively, we could introduce even more boilerplate and handle errors directly in the stream:
 
 ```js
-const aperture = () => component =>
+const aperture = component =>
     component
         .observe('username')
         .pipe(
@@ -93,7 +93,7 @@ ReactDOM.render(<App api={apiDependency} />)
 This dependency could then be exposed to Refract, allowing it to be called inside the apertures like so:
 
 ```js
-const aperture = ({ api }) => component =>
+const aperture = (component, { api }) =>
     component
         .observe('username')
         .pipe(mergeMap(username => api.getUser(username)))

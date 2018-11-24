@@ -24,6 +24,6 @@ import { withEffects, compose } from 'refract-rxjs'
 
 const WrappedComponent = compose(
     connect(mapStateToProps, mapDispatchToProps),
-    withEffects(handler)(aperture)
+    withEffects(aperture)
 )(BaseComponent)
 ```

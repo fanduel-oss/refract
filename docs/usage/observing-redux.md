@@ -5,7 +5,7 @@ _Before you can observe your Redux store, make sure you have used dependency inj
 Refract adds a method to your store called `observe` (see [Getting Started](./getting-started.md)), which you can use to observe Redux from inside your `aperture`.
 
 ```js
-const aperture = initialProps => component => {
+const aperture = (component, initialProps) => {
     const streamFromStore$ = initialProps.store.observe('something')
 }
 ```
@@ -17,7 +17,7 @@ const aperture = initialProps => component => {
 If you pass in a string, `store.observe` returns a stream of actions dispatched to your store which have that string as their action type.
 
 ```js
-const aperture = ({ store }) => component => {
+const aperture = (component, { store }) => {
     const ping$ = store.observe('PING')
     const pong$ = store.observe('PONG')
 }
@@ -43,7 +43,7 @@ const storeShape = {
 
 const getBalance = username => state => state.users[username].balance
 
-const aperture = ({ store }) => component => {
+const aperture = (component, { store }) => {
     const balance$ = store.observe(getBalance('SomeUserName'))
 }
 ```
@@ -53,7 +53,7 @@ In this example, `balance$` will receive a new value every time the user's balan
 Note that this is particularly powerful in combination with curried selectors - by tweaking the above example to use the `initialProps` to source the username, we can select the slice of state dynamically:
 
 ```js
-const aperture = ({ store, username }) => component => {
+const aperture = (component, { store, username }) => {
     const balance$ = store.observe(getBalance(username))
 }
 ```

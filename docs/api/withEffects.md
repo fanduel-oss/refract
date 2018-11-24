@@ -10,17 +10,25 @@ Used to enhance a plain component, wrapping it in a WithEffects component which 
 
 ```js
 withEffects = (
-    handler,
-    errorHandler?,
-    Context?
-) => aperture => BaseComponent => {
+    aperture,
+    { handler?, errorHandler?, Context? }
+) => BaseComponent => {
     return WrappedComponent
 }
 ```
 
 ## Arguments
 
-1.  `handler` _(function)_: a function which causes side-effects in response to `effect` values.
+1.  `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
+
+    Signature: `(initialProps, initialContext) => (component) => { return effectStream }`.
+
+    *   The `initialProps` are all props passed into the `WrappedComponent`.
+    *   The `initialContext` is the initial context value of the provided `Context` (see above, React >= 16.6.0 only)
+    *   The `component` is an object which lets you observe your React, Inferno or Preact component: see [Observing React](../usage/observing-react.md)
+    *   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
+
+1.  `handler` _(function)_: an _optional_ function which causes side-effects in response to `effect` values.
 
     Signature: `(initialProps, initialContext) => (effect) => { /* handle effect here */ }`
 
@@ -40,15 +48,6 @@ withEffects = (
 
 1.  `Context` _(ReactContext)_: a React Context object. Its initial value will be passed to `handler`, `errorHandler` and `aperture` (React 16.6.0 and above only).
 
-1.  `aperture` _(function)_: a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
-
-    Signature: `(initialProps, initialContext) => (component) => { return effectStream }`.
-
-    *   The `initialProps` are all props passed into the `WrappedComponent`.
-    *   The `initialContext` is the initial context value of the provided `Context` (see above, React >= 16.6.0 only)
-    *   The `component` is an object which lets you observe your React, Inferno or Preact component: see [Observing React](../usage/observing-react.md)
-    *   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
-
 1.  `BaseComponent` _(React component)_: any react component.
 
 ## Returns
@@ -64,7 +63,7 @@ const BaseComponent = ({ username, onChange }) => (
     <input value={username} onChange={onChange} />
 )
 
-const aperture = initialProps => component => {
+const aperture = component => {
     return component.observe('username').pipe(
         debounce(2000),
         map(username => ({
@@ -83,7 +82,7 @@ const handler = initialProps => effect => {
     }
 }
 
-const WrappedComponent = withEffects(handler)(aperture)(BaseComponent)
+const WrappedComponent = withEffects(aperture, { handler })(BaseComponent)
 ```
 
 ## Tips

@@ -22,9 +22,7 @@ import { map } from 'rxjs/operators'
 import { withEffects, toProps } from 'refract-rxjs'
 import { getUser, getPosts } from './mySelectors'
 
-const handler = () => () => {}
-
-const aperture = initialProps => component => {
+const aperture = (component, initialProps) => {
     const { store } = initialProps
 
     const user$ = store.observe(getUser)
@@ -39,7 +37,7 @@ const aperture = initialProps => component => {
     )
 }
 
-const ContainerComponent = withEffects(handler)(aperture)(BaseComponent)
+const ContainerComponent = withEffects(aperture)(BaseComponent)
 ```
 
 Let's look at the example above step by step:
@@ -91,7 +89,7 @@ const toDispatch = action => ({
     payload: action
 })
 
-const aperture = initialProps => component => {
+const aperture = component => {
     const [ addPostEvents$, addPost] = component.pushEvent('addPost')
     const [ removePostEvents$, removePost] = component.pushEvent('removePost')
 
@@ -108,7 +106,7 @@ const aperture = initialProps => component => {
     })
 }
 
-const ContainerComponent = withEffects(handler)(aperture)(BaseComponent)
+const ContainerComponent = withEffects(aperture, { handler })(BaseComponent)
 ```
 
 Again, it is a more verbose approach than `mapDispatchToProps`. But by separating action creation from dispatching logic, it enables you to hook other side-effects that you could otherwise find in a Redux middleware (like analytics events).
