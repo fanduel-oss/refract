@@ -19,13 +19,12 @@ import {
 } from './data'
 
 const configureComponent = <P, E, Ctx>(
-    handler?: Handler<P, E, Ctx>,
-    errorHandler?: ErrorHandler<P>
-) => (
     aperture: Aperture<P, E, Ctx>,
     instance: any,
     isValidElement: (val: any) => boolean = () => false,
-    isComponentClass: (val: any) => boolean = () => false
+    isComponentClass: (val: any) => boolean = () => false,
+    handler?: Handler<P, E, Ctx>,
+    errorHandler?: ErrorHandler<P>
 ) => {
     instance.state = {
         renderEffect: false,
