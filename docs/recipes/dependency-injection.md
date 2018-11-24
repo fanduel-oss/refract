@@ -43,9 +43,11 @@ import { withEffects } from 'refract-rxjs'
 
 const MyComponent = props => <Foo {...props} />
 
-export default withEffects(handler, errorHandler, Context)(aperture)(
-    MyComponent
-)
+export default withEffects(aperture, {
+    handler,
+    errorHandler,
+    Context
+})(MyComponent)
 ```
 
 `handler`, `errorHandler` and `aperture` will then be called with two arguments:
@@ -62,7 +64,7 @@ import { withEffects } from 'refract-rxjs'
 
 const MyComponent = props => <Foo {...props} />
 
-export default withEffects(handler)(aperture)(MyComponent)
+export default withEffects(aperture, { handler })(MyComponent)
 ```
 
 ```js
@@ -95,7 +97,7 @@ import RefractContext from './refractContext'
 const MyComponent = props => <Foo {...props} />
 
 export default contextToProps(RefractContext.Consumer)(
-    withEffects(handler)(aperture)(MyComponent)
+    withEffects(aperture, { handler })(MyComponent)
 )
 ```
 
@@ -116,10 +118,10 @@ import { contextToProps } from 'react-zap'
 
 const RefractContext = createContext()
 
-const enhancedWithEffects = (handler, errorHandler) => aperture => BaseComponent =>
+const enhancedWithEffects = (aperture, { handler, errorHandler }) => BaseComponent =>
     compose(
         contextToProps(RefractContext.Consumer),
-        withEffects(handler, errorHandler)(aperture)
+        withEffects(aperture, { handler, errorHandler })
     )(BaseComponent)
 
 export {
@@ -135,5 +137,5 @@ import { withEffects } from './sideEffects'
 
 const MyComponent = props => <Foo {...props} />
 
-export default withEffects(handler)(aperture)(MyComponent) // now includes dependencies!
+export default withEffects(aperture, { handler })(MyComponent) // now includes dependencies!
 ```

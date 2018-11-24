@@ -5,7 +5,7 @@
 Refract exposes an object called `component` as your `aperture`'s second argument, which allows you to cause side-effects in response to changes within your React app.
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     /* ... */
 }
 ```
@@ -21,7 +21,7 @@ const Input = ({ value, onChange }) => (
     <input value={value} onChange={onChange} />
 )
 
-const InputWithEffects = withEffects(handler)(aperture)(Input)
+const InputWithEffects = withEffects(aperture, { handler })(Input)
 
 class Container extends Component {
     state = { currentvalue: '' }
@@ -52,7 +52,7 @@ Refract's `component.observe` function lets you observe your React props. It han
 *   `propTransformer` _(function)_: an optional function to transform each received value of `propName`
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     const onChange$ = component.observe('onChange')
     const value$ = component.observe('value')
     /* create effects here */
@@ -72,7 +72,7 @@ Refract emits new prop values only if they have changed. The change detection is
 For example, if we want to observe the `value` prop in our aperture, and only cause an effect when the new string is at least five characters long:
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     const value$ = component.observe('value')
 
     return value$.pipe(filter(string => string.length > 5))
@@ -94,7 +94,7 @@ When the prop you observe is a function, `component.observe` will return a strea
 For example, if we want to observe arguments passed to the `onChange` prop to achieve the same effect as above:
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     const onChange$ = component.observe('onChange')
 
     return onChange$.pipe(filter(string => string.length > 5))
@@ -119,7 +119,7 @@ Instead, when you do not specify a `propName`, `component.observe` will return a
 For example, if you wanted to just send all props through to your `handler` every time one of them changes:
 
 ```js
-const aperture = initialProps => component => component.observe()
+const aperture = component => component.observe()
 ```
 
 ## Observing Events
@@ -146,7 +146,7 @@ In your aperture, you can observe events by simply invoking `component.fromEvent
 *   `eventTransformer` _(function)_: an optional function to transform the value of each `eventName` event
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     const buttonClick$ = component.fromEvent('buttonClick')
 
     return buttonClick$.pipe(mapTo('Button clicked!'))
@@ -161,7 +161,7 @@ A convenient helper function `useEvent` is available on `component`, to make it 
 *   `seedValue` _(any)_: an optional seed value to initialise the streem of event values with
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     const [ value$, setValue ] = component.useEvent('eventName', '')
 
     return value$.pipe(map(value => toProps({
@@ -183,7 +183,7 @@ These are streams which emit an event, like a signal, either when the component 
 It can be useful to defer any logic until a component has been mounted.
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     const mount$ = component.mount
 
     return mount$.pipe(mapTo('Component mounted!'))
@@ -197,7 +197,7 @@ const aperture = initialProps => component => {
 It can be useful to trigger side-effects when a component is about to be unmounted.
 
 ```js
-const aperture = initialProps => component => {
+const aperture = component => {
     const unmount$ = component.unmount
 
     return unmount$.pipe(mapTo('Component unmounted!'))

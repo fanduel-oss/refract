@@ -9,9 +9,11 @@ A `side-effect` is a general term in computer science. In the context of an app,
 An `aperture` controls the streams of data which enter Refract.
 
 ```js
-type Aperture<P, E> = (
-    initialProps: P
-) => (component: ObservableComponent) => Observable<E>
+type Aperture<P, E, C> = (
+    component: ObservableComponent,
+    initialProps: P,
+    initialContext: C
+) => Observable<E>
 ```
 
 It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
@@ -27,7 +29,7 @@ It's expected that for most applications, `effect`s will likely be plain JavaScr
 A `handler` causes side-effects in response to any `effect` value output by the `aperture`.
 
 ```js
-type Handler<P, E> = (initialProps: P) => (effect: E) => void
+type Handler<P, E> = (initialProps: P, initialContext: C) => (effect: E) => void
 ```
 
 It is a function which imperatively calls any side-effect you wish to result from the output of your aperture. This often includes returning data to your app's flow (via `setState` or Redux `dispatch` for example), but could also include external side-effects which do not loop back into your app (such as localstorage or analytics).
@@ -37,7 +39,10 @@ It is a function which imperatively calls any side-effect you wish to result fro
 An `errorHandler` causes side-effects in response to any fatal error occurring within your `aperture`.
 
 ```js
-type ErrorHandler<P> = (initialProps: P) => (error: any) => void
+type ErrorHandler<P> = (
+    initialProps: P,
+    initialContext: C
+) => (error: any) => void
 ```
 
 It is a function which calls any side-effect you wish to result from any fatal errors within your streams. In some situations, an error can occur which breaks your stream pipeline. In this case, the error is handled by your `errorHandler`. Usually, you would be expected to log this error for further investigation.

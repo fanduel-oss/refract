@@ -22,7 +22,7 @@ import { scan, map } from 'rxjs/operators'
 
 const Counter = ({ count, addOne }) => <button onClick={addOne}>{count}</button>
 
-const aperture = ({ initialCount }) => component => {
+const aperture = (component, { initialCount }) => {
     const [addOneEvents$, addOne] = component.useEvent('addOne')
 
     return addOneEvents$.pipe(
@@ -40,7 +40,5 @@ const aperture = ({ initialCount }) => component => {
     )
 }
 
-const handler = () => () => {}
-
-export default withEffects(handler)(aperture)()
+export default withEffects(aperture)()
 ```

@@ -18,7 +18,7 @@ import configureStore from './configureStore'
 import App from './components/App'
 
 const store = configureStore()
-const AppWithEffects = withEffects(handler)(aperture)(App)
+const AppWithEffects = withEffects(aperture, { handler })(App)
 
 ReactDOM.render(
     <Provider store={store}>

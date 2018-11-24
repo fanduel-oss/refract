@@ -29,11 +29,11 @@ import { withEffects } from 'refract-rxjs'
 
 // Note that the handler and aperture are explained later in the docs,
 // these empty functions are just placeholders
-const aperture = initialProps => component => {}
+const aperture = (component, initialProps) => {}
 const handler = initialProps => effect => {}
 //
 
-const CounterWithEffects = withEffects(handler)(aperture)(Counter)
+const CounterWithEffects = withEffects(aperture), { handler }(Counter)
 ```
 
 This new `CounterWithEffects` component now includes the side-effect logic included in our `handler` and `aperture`, and renders the original `Counter` presentational component unaltered. It can be used just like any other component:
