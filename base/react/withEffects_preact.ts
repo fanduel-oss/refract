@@ -53,11 +53,13 @@ export const withEffects = <P, E, CP = P>(
         constructor(props: P) {
             super(props)
 
-            configureComponent(config.handler, config.errorHandler)(
+            configureComponent(
                 aperture,
                 this,
                 isValidElement,
-                isComponentClass
+                isComponentClass,
+                config.handler,
+                config.errorHandler
             )
         }
 
