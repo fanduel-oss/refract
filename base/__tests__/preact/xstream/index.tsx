@@ -22,7 +22,7 @@ describe('refract-preact-xstream', () => {
     //     const effectValueHandler = jest.fn()
     //     const setValue = () => void 0
     //     const WithEffects = withEffects<Props, Effect>(
-    //         {handler: () => effectValueHandler }
+    //         aperture, { handler: () => effectValueHandler }
     //     )(aperture)(({ setValue, pushEvent }) => (
     //         <div>
     //             <button onClick={() => setValue(10)} />
