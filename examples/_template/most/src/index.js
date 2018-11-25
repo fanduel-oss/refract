@@ -4,11 +4,11 @@ import { withEffects } from 'refract-most'
 
 const App = () => <p>Hello, world!</p>
 
-const aperture = intialProps => component => component.observe()
+const aperture = component => component.observe()
 
-const handler = initialProps => effect => {}
+const handler = () => effect => console.log(effect)
 const errorHandler = () => err => console.error(err)
 
-const AppWithEffects = withEffects(handler, errorHandler)(aperture)(App)
+const AppWithEffects = withEffects(aperture, { handler, errorHandler })(App)
 
 render(<AppWithEffects />, document.getElementById('root'))
