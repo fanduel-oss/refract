@@ -9,7 +9,7 @@ import { filter, flatten, map, pipe } from 'callbag-basics'
 import StateContainer from './StateContainer'
 import Layout from './Layout'
 
-const aperture = props => ({ observe }) =>
+const aperture = ({ observe }) =>
     pipe(
         observe('username'),
         filter(Boolean),
@@ -35,7 +35,7 @@ const handler = ({ setState }) => effect => {
     }
 }
 
-const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
+const LayoutWithEffects = withEffects(aperture, { handler })(Layout)
 
 const App = () => (
     <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>
