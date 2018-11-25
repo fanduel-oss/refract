@@ -4,7 +4,7 @@
         "react": "16.1.1",
         "react-dom": "16.1.1",
         "react-scripts": "1.0.10",
-        "refract-xstream": "~1.0.0",
+        "refract-xstream": "3.0.0",
         "xstream": "~11.7.0"
     },
     "version": "0.0.0",
