@@ -14,7 +14,7 @@ const directions = {
     NONE: 0
 }
 
-const aperture = initialProps => component => {
+const aperture = component => {
     const [direction$, setDirection] = component.useEvent('direction', 'NONE')
     const tick$ = interval(1000)
     const count$ = tick$.pipe(
@@ -35,9 +35,7 @@ const aperture = initialProps => component => {
     )
 }
 
-const handler = props => effect => {}
-
-const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
+const LayoutWithEffects = withEffects(aperture)(Layout)
 
 const App = () => <LayoutWithEffects />
 
