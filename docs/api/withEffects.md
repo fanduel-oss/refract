@@ -11,7 +11,7 @@ Used to enhance a plain component, wrapping it in a WithEffects component which 
 ```js
 withEffects = (
     aperture,
-    config: { handler?, errorHandler?, Context? }
+    config: { handler?, errorHandler?, Context?, mergedProps? }
 ) => BaseComponent => {
     return WrappedComponent
 }
@@ -28,25 +28,29 @@ withEffects = (
     *   The `initialContext` is the initial context value of the provided `Context` (see above, React >= 16.6.0 only)
     *   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
 
-1.  `handler` _(function)_: an _optional_ function which causes side-effects in response to `effect` values.
+1.  a `config` object optionally containing the following:
 
-    Signature: `(initialProps, initialContext?) => (effect) => { /* handle effect here */ }`
+    1.  `handler` _(function)_: an _optional_ function which causes side-effects in response to `effect` values.
 
-    *   The `initialProps` are all props passed into the `WrappedComponent`.
-    *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
-    *   The `effect` is each value emitted by your `aperture`.
-    *   Within the body of the function, you cause any side-effect you wish.
+        Signature: `(initialProps, initialContext?) => (effect) => { /* handle effect here */ }`
 
-1.  `errorHandler` _(function)_: an _optional_ function for catching any unexpected errors thrown within your `aperture`. Typically used for logging errors.
+        *   The `initialProps` are all props passed into the `WrappedComponent`.
+        *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
+        *   The `effect` is each value emitted by your `aperture`.
+        *   Within the body of the function, you cause any side-effect you wish.
 
-    Signature: `(initialProps, initialContext?) => (error) => { /* handle error here */ }`
+    1.  `errorHandler` _(function)_: an _optional_ function for catching any unexpected errors thrown within your `aperture`. Typically used for logging errors.
 
-    *   The `initialProps` are all props passed into the `WrappedComponent`.
-    *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
-    *   The `error` is each value emitted by your `aperture`.
-    *   Within the body of the function, you cause any side-effect you wish.
+        Signature: `(initialProps, initialContext?) => (error) => { /* handle error here */ }`
 
-1.  `Context` _(ReactContext)_: a React Context object. Its initial value will be passed to `handler`, `errorHandler` and `aperture` (React 16.6.0 and above only).
+        *   The `initialProps` are all props passed into the `WrappedComponent`.
+        *   The `initialContext` is the initial context value of the provided `Context` (see below, React >= 16.6.0 only)
+        *   The `error` is each value emitted by your `aperture`.
+        *   Within the body of the function, you cause any side-effect you wish.
+
+    1.  `Context` _(ReactContext)_: a React Context object. Its initial value will be passed to `handler`, `errorHandler` and `aperture` (React 16.6.0 and above only).
+
+    1.  `mergedProps`: whether or not props passed with `toProps` or `asProps` should be merged together.
 
 1.  `BaseComponent` _(React component)_: any react component.
 
