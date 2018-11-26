@@ -36,7 +36,7 @@
 
 Refract lets you handle your component effects and side-effects, so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
-Refract makes reactive programming possible in React, React Native, Preact and Inferno, with only a single higher-order component! You can choose to start using a tiny bit of reactive programming, or go full reactive. Refract allows you to:
+Refract makes reactive programming possible in React, React Native, Preact and Inferno, with only a single higher-order component or a single hook! You can choose to start using a tiny bit of reactive programming, or go full reactive. Refract allows you to:
 
 *   [Manage side effects](https://refract.js.org/) like API calls, analytics, logging, etc.
 *   [Manipulate, replace and inject props](https://refract.js.org/usage/pushing-to-props), you can even [fully replace Redux `connect` HoC](https://refract.js.org/recipes/replacing-connect)
@@ -101,39 +101,15 @@ const handler = initialProps => effect => {
 const WrappedComponent = withEffects(aperture, { handler })(BaseComponent)
 ```
 
+The example demonstrates uses the two building blocks used with Refract - an `aperture` and a `handler` - and shows how they can be integrated into a React component via the `withEffects` higher-order component.
+
 ### Aperture
 
-An `aperture` controls the streams of data entering Refract. It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect`s.
-
-Signature: `(component, initialProps) => { return effectStream }`.
-
-*   The `initialProps` are all props passed into the `WrappedComponent`.
-*   The `component` is an object which lets you observe your React component.
-*   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
+An `aperture` controls the streams of data entering Refract. It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
 
 ### Handler
 
-A `handler` is a function which causes side-effects in response to any `effect` object output by the `aperture`.
-
-Signature: `(initialProps) => (effect) => { /* handle effects here */ }`.
-
-*   The `initialProps` are all props passed into the `WrappedComponent`.
-*   The `effect` is each event emitted by your `aperture`.
-*   Within the body of the function, you call any side-effects imperatively.
-
-### withEffects
-
-The `withEffects` higher-order component implements your side-effect logic as a React component.
-
-Signature: `(aperture, { handler }) => (Component) => { return WrappedComponent }`
-
-*   The hoc takes in two arguments, followed by a component:
-    *   An `aperture` function
-    *   An optional `config` object accepting
-        *   a `handler` function
-        *   a `errorHandler` function
-        *   a `Context` object (React only)
-*   The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
+A `handler` is a function which causes side-effects in response to `effect` values.
 
 # Learn Refract
 
