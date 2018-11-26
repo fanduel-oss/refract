@@ -1,4 +1,4 @@
-import { merge, of } from 'most'
+import { merge, of, from } from 'most'
 
 import {
     Aperture,
@@ -87,6 +87,14 @@ export const toPropsAperture: Aperture<
             newProp: `${prop} world`
         }))
         .map(toProps)
+
+export const toMergedPropsAperture: Aperture<
+    SourceProps,
+    PropEffect<{
+        prop1?: number
+        prop2?: number
+    }>
+> = () => merge<any>(of(toProps({ prop1: 1 })), of(toProps({ prop2: 2 })))
 
 export const createRenderingAperture = <VNode>(
     render: (prop: string) => VNode

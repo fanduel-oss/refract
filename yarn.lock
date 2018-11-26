@@ -787,6 +787,11 @@ callbag-merge@2.0.x:
   resolved "https://registry.yarnpkg.com/callbag-merge/-/callbag-merge-2.0.1.tgz#69c2c031fdb40964fe766399fb5af21f50d3270e"
   integrity sha512-Kl6JQ8Swc7DBuIL+Yjkgm92l82vrD2yQCNZHO8M8o6zVI+a0/RAAPLD5qrnGA1WwHLOOD6xAYsm0gzfzAJ3hkA==
 
+callbag-of@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/callbag-of/-/callbag-of-1.0.1.tgz#2b804f42dbce751f609223252cc7728cc9a36b0a"
+  integrity sha512-Ap/DpwdTbN7xnxYRnJ0v5VJem1oYx0ljBWnvQRBR3PEA9+JbxefTxEl79dIgC6gfIR4E3y5pNYH1O05jwU4bgA==
+
 callbag-pipe@1.1.x, callbag-pipe@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/callbag-pipe/-/callbag-pipe-1.1.1.tgz#f9d9f651f0bb64bc78d91f7132d738f066e3a4cf"

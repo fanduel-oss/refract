@@ -100,6 +100,14 @@ export const toPropsAperture: Aperture<
         map(toProps)
     )
 
+export const toMergedPropsAperture: Aperture<
+    SourceProps,
+    PropEffect<{
+        prop1?: number
+        prop2?: number
+    }>
+> = () => of(toProps({ prop1: 1 }), toProps({ prop2: 2 }))
+
 export const createRenderingAperture = <VNode>(
     render: (prop: string) => VNode
 ) => {

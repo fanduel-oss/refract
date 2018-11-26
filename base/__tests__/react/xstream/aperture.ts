@@ -5,6 +5,7 @@ import {
     asProps,
     PropEffect
 } from '../../../../packages/refract-xstream/src'
+import { of } from 'most'
 
 export interface Effect {
     type: string
@@ -82,6 +83,14 @@ export const toPropsAperture: Aperture<
             newProp: `${prop} world`
         }))
         .map(toProps)
+
+export const toMergedPropsAperture: Aperture<
+    SourceProps,
+    PropEffect<{
+        prop1?: number
+        prop2?: number
+    }>
+> = () => xs.of<any>(toProps({ prop1: 1 }), toProps({ prop2: 2 }))
 
 export const createRenderingAperture = <VNode>(
     render: (prop: string) => VNode
