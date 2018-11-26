@@ -40,7 +40,7 @@
 
 Refract lets you handle your component effects and side-effects, so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
-Refract makes reactive programming possible in React, React Native, Preact and Inferno, with only a single higher-order component! You can choose to start using a tiny bit of reactive programming, or go full reactive. Refract allows you to:
+Refract makes reactive programming possible in React, React Native, Preact and Inferno, with only a single higher-order component or a single hook! You can choose to start using a tiny bit of reactive programming, or go full reactive. Refract allows you to:
 
 *   [Manage side effects](https://refract.js.org/usage/getting-started) like API calls, analytics, logging, etc.
 *   [Manipulate, replace and inject props](https://refract.js.org/usage/pushing-to-props), you can even [fully replace Redux `connect` HoC](https://refract.js.org/recipes/replacing-connect)
