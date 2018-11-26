@@ -14,9 +14,9 @@ export interface State {
 }
 
 export interface Config<P, E, C = any> {
-    handler: Handler<P, E, C>
-    errorHandler: ErrorHandler<P, C>
-    Context: React.Context<C>
+    handler?: Handler<P, E, C>
+    errorHandler?: ErrorHandler<P, C>
+    Context?: React.Context<C>
 }
 
 const isComponentClass = (ComponentClass: any): boolean =>
@@ -30,7 +30,7 @@ const Empty = () => null
 
 export const withEffects = <P, E, CP = P, C = any>(
     aperture: Aperture<P, E, C>,
-    config: Partial<Config<P, E, C>> = {}
+    config: Config<P, E, C> = {}
 ) => (
     BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }> = Empty
 ): React.ComponentClass<P> =>
