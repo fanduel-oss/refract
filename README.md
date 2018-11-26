@@ -107,37 +107,15 @@ const handler = initialProps => effect => {
 const WrappedComponent = withEffects(aperture, { handler })(BaseComponent)
 ```
 
+The example demonstrates uses the two building blocks used with Refract - an `aperture` and a `handler` - and shows how they can be integrated into a React component via the `withEffects` higher-order component.
+
 ### Aperture
 
-An `aperture` controls the streams of data entering Refract. It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect`s.
-
-Signature: `(initialProps) => (component) => { return effectStream }`.
-
-*   The `initialProps` are all props passed into the `WrappedComponent`.
-*   The `component` is an object which lets you observe your React component.
-*   Within the body of the function, you observe the event source you choose, pipe the events through your stream library of choice, and return a single stream of effects.
+An `aperture` controls the streams of data entering Refract. It is a function which observes data sources within your app, passes this data through any necessary logic flows, and outputs a stream of `effect` values in response.
 
 ### Handler
 
-A `handler` is a function which causes side-effects in response to any `effect` object output by the `aperture`.
-
-Signature: `(initialProps) => (effect) => { /* handle effects here */ }`.
-
-*   The `initialProps` are all props passed into the `WrappedComponent`.
-*   The `effect` is each event emitted by your `aperture`.
-*   Within the body of the function, you call any side-effects imperatively.
-
-### withEffects
-
-The `withEffects` higher-order component implements your side-effect logic as a React component.
-
-Signature: `(handler) => (aperture) => (Component) => { return WrappedComponent }`
-
-*   The hoc takes in three curried arguments:
-    *   A `handler` function
-    *   An `aperture` function
-    *   A React `Component`
-*   The hoc returns a `WrappedComponent` - an enhanced version of your original `Component` which includes your side-effect logic.
+A `handler` is a function which causes side-effects in response to `effect` values.
 
 # Learn Refract
 
