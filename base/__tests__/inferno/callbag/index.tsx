@@ -13,7 +13,8 @@ import {
     Effect,
     Props,
     ExtraProps,
-    createRenderingAperture
+    createRenderingAperture,
+    toMergedPropsAperture
 } from '../../react/callbag/aperture'
 import { mount } from 'enzyme'
 
@@ -153,6 +154,40 @@ describe('refract-inferno-callbag', () => {
 
         expect(props.prop).toBe('this')
         expect(props.newProp).toBe('this world')
+    })
+
+    it('should not merge props by default', () => {
+        const BaseComponent = jest.fn().mockReturnValue(<div />)
+        const WithEffects = withEffects<{}, PropEffect>(toMergedPropsAperture)(
+            BaseComponent
+        )
+
+        mount(
+            // @ts-ignore
+            <WithEffects />
+        )
+
+        const props = BaseComponent.mock.calls[0][0]
+
+        expect(props.prop1).toBeUndefined()
+        expect(props.prop2).toBe(2)
+    })
+
+    it('should not merge props by default', () => {
+        const BaseComponent = jest.fn().mockReturnValue(<div />)
+        const WithEffects = withEffects<{}, PropEffect>(toMergedPropsAperture, {
+            mergeProps: true
+        })(BaseComponent)
+
+        mount(
+            // @ts-ignore
+            <WithEffects />
+        )
+
+        const props = BaseComponent.mock.calls[0][0]
+
+        expect(props.prop1).toBe(1)
+        expect(props.prop2).toBe(2)
     })
 
     it('should render virtual elements', () => {

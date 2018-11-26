@@ -1,5 +1,7 @@
 import { merge, map, pipe } from 'callbag-basics'
 import startWith from 'callbag-start-with'
+import of from 'callbag-of'
+
 import {
     Aperture,
     toProps,
@@ -86,6 +88,14 @@ export const toPropsAperture: Aperture<
         })),
         map(toProps)
     )
+
+export const toMergedPropsAperture: Aperture<
+    SourceProps,
+    PropEffect<{
+        prop1?: number
+        prop2?: number
+    }>
+> = () => merge(of(toProps({ prop1: 1 }), toProps({ prop2: 2 })))
 
 export const createRenderingAperture = <VNode>(
     render: (prop: string) => VNode
