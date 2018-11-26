@@ -1,6 +1,50 @@
 <!-- prettier-ignore-start -->
 # Changelog
 
+## 27 November 2018
+
+| Packages | Version | Changes |
+| --- | --- | --- |
+| React / Inferno / Preact | 3.0.0 | :rocket: **BREAKING CHANGES**: we've simplified Refract API, to allow for `handler` to be optional [(#124)](https://github.com/fanduel-oss/refract/pull/124)<br>:fire: React packages now have a `useRefract` hook [(#123)](https://github.com/fanduel-oss/refract/pull/123) |
+
+#### API simplification (BREAKING CHANGES)
+
+`withEffects` and `aperture` have now a simplified "flattened" API. `handler`, `errorHandler` and `Context` are entirely optional in `withEffects` (note that `Context` is only for React 16.6.0 and above). In addition `aperture` is now a simple function:
+
+```js
+const aperture = (component, initialProps, initialContext) => {
+    /** Return a stream **/
+}
+
+const MyContainerComponent = withEffects(
+    aperture,
+    { hander, errorHander, Context }
+)(MyBaseComponent)
+```
+
+#### Hook
+
+In addition, a `useRefract` hook has been introduced. It is very similar to `withEffects`:
+- Instead of observing `props`, it can observe `data` passed to it. `data` can be anything: props, context, state.
+- `useRefract` doesn't have the ability to observe functions being called
+- It has only one built-in effect called `toRender`, which enables to return data to your component
+
+```js
+const aperture = (component, initialData) => {
+    /** Return a stream **/
+}
+
+function MyComponent(props) {
+    const context = useContext(MyContext)
+    const data = {
+        ...props,
+        ...context
+    }
+    const returnedData = useRefract(aperture, data)
+}
+```
+
+
 ## 30 October 2018
 
 | Packages | Version | Changes |

@@ -23,7 +23,19 @@ const filesPerBaseDir = {
         ({ obsLib }) => ({
             src: `observable${obsLib === 'rxjs' ? '' : `_${obsLib}`}.ts`,
             dest: 'observable.ts'
-        })
+        }),
+        ({ mainLib }) =>
+            mainLib === 'react'
+                ? { src: 'configureHook.ts', dest: 'configureHook.ts' }
+                : null,
+        ({ mainLib }) => ({
+            src:
+                mainLib === 'react'
+                    ? 'refractHook.ts'
+                    : 'unavailableRefractHook.ts',
+            dest: 'refractHook.ts'
+        }),
+        'reactHooks.d.ts'
     ],
     redux: [
         'baseTypes.ts',
@@ -71,25 +83,34 @@ async function copyBaseFiles(mainLib) {
                     ]
                 )
                 .concat(
-                    filesPerBaseDir[package.baseDir].map(fileName => {
-                        let srcFileName, destFileName
-                        if (typeof fileName === 'function') {
-                            const files = fileName(package)
-                            srcFileName = files.src
-                            destFileName = files.dest
-                        } else {
-                            srcFileName = fileName
-                            destFileName = fileName
-                        }
+                    filesPerBaseDir[package.baseDir]
+                        .map(fileName => {
+                            let srcFileName, destFileName
 
-                        return {
-                            src: getBaseFilePath(package.baseDir, srcFileName),
-                            dest: getPackageFilePath(
-                                package.name,
-                                path.join('src', destFileName)
-                            )
-                        }
-                    })
+                            if (typeof fileName === 'function') {
+                                const files = fileName(package)
+                                if (!files) {
+                                    return null
+                                }
+                                srcFileName = files.src
+                                destFileName = files.dest
+                            } else {
+                                srcFileName = fileName
+                                destFileName = fileName
+                            }
+
+                            return {
+                                src: getBaseFilePath(
+                                    package.baseDir,
+                                    srcFileName
+                                ),
+                                dest: getPackageFilePath(
+                                    package.name,
+                                    path.join('src', destFileName)
+                                )
+                            }
+                        })
+                        .filter(Boolean)
                 ),
         []
     )
