@@ -2,8 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import { withEffects, toProps } from 'refract-rxjs'
-import { combineLatest } from 'rxjs'
-import { interval } from 'rxjs/observable/interval'
+import { combineLatest, interval } from 'rxjs'
 import { withLatestFrom, map, scan, startWith } from 'rxjs/operators'
 
 import Layout from './Layout'
@@ -14,7 +13,7 @@ const directions = {
     NONE: 0
 }
 
-const aperture = initialProps => component => {
+const aperture = component => {
     const [direction$, setDirection] = component.useEvent('direction', 'NONE')
     const tick$ = interval(1000)
     const count$ = tick$.pipe(
@@ -35,9 +34,7 @@ const aperture = initialProps => component => {
     )
 }
 
-const handler = props => effect => {}
-
-const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
+const LayoutWithEffects = withEffects(aperture)(Layout)
 
 const App = () => <LayoutWithEffects />
 

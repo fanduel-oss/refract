@@ -17,7 +17,7 @@ import App from './App'
 const isVisible = () => document.visibilityState === 'visible'
 const isOnline = () => window.navigator.onLine
 
-const aperture = () => component => {
+const aperture = () => {
     const visible$ = fromEvent(document, 'visibilitychange').pipe(
         map(isVisible),
         startWith(isVisible())
@@ -82,7 +82,7 @@ const mapSetStateToProps = {
 
 const AppWithEffects = compose(
     withState(initialState, mapSetStateToProps),
-    withEffects(handler, errorHandler)(aperture)
+    withEffects(aperture, { handler, errorHandler })
 )(App)
 
 render(<AppWithEffects />, document.getElementById('root'))

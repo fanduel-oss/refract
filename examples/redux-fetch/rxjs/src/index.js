@@ -12,7 +12,7 @@ import Layout from './Layout'
 import { actionCreators, actionTypes, selectors } from './store'
 import store from './setupStore'
 
-const aperture = ({ store }) => component => {
+const aperture = (component, { store }) => {
     const combined$ = combineLatest(
         store.observe(actionTypes.USER_REQUEST),
         store.observe(selectors.getUsers)
@@ -60,7 +60,7 @@ const handler = ({ store }) => effect => {
     }
 }
 
-const App = withEffects(handler)(aperture)(Layout)
+const App = withEffects(aperture, { handler })(Layout)
 
 render(
     <Provider store={store}>

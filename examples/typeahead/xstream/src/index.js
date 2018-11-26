@@ -10,7 +10,7 @@ import Layout from './Layout'
 
 const toState = payload => ({ type: 'SET_STATE', payload })
 
-const aperture = props => component => {
+const aperture = component => {
     const search$ = component.observe('search')
 
     const suggestions$ = search$
@@ -62,7 +62,9 @@ const handler = ({ setState }) => effect => {
 }
 const errorHandler = () => err => console.error(err)
 
-const LayoutWithEffects = withEffects(handler, errorHandler)(aperture)(Layout)
+const LayoutWithEffects = withEffects(aperture, { handler, errorHandler })(
+    Layout
+)
 
 const App = () => (
     <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>

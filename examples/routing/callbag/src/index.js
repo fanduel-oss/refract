@@ -8,7 +8,7 @@ import of from 'callbag-of'
 import StateContainer from './StateContainer'
 import Layout from './Layout'
 
-const aperture = initialProps => component => {
+const aperture = (component, initialProps) => {
     const activeTab$ = component.observe('setActiveTab')
 
     return merge(
@@ -56,7 +56,7 @@ const handler = ({ setState }) => effect => {
     }
 }
 
-const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
+const LayoutWithEffects = withEffects(aperture, { handler })(Layout)
 
 const App = () => (
     <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>

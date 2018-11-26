@@ -9,7 +9,7 @@ import { timer } from 'rxjs/observable/timer'
 import StateContainer from './StateContainer'
 import Layout from './Layout'
 
-const aperture = props => ({ observe }) =>
+const aperture = ({ observe }) =>
     observe('username').pipe(
         filter(Boolean),
         debounce(() => timer(1000)),
@@ -33,7 +33,7 @@ const handler = ({ setState }) => effect => {
     }
 }
 
-const LayoutWithEffects = withEffects(handler)(aperture)(Layout)
+const LayoutWithEffects = withEffects(aperture, { handler })(Layout)
 
 const App = () => (
     <StateContainer>{state => <LayoutWithEffects {...state} />}</StateContainer>
