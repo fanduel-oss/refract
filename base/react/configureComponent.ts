@@ -122,7 +122,7 @@ const configureComponent = <P, E, Ctx>(
     }
 
     const component: ObservableComponent = createComponent(
-        instance,
+        propName => instance.props[propName],
         dataObservable,
         pushEvent
     )
