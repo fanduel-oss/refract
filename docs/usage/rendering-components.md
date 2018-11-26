@@ -18,7 +18,7 @@ Below is the same counter example, pushing elements rather than props:
 ```js
 import React from 'react'
 import { withEffects } from 'refract-rxjs'
-import { scan, map } from 'rxjs/operators'
+import { scan, startWith, map } from 'rxjs/operators'
 
 const Counter = ({ count, addOne }) => <button onClick={addOne}>{count}</button>
 
@@ -26,16 +26,14 @@ const aperture = (component, { initialCount }) => {
     const [addOneEvents$, addOne] = component.useEvent('addOne')
 
     return addOneEvents$.pipe(
-        scan(
-            ({ count, ...props }) => ({
-                ...props,
-                count: count + 1
-            }),
-            {
-                count: initialCount,
-                addOne
-            }
-        ),
+        startWith({
+            count: initialCount,
+            addOne
+        }),
+        scan(({ count, ...props }) => ({
+            ...props,
+            count: count + 1
+        })),
         map(Counter)
     )
 }

@@ -27,23 +27,28 @@ import {
 
 export { Listener, Subscription }
 
-export interface ObservableComponent {
-    observe: <T>(
-        propName?: string,
-        valueTransformer?: (val: any) => T
-    ) => Observable<T>
+export interface ObservableComponentBase {
+    mount: Observable<any>
+    unmount: Observable<any>
     fromEvent: <T>(
         eventName: string,
         valueTransformer?: (val: any) => T
     ) => Observable<T>
-    mount: Observable<any>
-    unmount: Observable<any>
     pushEvent: PushEvent
     useEvent: <T>(
         eventName: string,
         seedValue?: T
     ) => [Observable<T>, (val: T) => any]
 }
+
+export interface Observe {
+    observe: <T>(
+        propName?: string,
+        valueTransformer?: (val: any) => T
+    ) => Observable<T>
+}
+
+export type ObservableComponent = Observe & ObservableComponentBase
 
 export type Aperture<P, E, C = any> = (
     component: ObservableComponent,
@@ -61,14 +66,12 @@ export const subscribeToSink = <T>(
         error
     })
 
-export const createComponent = <P>(
-    instance,
-    dataObservable,
+const getComponentBase = (
+    data: Observable<any>,
     pushEvent: PushEvent
-): ObservableComponent => {
-    const data = () => from<Data<P>>(dataObservable)
+): ObservableComponentBase => {
     const fromEvent = <T>(eventName, valueTransformer?) =>
-        data().pipe(
+        data.pipe(
             filter(isEvent(eventName)),
             map((data: EventData) => {
                 const { value } = data.payload
@@ -78,39 +81,8 @@ export const createComponent = <P>(
         )
 
     return {
-        mount: data().pipe(filter(isEvent(MOUNT_EVENT)), mapTo(undefined)),
-        unmount: data().pipe(filter(isEvent(UNMOUNT_EVENT)), mapTo(undefined)),
-        observe: <T>(propName?, valueTransformer?) => {
-            if (propName && typeof instance.props[propName] === 'function') {
-                return data().pipe(
-                    filter(isCallback(propName)),
-                    map((data: CallbackData) => {
-                        const { args } = data.payload
-                        return valueTransformer
-                            ? valueTransformer(args)
-                            : args[0]
-                    })
-                )
-            }
-
-            if (propName) {
-                return data().pipe(
-                    filter(isProps),
-                    map((data: PropsData<P>) => {
-                        const prop = data.payload[propName]
-
-                        return valueTransformer ? valueTransformer(prop) : prop
-                    }),
-                    distinctUntilChanged()
-                )
-            }
-
-            return data().pipe(
-                filter(isProps),
-                map((data: PropsData<P>) => data.payload),
-                distinctUntilChanged(shallowEquals)
-            )
-        },
+        mount: data.pipe(filter(isEvent(MOUNT_EVENT)), mapTo(undefined)),
+        unmount: data.pipe(filter(isEvent(UNMOUNT_EVENT)), mapTo(undefined)),
         fromEvent,
         pushEvent,
         useEvent: <T>(eventName: string, seedValue?: T) => {
@@ -124,5 +96,50 @@ export const createComponent = <P>(
                 pushEventValue
             ]
         }
+    }
+}
+
+export const getObserve = <P>(getProp, data) => {
+    return function observe<T>(propName?, valueTransformer?) {
+        if (propName && typeof getProp(propName) === 'function') {
+            return data().pipe(
+                filter(isCallback(propName)),
+                map((data: CallbackData) => {
+                    const { args } = data.payload
+                    return valueTransformer ? valueTransformer(args) : args[0]
+                })
+            )
+        }
+
+        if (propName) {
+            return data().pipe(
+                filter(isProps),
+                map((data: PropsData<P>) => {
+                    const prop = data.payload[propName]
+
+                    return valueTransformer ? valueTransformer(prop) : prop
+                }),
+                distinctUntilChanged()
+            )
+        }
+
+        return data().pipe(
+            filter(isProps),
+            map((data: PropsData<P>) => data.payload),
+            distinctUntilChanged(shallowEquals)
+        )
+    }
+}
+
+export const createComponent = <P>(
+    getProp,
+    dataObservable,
+    pushEvent: PushEvent
+): ObservableComponent => {
+    const data = () => from<Data<P>>(dataObservable)
+
+    return {
+        observe: getObserve(getProp, data),
+        ...getComponentBase(data(), pushEvent)
     }
 }
