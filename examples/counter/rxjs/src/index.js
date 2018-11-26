@@ -2,8 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import { withEffects, toProps } from 'refract-rxjs'
-import { combineLatest } from 'rxjs'
-import { interval } from 'rxjs/observable/interval'
+import { combineLatest, interval } from 'rxjs'
 import { withLatestFrom, map, scan, startWith } from 'rxjs/operators'
 
 import Layout from './Layout'
