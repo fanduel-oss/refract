@@ -24,7 +24,8 @@ const configureComponent = <P, E, Ctx>(
     isValidElement: (val: any) => boolean = () => false,
     isComponentClass: (val: any) => boolean = () => false,
     handler?: Handler<P, E, Ctx>,
-    errorHandler?: ErrorHandler<P>
+    errorHandler?: ErrorHandler<P>,
+    mergeProps?: boolean
 ) => {
     instance.state = {
         renderEffect: false,
@@ -63,7 +64,12 @@ const configureComponent = <P, E, Ctx>(
 
                 setState({
                     replace: payload.replace,
-                    props: payload.props
+                    props: mergeProps
+                        ? {
+                              ...instance.state.props,
+                              ...payload.props
+                          }
+                        : payload.props
                 })
             } else {
                 effectHandler(effect)

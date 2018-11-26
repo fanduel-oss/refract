@@ -16,6 +16,7 @@ export interface State {
 export interface Config<P, E> {
     handler?: Handler<P, E>
     errorHandler?: ErrorHandler<P, E>
+    mergeProps?: boolean
 }
 
 const Empty = () => null
@@ -60,7 +61,8 @@ export const withEffects = <P, E, CP = P>(
                 isValidElement,
                 isComponentClass,
                 config.handler,
-                config.errorHandler
+                config.errorHandler,
+                config.mergeProps
             )
         }
 
