@@ -27,22 +27,21 @@ async function publish() {
     }
 
     const newVersions = await promptNewVersions(changedPackages)
+    const publishedPackages = changedPackages.filter(
+        package => newVersions[package.name]
+    )
 
-    await forEach(changedPackages, async package => {
-        const newVersion = newVersions[package.name]
-
-        if (newVersion) {
-            return await updateVersion(package, newVersions[package.name])
-        }
-    })
+    await forEach(
+        publishedPackages,
+        async package => await updateVersion(package, newVersions[package.name])
+    )
 
     await exec('git', ['add', '-A'])
     await exec('git', ['commit', '-m', 'Publish'])
 
-    const publishingSpinner = ora('').start()
+    const publishingSpinner = ora('Publishing').start()
 
-    await forEach(changedPackages, async ({ name }) => {
-        publishingSpinner.text = `Publishing ${name}`
+    await forEach(publishedPackages, async ({ name }) => {
         try {
             await exec('npm', ['publish', `./packages/${name}`])
             await exec('git', ['tag', `${name}@${newVersions[name]}`])
