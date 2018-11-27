@@ -142,3 +142,8 @@ Before getting started, please read through our [contributing guidelines](../../
 ### Discuss
 
 [Everyone is welcome to join our discussion channel - `#refract` on the Reactiflux Discord server.](https://discord.gg/fqk86GH)
+
+### Talks
+
+*   [ReactiveConf 2018 - Thomas Roch: **Be More Functional and Reactive in React**](https://www.youtube.com/watch?v=c8p9o4rxcYk)
+*   [ReactiveConf 2018 - **AMA w/ Thomas Roch**](https://www.youtube.com/watch?v=liqHgQz8Ar0)

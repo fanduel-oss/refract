@@ -5,6 +5,12 @@
 
 | Packages | Version | Changes |
 | --- | --- | --- |
+| React / Inferno / Preact | 3.1.0 | :rocket: Add new config option `mergeProps` to `withEffects`: when set to true, props passed with `toProps` or `asProps` will be merged with previoiusly received ones [(#129)](https://github.com/fanduel-oss/refract/pull/129) |
+
+## 26 November 2018
+
+| Packages | Version | Changes |
+| --- | --- | --- |
 | React / Inferno / Preact | 3.0.0 | :rocket: **BREAKING CHANGES**: we've simplified Refract API, to allow for `handler` to be optional [(#124)](https://github.com/fanduel-oss/refract/pull/124)<br>:fire: React packages now have a `useRefract` hook [(#123)](https://github.com/fanduel-oss/refract/pull/123) |
 
 #### API simplification (BREAKING CHANGES)
