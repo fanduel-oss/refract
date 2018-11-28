@@ -13,7 +13,7 @@ Refract has three built-in effect handlers, to:
 
 This section focuses on adding and replacing props, and its applications. All React, Preact and Inferno packages export two effect creators: `toProps` and `asProps`. They both take an object of props.
 
-Note that by default, props passed to `toProps` and `asProps` won't be merged with previous values: to enable this behaviour, you need to set `mergedProps` to `true` in `withEffects` config.
+Note that by default, props passed to `toProps` and `asProps` won't be merged with previous values: to enable this behaviour, you need to set `mergeProps` to `true` in `withEffects` config.
 
 ## Adding Props
 
