@@ -45,10 +45,7 @@ export interface FromEvent {
 export interface ObservableComponentBase {
     mount: Source<any>
     unmount: Source<any>
-    fromEvent: <T>(
-        eventName: string,
-        valueTransformer?: (val: any) => T
-    ) => Source<T>
+    fromEvent: FromEvent
     pushEvent: PushEvent
     useEvent: UseEvent
 }
@@ -82,7 +79,7 @@ const getComponentBase = (
     data: Source<any>,
     pushEvent: PushEvent
 ): ObservableComponentBase => {
-    const fromEvent = <T>(eventName, valueTransformer?) =>
+    const fromEvent = (eventName, valueTransformer?) =>
         pipe(
             data,
             filter(isEvent(eventName)),
