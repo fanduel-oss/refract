@@ -28,7 +28,7 @@ export const aperture: Aperture<Props, Effect> = component => {
     const valueSet$ = component.observe<number>('setValue')
     const mount$ = component.mount
     const unmount$ = component.unmount
-    const [linkClick$, clickLink] = component.useEvent<any>('linkClick', '')
+    const [linkClick$, clickLink] = component.useEvent('linkClick')
 
     return pipe(
         merge(

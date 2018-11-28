@@ -2,7 +2,8 @@ import { withEffects } from './withEffects'
 import {
     ObservableComponent,
     Aperture,
-    ObservableComponentBase
+    ObservableComponentBase,
+    UseEvent
 } from './observable'
 import { ErrorHandler, Handler, PushEvent } from './baseTypes'
 import { compose, Compose } from './compose'
@@ -24,6 +25,7 @@ export {
     Handler,
     ErrorHandler,
     PushEvent,
+    UseEvent,
     compose,
     Compose,
     asProps,

@@ -32,6 +32,11 @@ export interface Subscription {
     unsubscribe(): void
 }
 
+export interface UseEvent {
+    (eventName: string): [Source<void>, () => any]
+    <T = any>(eventName: string, seedValue?: T): [Source<T>, (val: T) => any]
+}
+
 export interface ObservableComponentBase {
     mount: Source<any>
     unmount: Source<any>
@@ -40,10 +45,7 @@ export interface ObservableComponentBase {
         valueTransformer?: (val: any) => T
     ) => Source<T>
     pushEvent: PushEvent
-    useEvent: <T>(
-        eventName: string,
-        seedValue?: T
-    ) => [Source<T>, (val: T) => any]
+    useEvent: UseEvent
 }
 
 export interface Observe {
@@ -86,6 +88,18 @@ const getComponentBase = (
             })
         )
 
+    const useEvent = (eventName: string, seedValue?: any) => {
+        const events$ = fromEvent(eventName)
+        const pushEventValue = pushEvent(eventName)
+
+        return [
+            seedValue === undefined
+                ? events$
+                : pipe(events$, startWith(seedValue)),
+            pushEventValue
+        ]
+    }
+
     return {
         mount: pipe(data, filter(isEvent(MOUNT_EVENT)), map(() => undefined)),
         unmount: pipe(
@@ -95,17 +109,7 @@ const getComponentBase = (
         ),
         fromEvent,
         pushEvent,
-        useEvent: <T>(eventName: string, seedValue?: T) => {
-            const events$ = fromEvent(eventName)
-            const pushEventValue = pushEvent(eventName) as (value: T) => void
-
-            return [
-                seedValue === undefined
-                    ? events$
-                    : pipe(events$, startWith(seedValue)),
-                pushEventValue
-            ]
-        }
+        useEvent: useEvent as UseEvent
     }
 }
 
