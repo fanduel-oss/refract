@@ -88,7 +88,7 @@ const configureComponent = <P, E, Ctx>(
         listeners = listeners.filter(l => l !== listener)
     }
 
-    const pushEvent: PushEvent = (eventName: string) => <T>(val: T) => {
+    const pushEvent = (eventName: string) => (val?: any) => {
         listeners.forEach(listener => {
             listener.next(createEventData(eventName, val))
         })
@@ -130,7 +130,7 @@ const configureComponent = <P, E, Ctx>(
     const component: ObservableComponent = createComponent(
         propName => instance.props[propName],
         dataObservable,
-        pushEvent
+        pushEvent as PushEvent
     )
 
     const sinkObservable = aperture(component, instance.props, instance.context)
@@ -161,11 +161,11 @@ const configureComponent = <P, E, Ctx>(
     }
 
     instance.triggerMount = () => {
-        pushEvent(MOUNT_EVENT)(undefined)
+        ;(pushEvent as PushEvent)(MOUNT_EVENT)()
     }
 
     instance.triggerUnmount = () => {
-        pushEvent(UNMOUNT_EVENT)(undefined)
+        ;(pushEvent as PushEvent)(UNMOUNT_EVENT)()
         sinkSubscription.unsubscribe()
     }
 

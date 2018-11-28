@@ -51,7 +51,7 @@ export const configureHook = <D, E>(
         listeners = listeners.filter(l => l !== listener)
     }
 
-    const pushEvent: PushEvent = (eventName: string) => <T>(val: T) => {
+    const pushEvent = (eventName: string) => (val?: any) => {
         listeners.forEach(listener => {
             listener.next(createEventData(eventName, val))
         })
@@ -73,7 +73,7 @@ export const configureHook = <D, E>(
     const component: ObservableComponent = createComponent(
         propName => data[propName],
         dataObservable,
-        pushEvent
+        pushEvent as PushEvent
     )
 
     const sinkObservable = aperture(component, data)
@@ -85,11 +85,11 @@ export const configureHook = <D, E>(
     )
 
     const pushMountEvent = () => {
-        pushEvent(MOUNT_EVENT)(undefined)
+        ;(pushEvent as PushEvent)(MOUNT_EVENT)()
     }
 
     const pushUnmountEvent = () => {
-        pushEvent(UNMOUNT_EVENT)(undefined)
+        ;(pushEvent as PushEvent)(UNMOUNT_EVENT)()
     }
 
     return {
