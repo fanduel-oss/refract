@@ -87,14 +87,15 @@ const getComponentBase = (
             })
         )
 
-    const useEvent = (eventName: string, seedValue?: any) => {
+    const useEvent = (...args) => {
+        const eventName: string = args[0]
+        const hasSeedValue = args.length > 1
+        const seedValue = args[2]
         const events$ = fromEvent(eventName)
         const pushEventValue = pushEvent(eventName)
 
         return [
-            seedValue === undefined
-                ? events$
-                : events$.pipe(startWith(seedValue)),
+            !hasSeedValue ? events$ : events$.pipe(startWith(seedValue)),
             pushEventValue
         ]
     }

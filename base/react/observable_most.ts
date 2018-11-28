@@ -74,12 +74,15 @@ const getComponentBase = (
             return valueTransformer ? valueTransformer(value) : value
         })
 
-    const useEvent = (eventName: string, seedValue?: any) => {
+    const useEvent = (...args) => {
+        const eventName: string = args[0]
+        const hasSeedValue = args.length > 1
+        const seedValue = args[2]
         const events$ = fromEvent(eventName)
         const pushEventValue = pushEvent(eventName)
 
         return [
-            seedValue === undefined ? events$ : events$.startWith(seedValue),
+            !hasSeedValue ? events$ : events$.startWith(seedValue),
             pushEventValue
         ]
     }
