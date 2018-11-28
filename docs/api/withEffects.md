@@ -11,7 +11,7 @@ Used to enhance a plain component, wrapping it in a WithEffects component which 
 ```js
 withEffects = (
     aperture,
-    config: { handler?, errorHandler?, Context?, mergedProps? }
+    config: { handler?, errorHandler?, Context?, mergeProps?, decorateProps? }
 ) => BaseComponent => {
     return WrappedComponent
 }
@@ -50,7 +50,9 @@ withEffects = (
 
     1.  `Context` _(ReactContext)_: a React Context object. Its initial value will be passed to `handler`, `errorHandler` and `aperture` (React 16.6.0 and above only).
 
-    1.  `mergedProps`: whether or not props passed with `toProps` or `asProps` should be merged together.
+    1.  `mergeProps`: whether or not props passed with `toProps` or `asProps` should be merged together.
+
+    1.  `decorateProps`: whether or not props which are functions should be decorated, so their arguments can be observed (default to `true`).
 
 1.  `BaseComponent` _(React component)_: any react component.
 

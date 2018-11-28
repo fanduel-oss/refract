@@ -4,7 +4,7 @@
 
 `toProps` and `asProps` are provided by our React, Inferno or Preact packages - `refract-*`, `refract-inferno-*`, `refract-preact-*`.
 
-Note that by default, props passed to `toProps` and `asProps` won't be merged with previous values: to enable this behaviour, you need to set `mergedProps` to `true` in `withEffects` config.
+Note that by default, props passed to `toProps` and `asProps` won't be merged with previous values: to enable this behaviour, you need to set `mergeProps` to `true` in `withEffects` config.
 
 ## Arguments
 

@@ -89,7 +89,7 @@ const userName$ = component.observe('user', user => user.name)
 
 ### Observing Functions
 
-Functions are the callbacks you pass into your components: any function which is passed as props, such as an onClick handler or a setState function.
+Functions are the callbacks you pass into your components: any function which is passed as props, such as an onClick handler or a setState function. By default, Refract will decorate these prop functions, so you can observe arguments they are called with. You can turn this off by setting `decorateProps` to `false` in `withEffects` config object.
 
 When the prop you observe is a function, `component.observe` will return a stream which emits a new value each time your function is called. This value will be the first argument passed to the function.
 
