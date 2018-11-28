@@ -3,7 +3,8 @@ import {
     ObservableComponent,
     Aperture,
     ObservableComponentBase,
-    UseEvent
+    UseEvent,
+    FromEvent
 } from './observable'
 import { ErrorHandler, Handler, PushEvent } from './baseTypes'
 import { compose, Compose } from './compose'
@@ -25,6 +26,7 @@ export {
     Handler,
     ErrorHandler,
     PushEvent,
+    FromEvent,
     UseEvent,
     compose,
     Compose,

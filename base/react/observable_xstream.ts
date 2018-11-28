@@ -21,6 +21,11 @@ export interface UseEvent {
     <T = any>(eventName: string, seedValue?: T): [Stream<T>, (val: T) => any]
 }
 
+export interface FromEvent {
+    (eventName: string): Stream<void>
+    <T>(eventName: string, valueTransformer?: (val: any) => T): Stream<T>
+}
+
 export interface ObservableComponentBase {
     mount: Stream<any>
     unmount: Stream<any>
