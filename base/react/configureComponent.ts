@@ -185,8 +185,8 @@ const configureComponent = <P, E, Ctx>(
         if (state.replace === false) {
             return {
                 ...instance.props,
-                ...stateProps,
-                ...additionalProps
+                ...additionalProps,
+                ...stateProps
             }
         }
 
