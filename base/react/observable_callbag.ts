@@ -37,6 +37,11 @@ export interface UseEvent {
     <T = any>(eventName: string, seedValue?: T): [Source<T>, (val: T) => any]
 }
 
+export interface FromEvent {
+    (eventName: string): Source<void>
+    <T>(eventName: string, valueTransformer?: (val: any) => T): Source<T>
+}
+
 export interface ObservableComponentBase {
     mount: Source<any>
     unmount: Source<any>

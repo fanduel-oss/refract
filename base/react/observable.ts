@@ -11,7 +11,7 @@ import {
     distinctUntilChanged,
     startWith
 } from 'rxjs/operators'
-import { PushEvent, Handler, ErrorHandler } from './baseTypes'
+import { PushEvent } from './baseTypes'
 import {
     isEvent,
     MOUNT_EVENT,
@@ -35,13 +35,15 @@ export interface UseEvent {
     ]
 }
 
+export interface FromEvent {
+    (eventName: string): Observable<void>
+    <T>(eventName: string, valueTransformer?: (val: any) => T): Observable<T>
+}
+
 export interface ObservableComponentBase {
     mount: Observable<any>
     unmount: Observable<any>
-    fromEvent: <T>(
-        eventName: string,
-        valueTransformer?: (val: any) => T
-    ) => Observable<T>
+    fromEvent: FromEvent
     pushEvent: PushEvent
     useEvent: UseEvent
 }
