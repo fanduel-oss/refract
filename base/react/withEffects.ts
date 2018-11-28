@@ -18,6 +18,7 @@ export interface Config<P, E, C = any> {
     errorHandler?: ErrorHandler<P, C>
     Context?: React.Context<C>
     mergeProps?: boolean
+    decorateProps?: boolean
 }
 
 const isComponentClass = (ComponentClass: any): boolean =>
@@ -57,7 +58,8 @@ export const withEffects = <P, E, CP = P, C = any>(
                 isComponentClass,
                 config.handler,
                 config.errorHandler,
-                config.mergeProps
+                config.mergeProps,
+                config.decorateProps !== false
             )
         }
 
