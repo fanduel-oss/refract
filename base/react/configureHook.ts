@@ -73,7 +73,8 @@ export const configureHook = <D, E>(
     const component: ObservableComponent = createComponent(
         propName => data[propName],
         dataObservable,
-        pushEvent as PushEvent
+        pushEvent as PushEvent,
+        false
     )
 
     const sinkObservable = aperture(component, data)

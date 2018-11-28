@@ -25,7 +25,8 @@ const configureComponent = <P, E, Ctx>(
     isComponentClass: (val: any) => boolean = () => false,
     handler?: Handler<P, E, Ctx>,
     errorHandler?: ErrorHandler<P>,
-    mergeProps?: boolean
+    mergeProps?: boolean,
+    decorateProps?: boolean
 ) => {
     instance.state = {
         renderEffect: false,
@@ -108,11 +109,13 @@ const configureComponent = <P, E, Ctx>(
         }
     }
 
-    Object.keys(instance.props).forEach(propName => {
-        if (typeof instance.props[propName] === 'function') {
-            decorateProp(decoratedProps, instance.props[propName], propName)
-        }
-    })
+    if (decorateProps) {
+        Object.keys(instance.props).forEach(propName => {
+            if (typeof instance.props[propName] === 'function') {
+                decorateProp(decoratedProps, instance.props[propName], propName)
+            }
+        })
+    }
 
     const dataObservable = {
         subscribe(listener: Listener<any>) {
@@ -130,7 +133,8 @@ const configureComponent = <P, E, Ctx>(
     const component: ObservableComponent = createComponent(
         propName => instance.props[propName],
         dataObservable,
-        pushEvent as PushEvent
+        pushEvent as PushEvent,
+        decorateProps
     )
 
     const sinkObservable = aperture(component, instance.props, instance.context)
@@ -144,14 +148,16 @@ const configureComponent = <P, E, Ctx>(
     )
 
     instance.reDecorateProps = nextProps => {
-        Object.keys(nextProps).forEach(propName => {
-            if (
-                typeof instance.props[propName] === 'function' &&
-                nextProps[propName] !== instance.props[propName]
-            ) {
-                decorateProp(decoratedProps, nextProps[propName], propName)
-            }
-        })
+        if (decorateProps) {
+            Object.keys(nextProps).forEach(propName => {
+                if (
+                    typeof instance.props[propName] === 'function' &&
+                    nextProps[propName] !== instance.props[propName]
+                ) {
+                    decorateProp(decoratedProps, nextProps[propName], propName)
+                }
+            })
+        }
     }
 
     instance.pushProps = (props: P) => {

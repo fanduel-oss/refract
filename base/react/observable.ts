@@ -109,9 +109,13 @@ const getComponentBase = (
     }
 }
 
-export const getObserve = <P>(getProp, data) => {
+export const getObserve = <P>(getProp, data, decoratedProps) => {
     return function observe<T>(propName?, valueTransformer?) {
-        if (propName && typeof getProp(propName) === 'function') {
+        if (
+            decoratedProps &&
+            propName &&
+            typeof getProp(propName) === 'function'
+        ) {
             return data().pipe(
                 filter(isCallback(propName)),
                 map((data: CallbackData) => {
@@ -144,12 +148,13 @@ export const getObserve = <P>(getProp, data) => {
 export const createComponent = <P>(
     getProp,
     dataObservable,
-    pushEvent: PushEvent
+    pushEvent: PushEvent,
+    decoratedProps: boolean
 ): ObservableComponent => {
     const data = () => from<Data<P>>(dataObservable)
 
     return {
-        observe: getObserve(getProp, data),
+        observe: getObserve(getProp, data, decoratedProps),
         ...getComponentBase(data(), pushEvent)
     }
 }
