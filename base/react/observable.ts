@@ -27,6 +27,14 @@ import {
 
 export { Listener, Subscription }
 
+export interface UseEvent {
+    (eventName: string): [Observable<void>, () => any]
+    <T = any>(eventName: string, seedValue?: T): [
+        Observable<T>,
+        (val: T) => any
+    ]
+}
+
 export interface ObservableComponentBase {
     mount: Observable<any>
     unmount: Observable<any>
@@ -35,10 +43,7 @@ export interface ObservableComponentBase {
         valueTransformer?: (val: any) => T
     ) => Observable<T>
     pushEvent: PushEvent
-    useEvent: <T>(
-        eventName: string,
-        seedValue?: T
-    ) => [Observable<T>, (val: T) => any]
+    useEvent: UseEvent
 }
 
 export interface Observe {
@@ -80,22 +85,24 @@ const getComponentBase = (
             })
         )
 
+    const useEvent = (eventName: string, seedValue?: any) => {
+        const events$ = fromEvent(eventName)
+        const pushEventValue = pushEvent(eventName)
+
+        return [
+            seedValue === undefined
+                ? events$
+                : events$.pipe(startWith(seedValue)),
+            pushEventValue
+        ]
+    }
+
     return {
         mount: data.pipe(filter(isEvent(MOUNT_EVENT)), mapTo(undefined)),
         unmount: data.pipe(filter(isEvent(UNMOUNT_EVENT)), mapTo(undefined)),
         fromEvent,
         pushEvent,
-        useEvent: <T>(eventName: string, seedValue?: T) => {
-            const events$ = fromEvent(eventName)
-            const pushEventValue = pushEvent(eventName) as (value: T) => void
-
-            return [
-                seedValue === undefined
-                    ? events$
-                    : events$.pipe(startWith(seedValue)),
-                pushEventValue
-            ]
-        }
+        useEvent: useEvent as UseEvent
     }
 }
 
