@@ -1,6 +1,17 @@
 <!-- prettier-ignore-start -->
 # Changelog
 
+## 28 November 2018
+
+| Packages | Version | Changes |
+| --- | --- | --- |
+| React / Inferno / Preact | 4.0.0 | :rocket: `component.useEvent` and `component.pushEvent` are now better typed to valueless events and observables [(#130)](https://github.com/fanduel-oss/refract/pull/130)<br>:bug: `component.useEvent` now makes the distinction between a seed value of `undefined` and no seed value<br>:rocket: a new `decorateProps` config option has been added to `withEffects`, so prop decoration can be turned off (default to `true`: decoration is on) [(#131)](https://github.com/fanduel-oss/refract/pull/131)
+:rocket:  |
+
+#### Breaking changes (TypeScript users only)
+
+`pushEvent` has changed signature: when not valueless, it is now `<T>(eventName: string) => (val: T) => void` instead of `(eventName: string) => <T>(val: T) => void`.
+
 ## 27 November 2018
 
 | Packages | Version | Changes |
