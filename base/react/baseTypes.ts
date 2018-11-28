@@ -8,4 +8,7 @@ export type ErrorHandler<P, C = any> = (
     initialContext?: C
 ) => (error: any) => void
 
-export type PushEvent = (eventName: string) => <T>(val: T) => void
+export interface PushEvent {
+    (eventName: string): () => void
+    <T = any>(eventName: string): (val: T) => void
+}
