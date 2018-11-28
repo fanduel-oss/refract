@@ -28,10 +28,7 @@ export interface FromEvent {
 export interface ObservableComponentBase {
     mount: Stream<any>
     unmount: Stream<any>
-    fromEvent: <T>(
-        eventName: string,
-        valueTransformer?: (val: any) => T
-    ) => Stream<T>
+    fromEvent: FromEvent
     pushEvent: PushEvent
     useEvent: UseEvent
 }
@@ -70,7 +67,7 @@ const getComponentBase = (
     data: Stream<any>,
     pushEvent: PushEvent
 ): ObservableComponentBase => {
-    const fromEvent = <T>(eventName, valueTransformer?) =>
+    const fromEvent = (eventName, valueTransformer?) =>
         data.filter(isEvent(eventName)).map((data: EventData) => {
             const { value } = data.payload
 
