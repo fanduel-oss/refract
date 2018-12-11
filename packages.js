@@ -27,22 +27,12 @@ const peerDependencies = {
     }
 }
 const baseDependencies = {
-    react: {
-        'symbol-observable': '~1.2.0'
-    },
-    inferno: {
-        'symbol-observable': '~1.2.0'
-    },
-    preact: {
-        'symbol-observable': '~1.2.0'
-    },
+    react: {},
+    inferno: {},
+    preact: {},
     callbag: {
         callbag: '~1.1.0',
-        'callbag-from-obs': '~1.2.0',
-        'symbol-observable': '~1.2.0'
-    },
-    most: {
-        'symbol-observable': '~1.2.0'
+        'callbag-from-obs': '~1.2.0'
     }
 }
 

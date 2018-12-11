@@ -67,7 +67,6 @@
         "rollup-plugin-typescript2": "~0.15.1",
         "rxjs": "~6.1.0",
         "rxjs-compat": "~6.1.0",
-        "symbol-observable": "~1.2.0",
         "tar": "~4.4.6",
         "ts-jest": "~22.4.5",
         "tslint": "~5.10.0",

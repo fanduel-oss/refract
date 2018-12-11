@@ -68,3 +68,20 @@ export const shallowEquals = (left, right) =>
     left === right ||
     (Object.keys(left).length === Object.keys(right).length &&
         Object.keys(left).every(leftKey => left[leftKey] === right[leftKey]))
+
+export const createObservable = subscribe => {
+    const observable = {
+        subscribe,
+        ['@@observable']() {
+            return this
+        }
+    }
+
+    // @ts-ignore
+    if (typeof Symbol === 'function' && Symbol.observable) {
+        // @ts-ignore
+        observable[Symbol.observable] = () => observable
+    }
+
+    return observable
+}

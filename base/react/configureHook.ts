@@ -1,4 +1,3 @@
-import $$observable from 'symbol-observable'
 import { COMPONENT_EFFECT } from './effects'
 import {
     Listener,
@@ -12,7 +11,8 @@ import {
     createEventData,
     MOUNT_EVENT,
     UNMOUNT_EVENT,
-    createPropsData
+    createPropsData,
+    createObservable
 } from './data'
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 
@@ -57,18 +57,13 @@ export const configureHook = <D, E>(
         })
     }
 
-    const dataObservable = {
-        subscribe(listener: Listener<any>) {
-            addListener(listener)
+    const dataObservable = createObservable((listener: Listener<any>) => {
+        addListener(listener)
 
-            listener.next(createPropsData(lastData))
+        listener.next(createPropsData(lastData))
 
-            return { unsubscribe: () => removeListener(listener) }
-        },
-        [$$observable]() {
-            return this
-        }
-    }
+        return { unsubscribe: () => removeListener(listener) }
+    })
 
     const component: ObservableComponent = createComponent(
         propName => data[propName],
