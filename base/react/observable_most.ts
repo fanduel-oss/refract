@@ -1,3 +1,4 @@
+import $$observable from 'symbol-observable'
 import { from, Stream, Subscriber as Listener } from 'most'
 import { PushEvent } from './baseTypes'
 import {
@@ -142,3 +143,10 @@ export const createComponent = <P>(
         ...getComponentBase(data(), pushEvent)
     }
 }
+
+export const createObservable = subscribe => ({
+    subscribe,
+    [$$observable]() {
+        return this
+    }
+})
