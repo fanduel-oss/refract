@@ -13,9 +13,6 @@
         "inferno-create-element": "^5.0.0",
         "rxjs": "^6.0.0"
     },
-    "dependencies": {
-        "symbol-observable": "~1.2.0"
-    },
     "keywords": [
         "functional",
         "reactive",

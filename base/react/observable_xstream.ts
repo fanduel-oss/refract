@@ -1,3 +1,5 @@
+import $$observable from 'symbol-observable'
+
 import xs, { Stream, Listener, Subscription } from 'xstream'
 import dropRepeats from 'xstream/extra/dropRepeats'
 import { PushEvent } from './baseTypes'
@@ -139,3 +141,10 @@ export const createComponent = <P>(
         ...getComponentBase(data(), pushEvent)
     }
 }
+
+export const createObservable = subscribe => ({
+    subscribe,
+    [$$observable]() {
+        return this
+    }
+})

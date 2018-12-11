@@ -47,13 +47,15 @@ async function generatePackages() {
                     ...existingPackage,
                     ...packageBase,
                     peerDependencies,
-                    ...(Object.keys(dependencies).length
-                        ? { dependencies }
-                        : {}),
+                    dependencies,
                     description: `Refract bindings for ${libs[mainLib]} with ${
                         libs[obsLib]
                     }: harness the power of reactive programming to supercharge your components!`,
                     keywords: packageBase.keywords.concat([mainLib, obsLib])
+                }
+
+                if (Object.keys(finalPackage.dependencies).length === 0) {
+                    delete finalPackage.dependencies
                 }
 
                 await writeFile(

@@ -1,4 +1,4 @@
-import { from, Stream, Subscriber as Listener, of } from 'most'
+import { from, Stream, Subscriber as Listener } from 'most'
 import $$observable from 'symbol-observable'
 import { Selector } from './baseTypes'
 

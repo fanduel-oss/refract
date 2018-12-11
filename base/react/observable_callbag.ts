@@ -169,3 +169,10 @@ export const createComponent = <P>(
         ...getComponentBase(data(), pushEvent)
     }
 }
+
+export const createObservable = subscribe => ({
+    subscribe,
+    [$$observable]() {
+        return this
+    }
+})

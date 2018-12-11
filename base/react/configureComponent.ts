@@ -1,4 +1,3 @@
-import $$observable from 'symbol-observable'
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { PROPS_EFFECT } from './effects'
 import {
@@ -7,7 +6,8 @@ import {
     createComponent,
     ObservableComponent,
     subscribeToSink,
-    Aperture
+    Aperture,
+    createObservable
 } from './observable'
 import {
     shallowEquals,
@@ -117,18 +117,13 @@ const configureComponent = <P, E, Ctx>(
         })
     }
 
-    const dataObservable = {
-        subscribe(listener: Listener<any>) {
-            addListener(listener)
+    const dataObservable = createObservable((listener: Listener<any>) => {
+        addListener(listener)
 
-            listener.next(createPropsData(instance.props))
+        listener.next(createPropsData(instance.props))
 
-            return { unsubscribe: () => removeListener(listener) }
-        },
-        [$$observable]() {
-            return this
-        }
-    }
+        return { unsubscribe: () => removeListener(listener) }
+    })
 
     const component: ObservableComponent = createComponent(
         propName => instance.props[propName],
