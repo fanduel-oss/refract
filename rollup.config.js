@@ -18,7 +18,7 @@ export default packages
         )
         const externalDependencies = dependencies.concat(peerDependencies)
 
-        return Object.keys(formats).map(format => ({
+        return {
             input: `${packageDir}/src/index.ts`,
             plugins: [
                 typescript({
@@ -28,11 +28,11 @@ export default packages
                 })
             ],
             external: externalDependencies,
-            output: {
+            output: Object.keys(formats).map(format => ({
                 name: 'refract',
                 format,
                 file: `${packageDir}/${formats[format]}`
-            }
-        }))
+            }))
+        }
     })
-    .reduce((rollupConfig, configs) => rollupConfig.concat(configs, []))
+    .reduce((rollupConfig, configs) => rollupConfig.concat(configs), [])
