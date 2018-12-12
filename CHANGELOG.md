@@ -5,6 +5,10 @@
 
 | Packages | Version | Changes |
 | --- | --- | --- |
+| React / Inferno / Preact | 4.1.1 | :bug: Fix use of seed value with `useEvent` [(#135)](https://github.com/fanduel-oss/refract/pull/135)  |
+
+| Packages | Version | Changes |
+| --- | --- | --- |
 | React / Inferno / Preact | 4.1.0 | :bug: Remove usage of `symbol-observable` package with RxJS (there were issues if `rxjs` was imported first before Refract) and fix React hook not memoising its aperture [(#133)](https://github.com/fanduel-oss/refract/pull/133)  |
 
 ## 28 November 2018
