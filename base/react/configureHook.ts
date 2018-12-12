@@ -1,4 +1,3 @@
-import $$observable from 'symbol-observable'
 import { COMPONENT_EFFECT } from './effects'
 import {
     Listener,
@@ -6,7 +5,8 @@ import {
     Subscription,
     subscribeToSink,
     ObservableComponent,
-    Aperture
+    Aperture,
+    createObservable
 } from './observable'
 import {
     createEventData,
@@ -57,18 +57,13 @@ export const configureHook = <D, E>(
         })
     }
 
-    const dataObservable = {
-        subscribe(listener: Listener<any>) {
-            addListener(listener)
+    const dataObservable = createObservable((listener: Listener<any>) => {
+        addListener(listener)
 
-            listener.next(createPropsData(lastData))
+        listener.next(createPropsData(lastData))
 
-            return { unsubscribe: () => removeListener(listener) }
-        },
-        [$$observable]() {
-            return this
-        }
-    }
+        return { unsubscribe: () => removeListener(listener) }
+    })
 
     const component: ObservableComponent = createComponent(
         propName => data[propName],
