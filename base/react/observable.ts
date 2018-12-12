@@ -87,10 +87,8 @@ const getComponentBase = (
             })
         )
 
-    const useEvent = (...args) => {
-        const eventName: string = args[0]
-        const hasSeedValue = args.length > 1
-        const seedValue = args[2]
+    const useEvent = (eventName: string, seedValue?: any) => {
+        const hasSeedValue = arguments.length > 1
         const events$ = fromEvent(eventName)
         const pushEventValue = pushEvent(eventName)
 
