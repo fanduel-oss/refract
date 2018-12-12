@@ -90,7 +90,7 @@ const getComponentBase = (
             })
         )
 
-    const useEvent = (eventName: string, seedValue?: any) => {
+    function useEvent(eventName: string, seedValue?: any) {
         const hasSeedValue = arguments.length > 1
         const events$ = fromEvent(eventName)
         const pushEventValue = pushEvent(eventName)
