@@ -200,7 +200,7 @@ const configureComponent = <P, E, Ctx>(
     instance.havePropsChanged = (newProps, newState) => {
         const { state } = instance
 
-        if (state.renderEffect) {
+        if (state.renderEffect || newState.renderEffect) {
             return state.children !== newState.children
         }
 
