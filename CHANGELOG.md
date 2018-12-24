@@ -5,6 +5,16 @@
 
 | Packages | Version | Changes |
 | --- | --- | --- |
+| React / Inferno / Preact | 4.1.2 | :bug: Fix initial render when pushing JSX (`withEffects`) [(#136)](https://github.com/fanduel-oss/refract/pull/136) |
+
+
+
+# Changelog
+
+## 12 December 2018
+
+| Packages | Version | Changes |
+| --- | --- | --- |
 | React / Inferno / Preact | 4.1.1 | :bug: Fix use of seed value with `useEvent` [(#135)](https://github.com/fanduel-oss/refract/pull/135)  |
 
 | Packages | Version | Changes |
