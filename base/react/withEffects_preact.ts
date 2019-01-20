@@ -36,12 +36,12 @@ const isComponentClass = (ComponentClass: any): boolean =>
             ComponentClass.prototype.componentDidMount
     )
 
-export const withEffects = <Props, Effect, CurrentProps = Props>(
+export const withEffects = <Props, Effect, ChildProps = Props>(
     aperture: Aperture<Props, Effect>,
     config: Config<Props, Effect> = {}
 ) => (
     BaseComponent: ComponentFactory<
-        CurrentProps & { pushEvent: PushEvent }
+        ChildProps & { pushEvent: PushEvent }
     > = Empty
 ): ComponentFactory<Props> =>
     class WithEffects extends Component<Props, State> {
@@ -53,7 +53,7 @@ export const withEffects = <Props, Effect, CurrentProps = Props>(
         ) => boolean
         private reDecorateProps: (nextProps: Props) => void
         private pushProps: (props: Props) => void
-        private getChildProps: () => CurrentProps & { pushEvent: PushEvent }
+        private getChildProps: () => ChildProps & { pushEvent: PushEvent }
         private mounted: boolean = false
         private unmounted: boolean = false
 

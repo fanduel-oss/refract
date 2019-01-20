@@ -30,12 +30,12 @@ const isComponentClass = (ComponentClass: any): boolean =>
 
 const Empty = () => null
 
-export const withEffects = <Props, Effect, CurrentProps = Props, Context = any>(
+export const withEffects = <Props, Effect, ChildProps = Props, Context = any>(
     aperture: Aperture<Props, Effect, Context>,
     config: Config<Props, Effect, Context> = {}
 ) => (
     BaseComponent: React.ComponentType<
-        CurrentProps & { pushEvent: PushEvent }
+        ChildProps & { pushEvent: PushEvent }
     > = Empty
 ): React.ComponentClass<Props> =>
     class WithEffects extends React.Component<Props, State> {
@@ -49,7 +49,7 @@ export const withEffects = <Props, Effect, CurrentProps = Props, Context = any>(
         ) => boolean
         private reDecorateProps: (nextProps: Props) => void
         private pushProps: (props: Props) => void
-        private getChildProps: () => CurrentProps & { pushEvent: PushEvent }
+        private getChildProps: () => ChildProps & { pushEvent: PushEvent }
         private mounted: boolean = false
         private unmounted: boolean = false
 
