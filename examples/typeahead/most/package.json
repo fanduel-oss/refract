@@ -3,7 +3,7 @@
     "dependencies": {
         "most": "~1.7.3",
         "react": "16.4.1",
-        "react-dom": "16.4.1",
+        "react-dom": "16.4.2",
         "react-scripts": "1.0.10",
         "refract-most": "3.0.0"
     },

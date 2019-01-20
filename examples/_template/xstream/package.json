@@ -1,7 +1,7 @@
 {
     "dependencies": {
         "react": "16.4.1",
-        "react-dom": "16.4.1",
+        "react-dom": "16.4.2",
         "react-scripts": "1.0.10",
         "refract-xstream": "3.0.0",
         "xstream": "~11.7.0"

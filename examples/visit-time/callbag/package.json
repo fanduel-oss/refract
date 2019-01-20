@@ -7,7 +7,7 @@
         "callbag-of": "~1.0.0",
         "callbag-start-with": "~2.1.1",
         "react": "16.4.1",
-        "react-dom": "16.4.1",
+        "react-dom": "16.4.2",
         "react-scripts": "1.0.10",
         "react-state-hoc": "~3.0.0",
         "refract-callbag": "3.0.0"
