@@ -2,7 +2,7 @@
     "dependencies": {
         "callbag-basics": "~3.0.0",
         "react": "16.4.1",
-        "react-dom": "16.4.1",
+        "react-dom": "16.4.2",
         "react-scripts": "1.0.10",
         "refract-callbag": "3.0.0"
     },
