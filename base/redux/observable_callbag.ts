@@ -8,20 +8,20 @@ const pipe = require('callbag-pipe')
 import { Selector } from './baseTypes'
 
 export interface ObserveFn {
-    <T>(actionTypeOrListener: string | Selector<T>): Source<T>
+    <Type>(actionTypeOrListener: string | Selector<Type>): Source<Type>
 }
 
-export interface Listener<T> {
-    next: (val: T) => void
+export interface Listener<Type> {
+    next: (val: Type) => void
     error: (err: any) => void
-    complete: (val?: T) => void
+    complete: (val?: Type) => void
 }
 
 export const observeFactory = (store): ObserveFn => {
-    return <T>(actionOrSelector: string | Selector<T>): Source<T> => {
+    return <Type>(actionOrSelector: string | Selector<Type>): Source<Type> => {
         if (typeof actionOrSelector === 'string') {
             return fromObs({
-                subscribe(listener: Listener<T>) {
+                subscribe(listener: Listener<Type>) {
                     const unsubscribe = store.addActionListener(
                         actionOrSelector,
                         listener.next.bind(listener)

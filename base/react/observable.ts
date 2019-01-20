@@ -29,15 +29,18 @@ export { Listener, Subscription }
 
 export interface UseEvent {
     (eventName: string): [Observable<void>, () => any]
-    <T = any>(eventName: string, seedValue?: T): [
-        Observable<T>,
-        (val: T) => any
+    <Type = any>(eventName: string, seedValue?: Type): [
+        Observable<Type>,
+        (val: Type) => any
     ]
 }
 
 export interface FromEvent {
     (eventName: string): Observable<void>
-    <T>(eventName: string, valueTransformer?: (val: any) => T): Observable<T>
+    <Type>(
+        eventName: string,
+        valueTransformer?: (val: any) => Type
+    ): Observable<Type>
 }
 
 export interface ObservableComponentBase {
@@ -49,23 +52,23 @@ export interface ObservableComponentBase {
 }
 
 export interface Observe {
-    observe: <T>(
+    observe: <Type>(
         propName?: string,
-        valueTransformer?: (val: any) => T
-    ) => Observable<T>
+        valueTransformer?: (val: any) => Type
+    ) => Observable<Type>
 }
 
 export type ObservableComponent = Observe & ObservableComponentBase
 
-export type Aperture<P, E, C = any> = (
+export type Aperture<Props, Effect, Context = any> = (
     component: ObservableComponent,
-    initialProps: P,
-    initialContext?: C
-) => Observable<E>
+    initialProps: Props,
+    initialContext?: Context
+) => Observable<Effect>
 
-export const subscribeToSink = <T>(
-    sink: Observable<T>,
-    next: (val: T) => void,
+export const subscribeToSink = <Type>(
+    sink: Observable<Type>,
+    next: (val: Type) => void,
     error?: (error: any) => void
 ): Subscription =>
     sink.subscribe({
@@ -115,8 +118,8 @@ export const createObservable = subscribe => ({
     }
 })
 
-export const getObserve = <P>(getProp, data, decoratedProps) => {
-    return function observe<T>(propName?, valueTransformer?) {
+export const getObserve = <Props>(getProp, data, decoratedProps) => {
+    return function observe<Type>(propName?, valueTransformer?) {
         if (
             decoratedProps &&
             propName &&
@@ -134,7 +137,7 @@ export const getObserve = <P>(getProp, data, decoratedProps) => {
         if (propName) {
             return data().pipe(
                 filter(isProps),
-                map((data: PropsData<P>) => {
+                map((data: PropsData<Props>) => {
                     const prop = data.payload[propName]
 
                     return valueTransformer ? valueTransformer(prop) : prop
@@ -145,19 +148,19 @@ export const getObserve = <P>(getProp, data, decoratedProps) => {
 
         return data().pipe(
             filter(isProps),
-            map((data: PropsData<P>) => data.payload),
+            map((data: PropsData<Props>) => data.payload),
             distinctUntilChanged(shallowEquals)
         )
     }
 }
 
-export const createComponent = <P>(
+export const createComponent = <Props>(
     getProp,
     dataObservable,
     pushEvent: PushEvent,
     decoratedProps: boolean
 ): ObservableComponent => {
-    const data = () => from<Data<P>>(dataObservable)
+    const data = () => from<Data<Props>>(dataObservable)
 
     return {
         observe: getObserve(getProp, data, decoratedProps),

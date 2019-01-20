@@ -4,13 +4,13 @@ import { Selector } from './baseTypes'
 import { Store } from 'redux'
 
 export interface ObserveFn {
-    <T>(actionTypeOrListener: string | Selector<T>): Observable<T>
+    <Type>(actionTypeOrListener: string | Selector<Type>): Observable<Type>
 }
 
 export const observeFactory = (store): ObserveFn => {
-    return <T>(actionOrSelector) => {
+    return <Type>(actionOrSelector) => {
         if (typeof actionOrSelector === 'string') {
-            return Observable.create((listener: Partial<Listener<T>>) => {
+            return Observable.create((listener: Partial<Listener<Type>>) => {
                 const unsubscribe = store.addActionListener(
                     actionOrSelector,
                     listener.next.bind(listener)
@@ -21,9 +21,9 @@ export const observeFactory = (store): ObserveFn => {
         }
 
         if (typeof actionOrSelector === 'function') {
-            return from(store).pipe<T>(
+            return from(store).pipe<Type>(
                 map(actionOrSelector),
-                distinctUntilChanged<T>()
+                distinctUntilChanged<Type>()
             )
         }
     }

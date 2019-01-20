@@ -13,10 +13,10 @@ export interface State {
     children: React.ReactNode | null
 }
 
-export interface Config<P, E, C = any> {
-    handler?: Handler<P, E, C>
-    errorHandler?: ErrorHandler<P, C>
-    Context?: React.Context<C>
+export interface Config<Props, Effect, Context = any> {
+    handler?: Handler<Props, Effect, Context>
+    errorHandler?: ErrorHandler<Props, Context>
+    Context?: React.Context<Context>
     mergeProps?: boolean
     decorateProps?: boolean
 }
@@ -30,21 +30,26 @@ const isComponentClass = (ComponentClass: any): boolean =>
 
 const Empty = () => null
 
-export const withEffects = <P, E, CP = P, C = any>(
-    aperture: Aperture<P, E, C>,
-    config: Config<P, E, C> = {}
+export const withEffects = <Props, Effect, CurrentProps = Props, Context = any>(
+    aperture: Aperture<Props, Effect, Context>,
+    config: Config<Props, Effect, Context> = {}
 ) => (
-    BaseComponent: React.ComponentType<CP & { pushEvent: PushEvent }> = Empty
-): React.ComponentClass<P> =>
-    class WithEffects extends React.Component<P, State> {
+    BaseComponent: React.ComponentType<
+        CurrentProps & { pushEvent: PushEvent }
+    > = Empty
+): React.ComponentClass<Props> =>
+    class WithEffects extends React.Component<Props, State> {
         public static contextType = config.Context
 
         private triggerMount: () => void
         private triggerUnmount: () => void
-        private havePropsChanged: (nextProps: P, nextState: State) => boolean
-        private reDecorateProps: (nextProps: P) => void
-        private pushProps: (props: P) => void
-        private getChildProps: () => CP & { pushEvent: PushEvent }
+        private havePropsChanged: (
+            nextProps: Props,
+            nextState: State
+        ) => boolean
+        private reDecorateProps: (nextProps: Props) => void
+        private pushProps: (props: Props) => void
+        private getChildProps: () => CurrentProps & { pushEvent: PushEvent }
         private mounted: boolean = false
         private unmounted: boolean = false
 
@@ -68,7 +73,7 @@ export const withEffects = <P, E, CP = P, C = any>(
             this.triggerMount()
         }
 
-        public componentWillReceiveProps(nextProps: P) {
+        public componentWillReceiveProps(nextProps: Props) {
             this.reDecorateProps(nextProps)
             this.pushProps(nextProps)
         }
