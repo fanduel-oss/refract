@@ -16,11 +16,11 @@ import {
 } from './data'
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 
-export const configureHook = <D, E>(
-    aperture: Aperture<D, E>,
-    data: D,
-    handler: Handler<D, E> = () => () => void 0,
-    errorHandler?: ErrorHandler<D>
+export const configureHook = <Data, Effect>(
+    aperture: Aperture<Data, Effect>,
+    data: Data,
+    handler: Handler<Data, Effect> = () => () => void 0,
+    errorHandler?: ErrorHandler<Data>
 ) => {
     let returnedData
     let lastData = data
@@ -74,7 +74,7 @@ export const configureHook = <D, E>(
 
     const sinkObservable = aperture(component, data)
 
-    const sinkSubscription: Subscription = subscribeToSink<E>(
+    const sinkSubscription: Subscription = subscribeToSink<Effect>(
         sinkObservable,
         finalHandler(data),
         errorHandler ? errorHandler(data) : undefined
@@ -95,7 +95,7 @@ export const configureHook = <D, E>(
             sinkSubscription.unsubscribe()
         },
         pushMountEvent,
-        pushData: (data: D) => {
+        pushData: (data: Data) => {
             lastData = data
 
             listeners.forEach(listener => {

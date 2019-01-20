@@ -3,16 +3,16 @@ import dropRepeats from 'xstream/extra/dropRepeats'
 import { Selector } from './baseTypes'
 
 export interface ObserveFn {
-    <T>(actionTypeOrListener: string | Selector<T>): Stream<T>
+    <Type>(actionTypeOrListener: string | Selector<Type>): Stream<Type>
 }
 
 export const observeFactory = (store): ObserveFn => {
-    return <T>(actionOrSelector: string | Selector<T>): Stream<T> => {
+    return <Type>(actionOrSelector: string | Selector<Type>): Stream<Type> => {
         if (typeof actionOrSelector === 'string') {
             let unsubscribe
 
             return xs.create({
-                start(listener: Partial<Listener<T>>) {
+                start(listener: Partial<Listener<Type>>) {
                     unsubscribe = store.addActionListener(
                         actionOrSelector,
                         listener.next.bind(listener)

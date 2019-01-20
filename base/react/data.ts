@@ -7,11 +7,11 @@ export enum DataType {
     CALLBACK = 'callback'
 }
 
-export type Data<P> = PropsData<P> | CallbackData | EventData
+export type Data<Props> = PropsData<Props> | CallbackData | EventData
 
-export interface PropsData<P> {
+export interface PropsData<Props> {
     type: DataType
-    payload: Partial<P>
+    payload: Partial<Props>
 }
 
 export interface CallbackData {
@@ -30,13 +30,14 @@ export interface EventData {
     }
 }
 
-export const isEvent = <P>(eventName) => (data: Data<P>, index?) =>
+export const isEvent = <Props>(eventName) => (data: Data<Props>, index?) =>
     data.type === DataType.EVENT &&
     (data as EventData).payload.name === eventName
 
-export const isProps = <P>(data: Data<P>) => data.type === DataType.PROPS
+export const isProps = <Props>(data: Data<Props>) =>
+    data.type === DataType.PROPS
 
-export const isCallback = <P>(propName) => (data: Data<P>) =>
+export const isCallback = <Props>(propName) => (data: Data<Props>) =>
     data.type === DataType.CALLBACK &&
     (data as CallbackData).payload.name === propName
 
@@ -48,7 +49,7 @@ export const createEventData = (name: string, value?: any): EventData => ({
     }
 })
 
-export const createPropsData = <P>(props: P): PropsData<P> => ({
+export const createPropsData = <Props>(props: Props): PropsData<Props> => ({
     type: DataType.PROPS,
     payload: props
 })

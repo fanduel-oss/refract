@@ -1,14 +1,14 @@
-export type Handler<P, E, C = any> = (
-    intialProps: P,
-    initialContext?: C
-) => (val: E) => void
+export type Handler<Props, Effect, Context = any> = (
+    intialProps: Props,
+    initialContext?: Context
+) => (val: Effect) => void
 
-export type ErrorHandler<P, C = any> = (
-    intialProps: P,
-    initialContext?: C
+export type ErrorHandler<Props, Context = any> = (
+    intialProps: Props,
+    initialContext?: Context
 ) => (error: any) => void
 
 export interface PushEvent {
     (eventName: string): () => void
-    <T = any>(eventName: string): (val: T) => void
+    <Event = any>(eventName: string): (val: Event) => void
 }

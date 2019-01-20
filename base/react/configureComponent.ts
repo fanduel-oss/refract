@@ -18,13 +18,13 @@ import {
     UNMOUNT_EVENT
 } from './data'
 
-const configureComponent = <P, E, Ctx>(
-    aperture: Aperture<P, E, Ctx>,
+const configureComponent = <Props, Effect, Context>(
+    aperture: Aperture<Props, Effect, Context>,
     instance: any,
     isValidElement: (val: any) => boolean = () => false,
     isComponentClass: (val: any) => boolean = () => false,
-    handler?: Handler<P, E, Ctx>,
-    errorHandler?: ErrorHandler<P>,
+    handler?: Handler<Props, Effect, Context>,
+    errorHandler?: ErrorHandler<Props>,
     mergeProps?: boolean,
     decorateProps?: boolean
 ) => {
@@ -78,7 +78,7 @@ const configureComponent = <P, E, Ctx>(
         }
     }
 
-    const decoratedProps: Partial<P> = {}
+    const decoratedProps: Partial<Props> = {}
 
     let listeners: Array<Listener<any>> = []
 
@@ -134,7 +134,7 @@ const configureComponent = <P, E, Ctx>(
 
     const sinkObservable = aperture(component, instance.props, instance.context)
 
-    const sinkSubscription: Subscription = subscribeToSink<E>(
+    const sinkSubscription: Subscription = subscribeToSink<Effect>(
         sinkObservable,
         finalHandler(instance.props, instance.context),
         errorHandler
@@ -155,7 +155,7 @@ const configureComponent = <P, E, Ctx>(
         }
     }
 
-    instance.pushProps = (props: P) => {
+    instance.pushProps = (props: Props) => {
         listeners.forEach(listener => {
             listener.next(createPropsData(props))
         })

@@ -1,27 +1,32 @@
 import * as React from 'react'
 
 declare module 'react' {
-    function useState<T>(
-        initialState: T | (() => T)
-    ): [T, (newState: T) => void]
+    function useState<Type>(
+        initialState: Type | (() => Type)
+    ): [Type, (newState: Type) => void]
     function useEffect(
         create: () => void | (() => void),
         inputs?: ReadonlyArray<unknown>
     ): void
-    function useContext<T>(foo: React.Context<T>): T
-    function useReducer<S, A>(
-        reducer: (state: S, action: A) => S,
-        initialState: S
-    ): [S, (action: A) => void]
-    function useCallback<F extends (...args: never[]) => unknown>(
-        callback: F,
+    function useContext<Type>(foo: React.Context<Type>): Type
+    function useReducer<State, Action>(
+        reducer: (state: State, action: Action) => State,
+        initialState: State
+    ): [State, (action: Action) => void]
+    function useCallback<Callback extends (...args: never[]) => unknown>(
+        callback: Callback,
         inputs?: ReadonlyArray<unknown>
-    ): F
-    function useMemo<T>(create: () => T, inputs?: ReadonlyArray<unknown>): T
-    function useRef<T extends unknown>(initialValue?: T): React.RefObject<T>
-    function useImperativeMethods<T>(
-        ref: React.Ref<T>,
-        createInstance: () => T,
+    ): Callback
+    function useMemo<Type>(
+        create: () => Type,
+        inputs?: ReadonlyArray<unknown>
+    ): Type
+    function useRef<Type extends unknown>(
+        initialValue?: Type
+    ): React.RefObject<Type>
+    function useImperativeMethods<Type>(
+        ref: React.Ref<Type>,
+        createInstance: () => Type,
         inputs?: ReadonlyArray<unknown>
     ): void
     const useMutationEffect: typeof useEffect

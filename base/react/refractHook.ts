@@ -4,19 +4,19 @@ import { configureHook } from './configureHook'
 import { Aperture } from './observable'
 import { Handler, ErrorHandler } from './baseTypes'
 
-export interface Config<D, E> {
-    handler?: Handler<D, E>
-    errorHandler?: ErrorHandler<D>
+export interface Config<Data, Effect> {
+    handler?: Handler<Data, Effect>
+    errorHandler?: ErrorHandler<Data>
 }
 
-export const useRefract = <D, CD = any, E = any>(
-    aperture: Aperture<D, E>,
-    data: D,
-    config: Config<D, E> = {}
-): CD => {
+export const useRefract = <Data, CurrentData = any, Effect = any>(
+    aperture: Aperture<Data, Effect>,
+    data: Data,
+    config: Config<Data, Effect> = {}
+): CurrentData => {
     const initialHook = useMemo(
         () =>
-            configureHook<D, E>(
+            configureHook<Data, Effect>(
                 aperture,
                 data,
                 config.handler,
@@ -41,5 +41,5 @@ export const useRefract = <D, CD = any, E = any>(
         [data]
     )
 
-    return hook.data as CD
+    return hook.data as CurrentData
 }

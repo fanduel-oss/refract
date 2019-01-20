@@ -7,4 +7,4 @@ export type AddActionListener = (
     actionType: string,
     listener: ActionListener
 ) => UnsubscribeFn
-export type Selector<T> = (state: object) => T
+export type Selector<Type> = (state: object) => Type

@@ -4,7 +4,7 @@ import {
     StoreCreator,
     Store,
     AnyAction,
-    Action
+    Action as ReduxAction
 } from 'redux'
 
 import { observeFactory, ObserveFn } from './observable'
@@ -26,8 +26,8 @@ const defaultOptions: EnhancerOptions = {
 }
 
 export default function refractStoreEnhancer<
-    S = any,
-    A extends Action<any> = AnyAction
+    State = any,
+    Action extends ReduxAction<any> = AnyAction
 >(options: Partial<EnhancerOptions> = {}): StoreEnhancer {
     const opts: EnhancerOptions = { ...defaultOptions, ...options }
 
@@ -35,7 +35,7 @@ export default function refractStoreEnhancer<
         reducer: Reducer,
         initialState: {},
         enhancer?: StoreEnhancer
-    ): Store<S, A> => {
+    ): Store<State, Action> => {
         const actionListeners: ActionListeners = {}
         const store = createStore(reducer, initialState, enhancer)
         const dispatch = store.dispatch
@@ -78,6 +78,6 @@ export default function refractStoreEnhancer<
 
         store.observe = observeFactory(store)
 
-        return store as Store<S, A>
+        return store as Store<State, Action>
     }
 }

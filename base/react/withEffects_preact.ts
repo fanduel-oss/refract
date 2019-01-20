@@ -12,9 +12,9 @@ export interface State {
     children: VNode | null
 }
 
-export interface Config<P, E> {
-    handler?: Handler<P, E, any>
-    errorHandler?: ErrorHandler<P, any>
+export interface Config<Props, Effect> {
+    handler?: Handler<Props, Effect, any>
+    errorHandler?: ErrorHandler<Props, any>
     mergeProps?: boolean
     decorateProps?: boolean
 }
@@ -36,23 +36,28 @@ const isComponentClass = (ComponentClass: any): boolean =>
             ComponentClass.prototype.componentDidMount
     )
 
-export const withEffects = <P, E, CP = P>(
-    aperture: Aperture<P, E>,
-    config: Config<P, E> = {}
+export const withEffects = <Props, Effect, CurrentProps = Props>(
+    aperture: Aperture<Props, Effect>,
+    config: Config<Props, Effect> = {}
 ) => (
-    BaseComponent: ComponentFactory<CP & { pushEvent: PushEvent }> = Empty
-): ComponentFactory<P> =>
-    class WithEffects extends Component<P, State> {
+    BaseComponent: ComponentFactory<
+        CurrentProps & { pushEvent: PushEvent }
+    > = Empty
+): ComponentFactory<Props> =>
+    class WithEffects extends Component<Props, State> {
         private triggerMount: () => void
         private triggerUnmount: () => void
-        private havePropsChanged: (nextProps: P, nextState: State) => boolean
-        private reDecorateProps: (nextProps: P) => void
-        private pushProps: (props: P) => void
-        private getChildProps: () => CP & { pushEvent: PushEvent }
+        private havePropsChanged: (
+            nextProps: Props,
+            nextState: State
+        ) => boolean
+        private reDecorateProps: (nextProps: Props) => void
+        private pushProps: (props: Props) => void
+        private getChildProps: () => CurrentProps & { pushEvent: PushEvent }
         private mounted: boolean = false
         private unmounted: boolean = false
 
-        constructor(props: P) {
+        constructor(props: Props) {
             super(props)
 
             configureComponent(

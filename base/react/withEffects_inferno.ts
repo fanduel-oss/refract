@@ -13,9 +13,9 @@ export interface State {
     children: VNode | null
 }
 
-export interface Config<P, E> {
-    handler?: Handler<P, E>
-    errorHandler?: ErrorHandler<P, E>
+export interface Config<Props, Effect> {
+    handler?: Handler<Props, Effect>
+    errorHandler?: ErrorHandler<Props, Effect>
     mergeProps?: boolean
     decorateProps?: boolean
 }
@@ -37,19 +37,24 @@ const isComponentClass = (ComponentClass: any): boolean =>
             ComponentClass.prototype.componentDidMount
     )
 
-export const withEffects = <P, E, CP = P>(
-    aperture: Aperture<P, E>,
-    config: Config<P, E> = {}
+export const withEffects = <Props, Effect, CurrentProps = Props>(
+    aperture: Aperture<Props, Effect>,
+    config: Config<Props, Effect> = {}
 ) => (
-    BaseComponent: ComponentType<CP & { pushEvent: PushEvent }> = Empty
-): ComponentClass<P> =>
-    class WithEffects extends Component<P, State> {
+    BaseComponent: ComponentType<
+        CurrentProps & { pushEvent: PushEvent }
+    > = Empty
+): ComponentClass<Props> =>
+    class WithEffects extends Component<Props, State> {
         private triggerMount: () => void
         private triggerUnmount: () => void
-        private havePropsChanged: (nextProps: P, nextState: State) => boolean
-        private reDecorateProps: (nextProps: P) => void
-        private pushProps: (props: P) => void
-        private getChildProps: () => CP & { pushEvent: PushEvent }
+        private havePropsChanged: (
+            nextProps: Props,
+            nextState: State
+        ) => boolean
+        private reDecorateProps: (nextProps: Props) => void
+        private pushProps: (props: Props) => void
+        private getChildProps: () => CurrentProps & { pushEvent: PushEvent }
         private mounted: boolean = false
         private unmounted: boolean = false
 
@@ -73,7 +78,7 @@ export const withEffects = <P, E, CP = P>(
             this.triggerMount()
         }
 
-        public componentWillReceiveProps(nextProps: P) {
+        public componentWillReceiveProps(nextProps: Props) {
             this.reDecorateProps(nextProps)
             this.pushProps(nextProps)
         }

@@ -3,14 +3,14 @@ import $$observable from 'symbol-observable'
 import { Selector } from './baseTypes'
 
 export interface ObserveFn {
-    <T>(actionTypeOrListener: string | Selector<T>): Stream<T>
+    <Type>(actionTypeOrListener: string | Selector<Type>): Stream<Type>
 }
 
 export const observeFactory = (store): ObserveFn => {
-    return <T>(actionOrSelector: string | Selector<T>): Stream<T> => {
+    return <Type>(actionOrSelector: string | Selector<Type>): Stream<Type> => {
         if (typeof actionOrSelector === 'string') {
             return from({
-                subscribe(listener: Listener<T>) {
+                subscribe(listener: Listener<Type>) {
                     const unsubscribe = store.addActionListener(
                         actionOrSelector,
                         listener.next.bind(listener)

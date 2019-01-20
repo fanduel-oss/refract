@@ -1,20 +1,20 @@
 export const PROPS_EFFECT: string = '@@refract/effect/props'
 export const COMPONENT_EFFECT: string = '@@refract/effect/component'
 
-export interface PropEffect<P = object> {
+export interface PropEffect<Props = object> {
     type: string
     payload: {
         replace: boolean
-        props: P
+        props: Props
     }
 }
 
-export interface ComponentEffect<D = object> {
+export interface ComponentEffect<Data = object> {
     type: string
-    payload: D
+    payload: Data
 }
 
-export const toProps = <P>(props: P): PropEffect<P> => ({
+export const toProps = <Props>(props: Props): PropEffect<Props> => ({
     type: PROPS_EFFECT,
     payload: {
         replace: false,
@@ -22,7 +22,7 @@ export const toProps = <P>(props: P): PropEffect<P> => ({
     }
 })
 
-export const asProps = <P>(props: P): PropEffect<P> => ({
+export const asProps = <Props>(props: Props): PropEffect<Props> => ({
     type: PROPS_EFFECT,
     payload: {
         replace: true,
@@ -30,7 +30,7 @@ export const asProps = <P>(props: P): PropEffect<P> => ({
     }
 })
 
-export const toRender = <D>(data: D): ComponentEffect<D> => ({
+export const toRender = <Data>(data: Data): ComponentEffect<Data> => ({
     type: COMPONENT_EFFECT,
     payload: data
 })
