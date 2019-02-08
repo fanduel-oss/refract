@@ -3,8 +3,7 @@
 </p><br/>
 
 <p align="center">
-    Harness the power of reactive programming<br/>
-    to supercharge your components
+    Handle your component effects and side-effects in a clear and declarative fashion <br/> by using asynchronous data streams <a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754#reactive-programming-is-programming-with-asynchronous-data-streams">(reactive programming)</a>.
 </p>
 <br/>
 
@@ -37,8 +36,6 @@
 *   💾 **Tiny**: less than 2Kb minified and gzipped
 *   ✏ **Typed**: written in TypeScript, fully typed integrations
 *   ⚡ **Universal**: supports React, React Native, Inferno and Preact
-
-Refract lets you handle your component effects and side-effects, so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
 
 Refract makes reactive programming possible in React, React Native, Preact and Inferno, with only a single higher-order component or a single hook! You can choose to start using a tiny bit of reactive programming, or go full reactive. Refract allows you to:
 
