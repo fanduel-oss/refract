@@ -1,7 +1,7 @@
 {
     "name": "refract-preact-xstream",
     "description": "Refract bindings for Preact with xstream: harness the power of reactive programming to supercharge your components!",
-    "version": "4.1.2",
+    "version": "4.2.0",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
