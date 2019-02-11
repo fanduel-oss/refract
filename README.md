@@ -3,7 +3,7 @@
 </p><br/>
 
 <p align="center">
-    Handle your component effects and side-effects in a clear and declarative fashion <br/> by using asynchronous data streams <a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754#reactive-programming-is-programming-with-asynchronous-data-streams">(reactive programming)</a>.
+    Handle your component effects and side-effects in a clear and declarative fashion <br/> by using asynchronous data streams (reactive programming).
 </p>
 <br/>
 
