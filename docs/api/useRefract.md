@@ -59,14 +59,14 @@ import { useRefract } from 'refract-rxjs'
 const handler = initialData => effect => {
     switch (effect.type) {
         case 'localstorage':
-            localstorage.setItem(effect.name, effect.value)
+            localStorage.setItem(effect.name, effect.value)
             return
     }
 }
 
 const aperture = (component, initialData) => {
     return component.observe('username').pipe(
-        debounce(2000),
+        debounceTime(2000),
         map(username => ({
             type: 'localstorage',
             name: 'username',
