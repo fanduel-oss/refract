@@ -160,7 +160,7 @@ const aperture = component => {
 A convenient helper function `useEvent` is available on `component`, to make it easier to use events: it returns a tuple containing the result of `fromEvent(eventName)` and `pushEvent(eventName)`. `useEvent` takes two arguments:
 
 *   `eventName` _(string)_: the name of the event
-*   `seedValue` _(any)_: an optional seed value to initialise the streem of event values with
+*   `seedValue` _(any)_: an optional seed value to initialise the stream of event values with
 
 ```js
 const aperture = component => {
