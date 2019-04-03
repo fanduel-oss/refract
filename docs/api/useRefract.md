@@ -4,7 +4,7 @@ Used to create a custom hook.
 
 ## Packages
 
-`useRefract` is provided by our React packages - `refract-*`. It is only available for versions of React supporting hooks (React 16.7.0-alhpa.0 and above).
+`useRefract` is provided by our React packages - `refract-*`. It is only available for versions of React supporting hooks (React 16.7.0-alpha.0 and above).
 
 ## Signature
 
