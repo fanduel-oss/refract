@@ -39,7 +39,7 @@ export const withEffects = <Props, Effect, ChildProps = Props, Context = any>(
     > = Empty
 ): React.ComponentClass<Props> =>
     class WithEffects extends React.Component<Props, State> {
-        public static contextType = config.Context
+        public static contextType = config.Context || null
 
         private triggerMount: () => void
         private triggerUnmount: () => void
