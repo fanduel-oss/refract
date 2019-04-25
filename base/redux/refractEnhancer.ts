@@ -76,7 +76,7 @@ export default function refractStoreEnhancer<
             }
         }
 
-        store.observe = observeFactory(store)
+        store[opts.methodName || 'observe'] = observeFactory(store)
 
         return store as Store<State, Action>
     }
