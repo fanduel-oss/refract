@@ -22,7 +22,8 @@ interface ActionListeners {
 }
 
 const defaultOptions: EnhancerOptions = {
-    eventsPrefix: '@@event/'
+    eventsPrefix: '@@event/',
+    methodName: 'observe'
 }
 
 export default function refractStoreEnhancer<
@@ -76,7 +77,7 @@ export default function refractStoreEnhancer<
             }
         }
 
-        store[opts.methodName || 'observe'] = observeFactory(store)
+        store[opts.methodName] = observeFactory(store)
 
         return store as Store<State, Action>
     }
