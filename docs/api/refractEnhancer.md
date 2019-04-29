@@ -26,11 +26,11 @@ refractEnhancer = (options?) => {
         Note that customising the `methodName` option with TypeScript will break the Redux `Store` interface, which is extended when you import the Refract enhancer. To use this option with TypeScript, you will need to extend the interface - for example:
 
         ```js
-        import { ObserveFn } from 'refract-redux-rxjs'
+        import { StoreObserveFunction } from 'refract-redux-rxjs'
 
         declare module 'redux' {
             interface Store {
-                observeWithRxjs: ObserveFn
+                observeWithRxjs: StoreObserveFunction
             }
         }
         ```

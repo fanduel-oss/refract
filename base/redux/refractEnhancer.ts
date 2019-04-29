@@ -7,13 +7,13 @@ import {
     Action as ReduxAction
 } from 'redux'
 
-import { observeFactory, ObserveFn } from './observable'
+import { observeFactory, StoreObserveFunction } from './observable'
 import { AddActionListener, ActionListener, EnhancerOptions } from './baseTypes'
 
 declare module 'redux' {
     interface Store {
         addActionListener: AddActionListener
-        observe: ObserveFn
+        observe: StoreObserveFunction
     }
 }
 

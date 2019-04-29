@@ -2,11 +2,11 @@ import xs, { Stream, Listener } from 'xstream'
 import dropRepeats from 'xstream/extra/dropRepeats'
 import { Selector } from './baseTypes'
 
-export interface ObserveFn {
+export interface StoreObserveFunction {
     <Type>(actionTypeOrListener: string | Selector<Type>): Stream<Type>
 }
 
-export const observeFactory = (store): ObserveFn => {
+export const observeFactory = (store): StoreObserveFunction => {
     return <Type>(actionOrSelector: string | Selector<Type>): Stream<Type> => {
         if (typeof actionOrSelector === 'string') {
             let unsubscribe
