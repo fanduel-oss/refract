@@ -7,13 +7,13 @@ import {
     Action as ReduxAction
 } from 'redux'
 
-import { observeFactory, ObserveFn } from './observable'
+import { observeFactory, StoreObserveFunction } from './observable'
 import { AddActionListener, ActionListener, EnhancerOptions } from './baseTypes'
 
 declare module 'redux' {
     interface Store {
         addActionListener: AddActionListener
-        observe: ObserveFn
+        observe: StoreObserveFunction
     }
 }
 
@@ -22,7 +22,8 @@ interface ActionListeners {
 }
 
 const defaultOptions: EnhancerOptions = {
-    eventsPrefix: '@@event/'
+    eventsPrefix: '@@event/',
+    methodName: 'observe'
 }
 
 export default function refractStoreEnhancer<
@@ -76,7 +77,7 @@ export default function refractStoreEnhancer<
             }
         }
 
-        store.observe = observeFactory(store)
+        store[opts.methodName] = observeFactory(store)
 
         return store as Store<State, Action>
     }

@@ -1,5 +1,6 @@
 export interface EnhancerOptions {
     eventsPrefix: string
+    methodName: string
 }
 export type ActionListener = (action: object) => void
 export type UnsubscribeFn = () => void

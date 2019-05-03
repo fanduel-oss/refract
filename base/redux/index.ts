@@ -1,4 +1,5 @@
 import refractEnhancer from './refractEnhancer'
 import { EnhancerOptions } from './baseTypes'
+import { StoreObserveFunction } from './observable'
 
-export { refractEnhancer, EnhancerOptions }
+export { refractEnhancer, EnhancerOptions, StoreObserveFunction }

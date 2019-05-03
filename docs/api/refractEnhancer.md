@@ -18,9 +18,22 @@ refractEnhancer = (options?) => {
 
 1.  `options` _(object)_: an object which configures the Refract store enhancer.
 
-    Currently, `refractEnhancer` only supports one option:
+    Two options are currently available for the `refractEnhancer`:
 
     *   `eventsPrefix` _(string)_: defines an actionType prefix which marks actions which are _not_ intended to be forwarded to your reducers. Refract will intercept these, preventing them from touching your state (or any downstream store enhancers), but will forward them on to any watching apertures. (default: `@@event/`)
+    *   `methodName` _(string)_: customises the name used for the `store.observe` method. (default: `observe`)
+
+        Note that customising the `methodName` option with TypeScript will break the Redux `Store` interface, which is extended when you import the Refract enhancer. To use this option with TypeScript, you will need to extend the interface - for example:
+
+        ```js
+        import { StoreObserveFunction } from 'refract-redux-rxjs'
+
+        declare module 'redux' {
+            interface Store {
+                observeWithRxjs: StoreObserveFunction
+            }
+        }
+        ```
 
 ## Returns
 
