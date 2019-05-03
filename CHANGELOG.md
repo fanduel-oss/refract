@@ -1,6 +1,24 @@
 <!-- prettier-ignore-start -->
 # Changelog
 
+## 03 May 2019
+
+| Packages | Version | Changes |
+| --- | --- | --- |
+| Redux | 1.4.0 | :rocket: Rename Remove React context warnings [(#146)](https://github.com/fanduel-oss/refract/pull/146) |
+
+## 24 April 2019
+
+| Packages | Version | Changes |
+| --- | --- | --- |
+| React | 4.2.1 | :bug: Rename Remove React context warnings [(#145)](https://github.com/fanduel-oss/refract/pull/145) |
+
+## 11 February 2019
+
+| Packages | Version | Changes |
+| --- | --- | --- |
+| React / Inferno / Preact<br>Redux | 4.2.0<br>1.3.0 | :rocket: Rename generic types to be more readable [(#138)](https://github.com/fanduel-oss/refract/pull/138) |
+
 ## 11 February 2019
 
 | Packages | Version | Changes |
