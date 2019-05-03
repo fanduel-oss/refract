@@ -5,7 +5,7 @@
 
 | Packages | Version | Changes |
 | --- | --- | --- |
-| Redux | 1.4.0 | :rocket: Rename Remove React context warnings [(#146)](https://github.com/fanduel-oss/refract/pull/146) |
+| Redux | 1.4.0 | :rocket: Add option to use a custom `observe` method name [(#146)](https://github.com/fanduel-oss/refract/pull/146) |
 
 ## 24 April 2019
 
