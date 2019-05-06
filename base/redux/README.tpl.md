@@ -3,8 +3,7 @@
 </p><br/>
 
 <p align="center">
-    Harness the power of reactive programming<br/>
-    to supercharge your components
+    Handle your component effects and side-effects in a clear and declarative fashion <br/> by using asynchronous data streams (reactive programming).
 </p>
 <br/>
 
@@ -34,9 +33,7 @@
 *   :pencil: **Typed**: written in TypeScript, fully typed integrations
 *   :zap: **Universal**: supports React, React Native, Inferno and Preact
 
-Refract lets you handle your component effects and side-effects, so that you can write your code in a clear, pure, and declarative fashion by using reactive programming.
-
-Refract makes reactive programming possible in React, React Native, Preact and Inferno, with only a single higher-order component! You can choose to start using a tiny bit of reactive programming, or go full reactive. Refract allows you to:
+Refract makes reactive programming possible in React, React Native, Preact and Inferno, with only a single higher-order component or a single hook! You can choose to start using a tiny bit of reactive programming, or go full reactive. Refract allows you to:
 
 *   [Manage side effects](https://refract.js.org/) like API calls, analytics, logging, etc.
 *   [Manipulate, replace and inject props](https://refract.js.org/usage/pushing-to-props), you can even [fully replace Redux `connect` HoC](https://refract.js.org/recipes/replacing-connect)
@@ -128,3 +125,14 @@ Before getting started, please read through our [contributing guidelines](../../
 ### Discuss
 
 [Everyone is welcome to join our discussion channel - `#refract` on the Reactiflux Discord server.](https://discord.gg/fqk86GH)
+
+### Talks
+
+*   [ReactiveConf 2018 - Thomas Roch: **Be More Functional and Reactive in React**](https://www.youtube.com/watch?v=c8p9o4rxcYk)
+*   [ReactiveConf 2018 - **AMA w/ Thomas Roch**](https://www.youtube.com/watch?v=liqHgQz8Ar0)
+
+### Articles
+
+*   [The introduction to Reactive Programming you've been missing](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754) by [@andrestaltz](https://twitter.com/andrestaltz)
+*   [SurviveJS Interview with Thomas Roch - Refract: Manage Component Side Effects the Reactive Way](https://survivejs.com/blog/refract-interview/)
+*   [How we harnessed the power of reactive programming with Refract](https://medium.freecodecamp.org/how-we-harnessed-the-power-of-reactive-programming-with-refract-87f269ac779e)
