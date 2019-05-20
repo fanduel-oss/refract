@@ -137,7 +137,7 @@ const configureComponent = <Props, Effect, Context>(
 
     if (!sinkObservable) {
         throw new Error(
-            `Refract was unable to subscribe within your component (${componentName}). Make sure you return an observable from your aperture.`
+            `Your Refract aperture didn't return an observable entity in ${componentName}.`
         )
     }
 
