@@ -7,6 +7,7 @@ import { Handler, ErrorHandler } from './baseTypes'
 export interface Config<Data, Effect> {
     handler?: Handler<Data, Effect>
     errorHandler?: ErrorHandler<Data>
+    hookName?: string
 }
 
 export const useRefract = <Data, CurrentData = any, Effect = any>(
@@ -20,7 +21,8 @@ export const useRefract = <Data, CurrentData = any, Effect = any>(
                 aperture,
                 data,
                 config.handler,
-                config.errorHandler
+                config.errorHandler,
+                config.hookName
             ),
         []
     )
