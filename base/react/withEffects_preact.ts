@@ -69,7 +69,7 @@ export const withEffects = <Props, Effect, ChildProps = Props>(
                 config.errorHandler,
                 config.mergeProps,
                 config.decorateProps !== false,
-                BaseComponent.name
+                BaseComponent.displayName || BaseComponent.name
             )
         }
 
