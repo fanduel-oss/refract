@@ -77,7 +77,7 @@ export const configureHook = <Data, Effect>(
 
     if (!sinkObservable) {
         throw new Error(
-            `Your Refract aperture didn't return an observable entity in ${hookName}.`
+            `Your Refract aperture didn't return an observable entity in ${hookName} (hook).`
         )
     }
 
