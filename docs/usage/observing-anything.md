@@ -1,6 +1,6 @@
 # Observing Anything
 
-As explained in the [dependency injection](./dependency-injection.md) documentation, you can add dependencies to your `aperture` via React props. By passing observable data sources as props, you can observe anything you wish, and trigger side-effects in response.
+As explained in the [dependency injection](https://refract.js.org/usage/injecting-dependencies) documentation, you can add dependencies to your `aperture` via React props. By passing observable data sources as props, you can observe anything you wish, and trigger side-effects in response.
 
 In addition, your `aperture` is a blank slate, and allows you to observe anything which exists in the global context such as time or events.
 
