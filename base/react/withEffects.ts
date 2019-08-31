@@ -73,7 +73,7 @@ export const withEffects = <Props, Effect, ChildProps = Props, Context = any>(
             this.triggerMount()
         }
 
-        public componentWillReceiveProps(nextProps: Props) {
+        public UNSAFE_componentWillReceiveProps(nextProps: Props) {
             this.reDecorateProps(nextProps)
             this.pushProps(nextProps)
         }
