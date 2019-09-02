@@ -196,4 +196,18 @@ describe('refract-xstream', () => {
 
         expect(node.text()).toBe('hi')
     })
+
+    it('should throw an error if the aperture does not return anything', () => {
+        // prevent the error from being passed through to the console
+        jest.spyOn(global.console, 'error').mockImplementation(() => jest.fn())
+
+        // tslint:disable-next-line
+        const aperture = () => {}
+        const MyComponent: React.FC<{}> = () => <div />
+        const WithEffects = withEffects<any, any>(aperture as any)(MyComponent)
+
+        expect(() => mount(<WithEffects />)).toThrow()
+
+        jest.clearAllMocks()
+    })
 })

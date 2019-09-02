@@ -20,7 +20,8 @@ export const configureHook = <Data, Effect>(
     aperture: Aperture<Data, Effect>,
     data: Data,
     handler: Handler<Data, Effect> = () => () => void 0,
-    errorHandler?: ErrorHandler<Data>
+    errorHandler?: ErrorHandler<Data>,
+    hookName: string = 'unknown hook'
 ) => {
     let returnedData
     let lastData = data
@@ -73,6 +74,12 @@ export const configureHook = <Data, Effect>(
     )
 
     const sinkObservable = aperture(component, data)
+
+    if (!sinkObservable) {
+        throw new Error(
+            `Your Refract aperture didn't return an observable entity in ${hookName} (hook).`
+        )
+    }
 
     const sinkSubscription: Subscription = subscribeToSink<Effect>(
         sinkObservable,

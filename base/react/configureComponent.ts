@@ -26,7 +26,8 @@ const configureComponent = <Props, Effect, Context>(
     handler?: Handler<Props, Effect, Context>,
     errorHandler?: ErrorHandler<Props>,
     mergeProps?: boolean,
-    decorateProps?: boolean
+    decorateProps?: boolean,
+    componentName: string = 'unknown component'
 ) => {
     instance.state = {
         renderEffect: false,
@@ -133,6 +134,12 @@ const configureComponent = <Props, Effect, Context>(
     )
 
     const sinkObservable = aperture(component, instance.props, instance.context)
+
+    if (!sinkObservable) {
+        throw new Error(
+            `Your Refract aperture didn't return an observable entity in ${componentName} (component).`
+        )
+    }
 
     const sinkSubscription: Subscription = subscribeToSink<Effect>(
         sinkObservable,
