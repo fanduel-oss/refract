@@ -1,7 +1,7 @@
 {
     "name": "refract-redux-rxjs",
     "description": "Refract bindings for Redux with RxJS: harness the power of reactive programming to supercharge your components!",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
