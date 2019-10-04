@@ -25,7 +25,7 @@ All three are simply mapped to objects with the desired structure, and merged in
 
 If the effect's type is `NAVIGATION`, the `handler` calculates the new browser url, and pushes it to `window.history`.
 
-If the effect's type is `STATE`, it calls `setState` with the new state.
+If the effect's type is `STATE`, it calls `setActiveTab` with the new state.
 
 #### Result
 

@@ -1,20 +1,12 @@
-import { Component } from 'react'
+import { useState } from 'react'
 
-class StateContainer extends Component {
-    state = { activeTab: null }
-    setActiveTab = activeTab => this.setState({ activeTab })
-    setState = this.setState.bind(this)
+const StateContainer = props => {
+    const [activeTab, setActiveTab] = useState(null)
 
-    render() {
-        const { activeTab } = this.state
-        const { setActiveTab, setState } = this
-
-        return this.props.children({
-            activeTab,
-            setActiveTab,
-            setState
-        })
-    }
+    return props.children({
+        activeTab,
+        setActiveTab
+    })
 }
 
 export default StateContainer

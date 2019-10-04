@@ -15,7 +15,7 @@ const aperture = (component, initialProps) => {
         of({
             type: 'NAVIGATION',
             replace: true,
-            state: { activeTab: initialProps.activeTab }
+            state: initialProps.activeTab
         }),
 
         pipe(
@@ -23,7 +23,7 @@ const aperture = (component, initialProps) => {
             map(activeTab => ({
                 type: 'NAVIGATION',
                 replace: false,
-                state: { activeTab }
+                state: activeTab
             }))
         ),
 
@@ -31,13 +31,13 @@ const aperture = (component, initialProps) => {
             fromEvent(window, 'popstate'),
             map(evt => ({
                 type: 'STATE',
-                state: evt.state || { activeTab: null }
+                state: evt.state || null
             }))
         )
     )
 }
 
-const handler = ({ setState }) => effect => {
+const handler = ({ setActiveTab }) => effect => {
     switch (effect.type) {
         case 'NAVIGATION':
             const path = document.location.pathname
@@ -49,7 +49,7 @@ const handler = ({ setState }) => effect => {
             return
 
         case 'STATE':
-            return setState(effect.state)
+            return setActiveTab(effect.state)
 
         default:
             return
