@@ -30,15 +30,13 @@ const InputWithEffects = withEffects(aperture, { handler })(Input)
 const Container = () => {
     const [currentValue, setValue] = useState('')
 
-    render() {
-        return (
-            <InputWithEffects
-                value={currentValue}
-                onChange={newValue => setValue(newValue)}
-                {...otherProps}
-            />
-        )
-    }
+    return (
+        <InputWithEffects
+            value={currentValue}
+            onChange={newValue => setValue(newValue)}
+            {...otherProps}
+        />
+    )
 }
 ```
 
