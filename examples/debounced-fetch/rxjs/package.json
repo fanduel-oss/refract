@@ -1,12 +1,12 @@
 {
     "name": "refract-example-rxjs-debounced-fetch",
     "dependencies": {
-        "react": "16.1.1",
-        "react-dom": "16.1.1",
-        "react-scripts": "1.0.10",
-        "refract-rxjs": "3.0.0",
-        "rxjs": "~6.2.2",
-        "rxjs-compat": "~6.2.2"
+        "react": "16.10.2",
+        "react-dom": "16.10.2",
+        "react-scripts": "3.2.0",
+        "refract-rxjs": "4.2.2",
+        "rxjs": "6.5.3",
+        "rxjs-compat": "6.5.3"
     },
     "version": "0.0.0",
     "scripts": {

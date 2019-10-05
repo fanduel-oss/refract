@@ -19,28 +19,24 @@ This `component` object contains three properties: `observe`, `mount`, and `unmo
 The explanations below are all based on changing the `aperture` in the following example to observe different things:
 
 ```js
+import React, { useState } from 'react
+
 const Input = ({ value, onChange }) => (
     <input value={value} onChange={onChange} />
 )
 
 const InputWithEffects = withEffects(aperture, { handler })(Input)
 
-class Container extends Component {
-    state = { currentvalue: '' }
+const Container = () => {
+    const [currentValue, setValue] = useState('')
 
-    render() {
-        return (
-            <InputWithEffects
-                value={this.state.currentValue}
-                onChange={newValue =>
-                    this.setState({
-                        currentValue: newValue
-                    })
-                }
-                {...otherProps}
-            />
-        )
-    }
+    return (
+        <InputWithEffects
+            value={currentValue}
+            onChange={newValue => setValue(newValue)}
+            {...otherProps}
+        />
+    )
 }
 ```
 
