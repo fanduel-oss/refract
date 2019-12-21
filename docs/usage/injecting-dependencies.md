@@ -2,7 +2,7 @@
 
 Refract lets you inject your own dependencies, such as your Redux store, your router, your API, and so on.
 
-To expose any dependencies for use inside Refract, you simply pass them as props into any component wrapped with the `withEffects` higher-order component. Your dependencies will then be available as part of the `initialProps` object, which is the first argument in your `aperture`, `handler`, and `errorHandler`.
+To expose any dependencies for use inside Refract, you simply pass them as props into any component wrapped with the `withEffects` higher-order component. Your dependencies will then be available as part of the `initialProps` object, which is the second argument in your `aperture`, and the first argument in your `handler` and `errorHandler`.
 
 ## Exposing Your Redux Store
 
