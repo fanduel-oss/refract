@@ -1,5 +1,5 @@
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
-import { PROPS_EFFECT } from './effects'
+import { CALLBACK_EFFECT, PROPS_EFFECT } from './effects'
 import {
     Listener,
     Subscription,
@@ -79,6 +79,24 @@ const configureComponent = <Props, Effect, Context>(
                         replace: payload.replace,
                         props: payload.props
                     })
+                }
+            } else if (effect && effect.type === CALLBACK_EFFECT) {
+                let error
+                const {
+                    payload: { propName, data }
+                } = effect
+
+                if (!instance.props[propName]) {
+                    error = `prop ${propName} not found in ${componentName} (component).`
+                } else if (typeof instance.props[propName] !== 'function') {
+                    error = `prop ${propName} in ${componentName} (component) is not a function.`
+                }
+
+                if (error) {
+                    // tslint:disable-next-line
+                    console.error(`Refract callback effect failed: ${error}`)
+                } else {
+                    instance.props[propName](data)
                 }
             } else {
                 effectHandler(effect)

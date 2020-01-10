@@ -3,8 +3,10 @@ import { merge, of, empty } from 'rxjs'
 
 import {
     Aperture,
+    toCallback,
     toProps,
     asProps,
+    CallbackEffect,
     PropEffect
 } from '../../../../packages/refract-rxjs/src'
 
@@ -118,3 +120,9 @@ export const createRenderingAperture = <VNode>(
 }
 
 export const emptyStream = empty
+
+export const toCallbackAperture: Aperture<
+    { callback: () => void },
+    CallbackEffect<string>
+> = component =>
+    component.mount.pipe(map(() => 'Hello world!'), map(toCallback('callback')))
