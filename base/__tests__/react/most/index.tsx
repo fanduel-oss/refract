@@ -2,13 +2,14 @@ import * as React from 'react'
 import {
     withEffects,
     Handler,
-    ObservableComponent,
+    CallbackEffect,
     PropEffect
 } from '../../../../packages/refract-most/src'
 import {
     aperture,
     toPropsAperture,
     asPropsAperture,
+    toCallbackAperture,
     Effect,
     Props,
     ExtraProps,
@@ -212,5 +213,57 @@ describe('refract-most', () => {
         expect(() => mount(<WithEffects />)).toThrow()
 
         jest.clearAllMocks()
+    })
+
+    describe('toCallback', () => {
+        describe('when the callback prop exists', () => {
+            it('should call the callback', () => {
+                const callback = jest.fn()
+                interface Props {
+                    callback: (message: any) => void
+                }
+                const WithEffects = withEffects<Props, CallbackEffect<string>>(
+                    toCallbackAperture
+                )(() => null)
+
+                mount(<WithEffects callback={callback} />)
+
+                expect(callback).toHaveBeenCalledWith('Hello world!')
+            })
+        })
+
+        describe('when the callback prop does not exist', () => {
+            it('should log an error', () => {
+                const spy = jest.fn()
+                jest.spyOn(global.console, 'error').mockImplementation(spy)
+                const WithEffects = withEffects<{}, CallbackEffect<string>>(
+                    toCallbackAperture
+                )(() => null)
+
+                mount(<WithEffects />)
+
+                expect(spy).toHaveBeenCalled()
+
+                jest.clearAllMocks()
+            })
+        })
+
+        describe('when the prop exists but is not a function', () => {
+            it('should log an error', () => {
+                const spy = jest.fn()
+                jest.spyOn(global.console, 'error').mockImplementation(spy)
+                // @ts-ignore
+                const WithEffects = withEffects<
+                    { callback: string },
+                    CallbackEffect<string>
+                >(toCallbackAperture)(() => null)
+
+                mount(<WithEffects callback="string" />)
+
+                expect(spy).toHaveBeenCalled()
+
+                jest.clearAllMocks()
+            })
+        })
     })
 })

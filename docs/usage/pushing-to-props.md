@@ -5,10 +5,11 @@ By now, you should have a better understanding of what Refract does:
 *   It allows you to observe data sources ([React](./observing-react.md), [redux](./observing-redux), [anything else](./observing-anything.md))
 *   It allows you to push data to an effect handler (see [handling effects](./handling-effects.md))
 
-Refract has three built-in effect handlers, to:
+Refract has four built-in effect handlers, to:
 
 *   Pass additional props to the child it wraps
 *   Replace props
+*   Call props
 *   Render components
 
 This section focuses on adding and replacing props, and its applications. All React, Preact and Inferno packages export two effect creators: `toProps` and `asProps`. They both take an object of props.
@@ -29,7 +30,7 @@ const DoubleValue = ({ value, doubledValue }) => (
 )
 
 const aperture = (component, { initialCount }) => {
-    component.observe('value').pipe(map(value => toProps({
+    return component.observe('value').pipe(map(value => toProps({
         doubledValue: 2 * value
     })))
 }
@@ -44,6 +45,27 @@ export default withEffects(aperture)(DoubleValue)
 It allows you to fully control what props are passed through, and can result in performance benefits by controlling exactly when a component re-renders.
 
 Essentially, `toProps` and `asProps` allow you to inject data into components, by using existing props or external data sources (sideways data loading).
+
+## Calling Props
+
+`toCallbck` is used to declaratively tell Refract to call your component's props with some data.
+
+In the example below, every time the `value` prop changes, the stream debounces the value for one second, and then calls `props.onCommit` with the new value.
+
+```js
+import React from 'react'
+import { withEffects, toCallback } from 'refract-rxjs'
+import { debounceTime, map } from 'rxjs/operators'
+
+const Input = props => <input {...props} />
+
+const aperture = component =>
+    component
+        .observe('value')
+        .pipe(debounceTime(1000), map(toCallback('onCommit')))
+
+export const DebouncedInput = withEffects(aperture)(Input)
+```
 
 ## Stateful Apertures
 

@@ -1,11 +1,12 @@
 import xs from 'xstream'
 import {
     Aperture,
+    toCallback,
     toProps,
     asProps,
+    CallbackEffect,
     PropEffect
 } from '../../../../packages/refract-xstream/src'
-import { of } from 'most'
 
 export interface Effect {
     type: string
@@ -100,3 +101,9 @@ export const createRenderingAperture = <VNode>(
 
     return aperture
 }
+
+export const toCallbackAperture: Aperture<
+    { callback: () => void },
+    CallbackEffect<string>
+> = component =>
+    component.mount.map(() => 'Hello world!').map(toCallback('callback'))
