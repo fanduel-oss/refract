@@ -41,9 +41,7 @@ const handler = ({ setActiveTab }) => effect => {
     switch (effect.type) {
         case 'NAVIGATION':
             const path = document.location.pathname
-            const search = effect.state.activeTab
-                ? `?tab=${effect.state.activeTab}`
-                : ''
+            const search = effect.state ? `?tab=${effect.state}` : ''
             const methodName = effect.replace ? 'replaceState' : 'pushState'
             window.history[methodName](effect.state, null, `${path}${search}`)
             return
