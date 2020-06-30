@@ -19,10 +19,10 @@ const aperture = ({ observe }) =>
         .awaitPromises()
         .map(payload => ({ type: 'USER_DATA_RECEIVE', payload }))
 
-const handler = ({ setState }) => effect => {
+const handler = ({ setData }) => effect => {
     switch (effect.type) {
         case 'USER_DATA_RECEIVE':
-            return setState({ data: effect.payload })
+            return setData(effect.payload)
 
         default:
             return

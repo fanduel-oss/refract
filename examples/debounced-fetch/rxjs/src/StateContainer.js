@@ -1,21 +1,15 @@
-import { Component } from 'react'
+import { useState } from 'react'
 
-class StateContainer extends Component {
-    state = { data: null, username: '' }
-    setUsername = username => this.setState({ username })
-    setState = this.setState.bind(this)
+const StateContainer = props => {
+    const [data, setData] = useState(null)
+    const [username, setUsername] = useState('')
 
-    render() {
-        const { data, username } = this.state
-        const { setUsername, setState } = this
-
-        return this.props.children({
-            data,
-            username,
-            setUsername,
-            setState
-        })
-    }
+    return props.children({
+        data,
+        username,
+        setUsername,
+        setData
+    })
 }
 
 export default StateContainer

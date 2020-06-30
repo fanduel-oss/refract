@@ -17,39 +17,39 @@ const aperture = (component, initialProps) => {
         of({
             type: 'NAVIGATION',
             replace: true,
-            state: { activeTab: initialProps.activeTab }
+            state: initialProps.activeTab
         }),
 
         activeTab$.pipe(
             map(activeTab => ({
                 type: 'NAVIGATION',
                 replace: false,
-                state: { activeTab }
+                state: activeTab
             }))
         ),
 
         fromEvent(window, 'popstate').pipe(
             map(evt => ({
                 type: 'STATE',
-                state: evt.state || { activeTab: null }
+                state: evt.state || null
             }))
         )
     )
 }
 
-const handler = ({ setState }) => effect => {
+const handler = ({ setActiveTab }) => effect => {
     switch (effect.type) {
         case 'NAVIGATION':
             const path = document.location.pathname
-            const search = effect.state.activeTab
-                ? `?tab=${effect.state.activeTab}`
+            const search = effect.state
+                ? `?tab=${effect.state}`
                 : ''
             const methodName = effect.replace ? 'replaceState' : 'pushState'
             window.history[methodName](effect.state, null, `${path}${search}`)
             return
 
         case 'STATE':
-            return setState(effect.state)
+            return setActiveTab(effect.state)
 
         default:
             return
