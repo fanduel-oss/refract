@@ -1,12 +1,12 @@
 {
     "name": "refract-example-callbag-routing",
     "dependencies": {
-        "callbag-basics": "~3.0.0",
-        "callbag-of": "~1.0.0",
-        "react": "16.1.1",
-        "react-dom": "16.1.1",
-        "react-scripts": "1.0.10",
-        "refract-callbag": "3.0.0"
+        "callbag-basics": "3.1.0",
+        "callbag-of": "2.0.0",
+        "react": "16.10.2",
+        "react-dom": "16.10.2",
+        "react-scripts": "3.2.0",
+        "refract-callbag": "4.2.2"
     },
     "version": "0.0.0",
     "scripts": {

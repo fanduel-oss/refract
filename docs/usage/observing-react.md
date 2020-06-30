@@ -4,7 +4,7 @@
 
 > A Refract hook is available in version 2.3.0-alpha.0. API is similar except functions cannot be observed. For more detail, see [useRefract API](../api/useRefract.md)
 
-Refract exposes an object called `component` as your `aperture`'s second argument, which allows you to cause side-effects in response to changes within your React app.
+Refract exposes an object called `component` as your `aperture`'s first argument, which allows you to cause side-effects in response to changes within your React app.
 
 ```js
 const aperture = component => {
@@ -19,28 +19,24 @@ This `component` object contains three properties: `observe`, `mount`, and `unmo
 The explanations below are all based on changing the `aperture` in the following example to observe different things:
 
 ```js
+import React, { useState } from 'react
+
 const Input = ({ value, onChange }) => (
     <input value={value} onChange={onChange} />
 )
 
 const InputWithEffects = withEffects(aperture, { handler })(Input)
 
-class Container extends Component {
-    state = { currentvalue: '' }
+const Container = () => {
+    const [currentValue, setValue] = useState('')
 
-    render() {
-        return (
-            <InputWithEffects
-                value={this.state.currentValue}
-                onChange={newValue =>
-                    this.setState({
-                        currentValue: newValue
-                    })
-                }
-                {...otherProps}
-            />
-        )
-    }
+    return (
+        <InputWithEffects
+            value={currentValue}
+            onChange={newValue => setValue(newValue)}
+            {...otherProps}
+        />
+    )
 }
 ```
 

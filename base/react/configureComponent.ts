@@ -42,6 +42,8 @@ const configureComponent = <Props, Effect, Context>(
 
         if (instance.mounted) {
             instance.setState(state)
+        } else if (typeof state === 'function') {
+            instance.state = state(instance.state)
         } else {
             instance.state = {
                 ...instance.state,
@@ -64,15 +66,20 @@ const configureComponent = <Props, Effect, Context>(
             } else if (effect && effect.type === PROPS_EFFECT) {
                 const { payload } = effect
 
-                setState({
-                    replace: payload.replace,
-                    props: mergeProps
-                        ? {
-                              ...instance.state.props,
-                              ...payload.props
-                          }
-                        : payload.props
-                })
+                if (mergeProps) {
+                    setState(prev => ({
+                        replace: payload.replace,
+                        props: {
+                            ...prev.props,
+                            ...payload.props
+                        }
+                    }))
+                } else {
+                    setState({
+                        replace: payload.replace,
+                        props: payload.props
+                    })
+                }
             } else {
                 effectHandler(effect)
             }

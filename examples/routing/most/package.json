@@ -1,11 +1,11 @@
 {
     "name": "refract-example-most-routing",
     "dependencies": {
-        "most": "~1.7.3",
-        "react": "16.1.1",
-        "react-dom": "16.1.1",
-        "react-scripts": "1.0.10",
-        "refract-most": "3.0.0"
+        "most": "1.7.3",
+        "react": "16.10.2",
+        "react-dom": "16.10.2",
+        "react-scripts": "3.2.0",
+        "refract-most": "4.2.2"
     },
     "version": "0.0.0",
     "scripts": {
