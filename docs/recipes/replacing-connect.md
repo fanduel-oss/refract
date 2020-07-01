@@ -76,10 +76,10 @@ import { of, merge } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { createAddPostAction, createRemovePostAction } from './actions'
 
-const BaseComponent = ({ pushEvent }) => (
+const BaseComponent = ({ addPost, removePost }) => (
     <>
-        <button onClick={pushEvent('addPost')()}>Add post</button>
-        <button onClick={pushEvent('removePost')()}>Remove post</button>
+        <button onClick={addPost(/* post data */))}>Add post</button>
+        <button onClick={removePost(/* post data */))}>Remove post</button>
     </>
 )
 

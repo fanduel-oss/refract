@@ -9,6 +9,6 @@ export type ErrorHandler<Props, Context = any> = (
 ) => (error: any) => void
 
 export interface PushEvent {
-    (eventName: string): () => void
+    (eventName: string): (val?: any) => void
     <Event = any>(eventName: string): (val: Event) => void
 }
