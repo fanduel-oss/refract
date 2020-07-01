@@ -78,8 +78,8 @@ import { createAddPostAction, createRemovePostAction } from './actions'
 
 const BaseComponent = ({ pushEvent }) => (
     <>
-        <button onClick={pushEvent('addPost')}>Add post</button>
-        <button onClick={pushEvent('removePost')}>Remove post</button>
+        <button onClick={pushEvent('addPost')()}>Add post</button>
+        <button onClick={pushEvent('removePost')()}>Remove post</button>
     </>
 )
 
