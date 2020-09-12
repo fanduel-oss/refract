@@ -54,7 +54,7 @@
         "jest": "~22.4.3",
         "lint-staged": "~7.0.5",
         "most": "~1.7.3",
-        "node-fetch": "~2.2.0",
+        "node-fetch": "~2.6.1",
         "npm-packlist": "~1.1.11",
         "ora": "~3.0.0",
         "p-iteration": "~1.1.7",
