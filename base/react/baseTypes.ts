@@ -8,7 +8,6 @@ export type ErrorHandler<Props, Context = any> = (
     initialContext?: Context
 ) => (error: any) => void
 
-export interface PushEvent {
-    (eventName: string): () => void
-    <Event = any>(eventName: string): (val: Event) => void
-}
+export type PushEvent<T = unknown> = (eventName: string) => PushEventData<T>
+
+export type PushEventData<T = unknown> = (val?: T) => void
