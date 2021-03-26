@@ -10,4 +10,4 @@ export type ErrorHandler<Props, Context = any> = (
 
 export type PushEvent<T = unknown> = (eventName: string) => PushEventData<T>
 
-export type PushEventData<T = unknown> = (val: T) => void
+export type PushEventData<T = unknown> = (val?: T) => void
