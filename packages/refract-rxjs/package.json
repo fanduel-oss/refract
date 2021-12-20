@@ -1,7 +1,7 @@
 {
     "name": "refract-rxjs",
     "description": "Refract bindings for React with RxJS: harness the power of reactive programming to supercharge your components!",
-    "version": "4.2.3",
+    "version": "4.2.4",
     "main": "index.js",
     "jsnext:main": "index.es.js",
     "module": "index.es.js",
@@ -9,8 +9,8 @@
     "sideEffects": false,
     "license": "MIT",
     "peerDependencies": {
-        "react": ">= 15.0.0 < 17.0.0",
-        "rxjs": "^6.0.0"
+        "react": ">= 15.0.0 <= 17.0.0",
+        "rxjs": "^7.1.0"
     },
     "keywords": [
         "functional",

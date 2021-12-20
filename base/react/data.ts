@@ -30,7 +30,7 @@ export interface EventData {
     }
 }
 
-export const isEvent = <Props>(eventName) => (data: Data<Props>, index?) =>
+export const isEvent = <Props>(eventName) => (data: Data<Props>) =>
     data.type === DataType.EVENT &&
     (data as EventData).payload.name === eventName
 
