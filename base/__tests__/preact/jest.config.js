@@ -8,5 +8,6 @@ module.exports = {
         'ts-jest': {
             tsconfig: 'tsconfig.test.json'
         }
-    }
+    },
+    setupFiles: ['./test.config.js'],
 }

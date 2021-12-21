@@ -12,7 +12,6 @@ import {
     asPropsAperture,
     Effect,
     Props,
-    ExtraProps,
     createRenderingAperture,
     toMergedPropsAperture
 } from '../../react/most/aperture'
@@ -32,7 +31,7 @@ describe('refract-inferno-most', () => {
     it('should observe component changes', () => {
         const effectValueHandler = jest.fn()
         const setValue = () => void 0
-        const WithEffects = withEffects<Props, Effect, Props & ExtraProps>(
+        const WithEffects = withEffects<Props, Effect, Props>(
             aperture,
             { handler: () => effectValueHandler }
         )(({ setValue, pushEvent }) => (
