@@ -2,7 +2,8 @@ import {
     Observable,
     PartialObserver as Listener,
     Subscription,
-    from
+    from,
+    ObservableInput
 } from 'rxjs'
 import {
     filter,
@@ -82,7 +83,7 @@ const getComponentBase = (
 ): ObservableComponentBase => {
     const fromEvent = <T>(eventName, valueTransformer?) =>
         data.pipe(
-            filter(isEvent(eventName)),
+            filter<EventData>(isEvent(eventName)),
             map((data: EventData) => {
                 const { value } = data.payload
 
@@ -110,13 +111,7 @@ const getComponentBase = (
     }
 }
 
-export const createObservable = subscribe => ({
-    subscribe,
-    // @ts-ignore
-    [(typeof Symbol === 'function' && Symbol.observable) || '@@observable']() {
-        return this
-    }
-})
+export const createObservable = subscribe => new Observable(subscribe)
 
 export const getObserve = <Props>(getProp, data, decoratedProps) => {
     return function observe<Type>(propName?, valueTransformer?) {
@@ -160,7 +155,7 @@ export const createComponent = <Props>(
     pushEvent: PushEvent,
     decoratedProps: boolean
 ): ObservableComponent => {
-    const data = () => from<Data<Props>>(dataObservable)
+    const data = () => from<ObservableInput<Data<Props>>>(dataObservable)
 
     return {
         observe: getObserve(getProp, data, decoratedProps),

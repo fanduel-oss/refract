@@ -8,5 +8,6 @@ module.exports = {
         'ts-jest': {
             tsconfig: 'tsconfig.test.json'
         }
-    }
+    },
+    testEnvironment: 'jest-environment-jsdom'
 }

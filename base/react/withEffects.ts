@@ -4,7 +4,6 @@ import configureComponent from './configureComponent'
 
 import { Handler, ErrorHandler, PushEvent } from './baseTypes'
 import { Aperture } from './observable'
-import { ReactElement } from 'react'
 
 export interface State {
     replace?: boolean

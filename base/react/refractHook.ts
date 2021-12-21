@@ -1,4 +1,3 @@
-// @ts-ignore
 import { useState, useLayoutEffect, useEffect, useMemo } from 'react'
 import { configureHook } from './configureHook'
 import { Aperture } from './observable'
