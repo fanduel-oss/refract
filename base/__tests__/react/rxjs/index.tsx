@@ -34,7 +34,7 @@ describe('refract-rxjs', () => {
             { handler: () => effectValueHandler }
         )(({ setValue, clickLink }) => (
             <div>
-                <button onClick={() => setValue(10)} data-testid='valueButton' />
+                <button onClick={() => setValue(10)} data-testid="valueButton" />
                 <a onClick={() => clickLink()} data-testid="link"/>
             </div>
         ))
@@ -71,7 +71,6 @@ describe('refract-rxjs', () => {
         })
 
         rerender(<Element setValue={() => void 0 } />)
-
         fireEvent(
             getByTestId('valueButton'),
             new MouseEvent('click', {

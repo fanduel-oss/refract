@@ -4,7 +4,7 @@ const supportedObservableLibraries = ['rxjs', 'xstream', 'most', 'callbag']
 
 const peerDependencies = {
     react: {
-        react: '>= 15.0.0 < 17.0.0'
+        react: '>= 15.0.0 <= 17.0.2'
     },
     redux: {
         redux: '>= 3.5.0 < 5.0.0'
@@ -17,7 +17,7 @@ const peerDependencies = {
         'inferno-create-element': '^5.0.0'
     },
     rxjs: {
-        rxjs: '^6.0.0'
+        rxjs: '^7.1.0'
     },
     xstream: {
         xstream: '>= 11.3.0 < 12.0.0'

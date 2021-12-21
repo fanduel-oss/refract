@@ -1,16 +1,14 @@
-import { from, Observable, PartialObserver as Listener } from 'rxjs'
-import { map, distinctUntilChanged } from 'rxjs/operators'
-import { Selector } from './baseTypes'
 import { Store } from 'redux'
+import { from, Observable, PartialObserver as Listener } from 'rxjs'
+import { distinctUntilChanged, map } from 'rxjs/operators'
+import { Selector } from './baseTypes'
 
-export interface StoreObserveFunction {
-    <Type>(actionTypeOrListener: string | Selector<Type>): Observable<Type>
-}
+export type StoreObserveFunction = (store: Store) => <T>(actionTypeOrListener: string | Selector<T>) => Observable<T>
 
-export const observeFactory = (store): StoreObserveFunction => {
-    return <Type>(actionOrSelector) => {
+export const observeFactory: StoreObserveFunction = (store) => {
+    return <T>(actionOrSelector) => {
         if (typeof actionOrSelector === 'string') {
-            return Observable.create((listener: Partial<Listener<Type>>) => {
+            return new Observable((listener: Partial<Listener<T>>) => {
                 const unsubscribe = store.addActionListener(
                     actionOrSelector,
                     listener.next.bind(listener)
@@ -21,9 +19,9 @@ export const observeFactory = (store): StoreObserveFunction => {
         }
 
         if (typeof actionOrSelector === 'function') {
-            return from(store).pipe<Type>(
+            return (from(store) as any).pipe(
                 map(actionOrSelector),
-                distinctUntilChanged<Type>()
+                distinctUntilChanged()
             )
         }
     }

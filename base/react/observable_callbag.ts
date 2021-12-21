@@ -1,5 +1,5 @@
 import $$observable from 'symbol-observable'
-import { Callbag, Source, Sink } from 'callbag'
+import { Source, Sink } from 'callbag'
 const fromObs = require('callbag-from-obs')
 const toObs = require('callbag-to-obs')
 const dropRepeats = require('callbag-drop-repeats')

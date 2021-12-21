@@ -11,7 +11,7 @@
     "peerDependencies": {
         "inferno": "^5.0.0",
         "inferno-create-element": "^5.0.0",
-        "rxjs": "^6.0.0"
+        "rxjs": "^7.1.0"
     },
     "keywords": [
         "functional",

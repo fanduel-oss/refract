@@ -10,7 +10,7 @@
     "license": "MIT",
     "peerDependencies": {
         "most": "^1.0.0",
-        "react": ">= 15.0.0 < 17.0.0"
+        "react": ">= 15.0.0 <= 17.0.2"
     },
     "dependencies": {
         "symbol-observable": "~1.2.0"
