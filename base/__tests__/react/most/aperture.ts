@@ -17,10 +17,6 @@ export interface Props {
     setValue: (value: number) => void
 }
 
-export interface ExtraProps {
-    clickLink: () => void
-}
-
 export const aperture: Aperture<Props, Effect> = component => {
     const value$ = component.observe<number>('value')
     const valueSet$ = component.observe<number>('setValue')
@@ -47,7 +43,7 @@ export const aperture: Aperture<Props, Effect> = component => {
             type: 'Stop'
         }),
 
-        linkClick$.constant({
+       linkClick$.constant({
             type: 'LinkClick'
         }),
 
