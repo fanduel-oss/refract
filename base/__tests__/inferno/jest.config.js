@@ -9,5 +9,7 @@ module.exports = {
         'ts-jest': {
             tsConfigFile: './tsconfig.json'
         }
-    }
+    },
+    verbose: true,
+    testURL: 'http://localhost/'
 }
