@@ -1,11 +1,12 @@
-import { Store } from 'redux'
 import { from, Observable, PartialObserver as Listener } from 'rxjs'
 import { distinctUntilChanged, map } from 'rxjs/operators'
 import { Selector } from './baseTypes'
 
-export type StoreObserveFunction = (store: Store) => <T>(actionTypeOrListener: string | Selector<T>) => Observable<T>
+export interface StoreObserveFunction {
+    <Type>(actionTypeOrListener: string | Selector<Type>): Observable<Type>
+}
 
-export const observeFactory: StoreObserveFunction = (store) => {
+export const observeFactory = (store): StoreObserveFunction => {
     return <T>(actionOrSelector) => {
         if (typeof actionOrSelector === 'string') {
             return new Observable((listener: Partial<Listener<T>>) => {
@@ -19,8 +20,8 @@ export const observeFactory: StoreObserveFunction = (store) => {
         }
 
         if (typeof actionOrSelector === 'function') {
-            return (from(store) as any).pipe(
-                map(actionOrSelector),
+            return from(store).pipe(
+                map<unknown, T>(actionOrSelector),
                 distinctUntilChanged()
             )
         }

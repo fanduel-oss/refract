@@ -28,6 +28,7 @@ const defaultOptions: EnhancerOptions = {
 
 export default function refractStoreEnhancer<
     State,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _Action extends AnyAction = AnyAction
 >(options: Partial<EnhancerOptions> = {}): StoreEnhancer {
     const opts: EnhancerOptions = { ...defaultOptions, ...options }
