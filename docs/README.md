@@ -36,6 +36,7 @@
     *   [compose](./api/compose.md)
     *   [withEffects](./api/withEffects.md)
     *   [toProps, asProps](./api/props.md)
+    *   [toCallback](./api/toCallback.md)
     *   [useRefract](./api/useRefract.md)
     *   [refractEnhancer (Redux)](./api/refractEnhancer.md)
 *   [Glossary](./glossary.md)

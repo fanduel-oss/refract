@@ -4,8 +4,10 @@ import of from 'callbag-of'
 
 import {
     Aperture,
+    toCallback,
     toProps,
     asProps,
+    CallbackEffect,
     PropEffect
 } from '../../../../packages/refract-callbag/src'
 
@@ -105,3 +107,13 @@ export const createRenderingAperture = <VNode>(
 
     return aperture
 }
+
+export const toCallbackAperture: Aperture<
+    { callback: () => void },
+    CallbackEffect<string>
+> = component =>
+    pipe(
+        component.mount,
+        map(() => 'Hello world!'),
+        map(toCallback('callback'))
+    )

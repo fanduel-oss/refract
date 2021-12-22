@@ -14,6 +14,9 @@ import {
     PROPS_EFFECT,
     PropEffect,
     toRender,
+    CALLBACK_EFFECT,
+    CallbackEffect,
+    toCallback,
     COMPONENT_EFFECT,
     ComponentEffect
 } from './effects'
@@ -37,6 +40,9 @@ export {
     useRefract,
     ObservableComponentBase,
     toRender,
+    CALLBACK_EFFECT,
+    CallbackEffect,
+    toCallback,
     COMPONENT_EFFECT,
     ComponentEffect
 }

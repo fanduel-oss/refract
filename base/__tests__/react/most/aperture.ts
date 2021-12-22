@@ -1,9 +1,11 @@
-import { merge, of, from } from 'most'
+import { merge, of } from 'most'
 
 import {
     Aperture,
+    toCallback,
     toProps,
     asProps,
+    CallbackEffect,
     PropEffect
 } from '../../../../packages/refract-most/src'
 
@@ -104,3 +106,9 @@ export const createRenderingAperture = <VNode>(
 
     return aperture
 }
+
+export const toCallbackAperture: Aperture<
+    { callback: () => void },
+    CallbackEffect<string>
+> = component =>
+    component.mount.map(() => 'Hello world!').map(toCallback('callback'))
