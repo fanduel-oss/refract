@@ -10,4 +10,6 @@ module.exports = {
         }
     },
     setupFiles: ['./test.config.js'],
+    verbose: true,
+    testURL: 'http://localhost/'
 }

@@ -9,5 +9,7 @@ module.exports = {
             tsconfig: 'tsconfig.test.json'
         }
     },
-    testEnvironment: 'jest-environment-jsdom'
+    testEnvironment: 'jest-environment-jsdom',
+    verbose: true,
+    testURL: 'http://localhost/'
 }
