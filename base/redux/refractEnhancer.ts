@@ -4,7 +4,7 @@ import {
     StoreCreator,
     Store,
     AnyAction,
-    Action as ReduxAction
+    Action as ReduxAction,
 } from 'redux'
 
 import { observeFactory, StoreObserveFunction } from './observable'
@@ -23,62 +23,63 @@ interface ActionListeners {
 
 const defaultOptions: EnhancerOptions = {
     eventsPrefix: '@@event/',
-    methodName: 'observe'
+    methodName: 'observe',
 }
 
 export default function refractStoreEnhancer<
-    State = any,
-    Action extends ReduxAction<any> = AnyAction
+    State,
+    _Action extends AnyAction = AnyAction
 >(options: Partial<EnhancerOptions> = {}): StoreEnhancer {
     const opts: EnhancerOptions = { ...defaultOptions, ...options }
 
-    return (createStore: StoreCreator): StoreCreator => (
-        reducer: Reducer,
-        initialState: {},
-        enhancer?: StoreEnhancer
-    ): Store<State, Action> => {
-        const actionListeners: ActionListeners = {}
-        const store = createStore(reducer, initialState, enhancer)
-        const dispatch = store.dispatch
+    return (createStore: StoreCreator): StoreCreator =>
+        (
+            reducer: Reducer,
+            initialState: Record<string, any>,
+            enhancer?: StoreEnhancer
+        ): Store<State, ReduxAction> => {
+            const actionListeners: ActionListeners = {}
+            const store = createStore(reducer, initialState, enhancer)
+            const dispatch = store.dispatch
 
-        store.dispatch = action => {
-            let result
-            const hasType = action && action.type
-            const isEvent =
-                opts.eventsPrefix &&
-                hasType &&
-                action.type.indexOf(opts.eventsPrefix) === 0
+            store.dispatch = (action) => {
+                let result
+                const hasType = action && action.type
+                const isEvent =
+                    opts.eventsPrefix &&
+                    hasType &&
+                    action.type.indexOf(opts.eventsPrefix) === 0
 
-            if (!isEvent) {
-                result = dispatch(action)
+                if (!isEvent) {
+                    result = dispatch(action)
+                }
+
+                if (hasType && actionListeners[action.type]) {
+                    actionListeners[action.type].forEach((listener) =>
+                        listener(action)
+                    )
+                }
+
+                return result
             }
 
-            if (hasType && actionListeners[action.type]) {
-                actionListeners[action.type].forEach(listener =>
-                    listener(action)
-                )
+            store.addActionListener = (
+                actionType: string,
+                listener: ActionListener
+            ) => {
+                actionListeners[actionType] = (
+                    actionListeners[actionType] || []
+                ).concat(listener)
+
+                return () => {
+                    actionListeners[actionType] = actionListeners[
+                        actionType
+                    ].filter((l) => listener !== l)
+                }
             }
 
-            return result
+            store[opts.methodName] = observeFactory(store)
+
+            return store
         }
-
-        store.addActionListener = (
-            actionType: string,
-            listener: ActionListener
-        ) => {
-            actionListeners[actionType] = (
-                actionListeners[actionType] || []
-            ).concat(listener)
-
-            return () => {
-                actionListeners[actionType] = actionListeners[
-                    actionType
-                ].filter(l => listener !== l)
-            }
-        }
-
-        store[opts.methodName] = observeFactory(store)
-
-        return store as Store<State, Action>
-    }
 }
