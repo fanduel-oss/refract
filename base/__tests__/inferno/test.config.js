@@ -1,4 +1,4 @@
-import { configure } from 'enzyme'
-import InfernoEnzymeAdapter from 'enzyme-adapter-inferno'
+const enzyme = require('enzyme')
+const Adapter = require('enzyme-adapter-inferno')
 
-configure({ adapter: new InfernoEnzymeAdapter() })
+enzyme.configure({ adapter: new Adapter() })

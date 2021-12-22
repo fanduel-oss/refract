@@ -1,6 +1,7 @@
 {
-    "extends": "../../../tsconfig.base.json",
+    "extends": "../../../tsconfig.test.json",
     "compilerOptions": {
+        "types": ["inferno", "jest"],
         "jsx": "react",
         "jsxFactory": "createElement"
     },

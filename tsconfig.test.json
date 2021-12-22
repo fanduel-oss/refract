@@ -1,5 +1,7 @@
 {
     "extends": "./tsconfig.base.json",
     "include": ["./base/**/__tests__/*/*.ts", "./base/**/__tests__/*/*.tsx"],
-    "allowSyntheticDefaultImports": "true",
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+    }
 }

@@ -3,11 +3,13 @@ import dropRepeats from 'xstream/extra/dropRepeats'
 import { Selector } from './baseTypes'
 
 export interface StoreObserveFunction {
-    <Type>(actionTypeOrListener: string | Selector<Type>): Stream<Type>
+    <Type>(actionTypeOrListener: string | Selector<Type>): Stream<
+        Type | unknown
+    >
 }
 
 export const observeFactory = (store): StoreObserveFunction => {
-    return <Type>(actionOrSelector: string | Selector<Type>): Stream<Type> => {
+    return <Type>(actionOrSelector) => {
         if (typeof actionOrSelector === 'string') {
             let unsubscribe
 
@@ -21,15 +23,12 @@ export const observeFactory = (store): StoreObserveFunction => {
 
                 stop() {
                     unsubscribe()
-                }
+                },
             })
         }
 
         if (typeof actionOrSelector === 'function') {
-            return xs
-                .from(store)
-                .map(actionOrSelector)
-                .compose(dropRepeats())
+            return xs.from(store).map(actionOrSelector).compose(dropRepeats())
         }
     }
 }

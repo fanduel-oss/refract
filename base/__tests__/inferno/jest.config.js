@@ -1,15 +1,16 @@
 module.exports = {
     transform: {
-        '^.+\\.tsx?$': 'ts-jest'
+        '^.+\\.tsx?$': 'ts-jest',
     },
     testRegex: '.*/index.tsx?$',
     moduleFileExtensions: ['ts', 'tsx', 'js'],
     setupFiles: ['./test.config.js'],
     globals: {
         'ts-jest': {
-            tsconfig: 'tsconfig.test.json'
-        }
+            tsconfig: 'tsconfig.test.json',
+        },
     },
+    testEnvironment: 'jest-environment-jsdom',
     verbose: true,
-    testURL: 'http://localhost/'
+    testURL: 'http://localhost/',
 }

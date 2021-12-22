@@ -10,7 +10,7 @@
     "license": "MIT",
     "peerDependencies": {
         "react": ">= 15.0.0 <= 17.0.2",
-        "rxjs": "^7.1.0"
+        "rxjs": "~6.5.3"
     },
     "keywords": [
         "functional",
