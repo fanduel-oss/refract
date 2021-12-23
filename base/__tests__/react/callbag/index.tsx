@@ -2,7 +2,6 @@ import * as React from 'react'
 import {
     withEffects,
     Handler,
-    ObservableComponent,
     PropEffect
 } from '../../../../packages/refract-callbag/src'
 import {
@@ -15,7 +14,7 @@ import {
     createRenderingAperture,
     toMergedPropsAperture
 } from './aperture'
-import { mount } from 'enzyme'
+import { render, fireEvent } from '@testing-library/react'
 
 describe('refract-callbag', () => {
     const noop = (...args) => void 0
@@ -36,16 +35,19 @@ describe('refract-callbag', () => {
             { handler: () => effectValueHandler }
         )(({ setValue, clickLink }) => (
             <div>
-                <button onClick={() => setValue(10)} />
-                <a onClick={() => clickLink()} />
+                <button
+                    onClick={() => setValue(10)}
+                    data-testid="valueButton"
+                />
+                <a onClick={() => clickLink()} data-testid="link" />
             </div>
         ))
 
-        const component = mount(
-            React.createElement(WithEffects, { value: 1, setValue })
+        const Element = props => <WithEffects {...props} />
+        const { rerender, unmount, getByTestId } = render(
+            <Element value={1} setValue={setValue} />
         )
 
-        expect(component.prop('value')).toBe(1)
         expect(effectValueHandler).toHaveBeenCalledWith({
             type: 'ValueChange',
             value: 1
@@ -55,34 +57,52 @@ describe('refract-callbag', () => {
             type: 'Start'
         })
 
-        component.setProps({ value: 2 })
+        rerender(<Element value={2} setValue={setValue} />)
         expect(effectValueHandler).toHaveBeenCalledWith({
             type: 'ValueChange',
             value: 2
         })
 
-        component.find('button').simulate('click')
+        fireEvent(
+            getByTestId('valueButton'),
+            new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            })
+        )
 
         expect(effectValueHandler).toHaveBeenCalledWith({
             type: 'ValueSet',
             value: 10
         })
 
-        component.setProps({ setValue: () => void 0 })
-        component.find('button').simulate('click')
+        rerender(<Element setValue={() => void 0} />)
+        fireEvent(
+            getByTestId('valueButton'),
+            new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            })
+        )
 
         expect(effectValueHandler).toHaveBeenCalledWith({
             type: 'ValueSet',
             value: 10
         })
 
-        component.find('a').simulate('click')
+        fireEvent(
+            getByTestId('link'),
+            new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true
+            })
+        )
 
         expect(effectValueHandler).toHaveBeenCalledWith({
             type: 'LinkClick'
         })
 
-        component.unmount()
+        unmount()
 
         expect(effectValueHandler).toHaveBeenCalledWith({
             type: 'Stop'
@@ -101,16 +121,15 @@ describe('refract-callbag', () => {
             asPropsAperture
         )(BaseComponent)
 
-        const node = mount(<WithEffects prop="hello" />)
+        const Element = props => <WithEffects {...props} />
+        const { rerender } = render(<Element prop="hello" />)
 
         let props = BaseComponent.mock.calls[0][0]
 
         expect(props.prop).toBeUndefined()
         expect(props.newProp).toBe('hello world')
 
-        node.setProps({
-            prop: 'this'
-        })
+        rerender(<Element prop="this" />)
 
         props = BaseComponent.mock.calls[1][0]
 
@@ -131,16 +150,15 @@ describe('refract-callbag', () => {
             toPropsAperture
         )(BaseComponent)
 
-        const node = mount(<WithEffects prop="hello" />)
+        const Element = props => <WithEffects {...props} />
+        const { rerender } = render(<Element prop="hello" />)
 
         let props = BaseComponent.mock.calls[0][0]
 
         expect(props.prop).toBe('hello')
         expect(props.newProp).toBe('hello world')
 
-        node.setProps({
-            prop: 'this'
-        })
+        rerender(<Element prop="this" />)
 
         props = BaseComponent.mock.calls[1][0]
 
@@ -150,11 +168,12 @@ describe('refract-callbag', () => {
 
     it('should not merge props by default', () => {
         const BaseComponent = jest.fn().mockReturnValue(<div />)
-        const WithEffects = withEffects<{}, PropEffect>(toMergedPropsAperture)(
-            BaseComponent
-        )
+        const WithEffects = withEffects<{ prop }, PropEffect>(
+            toMergedPropsAperture
+        )(BaseComponent)
 
-        mount(<WithEffects />)
+        const Element = props => <WithEffects {...props} />
+        render(<Element />)
 
         const props = BaseComponent.mock.calls[0][0]
 
@@ -164,11 +183,15 @@ describe('refract-callbag', () => {
 
     it('should not merge props by default', () => {
         const BaseComponent = jest.fn().mockReturnValue(<div />)
-        const WithEffects = withEffects<{}, PropEffect>(toMergedPropsAperture, {
-            mergeProps: true
-        })(BaseComponent)
+        const WithEffects = withEffects<{ prop }, PropEffect>(
+            toMergedPropsAperture,
+            {
+                mergeProps: true
+            }
+        )(BaseComponent)
 
-        mount(<WithEffects />)
+        const Element = props => <WithEffects {...props} />
+        render(<Element />)
 
         const props = BaseComponent.mock.calls[0][0]
 
@@ -177,24 +200,19 @@ describe('refract-callbag', () => {
     })
 
     it('should render virtual elements', () => {
-        interface Props {
-            prop: string
-        }
         const aperture = createRenderingAperture<React.ReactNode>(prop => (
-            <div>{prop}</div>
+            <div data-testid="apertureDiv">{prop}</div>
         ))
-        const WithEffects = withEffects<Props, React.ReactNode>(aperture)()
+        const WithEffects = withEffects<{ prop }, React.ReactNode>(aperture)()
 
-        const node = mount(<WithEffects prop="hello" />)
+        const Element = props => <WithEffects {...props} />
+        const { rerender, getByTestId } = render(<Element prop="hello" />)
 
-        expect(node.text()).toBe('hello')
-        expect(node.find('div').exists()).toBe(true)
+        expect(getByTestId('apertureDiv').textContent).toBe('hello')
 
-        node.setProps({
-            prop: 'hi'
-        })
+        rerender(<Element prop="hi" />)
 
-        expect(node.text()).toBe('hi')
+        expect(getByTestId('apertureDiv').textContent).toBe('hi')
     })
 
     it('should throw an error if the aperture does not return anything', () => {
@@ -206,7 +224,9 @@ describe('refract-callbag', () => {
         const MyComponent: React.FC<{}> = () => <div />
         const WithEffects = withEffects<any, any>(aperture as any)(MyComponent)
 
-        expect(() => mount(<WithEffects />)).toThrow()
+        const Element = props => <WithEffects {...props} />
+
+        expect(() => render(<Element />)).toThrow()
 
         jest.clearAllMocks()
     })
