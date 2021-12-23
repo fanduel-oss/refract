@@ -21,7 +21,7 @@ async function publish() {
     const changedPackages = await detectChanges()
     checkingSpinner.stop()
 
-    if (changedPackages.length === 0) {
+    if (!changedPackages.length) {
         console.log('Nothing to release!')
         process.exit(0)
     }
