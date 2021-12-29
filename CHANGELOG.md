@@ -1,6 +1,12 @@
 <!-- prettier-ignore-start -->
 # Changelog
 
+## 29 December 2021
+
+| Packages | Version | Changes |
+| --- | --- | --- |
+| React | 5.0.0-rc.0 | :rocket: Upgrade to React 17 and remove dependency on React <17 [(#190)](https://github.com/fanduel-oss/refract/pull/190) |
+
 ## 03 May 2019
 
 | Packages | Version | Changes |
