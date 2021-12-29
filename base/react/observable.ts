@@ -110,13 +110,7 @@ const getComponentBase = (
     }
 }
 
-export const createObservable = subscribe => ({
-    subscribe,
-    // @ts-ignore
-    [(typeof Symbol === 'function' && Symbol.observable) || '@@observable']() {
-        return this
-    }
-})
+export const createObservable = subscribe => new Observable(subscribe)
 
 export const getObserve = <Props>(getProp, data, decoratedProps) => {
     return function observe<Type>(propName?, valueTransformer?) {
