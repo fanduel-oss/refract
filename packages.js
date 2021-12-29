@@ -4,7 +4,7 @@ const supportedObservableLibraries = ['rxjs', 'xstream', 'most', 'callbag']
 
 const peerDependencies = {
     react: {
-        react: '>= 15.0.0 < 17.0.0'
+        react: '>= 15.0.0'
     },
     redux: {
         redux: '>= 3.5.0 < 5.0.0'
