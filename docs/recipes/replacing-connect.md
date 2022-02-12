@@ -76,6 +76,13 @@ import { of, merge } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { createAddPostAction, createRemovePostAction } from './actions'
 
+const BaseComponent = ({ addPost, removePost }) => (
+    <>
+        <button onClick={addPost(/* post data */))}>Add post</button>
+        <button onClick={removePost(/* post data */))}>Remove post</button>
+    </>
+)
+
 const handler = initialProps => effect => {
     const { store } = initialProps
 
@@ -90,8 +97,8 @@ const toDispatch = action => ({
 })
 
 const aperture = component => {
-    const [ addPostEvents$, addPost] = component.pushEvent('addPost')
-    const [ removePostEvents$, removePost] = component.pushEvent('removePost')
+    const [ addPostEvents$, addPost] = component.useEvent('addPost')
+    const [ removePostEvents$, removePost] = component.useEvent('removePost')
 
     return merge(
         of({
