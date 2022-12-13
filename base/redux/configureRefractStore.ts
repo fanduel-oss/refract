@@ -1,11 +1,13 @@
 import {
     Action,
     AnyAction,
+    // @ts-ignore
     ConfigureStoreOptions,
+    // @ts-ignore
     EnhancedStore,
-    Middleware
+    Middleware,
+    configureStore
 } from '@reduxjs/toolkit'
-import { configureStore } from '@reduxjs/toolkit'
 import { ThunkMiddlewareFor } from '@reduxjs/toolkit/dist/getDefaultMiddleware'
 import { observeFactory, StoreObserveFunction } from './observable'
 import { AddActionListener, ActionListener } from './baseTypes'
@@ -14,7 +16,7 @@ export type UnsubscribeFn = () => void
 
 export type Selector<Type> = (state: object) => Type
 
-type Middlewares<S> = ReadonlyArray<Middleware<{}, S>>
+export type Middlewares<S> = ReadonlyArray<Middleware<{}, S>>
 
 export interface RefractEnhancedStore<
     S = any,
@@ -37,6 +39,7 @@ export function configureRefractStore<
 
     const actionListeners: Record<string, ActionListener[]> = {}
 
+    // @ts-ignore
     const dispatch = store.dispatch
 
     const newDispatch = (action: A) => {
@@ -55,8 +58,10 @@ export function configureRefractStore<
         return result
     }
 
+    // @ts-ignore
     store.dispatch = newDispatch as any
 
+    // @ts-ignore
     store.addActionListener = (
         actionType: string,
         listener: ActionListener
@@ -72,6 +77,7 @@ export function configureRefractStore<
         }
     }
 
+    // @ts-ignore
     store.observe = observeFactory(store)
 
     return store
