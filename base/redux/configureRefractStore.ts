@@ -12,10 +12,6 @@ import { ThunkMiddlewareFor } from '@reduxjs/toolkit/dist/getDefaultMiddleware'
 import { observeFactory, StoreObserveFunction } from './observable'
 import { AddActionListener, ActionListener } from './baseTypes'
 
-export type UnsubscribeFn = () => void
-
-export type Selector<Type> = (state: object) => Type
-
 export type Middlewares<S> = ReadonlyArray<Middleware<{}, S>>
 
 export interface RefractEnhancedStore<
