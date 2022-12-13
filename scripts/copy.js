@@ -41,6 +41,7 @@ const filesPerBaseDir = {
         'baseTypes.ts',
         'index.ts',
         'refractEnhancer.ts',
+        'configureRefractStore.ts',
         ({ obsLib }) => ({
             src: `observable${obsLib === 'rxjs' ? '' : `_${obsLib}`}.ts`,
             dest: 'observable.ts'
